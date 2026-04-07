@@ -1,0 +1,144 @@
+# Arc
+
+Lightweight product direction for spec-driven development — inspired by Linear's fast capture and clean triage, arc is the upstream companion to [temper](https://github.com/liatrio-labs/temper).
+
+Arc manages the idea lifecycle from raw thought to spec-ready brief. It keeps product direction as plain markdown files in your repo (`VISION`, `CUSTOMER`, `ROADMAP`, `BACKLOG`) and feeds shaped ideas directly into the claude-workflow SDD pipeline. Where temper governs engineering maturity, arc governs what gets built and why.
+
+## Idea Lifecycle
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+stateDiagram-v2
+    direction LR
+
+    [*] --> Capture : raw idea
+    Capture --> Shape : triage
+    Shape --> SpecReady : brief approved
+    SpecReady --> Shipped : SDD pipeline
+
+    Shape --> Capture : needs more context
+    SpecReady --> Shape : scope change
+
+    classDef capture fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
+    classDef shape fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+    classDef ready fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
+```
+
+| Stage | Description |
+|-------|-------------|
+| **Capture** | Raw idea recorded quickly — title, one-line summary, rough priority |
+| **Shape** | Idea refined into a structured brief: problem, proposed solution, success criteria, constraints |
+| **Spec-Ready** | Brief approved and ready to hand off to `/cw-spec` |
+| **Shipped** | Implemented and delivered via the SDD pipeline |
+
+## What Arc Manages
+
+Arc keeps product direction as markdown files tracked in your repository:
+
+| Artifact | Description |
+|----------|-------------|
+| `VISION` | Product vision, strategic direction, and north star metrics |
+| `CUSTOMER` | Personas, jobs-to-be-done, and success metrics |
+| `ROADMAP` | Phased delivery plan with themes and milestones |
+| `BACKLOG` | Triaged idea list with status, priority, and brief summaries |
+
+These files live in your project repo alongside engineering docs — there is no separate product tool to sync.
+
+## Two-Plugin Pipeline
+
+Arc and temper cover the full project lifecycle: arc shapes what gets built, temper governs how it gets built.
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+flowchart LR
+    AC["/arc-capture\nQuick idea entry"]:::arc
+    AS["/arc-shape\nRefine into\nspec-ready brief"]:::arc
+    AW["/arc-wave\nOrganize into\ndelivery cycle"]:::arc
+
+    CS["/cw-spec\nWrite spec and\nGherkin scenarios"]:::cw
+    CP["/cw-plan\nTask board\nand sub-tasks"]:::cw
+    CD["/cw-dispatch\nParallel coding\nworkers"]:::cw
+
+    TI["/temper-incept\nBootstrap repo\nand set phase"]:::temper
+    TP["/temper-progress\nGate evaluation\nand phase transition"]:::temper
+
+    AC --> AS --> AW --> TI
+    TI --> CS --> CP --> CD --> TP
+    TP -->|"advance"| TI
+    AW -->|"shaped brief"| CS
+
+    classDef arc fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+    classDef cw fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
+    classDef temper fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
+```
+
+| Skill | Role |
+|-------|------|
+| `/arc-capture` | Record a raw idea quickly — title, one-liner, rough priority |
+| `/arc-shape` | Refine an idea into a structured brief with problem, solution, and success criteria |
+| `/arc-wave` | Group shaped ideas into a delivery cycle and hand off to temper + claude-workflow |
+
+## Skills (Planned)
+
+Arc ships with three planned skills:
+
+- **`/arc-capture`** — Fast idea entry. Appends a structured stub to `BACKLOG` with minimal friction.
+- **`/arc-shape`** — Interactive refinement. Turns a captured idea into a spec-ready brief by guiding through problem framing, proposed solution, success criteria, and constraints.
+- **`/arc-wave`** — Delivery cycle management. Groups spec-ready ideas into a wave, updates `ROADMAP`, and prepares the handoff brief for `/temper-incept` and `/cw-spec`.
+
+## Relationship to Temper and claude-workflow
+
+Arc is **upstream** of both temper and claude-workflow:
+
+```
+/arc-capture -> /arc-shape -> /arc-wave -> /temper-incept -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-progress
+                                                ^                                                          |
+                                                '-------------------- phase loop --------------------------'
+```
+
+Arc requires [temper](https://github.com/liatrio-labs/temper) and [claude-workflow](https://github.com/liatrio-labs/claude-workflow). Install them first:
+
+```bash
+# Install claude-workflow
+claude plugin marketplace add https://github.com/liatrio-labs/claude-workflow.git
+claude plugin install claude-workflow@claude-workflow --scope user
+
+# Install temper
+claude plugin marketplace add https://github.com/liatrio-labs/temper.git
+claude plugin install temper@temper --scope user
+```
+
+## Install
+
+### From local filesystem (development)
+
+```bash
+claude plugin marketplace add /path/to/arc
+claude plugin install arc@arc --scope project
+```
+
+### From Git (distribution)
+
+```bash
+claude plugin marketplace add https://github.com/liatrio-labs/arc.git
+claude plugin install arc@arc --scope user
+```
+
+## Plugin Structure
+
+```
+arc/
+  .claude-plugin/
+    plugin.json               # Plugin identity and version
+    marketplace.json          # Marketplace registration
+  skills/                     # SKILL.md definitions (planned)
+  templates/                  # Artifact templates: VISION, CUSTOMER, ROADMAP, BACKLOG
+  references/                 # Shared reference docs
+  README.md
+  CLAUDE.md
+  .gitignore
+```
+
+---
+
+Copyright Liatrio Labs. All rights reserved.

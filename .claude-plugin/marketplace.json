@@ -1,0 +1,18 @@
+{
+  "name": "arc",
+  "owner": {
+    "name": "liatrio-labs"
+  },
+  "metadata": {
+    "description": "Lightweight product direction for spec-driven development. Inspired by Linear's fast capture and clean triage, arc helps shape ideas into spec-ready briefs.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "arc",
+      "description": "Product direction and idea pipeline. Provides /arc-capture for quick idea entry, /arc-shape for refining ideas into spec-ready briefs, and /arc-wave for organizing work into delivery cycles.",
+      "source": "./",
+      "strict": true
+    }
+  ]
+}
