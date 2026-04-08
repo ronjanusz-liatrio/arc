@@ -1,0 +1,27 @@
+Type: file
+File: skills/arc-align/references/align-report-template.md
+Check: Reference template file exists with full report structure and field descriptions
+Timestamp: 2026-04-08T20:00:00Z
+
+Expected: A reference template file at skills/arc-align/references/align-report-template.md
+  that mirrors the arc-review review-report-template.md pattern, containing:
+  - Full markdown template with all sections
+  - Field descriptions for each section
+  - Cross-references to related files
+
+Actual: File created at skills/arc-align/references/align-report-template.md (228 lines)
+  Structure:
+  - Template section: Complete markdown report template with all 5 content sections
+    plus Discovery Flow diagram and Cross-References footer
+  - Field Descriptions section: Detailed explanations for:
+    - Run Metadata (7 fields with source and description)
+    - Imported Items by Artifact (column descriptions for BACKLOG, VISION, CUSTOMER)
+    - Skipped Items (column descriptions, empty-state message)
+    - Excluded from Scanning (hardcoded categories, user-configured columns)
+    - Remaining Unmanaged Content (column descriptions, empty-state message)
+    - Discovery Flow Diagram (color definitions with Liatrio brand colors)
+    - Cross-References (always included)
+  - Cross-References section: Links to detection-patterns.md, import-rules.md,
+    review-report-template.md, and SKILL.md
+
+Status: PASS

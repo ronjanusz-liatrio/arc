@@ -571,13 +571,201 @@ If the manifest does not exist, create it with the table header. If it exists, a
 
 ### Step 8: Generate Report
 
-Create `docs/align-report.md` with the following sections:
+Create `docs/align-report.md` after every run. Read `skills/arc-align/references/align-report-template.md` for the full template. The report captures everything that happened during the run so the user can audit the results without re-running.
 
-- **Run metadata:** Timestamp, exclusion patterns applied, total files scanned, total discoveries
-- **Imported items by artifact:** Grouped by target (BACKLOG, VISION, CUSTOMER), showing source path, imported title, and detection method
-- **Skipped items:** Items found in the manifest from prior runs (already imported), with source path and original import date
-- **Unmatched exclusions:** Files/directories that were excluded from scanning
-- **Remaining unmanaged content:** Content detected but below confidence thresholds or ambiguous, with source path and snippet for manual review
+**8a. Run metadata section:**
+
+Write the report header and run metadata. All fields are derived from data collected during Steps 1-7.
+
+```markdown
+# Alignment Report
+
+**Generated:** {ISO 8601 timestamp}
+
+---
+
+## Run Metadata
+
+| Field | Value |
+|-------|-------|
+| Timestamp | {ISO 8601 timestamp} |
+| Exclusion patterns | {comma-separated list of all exclusion patterns from Step 1e} |
+| Total files scanned | {count of files examined during Steps 2a and 2b} |
+| Total discoveries | {count of all discoveries before manifest dedup} |
+| New imports | {count of items imported in this run} |
+| Skipped (manifest) | {count of items skipped due to prior manifest entries} |
+| Remaining unmanaged | {count of items below confidence threshold} |
+```
+
+**8b. Imported items by artifact section:**
+
+Group all successfully imported items by their target artifact (BACKLOG, VISION, CUSTOMER). Each group uses a markdown table showing source path, imported title, and detection method. Only include groups that have at least one imported item.
+
+```markdown
+---
+
+## Imported Items by Artifact
+
+### BACKLOG
+
+| Source Path | Imported Title | Detection Method |
+|-------------|---------------|-----------------|
+| {source_path} | {title from Step 5a-i} | {keyword (KW-N) or structural (ST-N)} |
+
+### VISION
+
+| Source Path | Imported Title | Detection Method |
+|-------------|---------------|-----------------|
+| {source_path} | (vision content) | {keyword (KW-N)} |
+
+### CUSTOMER
+
+| Source Path | Imported Title | Detection Method |
+|-------------|---------------|-----------------|
+| {source_path} | (persona content) | {keyword (KW-N)} |
+```
+
+If no items were imported for a given artifact, omit that artifact's subsection entirely rather than showing an empty table.
+
+**8c. Skipped items section:**
+
+List all items that were detected during scanning but skipped because their source location already appeared in `docs/align-manifest.md` from a prior run. These items were removed from the import list during Step 2d.
+
+```markdown
+---
+
+## Skipped Items
+
+| Source Path | Line Range | Original Import Date |
+|-------------|-----------|---------------------|
+| {source_path} | {line_range} | {timestamp from manifest} |
+```
+
+If no items were skipped, display:
+
+```markdown
+---
+
+## Skipped Items
+
+No items skipped — this is the first alignment run or no prior imports match current discoveries.
+```
+
+**8d. Unmatched exclusions section:**
+
+List all files and directories that were excluded from scanning during Step 1. This lets the user see what was not checked and decide whether to adjust exclusions on the next run.
+
+Separate hardcoded exclusions (from Step 1a) and user-configured exclusions (from Steps 1c/1d) so the user can distinguish between non-negotiable and optional exclusions.
+
+```markdown
+---
+
+## Excluded from Scanning
+
+### Hardcoded Exclusions (always applied)
+
+| Pattern | Category |
+|---------|----------|
+| .git/ | Directory |
+| node_modules/ | Directory |
+| vendor/ | Directory |
+| dist/ | Directory |
+| build/ | Directory |
+| docs/specs/ | Directory |
+| docs/BACKLOG.md | Arc-managed file |
+| docs/ROADMAP.md | Arc-managed file |
+| docs/VISION.md | Arc-managed file |
+| docs/CUSTOMER.md | Arc-managed file |
+| docs/wave-report.md | Arc-managed file |
+| docs/review-report.md | Arc-managed file |
+| docs/shape-report.md | Arc-managed file |
+| docs/align-manifest.md | Arc-managed file |
+| .env | Secret-bearing file |
+| credentials.json | Secret-bearing file |
+| *.key | Secret-bearing file |
+
+### User-Configured Exclusions
+
+| Pattern | Reason |
+|---------|--------|
+| {large_dir}/ | {N} files detected — recommended for exclusion |
+| {custom_pattern} | User-added custom pattern |
+```
+
+If no user-configured exclusions were added, display:
+
+```markdown
+### User-Configured Exclusions
+
+No additional exclusions were configured for this run.
+```
+
+**8e. Remaining unmanaged content section:**
+
+List content that was detected as potentially product-direction content but was not imported because it fell below confidence thresholds or was ambiguous. These are weak-signal matches (per the Pattern Confidence section in `detection-patterns.md`) that the skill flagged for manual review rather than automatically importing.
+
+```markdown
+---
+
+## Remaining Unmanaged Content
+
+| Source Path | Lines | Detection Signal | Snippet |
+|-------------|-------|-----------------|---------|
+| {source_path} | {line_range} | {weak signal description} | {first 200 chars of content} |
+```
+
+If no unmanaged content remains, display:
+
+```markdown
+---
+
+## Remaining Unmanaged Content
+
+No remaining unmanaged content detected. All product-direction content has been imported or was previously captured.
+```
+
+**8f. Discovery flow diagram (optional):**
+
+If the run processed a non-trivial number of discoveries (3 or more), include a Mermaid sankey or flowchart showing how discoveries flowed through the pipeline. Use Liatrio brand colors.
+
+````markdown
+---
+
+## Discovery Flow
+
+```mermaid
+flowchart LR
+    style A fill:#1B2A3D,color:#fff
+    style B fill:#11B5A4,color:#fff
+    style C fill:#11B5A4,color:#fff
+    style D fill:#E8662F,color:#fff
+    style E fill:#1B2A3D,color:#fff
+
+    A["{N} Discovered"] --> B["{N} Imported"]
+    A --> C["{N} Skipped"]
+    A --> D["{N} Unmanaged"]
+    A --> E["{N} User-rejected"]
+```
+````
+
+Only include the diagram if Mermaid rendering is supported (markdown context). Omit it if the diagram would have zero items in all branches except "Imported."
+
+**8g. Cross-references footer:**
+
+End the report with pointers to related files:
+
+```markdown
+---
+
+## Cross-References
+
+- `docs/align-manifest.md` — Full import history with source→artifact mappings
+- `docs/BACKLOG.md` — Imported captured stubs (BACKLOG targets)
+- `docs/VISION.md` — Imported vision/mission content (VISION targets)
+- `docs/CUSTOMER.md` — Imported persona/audience content (CUSTOMER targets)
+- `skills/arc-align/references/detection-patterns.md` — Detection pattern definitions
+- `skills/arc-align/references/import-rules.md` — Classification and import rules
+```
 
 ### Step 9: Present Summary
 
@@ -624,6 +812,7 @@ AskUserQuestion({
 
 - `skills/arc-align/references/detection-patterns.md` -- All keyword and structural detection patterns with examples
 - `skills/arc-align/references/import-rules.md` -- Artifact classification rules, stub generation logic, and cleanup behavior
+- `skills/arc-align/references/align-report-template.md` -- Full template and field descriptions for the alignment report
 - `references/idea-lifecycle.md` -- Capture stage definition, entry/exit criteria
 - `references/brief-format.md` -- Brief format for shaped ideas
 - `templates/BACKLOG.tmpl.md` -- Template for creating BACKLOG.md if absent

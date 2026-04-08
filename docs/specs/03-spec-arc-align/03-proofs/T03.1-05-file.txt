@@ -1,0 +1,19 @@
+Type: file
+Check: SKILL.md References section updated with align-report-template.md
+Timestamp: 2026-04-08T20:00:00Z
+
+Expected: The References section at the bottom of SKILL.md includes a link to
+  the new align-report-template.md reference file.
+
+Actual: Line 815 of SKILL.md contains:
+  - `skills/arc-align/references/align-report-template.md` -- Full template and field descriptions for the alignment report
+
+  Step 8 opening line (574) also references the template:
+  "Read `skills/arc-align/references/align-report-template.md` for the full template."
+
+Cross-references verified consistent:
+  - SKILL.md Step 8 -> align-report-template.md (read instruction)
+  - SKILL.md References -> align-report-template.md (reference list)
+  - align-report-template.md Cross-References -> SKILL.md (back-reference)
+
+Status: PASS

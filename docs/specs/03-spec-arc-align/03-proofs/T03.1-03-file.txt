@@ -1,0 +1,26 @@
+Type: file
+Check: All report sections use markdown tables consistent with arc-review report format
+Timestamp: 2026-04-08T20:00:00Z
+
+Expected: Each report section uses markdown tables (pipe-delimited) matching
+  the pattern established by skills/arc-review/references/review-report-template.md.
+
+Actual: All 5 main sections use markdown tables:
+  - Run Metadata: 2-column table (Field | Value) with 7 rows
+  - Imported Items by Artifact: 3-column table (Source Path | Imported Title | Detection Method)
+    repeated per artifact subsection
+  - Skipped Items: 3-column table (Source Path | Line Range | Original Import Date)
+  - Excluded from Scanning: 2-column tables split by subsection
+    (Pattern | Category for hardcoded; Pattern | Reason for user-configured)
+  - Remaining Unmanaged Content: 4-column table (Source Path | Lines | Detection Signal | Snippet)
+
+Table format verification (pipe-delimited with header + separator):
+  All tables follow the standard markdown table format:
+    | Column A | Column B |
+    |----------|----------|
+    | data     | data     |
+
+This matches the arc-review report template pattern where each finding section
+uses a markdown table rather than bullet lists.
+
+Status: PASS

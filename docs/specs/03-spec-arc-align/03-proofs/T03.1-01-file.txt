@@ -1,0 +1,24 @@
+Type: file
+File: skills/arc-align/SKILL.md
+Check: Step 8 contains all 5 required report sections with markdown table templates
+Timestamp: 2026-04-08T20:00:00Z
+
+Expected: Step 8 in SKILL.md defines generation instructions for all 5 sections:
+  1. Run metadata (timestamp, exclusions, files scanned, discoveries)
+  2. Imported items by artifact (BACKLOG, VISION, CUSTOMER groups)
+  3. Skipped items (manifest dedup, source path, import date)
+  4. Unmatched exclusions (hardcoded + user-configured)
+  5. Remaining unmanaged content (source path, snippet for review)
+
+Actual: Step 8 (lines 572-768) contains sub-steps 8a through 8g:
+  - 8a: Run metadata section with markdown table template (7 fields)
+  - 8b: Imported items by artifact with per-artifact markdown tables
+  - 8c: Skipped items section with markdown table and empty-state handling
+  - 8d: Excluded from Scanning section with hardcoded and user-configured subsections
+  - 8e: Remaining unmanaged content section with markdown table and empty-state handling
+  - 8f: Discovery flow Mermaid diagram (optional, with Liatrio brand colors)
+  - 8g: Cross-references footer
+
+All 5 required sections verified present.
+
+Status: PASS

@@ -1,0 +1,27 @@
+Type: file
+Check: Liatrio brand colors used in Mermaid diagram
+Timestamp: 2026-04-08T20:00:00Z
+
+Expected: Any Mermaid diagrams in the report template use Liatrio brand colors:
+  - primaryColor: #11B5A4 (teal)
+  - secondaryColor: #E8662F (orange)
+  - tertiaryColor: #1B2A3D (dark blue)
+
+Actual: Step 8f in SKILL.md and the Discovery Flow section of align-report-template.md
+  both include a Mermaid flowchart with the following style definitions:
+
+    style A fill:#1B2A3D,color:#fff   (tertiary - dark blue for totals)
+    style B fill:#11B5A4,color:#fff   (primary - teal for imported)
+    style C fill:#11B5A4,color:#fff   (primary - teal for skipped)
+    style D fill:#E8642F,color:#fff   (secondary - orange for unmanaged)
+    style E fill:#1B2A3D,color:#fff   (tertiary - dark blue for rejected)
+
+  The align-report-template.md also includes a color reference table:
+    | Color | Hex | Usage |
+    | Primary (teal) | #11B5A4 | Successful outcomes |
+    | Secondary (orange) | #E8662F | Attention-needed outcomes |
+    | Tertiary (dark blue) | #1B2A3D | Neutral outcomes |
+
+All three Liatrio brand colors are used appropriately.
+
+Status: PASS
