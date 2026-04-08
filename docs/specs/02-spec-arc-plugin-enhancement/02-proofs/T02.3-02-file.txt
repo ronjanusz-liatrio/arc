@@ -1,0 +1,28 @@
+Type: file
+Command: Verify SKILL.md contains context marker, critical constraints, and all 8 process steps
+Expected: Context marker ARC-REVIEW, 5 critical constraints (NEVER modify VISION/CUSTOMER, NEVER apply without confirmation, NEVER delete content, ALWAYS begin with marker, ALWAYS generate report), 8 process steps
+Timestamp: 2026-04-07T19:00:00Z
+
+--- Output ---
+
+Context Marker:
+  Line 12: Always begin your response with: **ARC-REVIEW**  [PASS]
+
+Critical Constraints:
+  1. NEVER modify VISION.md or CUSTOMER.md content   [PASS]
+  2. NEVER apply fixes without user confirmation      [PASS]
+  3. NEVER delete content from BACKLOG.md             [PASS]
+  4. ALWAYS begin response with ARC-REVIEW            [PASS]
+  5. ALWAYS generate docs/review-report.md            [PASS]
+
+Process Steps:
+  Step 1: Read Context (BACKLOG required, others optional, threshold config)  [PASS]
+  Step 2: Backlog Health Audit (BH-1 through BH-5)                           [PASS]
+  Step 3: Wave Alignment Audit (WA-1 through WA-6)                           [PASS]
+  Step 4: Calculate Health Rating (Healthy/Needs Attention/Critical)          [PASS]
+  Step 5: Generate Report (using review-report-template.md)                   [PASS]
+  Step 6: Present Findings (AskUserQuestion with multi-select fixes)          [PASS]
+  Step 7: Apply Fixes (stale markers, summary reconcile, brief markers, broken refs)  [PASS]
+  Step 8: Offer Next Steps (review again, capture, wave, done)                [PASS]
+
+Status: PASS

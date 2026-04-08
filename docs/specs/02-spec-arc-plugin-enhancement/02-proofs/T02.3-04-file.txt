@@ -1,0 +1,44 @@
+Type: file
+Command: Verify SKILL.md follows conventions from arc-capture, arc-shape, and arc-wave SKILL.md files
+Expected: Frontmatter format matches, context marker pattern matches, critical constraints format matches, numbered steps with AskUserQuestion patterns, references section present
+Timestamp: 2026-04-07T19:00:00Z
+
+--- Output ---
+
+Convention compliance (compared against arc-capture, arc-shape, arc-wave):
+
+Frontmatter format (YAML between --- delimiters):
+  - name: arc-review                             [MATCH: arc-capture pattern]
+  - description: quoted string                   [MATCH: arc-capture pattern]
+  - user-invocable: true                         [MATCH: all three skills]
+  - allowed-tools: comma-separated list          [MATCH: arc-capture pattern]
+
+Context marker section:
+  - "## Context Marker" heading                  [MATCH: all three skills]
+  - "Always begin your response with: **ARC-REVIEW**"  [MATCH: pattern from all three]
+
+Critical constraints section:
+  - "## Critical Constraints" heading            [MATCH: all three skills]
+  - NEVER/ALWAYS bold format                     [MATCH: all three skills]
+  - 5 constraint items                           [MATCH: similar count]
+
+Process section:
+  - "## Process" heading                         [MATCH: all three skills]
+  - Numbered steps (Step 1 through Step 8)       [MATCH: arc-wave has 11 steps]
+  - AskUserQuestion patterns with options        [MATCH: arc-capture pattern]
+  - Multi-select AskUserQuestion                 [MATCH: arc-wave pattern]
+
+References section:
+  - "## References" heading                      [MATCH: all three skills]
+  - Bullet list with relative paths              [MATCH: all three skills]
+  - Links to skill-specific and shared refs      [MATCH: arc-shape/arc-wave pattern]
+
+Report generation:
+  - Reads template reference                     [MATCH: arc-wave/arc-shape pattern]
+  - Generates docs/ output file                  [MATCH: arc-wave/arc-shape pattern]
+
+Next steps pattern:
+  - AskUserQuestion with next action options     [MATCH: all three skills]
+  - Loop, handoff, or done options               [MATCH: all three skills]
+
+Status: PASS

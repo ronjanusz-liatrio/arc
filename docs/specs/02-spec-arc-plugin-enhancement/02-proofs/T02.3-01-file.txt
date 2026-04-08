@@ -1,0 +1,17 @@
+Type: file
+Command: Verify skills/arc-review/SKILL.md exists with correct frontmatter
+Expected: File exists with name: arc-review, user-invocable: true, allowed-tools includes required tools
+Timestamp: 2026-04-07T19:00:00Z
+
+--- Output ---
+
+File: skills/arc-review/SKILL.md
+Exists: YES
+
+Frontmatter check:
+  name: arc-review                  [PASS]
+  user-invocable: true              [PASS]
+  allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion  [PASS]
+  description: contains "Pipeline health audit"  [PASS]
+
+Status: PASS
