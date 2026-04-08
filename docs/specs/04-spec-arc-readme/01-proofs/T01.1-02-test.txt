@@ -1,0 +1,33 @@
+Type: test
+Command: Grep for required structural elements in trust-signals.md
+Expected: All 8 signals (TS-1 through TS-8) defined with detection logic, source artifact, pass/fail criteria, and trust statement
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+Signal headings found: 8 (TS-1 through TS-8)
+  - TS-1: Overview (line 34)
+  - TS-2: Audience (line 58)
+  - TS-3: Features (line 81)
+  - TS-4: Roadmap (line 105)
+  - TS-5: Lifecycle Diagram (line 129)
+  - TS-6: Currency (line 153)
+  - TS-7: Traceability (line 176)
+  - TS-8: No Placeholders (line 199)
+
+Required fields per signal:
+  - "Trust statement:" count: 8 (all signals)
+  - "Source artifact:" count: 8 (all signals)
+  - "Detection steps:" count: 8 (all signals)
+  - "Pass criteria:" count: 8 (all signals)
+  - "Fail criteria:" count: 8 (all signals)
+  - "Managed section:" count: 7 (TS-7 and TS-8 use "any" rather than specific section)
+  - "Detectable proxy:" count: 8 (all signals)
+
+Additional structural elements:
+  - Evaluability Rules section: present
+  - Section-to-Artifact Mapping table: present (6 rows)
+  - Scorecard Output Format: present with template
+  - Cross-References section: present (5 references)
+  - Severity assignment rules: present (info >= 75%, warning < 75%)
+
+Status: PASS

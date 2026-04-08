@@ -1,0 +1,9 @@
+Type: file
+Command: ls -la skills/arc-readme/references/trust-signals.md
+Expected: File exists at skills/arc-readme/references/trust-signals.md
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+File exists: skills/arc-readme/references/trust-signals.md
+Line count: 287
+Status: PASS
