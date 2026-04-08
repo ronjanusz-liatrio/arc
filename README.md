@@ -54,6 +54,7 @@ flowchart LR
     AC["/arc-capture\nQuick idea entry"]:::arc
     AS["/arc-shape\nRefine into\nspec-ready brief"]:::arc
     AW["/arc-wave\nOrganize into\ndelivery cycle"]:::arc
+    AR["/arc-review\nAudit pipeline\nhealth"]:::arc
 
     CS["/cw-spec\nWrite spec and\nGherkin scenarios"]:::cw
     CP["/cw-plan\nTask board\nand sub-tasks"]:::cw
@@ -66,6 +67,8 @@ flowchart LR
     TI --> CS --> CP --> CD --> TP
     TP -->|"advance"| TI
     AW -->|"shaped brief"| CS
+    AR -. "audit anytime" .-> AW
+    AR -. "audit anytime" .-> CS
 
     classDef arc fill:#E8662F,stroke:#C7502A,color:#FFFFFF
     classDef cw fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
@@ -77,12 +80,14 @@ flowchart LR
 | `/arc-capture` | Record a raw idea quickly — title, one-liner, rough priority |
 | `/arc-shape` | Refine an idea into a structured brief with problem, solution, and success criteria |
 | `/arc-wave` | Group shaped ideas into a delivery cycle and hand off to temper + claude-workflow |
+| `/arc-review` | Audit backlog health and wave alignment across all product artifacts |
 
 ## Skills
 
 - **`/arc-capture`** — Fast idea entry. Appends a structured stub to `BACKLOG` with minimal friction.
 - **`/arc-shape`** — Interactive refinement. Turns a captured idea into a spec-ready brief using parallel subagent analysis across four dimensions (problem clarity, customer fit, scope boundaries, feasibility).
 - **`/arc-wave`** — Delivery cycle management. Groups spec-ready ideas into a wave, updates `ROADMAP`, injects `ARC:product-context` into project CLAUDE.md, and prepares the handoff for `/cw-spec`.
+- **`/arc-review`** — Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts, then offers interactive fixes.
 
 ## Relationship to Temper and claude-workflow
 
@@ -90,8 +95,9 @@ Arc is **upstream** of both temper and claude-workflow:
 
 ```
 /arc-capture -> /arc-shape -> /arc-wave -> /temper-incept -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-progress
-                                                ^                                                          |
-                                                '-------------------- phase loop --------------------------'
+                                   ^              ^                                                        |
+                                   |              '-------------------- phase loop --------------------------'
+                               /arc-review (audit at any stage)
 ```
 
 Arc requires [temper](https://github.com/liatrio-labs/temper) and [claude-workflow](https://github.com/liatrio-labs/claude-workflow). Install them first:
@@ -143,6 +149,11 @@ arc/
       references/
         wave-report-template.md             # Wave report format
         bootstrap-protocol.md               # ARC: namespace CLAUDE.md injection rules
+    arc-review/
+      SKILL.md                              # Pipeline health audit
+      references/
+        audit-dimensions.md                 # Health check definitions and thresholds
+        review-report-template.md           # Report format
   templates/
     VISION.tmpl.md                          # Product vision (always-required)
     CUSTOMER.tmpl.md                        # Personas and JTBD (always-required)

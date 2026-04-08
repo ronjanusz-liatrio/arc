@@ -1,0 +1,35 @@
+Type: file
+Command: Verify all files referenced in Plugin Structure section of README.md exist
+Expected: All 24 referenced files present on disk
+Timestamp: 2026-04-07T00:00:00Z
+
+--- OUTPUT ---
+OK: .claude-plugin/plugin.json
+OK: .claude-plugin/marketplace.json
+OK: skills/README.md
+OK: skills/arc-capture/SKILL.md
+OK: skills/arc-shape/SKILL.md
+OK: skills/arc-shape/references/shaping-dimensions.md
+OK: skills/arc-shape/references/brief-validation.md
+OK: skills/arc-wave/SKILL.md
+OK: skills/arc-wave/references/wave-report-template.md
+OK: skills/arc-wave/references/bootstrap-protocol.md
+OK: skills/arc-review/SKILL.md
+OK: skills/arc-review/references/audit-dimensions.md
+OK: skills/arc-review/references/review-report-template.md
+OK: templates/VISION.tmpl.md
+OK: templates/CUSTOMER.tmpl.md
+OK: templates/ROADMAP.tmpl.md
+OK: templates/BACKLOG.tmpl.md
+OK: references/README.md
+OK: references/idea-lifecycle.md
+OK: references/brief-format.md
+OK: references/wave-planning.md
+OK: README.md
+OK: CLAUDE.md
+OK: .gitignore
+
+--- RESULT ---
+Status: PASS
+All 24 files referenced in README.md Plugin Structure section exist on disk.
+No broken internal references found.
