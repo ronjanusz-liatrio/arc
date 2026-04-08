@@ -1,0 +1,16 @@
+Type: file
+Command: grep -c 'detection-patterns\.md\|import-rules\.md' skills/arc-align/SKILL.md
+Expected: References section lists both detection-patterns.md and import-rules.md
+Timestamp: 2026-04-08T00:00:00Z
+
+--- Output ---
+5
+
+References found in:
+- Step 2 body: detection-patterns.md (pattern reference)
+- Step 2 body: import-rules.md (classification rules)
+- Step 5 body: import-rules.md (detailed import rules)
+- References section: detection-patterns.md
+- References section: import-rules.md
+
+Status: PASS

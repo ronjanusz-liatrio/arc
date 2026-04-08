@@ -1,0 +1,24 @@
+Type: file
+Command: grep '^### Step' skills/arc-align/SKILL.md
+Expected: Process skeleton covers all 4 phases: exclusion setup, discovery scan, import, and report
+Timestamp: 2026-04-08T00:00:00Z
+
+--- Output ---
+### Step 1: Configure Exclusions
+### Step 2: Discover Product-Direction Content
+### Step 3: Confirm Import
+### Step 4: Bootstrap Artifacts
+### Step 5: Import Discoveries
+### Step 6: Clean Up Sources
+### Step 7: Update Manifest
+### Step 8: Generate Report
+### Step 9: Present Summary
+### Step 10: Offer Next Steps
+
+Phase coverage:
+- Exclusion setup: Step 1 (Configure Exclusions)
+- Discovery scan: Step 2 (Discover Product-Direction Content)
+- Import: Steps 3-7 (Confirm, Bootstrap, Import, Clean Up, Manifest)
+- Report: Steps 8-10 (Generate Report, Present Summary, Next Steps)
+
+Status: PASS

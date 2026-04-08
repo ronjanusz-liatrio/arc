@@ -1,0 +1,15 @@
+Type: file
+Command: grep -E '^## (Context Marker|Overview|Critical Constraints|Process|References)' skills/arc-align/SKILL.md
+Expected: All 5 required top-level sections present
+Timestamp: 2026-04-08T00:00:00Z
+
+--- Output ---
+## Context Marker
+## Overview
+## Critical Constraints
+## Process
+## References
+
+All 5 required top-level sections are present.
+
+Status: PASS

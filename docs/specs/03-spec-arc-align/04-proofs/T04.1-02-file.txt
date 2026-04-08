@@ -1,0 +1,17 @@
+Type: file
+Command: grep -c 'name: arc-align\|user-invocable: true\|allowed-tools:' skills/arc-align/SKILL.md
+Expected: Frontmatter contains all 3 required fields (name, user-invocable, allowed-tools)
+Timestamp: 2026-04-08T00:00:00Z
+
+--- Output ---
+3
+
+All required frontmatter fields present:
+- name: arc-align
+- description: "Codebase discovery and migration -- consolidate scattered product-direction content into Arc-managed artifacts"
+- user-invocable: true
+- allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
+
+Frontmatter format matches arc-capture/SKILL.md exactly.
+
+Status: PASS
