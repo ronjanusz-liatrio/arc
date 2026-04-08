@@ -1,0 +1,27 @@
+Type: file
+Description: Import confirmation flow — bulk and individual review with AskUserQuestion
+Command: Verify SKILL.md Step 3 contains import confirmation prompt and individual review flow
+Expected: Step 3 presents discoveries for user confirmation with Import all, Review individually, and Skip options; individual review shows per-item accept/reject with batch shortcuts
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Step 3 (line 340) contains the "Confirm Import" step
+- Bulk confirmation AskUserQuestion has 3 options:
+  1. Import all — import all N discovered items
+  2. Review individually — confirm each item one by one
+  3. Skip — generate report only, no import
+- Individual review AskUserQuestion shows per-item details:
+  - Index/total counter (e.g., [3/12])
+  - Source path with line range
+  - Target artifact
+  - Detection method with pattern ID
+  - Content snippet
+- Individual review has 4 options:
+  1. Accept — keep in import list
+  2. Reject — remove from import list, add to report as user-rejected
+  3. Accept all remaining — batch accept and stop prompting
+  4. Reject all remaining — batch reject and stop prompting
+- After individual review, a confirmation summary shows accepted and rejected counts
+- Rejected items are added to alignment report, not silently dropped
+
+Status: PASS

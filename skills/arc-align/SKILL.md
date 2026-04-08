@@ -243,7 +243,9 @@ Collect all structural discoveries into the same list as keyword discoveries. Ea
 
 **2c. Classify discoveries:**
 
-For each discovery (from both 2a and 2b), classify into one of three artifact targets. Read `skills/arc-align/references/import-rules.md` for the full classification rules.
+For each discovery (from both 2a and 2b), classify into exactly one of three artifact targets. Read `skills/arc-align/references/import-rules.md` for the full classification rules.
+
+**Classification table:**
 
 | Target | Content Type | Classification Signals |
 |--------|-------------|----------------------|
@@ -251,17 +253,56 @@ For each discovery (from both 2a and 2b), classify into one of three artifact ta
 | `VISION` | Mission/vision/north-star content | KW-15 (`mission`), KW-16 (`vision`), KW-17 (`north star`) |
 | `CUSTOMER` | Persona/audience/JTBD content | KW-13 (`persona`), KW-14 (`target audience`) |
 
-When a discovery's keyword or structural pattern does not map cleanly to a single target (e.g., a roadmap section containing a vision statement), split into separate discoveries per the ambiguity rules in `import-rules.md`.
+**Classification procedure:**
+
+For each discovery, apply the following decision rules in order:
+
+1. **Pattern-based assignment:** If the discovery was triggered by a single keyword or structural pattern, assign the target directly from the classification table above.
+
+2. **Merged-section handling:** If a discovery was merged from multiple keyword matches in the same heading section (per the deduplication rule in Step 2a), use the majority pattern target. If patterns map to different targets (e.g., a section matched by both `roadmap` and `vision`), split the discovery:
+   - Read the full section content
+   - Identify sub-sections or distinct content blocks within the merged section
+   - Create separate discoveries for each block, each with its own target classification
+
+3. **Ambiguity resolution:** When content does not map cleanly to a single target, apply these rules from `import-rules.md`:
+
+   | Ambiguity | Resolution |
+   |-----------|-----------|
+   | Roadmap with vision framing | Classify individual items as BACKLOG; classify the framing paragraph as VISION if it stands alone |
+   | Feature list with persona context | Classify the features as BACKLOG; classify the persona description as CUSTOMER |
+   | General "about" content | If it describes what the product does and why, classify as VISION |
+   | Mixed file with multiple content types | Split into separate discoveries, each with its own classification |
+
+4. **Inclusivity principle:** When in doubt about whether content is product-direction content, import it as a BACKLOG stub rather than skip it. The user can review and delete false positives from the BACKLOG after import.
 
 **2d. Check manifest for prior imports:**
 
-Read `docs/align-manifest.md` (if present). Parse the manifest table and build a set of `{source_path}:{line_range}` keys. For each discovery, check if its source location matches an existing manifest entry. If it matches:
-- Remove the discovery from the import list
-- Add it to the skipped-items list with the original import timestamp from the manifest
+Read `docs/align-manifest.md` (if present) to enforce idempotent re-runs. Previously imported source locations are skipped automatically.
+
+**Manifest parsing procedure:**
+
+1. Read `docs/align-manifest.md` using the Read tool. If the file does not exist, skip this step — all discoveries are treated as new.
+
+2. Parse the markdown table body (skip the header row and separator row). For each data row, extract `Source Path` and `Line Range` columns.
+
+3. Build a manifest key set: for each row, construct the key `{source_path}:{line_range}` (e.g., `README.md:50-70`, `TODO.md:1-5`). Store the full row data (including `Timestamp` and `Imported Title`) for use in the skipped-items list.
+
+4. For each discovery in the current discovery list, construct its key as `{source_file_path}:{line_range}` and check against the manifest key set:
+   - **Match found:** Remove the discovery from the import list. Add it to the skipped-items list with the original import timestamp from the manifest. This item will appear in the alignment report (Step 8) under "Skipped items."
+   - **No match:** Keep the discovery in the import list — it is a new discovery.
+
+**Edge cases (per `import-rules.md`):**
+
+| Scenario | Behavior |
+|----------|----------|
+| Source file was renamed since last import | The new path does not match the manifest entry — treated as a new discovery. The user can manually mark it as a duplicate after review. |
+| Source file content shifted (different line range) | Different line range means different manifest key — treated as a new discovery. The user reviews for duplicates in the alignment report. |
+| Manifest file was deleted | All source locations are treated as new — full re-import occurs (with user confirmation via the standard import flow in Step 3). |
+| Manifest file is empty (header only) | No keys to match — all discoveries are treated as new. |
 
 **2e. Build discovery list:**
 
-Assemble the final discovery list with one entry per discovery:
+Assemble the final discovery list from all discoveries that passed the manifest check (Step 2d). Each entry contains:
 
 | Field | Description |
 |-------|-------------|
@@ -273,6 +314,28 @@ Assemble the final discovery list with one entry per discovery:
 | Target artifact | `BACKLOG`, `VISION`, or `CUSTOMER` (from Step 2c) |
 
 Sort the discovery list by source file path, then by line range (ascending). This ordering groups discoveries from the same file together for easier user review in Step 3.
+
+**Discovery list display format:**
+
+Present the discovery list to the user as a numbered markdown table before the import confirmation prompt:
+
+```markdown
+| # | Source | Lines | Target | Method | Snippet |
+|---|--------|-------|--------|--------|---------|
+| 1 | README.md | 50-70 | BACKLOG | keyword (roadmap) | ## Roadmap - Q3: Launch dark mode... |
+| 2 | TODO.md | 1-15 | BACKLOG | structural (ST-1) | - [ ] Refactor auth module... |
+| 3 | ABOUT.md | 10-20 | VISION | keyword (mission) | ## Our Mission - To make product... |
+```
+
+If items were skipped due to manifest deduplication, display them separately:
+
+```markdown
+**Skipped (already imported):**
+
+| Source | Lines | Original Import |
+|--------|-------|-----------------|
+| TODO.md | 1-10 | 2026-04-01T10:00:00Z |
+```
 
 ### Step 3: Confirm Import
 
@@ -293,7 +356,31 @@ AskUserQuestion({
 })
 ```
 
-If the user selects "Review individually," present each discovery with accept/reject options.
+If the user selects "Review individually," present each discovery one at a time with accept/reject options:
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "[{index}/{total}] Import this item?\n\nSource: {source_path}:{line_range}\nTarget: {target_artifact}\nMethod: {detection_method} ({pattern_id})\nSnippet: {content_snippet}",
+    header: "Review Item",
+    options: [
+      { label: "Accept", description: "Import this item into {target_artifact}" },
+      { label: "Reject", description: "Skip this item — do not import" },
+      { label: "Accept all remaining", description: "Import this and all remaining items without further review" },
+      { label: "Reject all remaining", description: "Skip this and all remaining items" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+Track user decisions:
+- **Accept:** Keep the discovery in the import list
+- **Reject:** Remove the discovery from the import list; add it to the alignment report as a user-rejected item
+- **Accept all remaining:** Mark all remaining discoveries as accepted and stop prompting
+- **Reject all remaining:** Mark all remaining discoveries as rejected and stop prompting
+
+After individual review, display a confirmation summary showing the accepted count and rejected count before proceeding to Step 4.
 
 ### Step 4: Bootstrap Artifacts
 

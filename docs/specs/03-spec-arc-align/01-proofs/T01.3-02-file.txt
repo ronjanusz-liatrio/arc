@@ -1,0 +1,26 @@
+Type: file
+Description: Manifest-based idempotency — manifest parsing, key matching, and skip logic
+Command: Verify SKILL.md Step 2d contains manifest parsing procedure and deduplication logic
+Expected: Step 2d reads align-manifest.md, builds a key set from {source_path}:{line_range}, skips matching discoveries, and handles edge cases
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Step 2d (line 278) contains the "Check manifest for prior imports" substep
+- Manifest parsing procedure has 4 ordered steps:
+  1. Read docs/align-manifest.md (or skip if absent)
+  2. Parse markdown table body, extract Source Path and Line Range columns
+  3. Build manifest key set as {source_path}:{line_range} strings
+  4. Match each discovery against the key set — match removes from import list, adds to skipped list
+- Edge case table covers 4 scenarios:
+  - Source file renamed: treated as new discovery
+  - Content shifted (different lines): treated as new discovery
+  - Manifest file deleted: full re-import with user confirmation
+  - Manifest file empty (header only): all treated as new
+- Edge cases are consistent with import-rules.md Manifest Format section
+- Skipped items include original import timestamp for alignment report
+- Step references docs/align-manifest.md file path consistently
+
+Gherkin coverage: "Previously imported sources are skipped on re-run" — COVERED
+  Step 2d reads the manifest, builds key set from source locations, and skips matching discoveries with original timestamp notation
+
+Status: PASS

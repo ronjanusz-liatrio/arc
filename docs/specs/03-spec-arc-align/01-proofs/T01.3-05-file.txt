@@ -1,0 +1,22 @@
+Type: file
+Description: Cross-reference consistency between SKILL.md and import-rules.md
+Command: Verify SKILL.md Steps 2c-2d reference import-rules.md consistently and classification rules match
+Expected: Classification rules in SKILL.md are consistent with import-rules.md; manifest format in SKILL.md matches import-rules.md; ambiguity table matches
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- SKILL.md Step 2c references import-rules.md: "Read skills/arc-align/references/import-rules.md for the full classification rules"
+- Classification targets in SKILL.md match import-rules.md:
+  - BACKLOG: actionable items (TODOs, features, bugs, ideas, task lists, roadmap items) — matches import-rules.md "BACKLOG - Actionable Items" section
+  - VISION: mission/vision/north-star content — matches import-rules.md "VISION - Mission and Direction" section
+  - CUSTOMER: persona/audience/JTBD content — matches import-rules.md "CUSTOMER - Personas and Audience" section
+- Ambiguity resolution table in SKILL.md Step 2c matches import-rules.md "Ambiguous Content" section:
+  - Roadmap with vision framing: split items (BACKLOG) from framing (VISION)
+  - Feature list with persona context: split features (BACKLOG) from persona (CUSTOMER)
+  - General "about" content: classify as VISION
+  - Mixed file: split into separate discoveries
+- Inclusivity principle in SKILL.md matches import-rules.md: "When in doubt, import rather than skip"
+- Manifest key format {source_path}:{line_range} in Step 2d matches import-rules.md "Idempotent re-run check" section
+- Edge cases in Step 2d match import-rules.md "Edge cases" table: renamed files, shifted content, deleted manifest
+
+Status: PASS

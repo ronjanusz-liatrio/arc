@@ -1,0 +1,24 @@
+Type: file
+Description: Structured discovery list — field definitions, sort order, and display format
+Command: Verify SKILL.md Step 2e contains all required fields, sort logic, and display format
+Expected: Step 2e defines 6 fields per discovery entry, sorts by source file path then line range, and provides a display format table
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Step 2e (line 303) contains the "Build discovery list" substep
+- Discovery list field table contains all 6 required fields:
+  1. Source file path — relative path from repo root
+  2. Line range — start through end line (e.g., 20-35)
+  3. Matched content snippet — first 200 characters
+  4. Detection method — keyword or structural
+  5. Pattern identifier — KW-1..KW-17 or ST-1..ST-4
+  6. Target artifact — BACKLOG, VISION, or CUSTOMER (from Step 2c)
+- Sort order: by source file path, then by line range ascending
+- Discovery list display format shows a numbered markdown table with columns: #, Source, Lines, Target, Method, Snippet
+- Skipped items display format shows: Source, Lines, Original Import timestamp
+- Assemblage explicitly filters to "discoveries that passed the manifest check (Step 2d)"
+
+Gherkin coverage: "Discovery list records complete metadata for each match" — COVERED
+  Step 2e defines source file path, line range, content snippet, detection method, and target artifact classification for each entry
+
+Status: PASS

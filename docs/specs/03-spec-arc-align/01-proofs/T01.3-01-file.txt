@@ -1,0 +1,23 @@
+Type: file
+Description: Artifact classification logic — three-target classification table and decision rules
+Command: Verify SKILL.md Step 2c contains classification table, procedure, and ambiguity rules
+Expected: Step 2c maps all 17 keywords and 4 structural patterns to exactly one of BACKLOG, VISION, or CUSTOMER, with a procedural classification flow and ambiguity resolution table
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Step 2c (line 244) contains the "Classify discoveries" substep
+- Classification table maps KW-1 through KW-12 and ST-1 through ST-4 to BACKLOG
+- Classification table maps KW-13 (persona) and KW-14 (target audience) to CUSTOMER
+- Classification table maps KW-15 (mission), KW-16 (vision), KW-17 (north star) to VISION
+- Classification procedure has 4 ordered decision rules:
+  1. Pattern-based assignment — direct mapping from keyword/structural pattern
+  2. Merged-section handling — majority target or split when patterns map to different targets
+  3. Ambiguity resolution — 4 specific resolution rules from import-rules.md
+  4. Inclusivity principle — default to BACKLOG when uncertain
+- Ambiguity resolution table covers: roadmap+vision, features+persona, general "about", mixed files
+- Cross-reference to import-rules.md is present for full classification rules
+
+Gherkin coverage: "Discoveries are classified into correct artifact targets" — COVERED
+  Step 2c classifies PERSONAS.md -> CUSTOMER (via KW-13/KW-14), vision content -> VISION (via KW-15/16/17), features -> BACKLOG (via structural/keyword)
+
+Status: PASS
