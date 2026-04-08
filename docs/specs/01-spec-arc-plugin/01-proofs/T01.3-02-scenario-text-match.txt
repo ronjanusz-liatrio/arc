@@ -1,0 +1,140 @@
+Type: file
+Description: Verify error-path scenario text matches reference file exactly
+Expected: All 6 scenarios match text from error-path-gherkin-scenarios.feature scenarios 10-15
+Timestamp: 2026-04-07T00:00:00Z
+
+VERIFICATION OUTPUT:
+===================
+
+Scenario 1: arc-wave handles no shaped ideas in BACKLOG
+Reference (scenarios.feature lines 68-72):
+  Scenario: arc-wave handles no shaped ideas in BACKLOG
+    Given docs/BACKLOG.md exists with only captured ideas and no shaped ideas
+    When the user invokes /arc-wave
+    Then the skill displays a message that no shaped ideas are available for wave planning
+    And the skill recommends running /arc-shape first
+
+Appended (arc-wave-skill.feature lines 117-121):
+  Scenario: arc-wave handles no shaped ideas in BACKLOG
+    Given docs/BACKLOG.md exists with only captured ideas and no shaped ideas
+    When the user invokes /arc-wave
+    Then the skill displays a message that no shaped ideas are available for wave planning
+    And the skill recommends running /arc-shape first
+
+Match: YES
+
+---
+
+Scenario 2: arc-wave handles absent BACKLOG.md
+Reference (scenarios.feature lines 74-79):
+  Scenario: arc-wave handles absent BACKLOG.md
+    Given the arc plugin is installed in a project
+    And no docs/BACKLOG.md file exists
+    When the user invokes /arc-wave
+    Then the skill displays a message that BACKLOG.md was not found
+    And the skill recommends running /arc-capture first to create the backlog
+
+Appended (arc-wave-skill.feature lines 123-128):
+  Scenario: arc-wave handles absent BACKLOG.md
+    Given the arc plugin is installed in a project
+    And no docs/BACKLOG.md file exists
+    When the user invokes /arc-wave
+    Then the skill displays a message that BACKLOG.md was not found
+    And the skill recommends running /arc-capture first to create the backlog
+
+Match: YES
+
+---
+
+Scenario 3: arc-wave handles zero ideas selected
+Reference (scenarios.feature lines 81-85):
+  Scenario: arc-wave handles zero ideas selected
+    Given docs/BACKLOG.md contains shaped ideas
+    When the user invokes /arc-wave and selects zero ideas from the multi-select prompt
+    Then the skill displays a message that at least one idea must be selected
+    And the skill re-presents the idea selection prompt
+
+Appended (arc-wave-skill.feature lines 130-134):
+  Scenario: arc-wave handles zero ideas selected
+    Given docs/BACKLOG.md contains shaped ideas
+    When the user invokes /arc-wave and selects zero ideas from the multi-select prompt
+    Then the skill displays a message that at least one idea must be selected
+    And the skill re-presents the idea selection prompt
+
+Match: YES
+
+---
+
+Scenario 4: arc-wave handles scope exceeding phase recommendation with user override
+Reference (scenarios.feature lines 87-93):
+  Scenario: arc-wave handles scope exceeding phase recommendation with user override
+    Given docs/management-report.md indicates a Spike phase project
+    And docs/BACKLOG.md contains four shaped ideas
+    When the user selects all four ideas for the wave exceeding the 1-2 recommendation
+    Then the skill warns that the selection exceeds the recommended scope for Spike phase
+    And the skill offers options to reduce scope or override and proceed
+    And if the user chooses to override, the wave plan includes all four ideas
+
+Appended (arc-wave-skill.feature lines 136-142):
+  Scenario: arc-wave handles scope exceeding phase recommendation with user override
+    Given docs/management-report.md indicates a Spike phase project
+    And docs/BACKLOG.md contains four shaped ideas
+    When the user selects all four ideas for the wave exceeding the 1-2 recommendation
+    Then the skill warns that the selection exceeds the recommended scope for Spike phase
+    And the skill offers options to reduce scope or override and proceed
+    And if the user chooses to override, the wave plan includes all four ideas
+
+Match: YES
+
+---
+
+Scenario 5: arc-wave handles absent CLAUDE.md during context injection
+Reference (scenarios.feature lines 95-100):
+  Scenario: arc-wave handles absent CLAUDE.md during context injection
+    Given no project CLAUDE.md exists
+    When the user completes /arc-wave
+    Then the skill logs a warning that CLAUDE.md was not found
+    And the skill skips the ARC:product-context section injection
+    And wave planning completes successfully without the context injection
+
+Appended (arc-wave-skill.feature lines 144-149):
+  Scenario: arc-wave handles absent CLAUDE.md during context injection
+    Given no project CLAUDE.md exists
+    When the user completes /arc-wave
+    Then the skill logs a warning that CLAUDE.md was not found
+    And the skill skips the ARC:product-context section injection
+    And wave planning completes successfully without the context injection
+
+Match: YES
+
+---
+
+Scenario 6: arc-wave prevents ARC section nesting inside TEMPER block
+Reference (scenarios.feature lines 102-107):
+  Scenario: arc-wave prevents ARC section nesting inside TEMPER block
+    Given a project CLAUDE.md exists with a TEMPER: managed block
+    And the insertion point for ARC:product-context would fall inside the TEMPER: block
+    When the user completes /arc-wave
+    Then the skill places the ARC:product-context section outside all TEMPER: blocks
+    And the TEMPER: managed block content is unchanged
+
+Appended (arc-wave-skill.feature lines 151-156):
+  Scenario: arc-wave prevents ARC section nesting inside TEMPER block
+    Given a project CLAUDE.md exists with a TEMPER: managed block
+    And the insertion point for ARC:product-context would fall inside the TEMPER: block
+    When the user completes /arc-wave
+    Then the skill places the ARC:product-context section outside all TEMPER: blocks
+    And the TEMPER: managed block content is unchanged
+
+Match: YES
+
+---
+
+SUMMARY:
+========
+All 6 scenarios appended correctly.
+All scenario text matches the reference file exactly.
+No existing scenarios were modified or removed.
+Format follows existing Gherkin conventions with proper indentation.
+
+Status: PASS

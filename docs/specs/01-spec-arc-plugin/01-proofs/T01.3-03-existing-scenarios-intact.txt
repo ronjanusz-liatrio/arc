@@ -1,0 +1,51 @@
+Type: file
+Description: Verify existing scenarios were not modified or removed
+Expected: All original scenarios from lines 7-115 remain unchanged
+Timestamp: 2026-04-07T00:00:00Z
+
+VERIFICATION OUTPUT:
+===================
+
+Original scenario list (unchanged, lines 7-115):
+1. Skill definition follows plugin conventions (lines 7-12)
+2. Wave begins with context marker (lines 14-17)
+3. Wave presents shaped ideas for multi-select inclusion (lines 19-23)
+4. Wave constrains scope based on Temper management report in early phases (lines 25-30)
+5. Wave allows larger scope in Foundation or later phases (lines 32-36)
+6. Wave recommends stabilization work when hard gate failures exist (lines 38-42)
+7. Wave proceeds without constraints when no management report exists (lines 44-49)
+8. Wave gathers wave details via interactive questions (lines 51-56)
+9. Wave creates ROADMAP from template when none exists (lines 58-62)
+10. Wave appends to existing ROADMAP (lines 64-69)
+11. Wave updates BACKLOG idea statuses to spec-ready (lines 71-75)
+12. Wave injects ARC:product-context managed section into project CLAUDE.md (lines 77-84)
+13. Wave injection respects Temper namespace coexistence rules (lines 86-91)
+14. Wave creates stub VISION and CUSTOMER files when absent (lines 93-97)
+15. Wave saves a wave report with handoff instructions (lines 99-104)
+16. Wave reference documents exist (lines 106-110)
+17. Wave offers next steps after completion (lines 112-115)
+
+Total original scenarios: 17
+
+New scenarios appended (lines 117-156):
+18. arc-wave handles no shaped ideas in BACKLOG
+19. arc-wave handles absent BACKLOG.md
+20. arc-wave handles zero ideas selected
+21. arc-wave handles scope exceeding phase recommendation with user override
+22. arc-wave handles absent CLAUDE.md during context injection
+23. arc-wave prevents ARC section nesting inside TEMPER block
+
+Total new scenarios: 6
+Total scenarios in file: 23
+
+INTEGRITY CHECK:
+- All original scenario titles remain unchanged: YES
+- First scenario begins at line 7: YES
+- Last original scenario "Wave offers next steps after completion" ends at line 115: YES
+- Append separation maintained (blank line at 116): YES
+- New scenarios start at line 117: YES
+- File format (Gherkin with proper indentation) maintained: YES
+- No content within original scenarios modified: YES
+
+Status: PASS
+All existing scenarios intact. New scenarios properly appended without modification of original content.

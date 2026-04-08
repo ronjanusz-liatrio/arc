@@ -113,3 +113,44 @@ Feature: /arc-wave Skill
     Given the user has completed wave planning
     When the skill presents next steps
     Then the options include hand off to /cw-spec with the spec-ready brief, plan another wave, or done
+
+  Scenario: arc-wave handles no shaped ideas in BACKLOG
+    Given docs/BACKLOG.md exists with only captured ideas and no shaped ideas
+    When the user invokes /arc-wave
+    Then the skill displays a message that no shaped ideas are available for wave planning
+    And the skill recommends running /arc-shape first
+
+  Scenario: arc-wave handles absent BACKLOG.md
+    Given the arc plugin is installed in a project
+    And no docs/BACKLOG.md file exists
+    When the user invokes /arc-wave
+    Then the skill displays a message that BACKLOG.md was not found
+    And the skill recommends running /arc-capture first to create the backlog
+
+  Scenario: arc-wave handles zero ideas selected
+    Given docs/BACKLOG.md contains shaped ideas
+    When the user invokes /arc-wave and selects zero ideas from the multi-select prompt
+    Then the skill displays a message that at least one idea must be selected
+    And the skill re-presents the idea selection prompt
+
+  Scenario: arc-wave handles scope exceeding phase recommendation with user override
+    Given docs/management-report.md indicates a Spike phase project
+    And docs/BACKLOG.md contains four shaped ideas
+    When the user selects all four ideas for the wave exceeding the 1-2 recommendation
+    Then the skill warns that the selection exceeds the recommended scope for Spike phase
+    And the skill offers options to reduce scope or override and proceed
+    And if the user chooses to override, the wave plan includes all four ideas
+
+  Scenario: arc-wave handles absent CLAUDE.md during context injection
+    Given no project CLAUDE.md exists
+    When the user completes /arc-wave
+    Then the skill logs a warning that CLAUDE.md was not found
+    And the skill skips the ARC:product-context section injection
+    And wave planning completes successfully without the context injection
+
+  Scenario: arc-wave prevents ARC section nesting inside TEMPER block
+    Given a project CLAUDE.md exists with a TEMPER: managed block
+    And the insertion point for ARC:product-context would fall inside the TEMPER: block
+    When the user completes /arc-wave
+    Then the skill places the ARC:product-context section outside all TEMPER: blocks
+    And the TEMPER: managed block content is unchanged
