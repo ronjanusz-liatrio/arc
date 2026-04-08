@@ -317,28 +317,25 @@ Use Liatrio brand colors and the same theme initialization as `references/idea-l
 stateDiagram-v2
     direction LR
 
-    [*] --> Captured : raw idea
-    Captured --> Shaped : triage
-    Shaped --> SpecReady : brief approved
-    SpecReady --> Shipped : SDD pipeline
+    state "Captured({captured_count})" as captured
+    state "Shaped({shaped_count})" as shaped
+    state "Spec-Ready({spec_ready_count})" as specready
+    state "Shipped({shipped_count})" as shipped
 
-    Shaped --> Captured : needs more context
-    SpecReady --> Shaped : scope change
-
-    Captured : Captured({captured_count})
-    Shaped : Shaped({shaped_count})
-    SpecReady : SpecReady({spec_ready_count})
-    Shipped : Shipped({shipped_count})
+    [*] --> captured
+    captured --> shaped
+    shaped --> specready
+    specready --> shipped
 
     classDef capture fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
     classDef shape fill:#E8662F,stroke:#C7502A,color:#FFFFFF
     classDef ready fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
     classDef shipped fill:#0D8F82,stroke:#0A6B63,color:#FFFFFF
 
-    class Captured capture
-    class Shaped shape
-    class SpecReady ready
-    class Shipped shipped
+    class captured capture
+    class shaped shape
+    class specready ready
+    class shipped shipped
 ```
 
 <!--# END ARC:lifecycle-diagram -->

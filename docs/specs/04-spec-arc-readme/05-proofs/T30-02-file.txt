@@ -1,0 +1,29 @@
+Type: file
+Description: TS-5 regex in trust-signals.md updated to match canonical Mermaid syntax including hyphenated state names
+Command: grep for regex pattern in trust-signals.md
+Expected: Pattern [\w-]+\(\d+\) handles Spec-Ready(N) in addition to Captured(N), Shipped(N)
+Timestamp: 2026-04-08T22:30:00Z
+
+=== Old TS-5 regex ===
+Pattern: \w+\(\d+\)
+Examples: Captured(3), Shipped(7)
+Matches Spec-Ready? NO -- \w does not match hyphen
+
+=== Updated TS-5 regex ===
+Pattern: [\w-]+\(\d+\)
+Examples: Captured(3), Spec-Ready(2), Shipped(7)
+Matches Spec-Ready? YES -- character class [\w-] includes hyphen
+
+=== Verification: regex matches all canonical state labels ===
+- "Captured(3)"    -> [\w-]+ matches "Captured"    -> MATCH
+- "Shaped(5)"      -> [\w-]+ matches "Shaped"      -> MATCH
+- "Spec-Ready(2)"  -> [\w-]+ matches "Spec-Ready"  -> MATCH
+- "Shipped(7)"     -> [\w-]+ matches "Shipped"      -> MATCH
+
+=== No old-syntax remnants ===
+Searched entire skills/arc-readme/ directory for:
+  - Inline label syntax (e.g., "Captured : Captured("): 0 matches
+  - Capitalized transition targets (e.g., "[*] --> Captured"): 0 matches
+  - Old regex pattern "\w+\(\d+\)": 0 matches (only updated version exists)
+
+Status: PASS

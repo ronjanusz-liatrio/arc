@@ -1,0 +1,51 @@
+Type: file
+Description: SKILL.md Mermaid diagram syntax matches readme-mapping.md canonical aliased state syntax
+Command: diff comparison of state declarations, transitions, and class assignments
+Expected: Aliased state syntax, lowercase aliases, forward-only transitions, no transition labels
+Timestamp: 2026-04-08T22:30:00Z
+
+=== SKILL.md Mermaid state declarations (updated) ===
+    state "Captured({captured_count})" as captured
+    state "Shaped({shaped_count})" as shaped
+    state "Spec-Ready({spec_ready_count})" as specready
+    state "Shipped({shipped_count})" as shipped
+
+=== readme-mapping.md canonical state declarations ===
+    state "Captured({N})" as captured
+    state "Shaped({N})" as shaped
+    state "Spec-Ready({N})" as specready
+    state "Shipped({N})" as shipped
+
+=== SKILL.md transitions (updated) ===
+    [*] --> captured
+    captured --> shaped
+    shaped --> specready
+    specready --> shipped
+
+=== readme-mapping.md canonical transitions ===
+    [*] --> captured
+    captured --> shaped
+    shaped --> specready
+    specready --> shipped
+
+=== SKILL.md class assignments (updated) ===
+    class captured capture
+    class shaped shape
+    class specready ready
+    class shipped shipped
+
+=== readme-mapping.md canonical class assignments ===
+    class captured capture
+    class shaped shape
+    class specready ready
+    class shipped shipped
+
+=== Differences ===
+Only intentional difference: SKILL.md uses named placeholders ({captured_count}, etc.)
+while readme-mapping.md uses generic {N}. This is by design -- SKILL.md is implementer
+instruction and needs explicit variable names.
+
+All structural elements match: aliased state syntax, lowercase aliases,
+forward-only transitions, no transition labels, no backward transitions.
+
+Status: PASS

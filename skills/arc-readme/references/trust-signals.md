@@ -140,7 +140,7 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 
 1. Read `README.md` and extract content between `<!--# BEGIN ARC:lifecycle-diagram -->` and `<!--# END ARC:lifecycle-diagram -->`
 2. Verify a mermaid code fence exists (``` ```mermaid ``` block)
-3. Within the mermaid block, search for node labels with status counts using pattern: `\w+\(\d+\)` (e.g., `Captured(3)`, `Shipped(7)`)
+3. Within the mermaid block, search for node labels with status counts using pattern: `[\w-]+\(\d+\)` (e.g., `Captured(3)`, `Spec-Ready(2)`, `Shipped(7)`)
 4. Extract the numeric values from each matched node label
 5. Check whether at least one extracted count is greater than zero
 
