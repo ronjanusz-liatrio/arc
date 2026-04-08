@@ -1,27 +1,18 @@
 Type: file
-File: references/idea-lifecycle.md
-Expected: Contains all four stages (Capture, Shape, Spec-Ready, Shipped) with forward and backward transition rules
-Timestamp: 2026-04-07T17:15:00Z
-
-=== Verification ===
-
-Stage headings found:
-  ### Capture
-  ### Shape
-  ### Spec-Ready
-  ### Shipped
-
-Forward transitions (Mermaid diagram + prose):
-  Capture --> Shape : triage
-  Shape --> SpecReady : brief approved
-  SpecReady --> Shipped : SDD pipeline
-
-Backward transitions:
-  Shape --> Capture : needs more context
-  Spec-Ready --> Shape : scope change
-
-Each stage has: Description, Data Fields, Entry Criteria, Exit Criteria, Allowed Transitions.
-
-File size: 4799 bytes, 128 lines.
-
+Description: Verify arc-capture-skill.feature contains all four error-path scenarios
+File: docs/specs/01-spec-arc-plugin/arc-capture-skill.feature
+Expected: Four new scenarios appended after existing scenarios (lines 47-74), matching error-path-gherkin-scenarios.feature scenarios 1-4
+Timestamp: 2026-04-07T00:00:00Z
 Status: PASS
+
+Content Verification:
+- Scenario 1: "arc-capture error scenarios cover empty title input" (lines 47-52) ✓
+- Scenario 2: "arc-capture error scenarios cover empty summary input" (lines 54-59) ✓
+- Scenario 3: "arc-capture handles BACKLOG write failure gracefully" (lines 61-67) ✓
+- Scenario 4: "arc-capture handles duplicate idea title" (lines 69-74) ✓
+
+All scenarios follow Gherkin conventions:
+- Proper Given/When/Then/And structure ✓
+- Correct indentation (2 spaces) ✓
+- No modification of existing scenarios ✓
+- Text matches reference scenarios exactly ✓

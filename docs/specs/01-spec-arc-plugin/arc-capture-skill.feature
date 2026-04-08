@@ -43,3 +43,32 @@ Feature: /arc-capture Skill
     Given the arc plugin is installed in a project
     When the user completes /arc-capture successfully
     Then the skill presents options to capture another idea, shape this idea with /arc-shape, or done
+
+  Scenario: arc-capture error scenarios cover empty title input
+    Given the arc plugin is installed in a project
+    And docs/BACKLOG.md exists
+    When the user invokes /arc-capture and submits an empty title
+    Then the skill displays an error message indicating the title is required
+    And no new section is added to docs/BACKLOG.md
+
+  Scenario: arc-capture error scenarios cover empty summary input
+    Given the arc plugin is installed in a project
+    And docs/BACKLOG.md exists
+    When the user invokes /arc-capture with title "Widget API" and an empty summary
+    Then the skill displays an error message indicating the summary is required
+    And no new section is added to docs/BACKLOG.md
+
+  Scenario: arc-capture handles BACKLOG write failure gracefully
+    Given the arc plugin is installed in a project
+    And docs/BACKLOG.md exists but is not writable
+    When the user completes /arc-capture with valid inputs
+    Then the skill displays an error message indicating the file could not be written
+    And the skill does not report a successful capture
+    And the original BACKLOG.md content is unchanged
+
+  Scenario: arc-capture handles duplicate idea title
+    Given the arc plugin is installed in a project
+    And docs/BACKLOG.md contains an idea titled "Widget API"
+    When the user invokes /arc-capture with title "Widget API"
+    Then the skill warns that an idea with this title already exists
+    And the skill offers options to rename, overwrite, or cancel
