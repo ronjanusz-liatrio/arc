@@ -1,0 +1,49 @@
+Type: file
+File: skills/arc-review/references/review-report-template.md
+Expected: File created with template structure, field descriptions, and cross-references
+Timestamp: 2026-04-07T17:30:00Z
+
+VERIFICATION RESULTS:
+====================
+
+✓ File exists: /Users/ron/dev/arc/skills/arc-review/references/review-report-template.md
+
+✓ Content structure verified:
+  - Header section (title, format description)
+  - Template section with markdown block
+  - Field Descriptions section with detailed explanations
+
+✓ Template includes all required sections:
+  1. Generated timestamp and staleness threshold
+  2. Overall Health Rating with rating criteria (Healthy / Needs Attention / Critical)
+  3. Backlog Health Findings table (5 checks: stale ideas, priority imbalance, status distribution, missing fields, invalid status)
+  4. Wave Alignment Findings table (6 checks: broken refs, status mismatch, orphaned spec-ready, VISION alignment, CUSTOMER alignment, cross-reference integrity)
+  5. Status Distribution Summary (pipeline health interpretation)
+  6. Recommended Actions (grouped by severity: Critical, Warnings, Info)
+  7. Fixes Applied (interactive fixes checklist)
+  8. Cross-References (links to audit-dimensions.md, idea-lifecycle.md, brief-format.md)
+
+✓ Field Descriptions sections cover:
+  - Overall Health Rating criteria for Critical issues and Warning-level issues
+  - Backlog Health Findings: 5 checks defined with purpose and threshold information
+  - Wave Alignment Findings: 6 checks defined with consistency validation rules
+  - Status Distribution Summary: Pipeline health interpretation guidance
+  - Recommended Actions: Specificity and actionability guidance
+  - Fixes Applied: Scope and purpose documentation
+
+✓ Cross-references format:
+  - Links to audit-dimensions.md (thresholds and severity)
+  - Links to idea-lifecycle.md (status definitions)
+  - Links to brief-format.md (brief section requirements)
+  - Consistent with wave-report-template.md style
+
+✓ Style consistency with wave-report-template.md:
+  - Header structure (title, purpose statement, blank line)
+  - Template in fenced markdown block with placeholders
+  - Field Descriptions section after template
+  - Cross-References section at end
+  - Consistent markdown formatting
+
+Status: PASS
+
+The review-report-template.md reference document has been successfully created with all required sections, field descriptions, and cross-references following the pattern established by wave-report-template.md.

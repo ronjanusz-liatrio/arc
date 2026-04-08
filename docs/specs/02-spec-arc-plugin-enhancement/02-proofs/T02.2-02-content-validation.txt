@@ -1,0 +1,101 @@
+Type: file
+File: skills/arc-review/references/review-report-template.md
+Expected: Content validates against task requirements
+Timestamp: 2026-04-07T17:31:00Z
+
+SPEC REQUIREMENT VALIDATION:
+============================
+
+Task Requirement 1: Header section (Report title, ISO 8601 timestamp, staleness threshold)
+✓ Template includes:
+  - "# Review Report" heading
+  - "**Generated:** {ISO 8601 timestamp}" field
+  - "**Staleness Threshold:** {N days, default 14}" field
+
+Task Requirement 2: Overall Health Rating (Healthy, Needs Attention, Critical with rating criteria)
+✓ Template includes:
+  - "**Status:** Healthy | Needs Attention | Critical"
+  - Rating Criteria subsection with definitions for all three states:
+    - Healthy: no critical issues, zero stale, priority balanced, references valid, fields complete
+    - Needs Attention: warnings present, stale < 5 days, minor cross-ref issues, isolated missing fields
+    - Critical: critical issues, stale > 5 days, broken refs, pipeline bottleneck
+
+Task Requirement 3: Backlog Health Findings (table with Check, Finding, Severity, Recommended Action)
+✓ Template includes Backlog Health Findings table with:
+  - Column 1 (Check): 5 checks defined
+    1. Stale ideas
+    2. Priority imbalance
+    3. Status distribution
+    4. Missing brief fields
+    5. Invalid status values
+  - Column 2 (Finding): Placeholder examples with alternatives (e.g., "or None")
+  - Column 3 (Severity): info / warning / critical options
+  - Column 4 (Recommended Action): Specific action examples
+
+Task Requirement 4: Wave Alignment Findings (table with same columns)
+✓ Template includes Wave Alignment Findings table with:
+  - Column 1 (Check): 6 checks defined
+    1. Broken ROADMAP refs
+    2. Status mismatch
+    3. Orphaned spec-ready
+    4. VISION alignment
+    5. CUSTOMER alignment
+    6. Cross-reference integrity
+  - Columns 2-4: Same structure as Backlog Health table
+
+Task Requirement 5: Status Distribution Summary (table with counts per status)
+✓ Template includes Status Distribution Summary with:
+  - "Captured (in discovery): {N}"
+  - "Shaped (brief complete): {N}"
+  - "Spec-Ready (ready for SDD): {N}"
+  - "Shipped (implemented): {N}"
+  - "Total: {N}"
+  - Pipeline Health subsection with flow descriptions:
+    - Capture → Shape flow
+    - Shape → Spec-Ready flow
+    - Spec-Ready → Shipped flow
+
+Task Requirement 6: Recommended Actions (prioritized list grouped by severity)
+✓ Template includes Recommended Actions section with:
+  - Critical (address immediately)
+  - Warnings (address before next wave)
+  - Info (nice-to-have improvements)
+
+Task Requirement 7: Fixes Applied (section for recording interactive fixes)
+✓ Template includes Fixes Applied section with:
+  - Checklist of interactive fix types:
+    - Marked stale ideas with <!-- stale: reviewed --> markers
+    - Updated BACKLOG summary table reconciliation
+    - Added <!-- TODO: fill {field} --> markers
+    - Removed broken ROADMAP wave references
+    - Other custom fixes
+
+Task Requirement 8: Cross-References (links to audit-dimensions.md, etc.)
+✓ Template includes Cross-References section with:
+  - references/audit-dimensions.md (threshold definitions)
+  - references/idea-lifecycle.md (status transitions)
+  - references/brief-format.md (brief section requirements)
+
+FORMAT CONSISTENCY CHECK:
+========================
+
+✓ Follows wave-report-template.md pattern:
+  - Title and purpose statement at top
+  - Template section in fenced markdown block
+  - Field Descriptions section with detailed explanations
+  - Cross-References section at end
+
+✓ Field Descriptions provide:
+  - Purpose/context for each major section
+  - Examples and thresholds referenced
+  - Clear guidance on what values to use
+  - Connection to other reference documents
+
+✓ All placeholders use consistent format:
+  - {Curly braces} for dynamic content
+  - "or {alternative}" for conditional content
+  - {N} for numeric placeholders
+
+Status: PASS
+
+All task requirements have been validated and successfully implemented in the review-report-template.md reference document.
