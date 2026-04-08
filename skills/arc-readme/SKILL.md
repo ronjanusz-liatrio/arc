@@ -83,7 +83,63 @@ AskUserQuestion({
 })
 ```
 
-If the user selects "Cancel," exit gracefully. If "Inject sections," proceed to Step 3 using scaffold logic but preserve existing non-managed content.
+If the user selects "Cancel," exit gracefully. If "Inject sections," proceed to Step 2a.
+
+### Step 2a: Inject Markers into Existing README
+
+When the user approves marker injection, determine where to place each `ARC:` managed section block in the existing README.md. The goal is to add managed sections without disrupting existing content.
+
+#### Insertion Priority
+
+For each `ARC:` section to be injected, find the insertion point using this priority order:
+
+1. **After the last existing `ARC:` section end marker** — If any `<!--# END ARC:... -->` markers already exist (e.g., from a partial injection), insert the new section after the last one with one blank line separator.
+2. **Before Contributing or License sections** — If a `## Contributing` or `## License` heading exists, insert before the first of these with one blank line separator.
+3. **At EOF** — Append to the end of the file with one blank line separator.
+
+#### Section Ordering
+
+When injecting all sections at once, maintain this order relative to each other:
+
+1. `ARC:overview`
+2. `ARC:audience`
+3. `ARC:features`
+4. `ARC:roadmap`
+5. `ARC:lifecycle-diagram`
+
+#### Injection Procedure
+
+1. Read the existing `README.md` and identify the insertion point using the priority order above.
+2. For each `ARC:` section to be injected:
+   a. Generate the section content using the same extraction rules as scaffold mode (Steps 3a-3f).
+   b. Wrap the content in `<!--# BEGIN ARC:{section-name} -->` / `<!--# END ARC:{section-name} -->` markers.
+3. Confirm the injection plan via AskUserQuestion before writing:
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "The following ARC: managed sections will be injected into your README.md:\n\n{list of sections with insertion positions}\n\nExisting content will not be modified. Proceed?",
+    header: "Confirm Marker Injection",
+    options: [
+      { label: "Inject", description: "Add the listed ARC: managed sections" },
+      { label: "Cancel", description: "Leave README.md unchanged" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+4. If "Inject," write the markers using the Edit tool, inserting at the determined position.
+5. If "Cancel," exit gracefully.
+
+#### Post-Injection Validation
+
+After injection, verify:
+- No `ARC:` section is nested inside another `ARC:`, `TEMPER:`, or `MM:` section.
+- All marker pairs are properly matched (every BEGIN has a corresponding END).
+- Content outside the injected markers is identical to the original file.
+
+After successful injection, proceed to Step 4 (Trust-Signal Validation) to validate the injected content.
 
 ### Step 3: Scaffold README
 
@@ -639,3 +695,11 @@ Regressions: {count}
 
 Run /arc-readme again after shipping features or planning waves to keep managed sections current.
 ```
+
+## References
+
+- [`skills/arc-readme/references/trust-signals.md`](references/trust-signals.md) — Trust-signal definitions (TS-1 through TS-8) used for post-scaffold and post-update validation
+- [`skills/arc-readme/references/readme-mapping.md`](references/readme-mapping.md) — Artifact-to-section extraction rules for all ARC: managed sections
+- [`skills/arc-readme/references/readme-quality-rules.md`](references/readme-quality-rules.md) — Quality gates for line count, heading hierarchy, accessibility, and conciseness
+- [`skills/arc-wave/references/bootstrap-protocol.md`](../arc-wave/references/bootstrap-protocol.md) — Marker format and coexistence rules for ARC: namespace in project files
+- [`references/idea-lifecycle.md`](../../references/idea-lifecycle.md) — Idea lifecycle stages and status values referenced by ARC:features and ARC:lifecycle-diagram

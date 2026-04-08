@@ -1,0 +1,23 @@
+Type: file
+Command: Grep for marker injection substep in SKILL.md
+Expected: Step 2a with insertion priority, section ordering, injection procedure, and post-injection validation
+Timestamp: 2026-04-08T13:00:00Z
+
+--- Output ---
+
+SKILL.md contains Step 2a: Inject Markers into Existing README (line 88)
+
+Marker injection components verified:
+- Insertion Priority section (line 92):
+  1. After last ARC: section end marker (line 96)
+  2. Before Contributing or License sections (line 97)
+  3. At EOF (line 98)
+- Section Ordering (line 100): overview -> audience -> features -> roadmap -> lifecycle-diagram
+- Injection Procedure (line 110): Read README, generate sections, confirm via AskUserQuestion, write with Edit
+- Confirm Marker Injection AskUserQuestion (line 122)
+- Post-Injection Validation (line 135): nesting check, marker pair matching, content preservation
+
+Step 2 injection mode detection (line 64): README exists without ARC: markers -> Injection mode
+Step 2 routes to Step 2a on "Inject sections" (line 86)
+
+Status: PASS

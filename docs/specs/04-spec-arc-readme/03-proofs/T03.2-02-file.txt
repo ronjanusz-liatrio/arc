@@ -1,0 +1,22 @@
+Type: file
+Command: Grep for docs/ diagram scanning in SKILL.md
+Expected: Step 9 with Glob + Grep scanning, known diagram types, marker replacement
+Timestamp: 2026-04-08T13:00:00Z
+
+--- Output ---
+
+SKILL.md contains Step 9: Scan docs/ for ARC: Diagram Markers (line 538)
+
+Diagram scanning components verified:
+- Uses Glob to find all .md files in docs/ (line 542)
+- Uses Grep to search for BEGIN ARC: markers (line 543)
+- For each file with markers: extract marker pair, regenerate known diagrams (lines 544-547)
+- Known diagram types table (lines 549-554):
+  - ARC:wave-pipeline-diagram (source: ROADMAP.md + BACKLOG.md)
+  - ARC:lifecycle-diagram (source: BACKLOG.md)
+- Records which docs/ files were updated (line 556)
+- Silent skip when no markers found (line 558)
+
+Scanning uses Glob + Grep (not recursive file reads) per task requirement.
+
+Status: PASS

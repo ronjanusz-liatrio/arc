@@ -1,0 +1,25 @@
+Type: file
+Command: Grep for trust-signal validation in SKILL.md
+Expected: Step 10 with all 8 signals, regression detection, newly evaluable reporting, scorecard
+Timestamp: 2026-04-08T13:00:00Z
+
+--- Output ---
+
+SKILL.md contains Step 10: Trust-Signal Validation (line 560)
+
+Trust-signal validation components verified:
+- Runs TS-1 through TS-8 against updated README content (line 562)
+- References trust-signals.md for detection logic (line 562)
+- Regression detection (line 568): compares before-state vs after, flags regressions with cause
+- Newly evaluable signals (line 572): reports when N/A signals become evaluable after artifact creation
+- Scorecard format (lines 578-593):
+  - Before/After columns for each signal
+  - Result: N of M evaluable signals passing
+  - Regressions count
+  - Newly evaluable count
+  - Severity: info | warning
+- Regression warning behavior (line 595): warns user, does not block update
+
+Also verified Step 4 (scaffold mode validation) at line 366 covers the same 8 signals.
+
+Status: PASS

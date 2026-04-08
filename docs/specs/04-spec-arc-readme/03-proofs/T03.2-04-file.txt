@@ -1,0 +1,19 @@
+Type: file
+Command: Grep for References section in SKILL.md
+Expected: References section with 5 required reference links
+Timestamp: 2026-04-08T13:00:00Z
+
+--- Output ---
+
+SKILL.md contains ## References section (line 699)
+
+References verified (all 5 required):
+1. trust-signals.md (line 701) -- Trust-signal definitions (TS-1 through TS-8)
+2. readme-mapping.md (line 702) -- Artifact-to-section extraction rules
+3. readme-quality-rules.md (line 703) -- Quality gates for line count, heading hierarchy, etc.
+4. bootstrap-protocol.md (line 704) -- Marker format and coexistence rules
+5. idea-lifecycle.md (line 705) -- Idea lifecycle stages and status values
+
+All reference paths use relative links from the SKILL.md location.
+
+Status: PASS
