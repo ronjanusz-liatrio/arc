@@ -1,0 +1,32 @@
+Type: file
+Description: Captured stub fields match spec requirements (title, summary, priority, status, timestamp, aligned-from)
+Command: Verify Step 5a in SKILL.md specifies all required stub fields
+Expected: Each captured stub contains: title, one-line summary, P2-Medium priority, captured status, ISO 8601 timestamp, aligned-from source comment
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Step 5a-i (lines 371-383): Title derivation rules with 5 precedence levels:
+  - Heading text (stripped of markdown syntax)
+  - Task list text (stripped of checkbox)
+  - Numbered list text (stripped of number prefix)
+  - User story goal clause extraction
+  - First meaningful line (truncated to 60 chars)
+  - Title truncation at 80 chars word boundary
+
+- Step 5a-ii (lines 385-392): One-line summary extraction rules:
+  - First sentence from paragraph after heading
+  - Task text itself when no paragraph
+  - First non-heading non-blank line (truncated to 120 chars)
+  - Fallback: "Imported from {source_path}"
+
+- Step 5a-iv (lines 400-419): Captured stub format:
+  - Status: Always "captured" (line 416)
+  - Priority: Always "P2-Medium" (line 417)
+  - Captured: ISO 8601 UTC format YYYY-MM-DDTHH:MM:SSZ (line 418)
+  - aligned-from: {source_path}:{line_range} comment (lines 410, 419)
+  - One-line summary below the metadata block
+
+Gherkin coverage: "BACKLOG-targeted items are imported as captured stubs with correct fields" -- COVERED
+  Step 5a-iv specifies exact stub format with all 6 required fields
+
+Status: PASS

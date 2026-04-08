@@ -1,0 +1,25 @@
+Type: file
+Description: BACKLOG summary table updated with new rows for imported stubs
+Command: Verify Step 5a-v in SKILL.md specifies summary table row format and insertion logic
+Expected: Each imported stub adds a row to the summary table matching arc-capture format: | [Title](#anchor) | captured | P2-Medium | -- |
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Step 5a-iii (lines 394-398): Anchor generation rules:
+  - Lowercase, spaces to hyphens, strip non-alphanumeric except hyphens
+  - Example: "Add Dark Mode Support" -> #add-dark-mode-support
+
+- Step 5a-v (lines 421-429): Summary table row format:
+  - Format: | [{Title}](#{anchor}) | captured | P2-Medium | -- |
+  - Insertion point: immediately before the first `## ` section heading
+  - Multiple rows added in single Edit operation
+  - Rows ordered same as appended stubs
+
+- This matches arc-capture SKILL.md Step 3a format (line 132):
+  | [{Title}](#{anchor}) | captured | {Priority} | -- |
+  With priority always P2-Medium for arc-align imports
+
+Gherkin coverage: "BACKLOG summary table is updated with new rows" -- COVERED
+  Step 5a-v specifies row format, insertion location, batch operation
+
+Status: PASS

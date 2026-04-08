@@ -1,0 +1,23 @@
+Type: file
+Description: Inclusivity principle enforced -- import rather than skip when in doubt
+Command: Verify SKILL.md contains inclusivity principle in critical constraints and Step 5a
+Expected: Both the Critical Constraints section and Step 5a state the inclusivity principle
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Critical Constraints (line 28):
+  "ALWAYS be inclusive at import time -- when in doubt, import as a captured stub rather than skip"
+
+- Step 5a inclusivity principle (lines 431):
+  "When in doubt about whether a discovery is genuine product-direction content, import it as a captured stub rather than skip it. The user can review and delete false positives from the BACKLOG. It is better to over-import than to miss genuine content."
+
+- This matches the spec requirement (03-spec-arc-align.md):
+  "The system shall be inclusive at import time -- when in doubt about whether content is product-direction, import it as a captured stub rather than skip it"
+
+- Also matches import-rules.md inclusivity principle:
+  "When in doubt, import rather than skip. It is better to import a marginal item as a captured BACKLOG stub..."
+
+Gherkin coverage: "Ambiguous content is imported inclusively rather than skipped" -- COVERED
+  Both constraint and Step 5a enforce import-over-skip behavior
+
+Status: PASS

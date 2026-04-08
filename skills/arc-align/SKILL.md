@@ -297,33 +297,109 @@ If the user selects "Review individually," present each discovery with accept/re
 
 ### Step 4: Bootstrap Artifacts
 
-Before importing, ensure target artifacts exist.
+Before importing, ensure each target artifact exists. Only bootstrap artifacts that have at least one confirmed discovery targeting them. Check existence using Read; if the file does not exist, create it from the corresponding template.
 
 **4a. BACKLOG.md:**
 
 If `docs/BACKLOG.md` does not exist and there are BACKLOG-targeted discoveries:
-- Read `templates/BACKLOG.tmpl.md` for the Foundation phase format
-- Create `docs/BACKLOG.md` following the same bootstrap logic as `/arc-capture`
+
+1. Read `templates/BACKLOG.tmpl.md` for the Foundation phase format
+2. Create the `docs/` directory if it does not exist
+3. Create `docs/BACKLOG.md` with the following structure (matching `/arc-capture` Step 2 bootstrap logic):
+
+```markdown
+# BACKLOG
+
+A triaged list of product ideas. Each idea progresses through the idea lifecycle
+(Capture, Shape, Spec-Ready, Shipped) and is stored as a `## {Title}` section below.
+
+| Priority | Label | When to Use |
+|----------|-------|-------------|
+| P0 | Critical | Blocks current wave or causes user-visible failure |
+| P1 | High | Important for current or next wave; significant user impact |
+| P2 | Medium | Valuable but not urgent; can wait 1-2 waves |
+| P3 | Low | Nice to have; consider if capacity allows |
+
+| Title | Status | Priority | Wave |
+|-------|--------|----------|------|
+```
+
+The file starts with the heading, an overview paragraph, the priority definitions table from the Foundation section of the template, and an empty summary table header. Imported stubs are appended after the summary table in Step 5a.
 
 **4b. VISION.md:**
 
 If `docs/VISION.md` does not exist and there are VISION-targeted discoveries:
-- Read `templates/VISION.tmpl.md`
-- Create `docs/VISION.md` from the template
+
+1. Read `templates/VISION.tmpl.md` for the Spike phase format (the minimal stub)
+2. Create `docs/VISION.md` with the following structure:
+
+```markdown
+# VISION
+
+## Vision Summary
+
+{Leave blank — to be populated by /arc-shape or manual editing.}
+```
+
+The file starts with a heading and the minimal Spike-phase stub. Imported vision content is appended under a `## Imported Content` section in Step 5b.
 
 **4c. CUSTOMER.md:**
 
 If `docs/CUSTOMER.md` does not exist and there are CUSTOMER-targeted discoveries:
-- Read `templates/CUSTOMER.tmpl.md`
-- Create `docs/CUSTOMER.md` from the template
+
+1. Read `templates/CUSTOMER.tmpl.md` for the Spike phase format (the minimal notes stub)
+2. Create `docs/CUSTOMER.md` with the following structure:
+
+```markdown
+# CUSTOMER
+
+## Initial Audience Notes
+
+{Leave blank — to be populated by /arc-shape or manual editing.}
+```
+
+The file starts with a heading and the minimal Spike-phase stub. Imported persona content is appended under a `## Imported Content` section in Step 5c.
 
 ### Step 5: Import Discoveries
 
-Import confirmed items into the appropriate Arc artifacts. Read `skills/arc-align/references/import-rules.md` for detailed rules.
+Import confirmed items into the appropriate Arc artifacts. Read `skills/arc-align/references/import-rules.md` for the full classification rules, stub generation logic, and field derivation details.
 
 **5a. BACKLOG imports:**
 
-For each BACKLOG-targeted discovery, create a captured stub:
+For each BACKLOG-targeted discovery, create one captured stub and one summary table row. Process discoveries in the order they appear in the confirmed discovery list (sorted by source file path, then line range).
+
+**5a-i. Derive the title:**
+
+Apply the first matching rule from this precedence list:
+
+| Source Content | Derivation Rule | Example |
+|---------------|-----------------|---------|
+| Heading present | Use the heading text, stripped of markdown syntax (`#`, `**`, links) | `## Add dark mode` -> "Add dark mode" |
+| Task list item | Use the task text, stripped of checkbox syntax (`- [ ]`, `- [x]`) | `- [ ] Fix auth bug` -> "Fix auth bug" |
+| Numbered list item | Use the item text, stripped of number prefix | `3. Webhook support` -> "Webhook support" |
+| User story format | Extract the goal clause from "As a {persona}, I want {goal}" | "As a dev, I want real-time logs" -> "Real-time logs" |
+| No clear title | Use the first meaningful line (non-blank, non-comment), truncated to 60 characters | First line of the section |
+
+If the derived title exceeds 80 characters, truncate at the last word boundary before 80 characters.
+
+**5a-ii. Extract the one-line summary:**
+
+| Source Content | Extraction Rule |
+|---------------|-----------------|
+| Paragraph follows heading | Use the first sentence of the paragraph |
+| Task list item with no paragraph | Use the task text itself as the summary |
+| Multi-line content | Use the first non-heading, non-blank line, truncated to 120 characters |
+| No extractable content | Use "Imported from {source_path}" |
+
+**5a-iii. Generate the anchor:**
+
+Convert the title to a markdown anchor: lowercase, replace spaces with hyphens, strip all non-alphanumeric characters except hyphens.
+
+Example: "Add Dark Mode Support" -> `#add-dark-mode-support`
+
+**5a-iv. Append captured stub section:**
+
+Append one `## {Title}` section per discovery at the end of `docs/BACKLOG.md`:
 
 ```markdown
 ## {Title}
@@ -333,35 +409,52 @@ For each BACKLOG-targeted discovery, create a captured stub:
 - **Captured:** {ISO 8601 timestamp}
 <!-- aligned-from: {source_path}:{line_range} -->
 
-{One-line summary extracted or synthesized from surrounding context}
+{One-line summary}
 ```
 
-- Title: derived from source heading, task list text, or first meaningful line
-- Priority: default to `P2-Medium`
-- Status: `captured`
-- Update the BACKLOG summary table with a new row per imported idea
+Field values:
+- **Status:** Always `captured`
+- **Priority:** Always `P2-Medium` (no automatic inference -- user adjusts after import)
+- **Captured:** Current UTC time in ISO 8601 format (`YYYY-MM-DDTHH:MM:SSZ`)
+- **aligned-from:** `{source_path}:{line_range}` where source_path is relative to repo root and line_range is the start-end lines (e.g., `README.md:50-70` or `TODO.md:5`)
+
+**5a-v. Update the BACKLOG summary table:**
+
+For each imported stub, add a new row to the summary table immediately before the first `## ` section heading in `docs/BACKLOG.md`. Each row follows this format:
+
+```markdown
+| [{Title}](#{anchor}) | captured | P2-Medium | -- |
+```
+
+If multiple stubs are imported, add all rows in a single Edit operation to avoid repeated file writes. Rows are added in the same order as the stubs were appended.
+
+**Inclusivity principle:** When in doubt about whether a discovery is genuine product-direction content, import it as a captured stub rather than skip it. The user can review and delete false positives from the BACKLOG. It is better to over-import than to miss genuine content.
 
 **5b. VISION imports:**
 
-Append discovered content to `docs/VISION.md` under a `## Imported Content` section with source attribution:
+Append discovered vision/mission/north-star content to `docs/VISION.md` under a `## Imported Content` section. If the section already exists, append below existing content within it (do not create duplicate `## Imported Content` headings).
 
 ```markdown
 ## Imported Content
 
 <!-- aligned-from: {source_path}:{line_range} -->
-{imported content}
+{imported content, preserving original formatting}
 ```
+
+Each import gets its own `<!-- aligned-from: ... -->` comment immediately above the content block.
 
 **5c. CUSTOMER imports:**
 
-Append discovered persona/audience content to `docs/CUSTOMER.md` under a `## Imported Content` section with source attribution:
+Append discovered persona/audience/JTBD content to `docs/CUSTOMER.md` under a `## Imported Content` section. Same append-within-section rule as VISION imports.
 
 ```markdown
 ## Imported Content
 
 <!-- aligned-from: {source_path}:{line_range} -->
-{imported persona content}
+{imported persona content, preserving original formatting}
 ```
+
+Each import gets its own `<!-- aligned-from: ... -->` comment immediately above the content block.
 
 ### Step 6: Clean Up Sources
 

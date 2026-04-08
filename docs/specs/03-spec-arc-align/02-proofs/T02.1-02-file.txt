@@ -1,0 +1,27 @@
+Type: file
+Description: VISION.md and CUSTOMER.md bootstrap logic with template references
+Command: Verify Steps 4b and 4c in SKILL.md include bootstrap structures
+Expected: Step 4b creates docs/VISION.md from Spike phase template; Step 4c creates docs/CUSTOMER.md from Spike phase template
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Step 4b (lines 329-344) instructs:
+  - Reading templates/VISION.tmpl.md for Spike phase format
+  - Creating docs/VISION.md with heading "# VISION" and "## Vision Summary" stub
+  - Placeholder text indicating content to be populated by /arc-shape or manual editing
+  - Notes imported vision content goes under "## Imported Content" section (Step 5b)
+
+- Step 4c (lines 346-361) instructs:
+  - Reading templates/CUSTOMER.tmpl.md for Spike phase format
+  - Creating docs/CUSTOMER.md with heading "# CUSTOMER" and "## Initial Audience Notes" stub
+  - Placeholder text indicating content to be populated by /arc-shape or manual editing
+  - Notes imported persona content goes under "## Imported Content" section (Step 5c)
+
+- Both bootstrap paths are conditional: only triggered when the file does not exist AND there are discoveries targeting that artifact
+
+Gherkin coverage: "Missing VISION.md is created from template before import" -- COVERED
+  Step 4b checks existence, reads template, creates minimal Spike stub
+Gherkin coverage: "Missing CUSTOMER.md is created from template before import" -- COVERED
+  Step 4c checks existence, reads template, creates minimal Spike stub
+
+Status: PASS

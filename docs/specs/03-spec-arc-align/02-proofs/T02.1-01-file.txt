@@ -1,0 +1,21 @@
+Type: file
+Description: BACKLOG.md bootstrap logic matches arc-capture Step 2 pattern
+Command: Verify Step 4a in SKILL.md includes complete bootstrap structure
+Expected: Step 4a creates docs/BACKLOG.md with heading, overview, priority definitions table, and empty summary table header matching arc-capture SKILL.md Step 2
+Timestamp: 2026-04-08T17:00:00Z
+
+Verification:
+- Step 4a (line 302-327) instructs reading templates/BACKLOG.tmpl.md for Foundation phase format
+- Step 4a instructs creating docs/ directory if absent
+- Bootstrap structure includes:
+  - Heading: "# BACKLOG"
+  - Overview paragraph describing idea lifecycle (Capture, Shape, Spec-Ready, Shipped)
+  - Priority definitions table with P0-Critical, P1-High, P2-Medium, P3-Low (matches BACKLOG.tmpl.md Foundation section)
+  - Empty summary table header: | Title | Status | Priority | Wave |
+- This matches arc-capture SKILL.md Step 2 bootstrap logic (lines 106-124)
+- The structure is consistent with the BACKLOG.tmpl.md template Foundation phase requirements
+
+Gherkin coverage: "Missing BACKLOG.md is created from template before import" -- COVERED
+  Step 4a checks existence, reads template, creates file with Foundation structure
+
+Status: PASS
