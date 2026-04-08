@@ -55,6 +55,7 @@ flowchart LR
     AC["/arc-capture\nQuick idea entry"]:::arc
     AS["/arc-shape\nRefine into\nspec-ready brief"]:::arc
     AW["/arc-wave\nOrganize into\ndelivery cycle"]:::arc
+    AREADME["/arc-readme\nSync README with\nproduct direction"]:::arc
     AR["/arc-review\nAudit pipeline\nhealth"]:::arc
 
     CS["/cw-spec\nWrite spec and\nGherkin scenarios"]:::cw
@@ -65,12 +66,13 @@ flowchart LR
     TP["/temper-progress\nGate evaluation\nand phase transition"]:::temper
 
     AA --> AC
-    AC --> AS --> AW --> TI
+    AC --> AS --> AW --> AREADME --> TI
     TI --> CS --> CP --> CD --> TP
     TP -->|"advance"| TI
     AW -->|"shaped brief"| CS
     AR -. "audit anytime" .-> AW
     AR -. "audit anytime" .-> CS
+    AR -. "WA-7 fix" .-> AREADME
 
     classDef arc fill:#E8662F,stroke:#C7502A,color:#FFFFFF
     classDef cw fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
@@ -83,6 +85,7 @@ flowchart LR
 | `/arc-capture` | Record a raw idea quickly — title, one-liner, rough priority |
 | `/arc-shape` | Refine an idea into a structured brief with problem, solution, and success criteria |
 | `/arc-wave` | Group shaped ideas into a delivery cycle and hand off to temper + claude-workflow |
+| `/arc-readme` | Keep project README and diagrams in sync with product direction artifacts |
 | `/arc-review` | Audit backlog health and wave alignment across all product artifacts |
 
 ## Skills
@@ -91,6 +94,7 @@ flowchart LR
 - **`/arc-capture`** — Fast idea entry. Appends a structured stub to `BACKLOG` with minimal friction.
 - **`/arc-shape`** — Interactive refinement. Turns a captured idea into a spec-ready brief using parallel subagent analysis across four dimensions (problem clarity, customer fit, scope boundaries, feasibility).
 - **`/arc-wave`** — Delivery cycle management. Groups spec-ready ideas into a wave, updates `ROADMAP`, injects `ARC:product-context` into project CLAUDE.md, and prepares the handoff for `/cw-spec`.
+- **`/arc-readme`** — README synchronization. Scaffolds a complete README from Arc artifacts or selectively updates `ARC:` managed sections to reflect current product direction.
 - **`/arc-review`** — Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts, then offers interactive fixes.
 
 ## Relationship to Temper and claude-workflow
@@ -98,9 +102,9 @@ flowchart LR
 Arc is **upstream** of both temper and claude-workflow:
 
 ```
-/arc-align -> /arc-capture -> /arc-shape -> /arc-wave -> /temper-incept -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-progress
-                                                ^              ^                                                        |
-                                                |              '-------------------- phase loop --------------------------'
+/arc-align -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-readme -> /temper-incept -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-progress
+                                                ^                              ^                                                        |
+                                                |                              '-------------------- phase loop --------------------------'
                                             /arc-review (audit at any stage)
 ```
 
@@ -149,6 +153,12 @@ arc/
         import-rules.md                     # Import classification and merge rules
     arc-capture/
       SKILL.md                              # Fast idea entry
+    arc-readme/
+      SKILL.md                              # README synchronization with product direction
+      references/
+        trust-signals.md                    # Structural trust-signal definitions (shared with WA-7)
+        readme-mapping.md                   # Artifact-to-section mapping rules
+        readme-quality-rules.md             # Quality gates for README content
     arc-shape/
       SKILL.md                              # Interactive refinement with parallel subagent analysis
       references/

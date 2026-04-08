@@ -1,0 +1,49 @@
+Type: test
+Command: Structural verification of all 5 required README.md updates per task description
+Expected: Each of the 5 specified changes matches the exact content from the task requirements
+Timestamp: 2026-04-08T14:00:00Z
+
+--- Output ---
+
+Test 1: Skills table row
+  Required: | /arc-readme | Keep project README and diagrams in sync with product direction artifacts |
+  Found at line 88: MATCH
+  Position: After /arc-wave (line 87), before /arc-review (line 89)
+  Result: PASS
+
+Test 2: Two-Plugin Pipeline mermaid diagram
+  Required: New node AREADME with /arc-readme label
+  Found at line 58: AREADME["/arc-readme\nSync README with\nproduct direction"]:::arc
+  Required: AW --> AREADME and AREADME --> TI (replacing AW --> TI)
+  Found at line 69: AC --> AS --> AW --> AREADME --> TI
+  Required: AR WA-7 fix edge to AREADME
+  Found at line 75: AR -. "WA-7 fix" .-> AREADME
+  Result: PASS
+
+Test 3: Skills bullet list
+  Required: /arc-readme entry after /arc-wave with description
+  Found at line 97: - **`/arc-readme`** -- README synchronization. Scaffolds a complete README from Arc artifacts or selectively updates `ARC:` managed sections to reflect current product direction.
+  Position: After /arc-wave (line 96), before /arc-review (line 98)
+  Result: PASS
+
+Test 4: Plugin Structure tree
+  Required: arc-readme/ directory with SKILL.md and references/ subdirectory containing trust-signals.md, readme-mapping.md, readme-quality-rules.md
+  Found at lines 156-161:
+    arc-readme/
+      SKILL.md                              # README synchronization with product direction
+      references/
+        trust-signals.md                    # Structural trust-signal definitions (shared with WA-7)
+        readme-mapping.md                   # Artifact-to-section mapping rules
+        readme-quality-rules.md             # Quality gates for README content
+  Result: PASS
+
+Test 5: Workflow ASCII diagram
+  Required: /arc-wave -> /arc-readme -> /temper-incept
+  Found at line 105: /arc-align -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-readme -> /temper-incept -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-progress
+  Arrow alignment verified: ^ under /arc-wave, ^ under /temper-incept, phase loop arrow aligned
+  Result: PASS
+
+--- Summary ---
+All 5 required changes verified: 5/5 PASS
+
+Status: PASS

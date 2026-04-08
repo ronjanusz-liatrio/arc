@@ -1,0 +1,26 @@
+Type: file
+Command: grep -n "arc-readme" README.md
+Expected: /arc-readme appears in skills table, skills bullet list, mermaid diagram, ASCII diagram, and plugin structure
+Timestamp: 2026-04-08T14:00:00Z
+
+--- Output ---
+File: README.md
+Occurrences of /arc-readme: 10
+
+--- Content Verification ---
+[PASS] Skills table (line 88): | `/arc-readme` | Keep project README and diagrams in sync with product direction artifacts |
+  - Positioned after /arc-wave and before /arc-review
+[PASS] Skills bullet list (line 97): **`/arc-readme`** -- README synchronization entry
+  - Positioned after /arc-wave and before /arc-review
+[PASS] Mermaid diagram node (line 58): AREADME["/arc-readme\nSync README with\nproduct direction"]:::arc
+  - Node uses arc classDef (orange fill)
+[PASS] Mermaid diagram wiring (line 69): AC --> AS --> AW --> AREADME --> TI
+  - Replaces previous AW --> TI direct edge
+[PASS] Mermaid diagram WA-7 edge (line 75): AR -. "WA-7 fix" .-> AREADME
+  - Dotted line from /arc-review to /arc-readme for WA-7 fix flow
+[PASS] ASCII workflow diagram (line 105): /arc-wave -> /arc-readme -> /temper-incept
+  - /arc-readme inserted between /arc-wave and /temper-incept
+[PASS] Plugin Structure tree (line 156-161): arc-readme/ directory with SKILL.md and references/
+  - trust-signals.md, readme-mapping.md, readme-quality-rules.md listed
+
+Status: PASS
