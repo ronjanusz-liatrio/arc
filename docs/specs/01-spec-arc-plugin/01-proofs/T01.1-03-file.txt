@@ -1,0 +1,36 @@
+Type: file
+File: references/wave-planning.md
+Expected: Contains capacity constraints, precedence rules, theme grouping, and Temper phase compatibility guidance
+Timestamp: 2026-04-07T17:15:00Z
+
+=== Verification ===
+
+Required sections:
+  ## Capacity Constraints: 1 occurrence
+  ## Precedence Rules: 1 occurrence
+  ## Theme Grouping: 1 occurrence
+  ## Temper Phase Compatibility: 1 occurrence
+
+Capacity Constraints section includes:
+  - Sizing Guidelines table (7 Temper phases with recommended wave sizes)
+  - Hard Gate Failures guidance (stabilization recommendations)
+
+Precedence Rules section includes:
+  - Dependencies First rule
+  - Priority Ordering table (P0-P3 with wave precedence guidance)
+  - Risk-First Sequencing rule
+  - Theme Coherence rule
+
+Theme Grouping section includes:
+  - Good theme examples
+  - Weak theme examples
+  - Grouping strategy (4-step process)
+
+Temper Phase Compatibility section includes:
+  - Phase-to-Wave mapping table (7 phases with scope, artifacts, notes)
+  - Management Report absent handling
+  - Wave Lifecycle Mermaid diagram with Liatrio brand colors
+
+File size: 6840 bytes, 134 lines.
+
+Status: PASS

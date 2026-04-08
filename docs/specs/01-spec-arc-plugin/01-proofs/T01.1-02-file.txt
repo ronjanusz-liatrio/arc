@@ -1,0 +1,28 @@
+Type: file
+File: references/brief-format.md
+Expected: Contains all required brief sections (Problem, Proposed Solution, Success Criteria, Constraints, Assumptions, Wave Assignment, Open Questions) with field descriptions and example content
+Timestamp: 2026-04-07T17:15:00Z
+
+=== Verification ===
+
+Required sections (each appears twice -- once in template, once as field description):
+  ### Problem: 2 occurrences
+  ### Proposed Solution: 2 occurrences
+  ### Success Criteria: 2 occurrences
+  ### Constraints: 2 occurrences
+  ### Assumptions: 2 occurrences
+  ### Wave Assignment: 2 occurrences
+  ### Open Questions: 2 occurrences
+
+Field descriptions (Requirements blocks): 7
+Example blocks: 7
+
+Each section includes:
+  - Requirements (minimum counts, content guidance)
+  - Example (concrete content showing correct format)
+
+Validation checklist present with 8 items.
+
+File size: 5080 bytes, 140 lines.
+
+Status: PASS

@@ -1,0 +1,27 @@
+Type: file
+File: references/idea-lifecycle.md
+Expected: Contains all four stages (Capture, Shape, Spec-Ready, Shipped) with forward and backward transition rules
+Timestamp: 2026-04-07T17:15:00Z
+
+=== Verification ===
+
+Stage headings found:
+  ### Capture
+  ### Shape
+  ### Spec-Ready
+  ### Shipped
+
+Forward transitions (Mermaid diagram + prose):
+  Capture --> Shape : triage
+  Shape --> SpecReady : brief approved
+  SpecReady --> Shipped : SDD pipeline
+
+Backward transitions:
+  Shape --> Capture : needs more context
+  Spec-Ready --> Shape : scope change
+
+Each stage has: Description, Data Fields, Entry Criteria, Exit Criteria, Allowed Transitions.
+
+File size: 4799 bytes, 128 lines.
+
+Status: PASS

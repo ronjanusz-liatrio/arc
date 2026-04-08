@@ -1,0 +1,20 @@
+Type: file
+File: references/README.md
+Expected: Lists idea-lifecycle.md, brief-format.md, and wave-planning.md with one-line descriptions
+Timestamp: 2026-04-07T17:15:00Z
+
+=== Verification ===
+
+Directory hub table entries:
+  idea-lifecycle.md: "Four-stage idea progression (Capture -> Shape -> Spec-Ready -> Shipped) with forward and backward transition rules."
+  brief-format.md: "Spec-ready brief structure -- the exact template, field descriptions, validation checklist, and examples for the artifact consumed by /cw-spec."
+  wave-planning.md: "Wave organization principles: capacity constraints by Temper phase, precedence rules for idea ordering, theme grouping guidance, and Temper phase compatibility."
+
+Usage sections:
+  - In /arc-capture: references idea-lifecycle.md
+  - In /arc-shape: references idea-lifecycle.md and brief-format.md
+  - In /arc-wave: references idea-lifecycle.md, wave-planning.md, and brief-format.md
+
+File size: 1716 bytes, 25 lines.
+
+Status: PASS

@@ -1,0 +1,37 @@
+Type: file
+Command: grep -E "^(role|artifact|output_path):" templates/BACKLOG.tmpl.md && grep "Summary Table\|## {Title}\|captured\|shaped" templates/BACKLOG.tmpl.md
+Expected: BACKLOG.tmpl.md contains frontmatter with role: product-leadership, summary table header format, ## {Title} section format, and distinction between captured stubs and shaped full briefs
+Timestamp: 2026-04-07T17:30:00Z
+
+--- Output ---
+
+Frontmatter fields:
+  role: product-leadership
+  artifact: BACKLOG
+  output_path: docs/BACKLOG.md
+
+Phase sections found (7 of 7):
+  ### Spike -- Not Required
+  ### Proof of Concept -- Not Required
+  ### Vertical Slice -- Not Required
+  ### Foundation -- Stub
+  ### MVP -- Draft
+  ### Growth -- Full
+  ### Maturity -- Full (Maintained)
+
+Summary table format: Present
+  - Columns: Title, Status, Priority, Wave
+  - Example table with markdown anchor links to idea sections
+  - Column definitions table with value descriptions
+
+## {Title} section format: Present (7 occurrences)
+  - Template description: "stored as a ## {Title} section"
+  - Storage format section with explicit examples
+  - Foundation phase: "One ## {Title} section per idea"
+
+Captured vs Shaped distinction: Present
+  - "Captured idea (stub):" example with Status, Priority, Captured date, one-line summary
+  - "Shaped idea (full brief):" example with full subsections (Problem, Proposed Solution, Success Criteria, Constraints, Assumptions, Open Questions)
+  - "Spec-ready idea (full brief with wave assignment):" example with wave reference
+
+Status: PASS

@@ -1,0 +1,35 @@
+Type: file
+Command: grep -E "^(role|artifact|output_path):" templates/CUSTOMER.tmpl.md && grep "JTBD\|Jobs-To-Be-Done" templates/CUSTOMER.tmpl.md
+Expected: CUSTOMER.tmpl.md contains frontmatter with role: always-required and JTBD format
+Timestamp: 2026-04-07T17:30:00Z
+
+--- Output ---
+
+Frontmatter fields:
+  role: always-required
+  artifact: CUSTOMER
+  output_path: docs/CUSTOMER.md
+
+Phase sections found (7 of 7):
+  ### Spike -- Notes
+  ### Proof of Concept -- Draft
+  ### Vertical Slice -- Draft (Validated)
+  ### Foundation -- Full
+  ### MVP -- Full (Maintained)
+  ### Growth -- Full (Maintained)
+  ### Maturity -- Full (Maintained)
+
+JTBD references (12 occurrences):
+  - Template description mentions "jobs-to-be-done (JTBD) statements"
+  - PoC phase: "At least 1 JTBD statement in the format..."
+  - JTBD format: "When [situation], I want to [motivation], so I can [expected outcome]"
+  - Example JTBD provided with full format
+  - Vertical Slice phase: "At least 2 JTBD statements"
+  - Foundation phase: "At least 3 JTBD statements per primary persona"
+  - MVP phase: "Update JTBD statements if real usage revealed jobs"
+  - Growth phase: "new JTBD based on adoption data"
+  - Maturity phase: "Which JTBD were fully addressed"
+
+Persona definitions: Present in PoC (Primary Persona), Vertical Slice (Secondary Personas), Foundation (All Personas finalized)
+
+Status: PASS

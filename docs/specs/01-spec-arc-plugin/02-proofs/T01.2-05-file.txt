@@ -1,0 +1,41 @@
+Type: file
+Command: Verify all templates follow Temper phase-graduated conventions
+Expected: Every template contains YAML frontmatter with role, artifact, output_path; phase-graduated content Spike through Maturity; required sections per phase with content guidance
+Timestamp: 2026-04-07T17:30:00Z
+
+--- Output ---
+
+Convention check: YAML frontmatter
+  VISION.tmpl.md:    role: always-required, artifact: VISION, output_path: docs/VISION.md       OK
+  CUSTOMER.tmpl.md:  role: always-required, artifact: CUSTOMER, output_path: docs/CUSTOMER.md   OK
+  ROADMAP.tmpl.md:   role: product-leadership, artifact: ROADMAP, output_path: docs/ROADMAP.md  OK
+  BACKLOG.tmpl.md:   role: product-leadership, artifact: BACKLOG, output_path: docs/BACKLOG.md  OK
+
+Convention check: Phase-graduated sections (Spike through Maturity)
+  VISION.tmpl.md:    7/7 phases present    OK
+  CUSTOMER.tmpl.md:  7/7 phases present    OK
+  ROADMAP.tmpl.md:   7/7 phases present    OK
+  BACKLOG.tmpl.md:   7/7 phases present    OK
+
+Convention check: Required sections per phase with content guidance
+  VISION.tmpl.md:    All phases have "Required sections:" and "Content guidance:" subsections    OK
+  CUSTOMER.tmpl.md:  All phases have "Required sections:" and "Content guidance:" subsections    OK
+  ROADMAP.tmpl.md:   All phases have "Required sections:" and "Content guidance:" subsections    OK
+  BACKLOG.tmpl.md:   All phases have "Required sections:" and "Content guidance:" subsections    OK
+
+Convention check: Cross-References section
+  VISION.tmpl.md:    Cross-References present    OK
+  CUSTOMER.tmpl.md:  Cross-References present    OK
+  ROADMAP.tmpl.md:   Cross-References present    OK
+  BACKLOG.tmpl.md:   Cross-References present    OK
+
+Convention check: Mermaid diagrams with Liatrio brand colors
+  VISION.tmpl.md:    Foundation+ has vision-to-strategy diagram with brand colors    OK
+  CUSTOMER.tmpl.md:  Foundation+ has persona interaction map with brand colors       OK
+  ROADMAP.tmpl.md:   VS+ has wave dependency graph, Foundation+ has gantt timeline   OK
+  BACKLOG.tmpl.md:   No diagrams required (correct per spec)                         OK
+
+Convention check: Template naming (.tmpl.md extension)
+  All 4 templates follow {ARTIFACT}.tmpl.md naming convention    OK
+
+Status: PASS

@@ -1,0 +1,34 @@
+Type: file
+Command: grep -E "^(role|artifact|output_path):" templates/ROADMAP.tmpl.md && grep "#11B5A4\|#E8662F\|#1B2A3D" templates/ROADMAP.tmpl.md
+Expected: ROADMAP.tmpl.md contains frontmatter with role: product-leadership and Mermaid diagrams with Liatrio brand colors
+Timestamp: 2026-04-07T17:30:00Z
+
+--- Output ---
+
+Frontmatter fields:
+  role: product-leadership
+  artifact: ROADMAP
+  output_path: docs/ROADMAP.md
+
+Phase sections found (7 of 7):
+  ### Spike -- Not Required
+  ### Proof of Concept -- Not Required
+  ### Vertical Slice -- Stub
+  ### Foundation -- Draft
+  ### MVP -- Full
+  ### Growth -- Full (Maintained)
+  ### Maturity -- Full (Maintained)
+
+Mermaid diagram specifications:
+  - Vertical Slice: Wave dependency graph (flowchart) with Liatrio brand colors
+  - Foundation: Wave dependency graph (flowchart) + Milestone timeline (gantt) with Liatrio brand colors
+  - MVP+: Same as Foundation, updated
+
+Liatrio brand colors found:
+  - primaryColor: #11B5A4 (2 occurrences)
+  - secondaryColor: #E8662F (2 occurrences)
+  - tertiaryColor: #1B2A3D (2 occurrences)
+
+Wave definition sections: Present (wave name, goal, selected ideas, target timeframe, dependencies, status)
+
+Status: PASS
