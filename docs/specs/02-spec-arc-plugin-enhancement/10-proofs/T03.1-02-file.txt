@@ -1,3 +1,10 @@
+Type: file
+File: .claude-plugin/marketplace.json
+Description: Verify version is 0.3.0 and description includes /arc-review in marketplace.json
+Expected: "version": "0.3.0" and description containing "/arc-review for pipeline health auditing"
+Timestamp: 2026-04-07T00:00:00Z
+
+Content:
 {
   "name": "arc",
   "owner": {
@@ -16,3 +23,5 @@
     }
   ]
 }
+
+Status: PASS

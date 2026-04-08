@@ -1,5 +1,14 @@
+Type: file
+File: .claude-plugin/plugin.json
+Description: Verify version is 0.3.0 in plugin.json
+Expected: "version": "0.3.0"
+Timestamp: 2026-04-07T00:00:00Z
+
+Content:
 {
   "name": "arc",
   "version": "0.3.0",
   "description": "Lightweight product direction for spec-driven development. Capture ideas, shape them into spec-ready briefs, and feed them into the claude-workflow SDD pipeline."
 }
+
+Status: PASS
