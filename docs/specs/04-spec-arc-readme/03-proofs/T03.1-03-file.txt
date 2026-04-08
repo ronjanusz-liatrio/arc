@@ -1,0 +1,62 @@
+Type: file
+Command: Verify spec Unit 3 functional requirements coverage
+Expected: All Unit 3 requirements from 04-spec-arc-readme.md are implemented
+Timestamp: 2026-04-08T12:00:00Z
+
+=== Spec Unit 3 Functional Requirements ===
+
+1. "If README.md exists and contains at least one BEGIN ARC marker, enter update mode"
+   - Step 2 mode detection table, line 63
+   - PASS
+
+2. "Read all available Arc artifacts and update each managed section"
+   - Step 1 (shared artifact reading) + Step 8 (section-by-section rebuild)
+   - ARC:overview (8a), ARC:audience (8b), ARC:features (8c), ARC:roadmap (8d), ARC:lifecycle-diagram (8e)
+   - PASS
+
+3. "Follow bootstrap-protocol pattern: replace between markers, never move positions, validate no nesting"
+   - Step 7: nesting conflict validation
+   - Step 8 rules: "Replace content between markers only -- never move marker positions"
+   - PASS
+
+4. "Never modify content outside ARC: managed sections"
+   - Critical Constraints + Step 8 rules + Step 13c verification
+   - PASS
+
+5. "Never modify TEMPER: or MM: managed sections"
+   - Critical Constraints + Step 7 nesting check + Step 8 rules
+   - PASS
+
+6. "Show diff summary and ask user to confirm before writing"
+   - Step 11 (diff summary) + Step 12 (AskUserQuestion with Approve/Request changes/Cancel)
+   - PASS
+
+7. "If README.md exists but has no ARC: markers, offer to inject markers"
+   - Step 2 injection mode (pre-existing)
+   - PASS
+
+8. "Update mermaid diagrams in docs/ that contain ARC: managed diagram markers"
+   - Step 9 (scan docs/ for ARC: markers, known diagram types table)
+   - PASS
+
+9. "Report summary after update: sections updated, diagrams updated, line count delta"
+   - Step 13d report summary
+   - PASS
+
+10. "Run trust-signal validation (TS-1 through TS-8) against updated README"
+    - Step 10 (full trust-signal validation)
+    - PASS
+
+11. "If any trust signal regressed, warn the user"
+    - Step 10 regression detection + Step 11 regression warning
+    - PASS
+
+12. "If new trust signals became evaluable, report them"
+    - Step 10 newly evaluable signal detection
+    - PASS
+
+=== Summary ===
+
+All 12 functional requirements from spec Unit 3 are covered.
+
+Status: PASS

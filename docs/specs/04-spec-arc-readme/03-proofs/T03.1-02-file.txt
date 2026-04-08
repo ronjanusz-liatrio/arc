@@ -1,0 +1,70 @@
+Type: file
+Command: Verify Gherkin scenario coverage in SKILL.md update mode steps
+Expected: All update mode Gherkin scenarios from arc-readme-update-mode.feature are addressed
+Timestamp: 2026-04-08T12:00:00Z
+
+=== Scenario Coverage ===
+
+Scenario 1: "Updates managed sections in existing README"
+  - Covered by: Step 2 (mode detection), Step 8 (rebuild all managed sections)
+  - ARC:features rebuilt from BACKLOG.md shipped items (Step 8c)
+  - ARC:roadmap rebuilt from ROADMAP.md (Step 8d)
+  - PASS
+
+Scenario 2: "Does not modify content outside managed sections"
+  - Covered by: Critical Constraints ("NEVER modify content outside ARC: managed sections")
+  - Step 8 rules: "Replace content between markers only -- never move marker positions"
+  - Step 13a: "Replace only the content between markers -- never modify the markers themselves or content outside them"
+  - Step 13c: Verify "Content outside ARC: markers is unchanged from the original file"
+  - PASS
+
+Scenario 3: "Does not modify TEMPER managed sections"
+  - Covered by: Critical Constraints ("NEVER modify TEMPER: or MM: managed sections")
+  - Step 8 rules: "Never modify TEMPER: or MM: managed sections"
+  - Step 7: Nesting conflict detection includes TEMPER: and MM: sections
+  - PASS
+
+Scenario 4: "Shows diff summary and trust-signal scorecard before writing"
+  - Covered by: Step 11 (Build Diff Summary with section-by-section changes and line count delta)
+  - Step 10 (Trust-Signal Scorecard with Before/After columns)
+  - Step 12 (Present for Approval via AskUserQuestion before writing)
+  - PASS
+
+Scenario 5: "Warns on trust-signal regression after update"
+  - Covered by: Step 10 regression detection
+  - "If a signal was passing before the update and is now failing, flag it as a regression"
+  - Step 11: Regression warning appended to diff summary
+  - PASS
+
+Scenario 6: "Reports newly evaluable trust signals"
+  - Covered by: Step 10 newly evaluable signal detection
+  - "If a signal was N/A before and is now evaluable, report it as newly evaluable"
+  - Scorecard shows Before: N/A, After: PASS/FAIL with "Newly evaluable" annotation
+  - PASS
+
+Scenario 7: "Offers to inject markers into README without existing ARC sections"
+  - Covered by: Step 2 injection mode (pre-existing from scaffold mode, routes to Step 3)
+  - Note: This scenario is handled by the existing injection mode, not new update steps
+  - PASS
+
+Scenario 8: "Updates mermaid diagrams in docs directory"
+  - Covered by: Step 9 (Scan docs/ for ARC: Diagram Markers)
+  - Known diagram types table includes ARC:wave-pipeline-diagram and ARC:lifecycle-diagram
+  - Step 13b writes docs/ diagram updates
+  - PASS
+
+Scenario 9: "Lifecycle diagram updates with current BACKLOG counts"
+  - Covered by: Step 8e (ARC:lifecycle-diagram regeneration with current status counts)
+  - Uses same format as Step 3f (Liatrio brand colors, stateDiagram-v2, count-labeled nodes)
+  - PASS
+
+Scenario 10: "Reports summary after update"
+  - Covered by: Step 13d (Report summary)
+  - Reports: sections updated, diagrams updated (README + docs/), line count delta, trust signals, regressions
+  - PASS
+
+=== Summary ===
+
+All 10 Gherkin scenarios from arc-readme-update-mode.feature are covered by the update mode steps.
+
+Status: PASS

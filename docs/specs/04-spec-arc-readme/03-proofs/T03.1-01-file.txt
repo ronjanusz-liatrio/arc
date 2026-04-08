@@ -1,0 +1,31 @@
+Type: file
+Command: Verify update mode steps exist in SKILL.md
+Expected: Steps 7-13 present with update mode process
+Timestamp: 2026-04-08T12:00:00Z
+
+=== Verification ===
+
+File: skills/arc-readme/SKILL.md
+
+Step 2 routing check:
+- Line 63: "README.md exists with <!--# BEGIN ARC: markers | **Update** -- proceed to Step 7"
+- Line 68: "**If update mode:** Proceed to Step 7."
+- PASS: Update mode now routes to Step 7 instead of "not yet available" stub
+
+Update mode steps present:
+- Step 7: Capture Before-State (lines 393-405)
+- Step 8: Rebuild Managed Sections (lines 407-480)
+  - 8a: ARC:overview re-extraction from VISION.md
+  - 8b: ARC:audience re-extraction from CUSTOMER.md
+  - 8c: ARC:features rebuild from BACKLOG.md shipped items
+  - 8d: ARC:roadmap rebuild from ROADMAP.md waves
+  - 8e: ARC:lifecycle-diagram regeneration with status counts
+- Step 9: Scan docs/ for ARC: Diagram Markers (lines 482-502)
+- Step 10: Trust-Signal Validation with regression detection (lines 504-539)
+- Step 11: Build Diff Summary (lines 541-577)
+- Step 12: Present for Approval via AskUserQuestion (lines 579-602)
+- Step 13: Write Updates and Report (lines 604-641)
+
+PASS: All 7 update mode steps (7-13) are present and complete.
+
+Status: PASS
