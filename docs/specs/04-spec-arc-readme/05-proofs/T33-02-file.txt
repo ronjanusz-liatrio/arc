@@ -1,0 +1,23 @@
+Type: file
+Description: Verify scaffold and update mode fallback text matches for audience and roadmap
+Command: Compare scaffold (Step 3c/3e) with update (Step 8b/8d) and readme-mapping.md fallback text
+Expected: All three sources use identical fallback text
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+
+ARC:audience fallback comparison:
+  Scaffold (SKILL.md line 194): "Not yet defined — create [CUSTOMER.md](docs/CUSTOMER.md) to define target personas."
+  Scaffold code block (line 215): Not yet defined — create [CUSTOMER.md](docs/CUSTOMER.md) to define target personas.
+  Update (SKILL.md line 494): Not yet defined — create [CUSTOMER.md](docs/CUSTOMER.md) to define target personas.
+  readme-mapping.md (line 248): Not yet defined — create [CUSTOMER.md](docs/CUSTOMER.md) to define target personas.
+  MATCH: All three sources agree.
+
+ARC:roadmap fallback comparison:
+  Scaffold (SKILL.md line 264): "Not yet defined — create [ROADMAP.md](docs/ROADMAP.md) to plan delivery waves."
+  Scaffold code block (line 287): Not yet defined — create [ROADMAP.md](docs/ROADMAP.md) to plan delivery waves.
+  Update (SKILL.md line 520): Not yet defined — create [ROADMAP.md](docs/ROADMAP.md) to plan delivery waves.
+  readme-mapping.md (line 249): Not yet defined — create [ROADMAP.md](docs/ROADMAP.md) to plan delivery waves.
+  MATCH: All three sources agree.
+
+Status: PASS

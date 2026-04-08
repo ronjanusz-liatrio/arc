@@ -1,0 +1,25 @@
+Type: file
+Description: Verify scaffold fallback text no longer references wrong skills (/arc-capture, /arc-wave)
+Command: grep -n "arc-capture\|arc-wave" skills/arc-readme/SKILL.md (filtered to scaffold sections)
+Expected: No matches for /arc-capture in audience fallback or /arc-wave in roadmap fallback
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+
+Grep for "/arc-capture" in scaffold audience fallback (lines 187-218):
+  No matches found.
+
+Grep for "/arc-wave" in scaffold roadmap fallback (lines 256-290):
+  No matches found.
+
+Grep for "arc-capture" across entire SKILL.md:
+  Line 53: - If the file does not exist, warn and exit: "Run `/arc-capture` or create VISION.md first."
+  (This is the VISION.md gate check in Step 1, NOT a fallback — correctly references /arc-capture as the skill to run)
+
+Grep for "arc-wave" across entire SKILL.md:
+  Line 709: - [`skills/arc-wave/references/bootstrap-protocol.md`](...) — Marker format reference
+  (This is a cross-reference, not a fallback)
+
+Conclusion: Scaffold fallback text no longer references wrong skills.
+
+Status: PASS

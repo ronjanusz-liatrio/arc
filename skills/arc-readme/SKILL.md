@@ -177,7 +177,7 @@ Output format:
 
 {Problem statement and value proposition — 2-5 sentences derived from VISION.md}
 
-See [VISION.md](docs/VISION.md) for the full product vision.
+See [VISION.md](docs/VISION.md) for full product direction.
 
 <!--# END ARC:overview -->
 ```
@@ -191,7 +191,7 @@ Extract from `docs/CUSTOMER.md` (if present):
 - List each persona with their role
 
 If `docs/CUSTOMER.md` is absent:
-- Use placeholder text: "Not yet defined — run `/arc-capture` to define target personas."
+- Use placeholder text: "Not yet defined — create [CUSTOMER.md](docs/CUSTOMER.md) to define target personas."
 
 Output format (with CUSTOMER.md):
 ```markdown
@@ -201,7 +201,7 @@ Output format (with CUSTOMER.md):
 
 {Persona list derived from CUSTOMER.md — one line per persona with name and role}
 
-See [CUSTOMER.md](docs/CUSTOMER.md) for detailed persona profiles.
+See [CUSTOMER.md](docs/CUSTOMER.md) for detailed personas.
 
 <!--# END ARC:audience -->
 ```
@@ -212,7 +212,7 @@ Output format (without CUSTOMER.md):
 
 <!--# BEGIN ARC:audience -->
 
-Not yet defined — run `/arc-capture` to define target personas.
+Not yet defined — create [CUSTOMER.md](docs/CUSTOMER.md) to define target personas.
 
 <!--# END ARC:audience -->
 ```
@@ -261,7 +261,7 @@ Extract from `docs/ROADMAP.md` (if present):
 - Present as a table
 
 If `docs/ROADMAP.md` is absent:
-- Use placeholder text: "Not yet defined — run `/arc-wave` to plan delivery waves."
+- Use placeholder text: "Not yet defined — create [ROADMAP.md](docs/ROADMAP.md) to plan delivery waves."
 
 Output format (with ROADMAP.md):
 ```markdown
@@ -273,7 +273,7 @@ Output format (with ROADMAP.md):
 |------|-------|--------|
 | {Wave Name} | {Theme} | {Status} |
 
-See [ROADMAP.md](docs/ROADMAP.md) for wave details.
+See [ROADMAP.md](docs/ROADMAP.md) for the full delivery plan.
 
 <!--# END ARC:roadmap -->
 ```
@@ -284,7 +284,7 @@ Output format (without ROADMAP.md):
 
 <!--# BEGIN ARC:roadmap -->
 
-Not yet defined — run `/arc-wave` to plan delivery waves.
+Not yet defined — create [ROADMAP.md](docs/ROADMAP.md) to plan delivery waves.
 
 <!--# END ARC:roadmap -->
 ```

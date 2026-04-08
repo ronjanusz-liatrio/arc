@@ -1,0 +1,33 @@
+Type: file
+Description: Verify scaffold traceability link text aligns with readme-mapping.md canonical text
+Command: Compare scaffold (Step 3b/3c/3e) traceability links with readme-mapping.md
+Expected: Scaffold traceability links match readme-mapping.md to prevent unnecessary diff on first update
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+
+ARC:overview traceability link comparison:
+  Scaffold (SKILL.md line 180): See [VISION.md](docs/VISION.md) for full product direction.
+  Update (SKILL.md line 481): See [VISION.md](docs/VISION.md) for full product direction.
+  readme-mapping.md (line 64): See [VISION.md](docs/VISION.md) for full product direction.
+  MATCH: All three sources agree.
+
+ARC:audience traceability link comparison:
+  Scaffold (SKILL.md line 204): See [CUSTOMER.md](docs/CUSTOMER.md) for detailed personas.
+  readme-mapping.md (line 100): See [CUSTOMER.md](docs/CUSTOMER.md) for detailed personas.
+  MATCH: Both sources agree.
+
+ARC:roadmap traceability link comparison:
+  Scaffold (SKILL.md line 276): See [ROADMAP.md](docs/ROADMAP.md) for the full delivery plan.
+  readme-mapping.md (line 173): See [ROADMAP.md](docs/ROADMAP.md) for the full delivery plan.
+  MATCH: Both sources agree.
+
+Before fix, scaffold mode used different text:
+  overview: "for the full product vision" vs canonical "for full product direction"
+  audience: "for detailed persona profiles" vs canonical "for detailed personas"
+  roadmap: "for wave details" vs canonical "for the full delivery plan"
+
+These divergences would cause unnecessary diffs when /arc-readme first ran in update mode
+on a previously scaffolded README. Now scaffold and update modes produce identical text.
+
+Status: PASS
