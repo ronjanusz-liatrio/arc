@@ -1,0 +1,26 @@
+Type: file
+Command: Grep for WA-7 row in skills/arc-review/references/review-report-template.md
+Expected: WA-7 row in Wave Alignment Findings table, updated Field Descriptions section
+Timestamp: 2026-04-08T14:15:00-07:00
+Status: PASS
+
+--- Verification ---
+
+1. Wave Alignment Findings table (inside template code fence):
+   - Line 46: '| README trust signals | {N of M signals passing, or "No README" or "No ARC: sections"} | info / warning | Run /arc-readme to fix failing signals |'
+   - Row follows same format as WA-1 through WA-6 rows
+
+2. Cross-References in template code fence updated:
+   - Line 99: trust-signals.md reference added
+
+3. Field Descriptions - Overall Health Rating:
+   - Line 120: "README trust signals below 75% passing" added to warning-level issues list
+
+4. Field Descriptions - Wave Alignment Findings:
+   - Line 134: "Seven checks that verify consistency between BACKLOG, ROADMAP, VISION, CUSTOMER, and README" (was "Six" and listed 4 docs)
+   - Line 143: Item 7 added - "README trust signals" description with TS-1 through TS-8 and N/M scorecard
+
+5. Cross-References at bottom of file:
+   - Line 172: trust-signals.md reference added
+
+All expected changes present in review-report-template.md.

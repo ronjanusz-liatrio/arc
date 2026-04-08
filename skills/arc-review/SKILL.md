@@ -113,7 +113,7 @@ Report in the format defined in audit-dimensions.md (BH-5 section).
 
 ### Step 3: Wave Alignment Audit
 
-Execute all six wave alignment checks per `skills/arc-review/references/audit-dimensions.md`.
+Execute all seven wave alignment checks per `skills/arc-review/references/audit-dimensions.md`.
 
 **If `docs/ROADMAP.md` is absent:** Skip WA-1, WA-2, and WA-3 (report as info: "No ROADMAP.md found — wave alignment checks skipped").
 
@@ -172,6 +172,34 @@ Report in the format defined in audit-dimensions.md (WA-5 section).
 
 Report in the format defined in audit-dimensions.md (WA-6 section).
 
+#### WA-7: README Trust-Signal Audit
+
+Evaluate the structural trust signals defined in `skills/arc-readme/references/trust-signals.md` against the project's README.md `ARC:` managed sections.
+
+**Skip conditions:**
+- If `README.md` does not exist at the project root: report as info ("No README.md found") and skip
+- If `README.md` exists but contains no `<!--# BEGIN ARC:... -->` markers: report as info ("No ARC: sections in README — run `/arc-readme` to scaffold") and skip
+
+**Detection logic:**
+- Read `skills/arc-readme/references/trust-signals.md` for the canonical signal definitions and evaluability rules
+- Evaluate each of the 8 trust signals (TS-1 through TS-8) per the detection steps in trust-signals.md
+- A signal is evaluable only when its source artifact exists AND the corresponding `ARC:` managed section exists in README.md
+- For each evaluable signal, cross-reference README.md content against the source artifact (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) to determine pass/fail
+- TS-8 (No Placeholders) only fails when the source artifact has substantive content (>200 non-whitespace chars) — placeholder text is permitted when the artifact is absent or a stub
+
+**Report format:**
+- Output a trust-signal scorecard: `N of M signals passing` (where M is the count of evaluable signals)
+- For each signal, report PASS, FAIL, or N/A with a detail string explaining the result
+- Use the scorecard format defined in trust-signals.md
+
+**Severity:**
+- `info` — 75% or more of evaluable signals pass
+- `warning` — fewer than 75% of evaluable signals pass
+
+**Recommended action:** "Run `/arc-readme` to fix failing signals" with a list of which signals failed.
+
+Report in the format defined in audit-dimensions.md (WA-7 section).
+
 ### Step 4: Calculate Health Rating
 
 Apply the thresholds from audit-dimensions.md to determine the overall rating:
@@ -196,6 +224,7 @@ Apply the thresholds from audit-dimensions.md to determine the overall rating:
 - WA-3: Orphaned spec-ready ideas (1+ idea)
 - WA-4: VISION stub or missing
 - WA-5: CUSTOMER undefined personas (1+ reference)
+- WA-7: README trust signals (<75% of evaluable signals passing)
 
 **Info findings** do not affect the health rating.
 
@@ -208,7 +237,7 @@ Create `docs/review-report.md` with:
 - Timestamp and staleness threshold
 - Overall health rating with criteria explanation
 - Backlog health findings table (all 5 checks)
-- Wave alignment findings table (all 6 checks)
+- Wave alignment findings table (all 7 checks)
 - Status distribution summary with pipeline health assessment
 - Recommended actions grouped by severity (critical, warnings, info)
 - Fixes applied section (initially empty, populated if user applies fixes)
@@ -298,5 +327,6 @@ AskUserQuestion({
 
 - `skills/arc-review/references/audit-dimensions.md` — Health check definitions, detection logic, thresholds, severity levels, and configurable parameters
 - `skills/arc-review/references/review-report-template.md` — Report format and section layout for `docs/review-report.md`
+- `skills/arc-readme/references/trust-signals.md` — Structural trust-signal definitions used by WA-7 (TS-1 through TS-8)
 - `references/idea-lifecycle.md` — Idea status transitions, timestamp fields, and lifecycle phases
 - `references/brief-format.md` — The seven required brief sections used by BH-4
