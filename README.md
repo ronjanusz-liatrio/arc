@@ -78,13 +78,11 @@ flowchart LR
 | `/arc-shape` | Refine an idea into a structured brief with problem, solution, and success criteria |
 | `/arc-wave` | Group shaped ideas into a delivery cycle and hand off to temper + claude-workflow |
 
-## Skills (Planned)
-
-Arc ships with three planned skills:
+## Skills
 
 - **`/arc-capture`** — Fast idea entry. Appends a structured stub to `BACKLOG` with minimal friction.
-- **`/arc-shape`** — Interactive refinement. Turns a captured idea into a spec-ready brief by guiding through problem framing, proposed solution, success criteria, and constraints.
-- **`/arc-wave`** — Delivery cycle management. Groups spec-ready ideas into a wave, updates `ROADMAP`, and prepares the handoff brief for `/temper-incept` and `/cw-spec`.
+- **`/arc-shape`** — Interactive refinement. Turns a captured idea into a spec-ready brief using parallel subagent analysis across four dimensions (problem clarity, customer fit, scope boundaries, feasibility).
+- **`/arc-wave`** — Delivery cycle management. Groups spec-ready ideas into a wave, updates `ROADMAP`, injects `ARC:product-context` into project CLAUDE.md, and prepares the handoff for `/cw-spec`.
 
 ## Relationship to Temper and claude-workflow
 
@@ -129,11 +127,32 @@ claude plugin install arc@arc --scope user
 ```
 arc/
   .claude-plugin/
-    plugin.json               # Plugin identity and version
-    marketplace.json          # Marketplace registration
-  skills/                     # SKILL.md definitions (planned)
-  templates/                  # Artifact templates: VISION, CUSTOMER, ROADMAP, BACKLOG
-  references/                 # Shared reference docs
+    plugin.json                             # Plugin identity and version
+    marketplace.json                        # Marketplace registration
+  skills/
+    README.md                               # Skill directory hub
+    arc-capture/
+      SKILL.md                              # Fast idea entry
+    arc-shape/
+      SKILL.md                              # Interactive refinement with parallel subagent analysis
+      references/
+        shaping-dimensions.md               # Four analysis dimensions and subagent prompts
+        brief-validation.md                 # Readiness criteria for spec-ready status
+    arc-wave/
+      SKILL.md                              # Delivery cycle management
+      references/
+        wave-report-template.md             # Wave report format
+        bootstrap-protocol.md               # ARC: namespace CLAUDE.md injection rules
+  templates/
+    VISION.tmpl.md                          # Product vision (always-required)
+    CUSTOMER.tmpl.md                        # Personas and JTBD (always-required)
+    ROADMAP.tmpl.md                         # Phased delivery plan (product-leadership)
+    BACKLOG.tmpl.md                         # Triaged idea list (product-leadership)
+  references/
+    README.md                               # Reference directory hub
+    idea-lifecycle.md                       # Capture → Shape → Spec-Ready → Shipped model
+    brief-format.md                         # Spec-ready brief specification and examples
+    wave-planning.md                        # Wave organization, precedence, Temper phase compatibility
   README.md
   CLAUDE.md
   .gitignore
