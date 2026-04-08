@@ -1,0 +1,19 @@
+Type: file
+Command: grep -n "Wave.*Theme.*Status\|Wave.*Status.*Goal" skills/arc-readme/references/readme-mapping.md skills/arc-readme/SKILL.md skills/arc-readme/references/readme-quality-rules.md
+Expected: All three files use "Wave | Theme | Status" columns; no "Wave | Status | Goal" remains
+Timestamp: 2026-04-08T15:00:00Z
+
+Output:
+skills/arc-readme/references/readme-mapping.md:168:| Wave | Theme | Status |
+skills/arc-readme/SKILL.md:272:| Wave | Theme | Status |
+skills/arc-readme/SKILL.md:274:| {Wave Name} | {Theme} | {Status} |
+skills/arc-readme/references/readme-quality-rules.md:96:- Compact table with columns: Wave, Theme, Status
+skills/arc-readme/references/readme-quality-rules.md:101:| Wave | Theme | Status |
+
+Analysis:
+- readme-mapping.md line 168: Wave | Theme | Status (FIXED, was Wave | Status | Goal)
+- SKILL.md line 272: Wave | Theme | Status (already correct)
+- readme-quality-rules.md line 101: Wave | Theme | Status (already correct)
+- No occurrences of "Wave | Status | Goal" remain in any file
+
+Status: PASS
