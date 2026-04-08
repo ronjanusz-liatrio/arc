@@ -1,0 +1,28 @@
+Type: file
+Command: verify merge logic in SKILL.md Step 1e
+Expected: Final exclusion set merges hardcoded + user-selected large dirs + custom patterns
+Timestamp: 2026-04-08T11:15:00Z
+
+== Requirement ==
+Merge user selections into the final exclusion set.
+
+== Verification ==
+SKILL.md Step 1e (lines 106-115):
+
+  "Build the final exclusion set by combining:
+  1. All hardcoded exclusions from 1a (always included)
+  2. Large directories the user left selected in 1c
+  3. Any custom patterns from 1d"
+
+  "Directories the user deselected in 1c are removed from the exclusion set
+  and will be scanned."
+
+  "Use this merged exclusion set for all subsequent scanning in Steps 2-8."
+
+Checks:
+  [PASS] Three-source merge: hardcoded + large dirs + custom patterns
+  [PASS] Deselection honored (user can opt out of large dir recommendations)
+  [PASS] Hardcoded exclusions cannot be deselected (always included)
+  [PASS] Merged set used for all subsequent steps (Steps 2-8)
+
+Status: PASS

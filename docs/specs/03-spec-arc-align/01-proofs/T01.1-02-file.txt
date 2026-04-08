@@ -1,0 +1,35 @@
+Type: file
+Command: verify directory pre-scan logic in skills/arc-align/SKILL.md Step 1b
+Expected: Pre-scan uses Glob to identify directories >100 files, recommends for exclusion
+Timestamp: 2026-04-08T11:15:00Z
+
+== Requirement ==
+Implement a quick directory scan using Glob to identify folders with >100 files
+and recommend them for exclusion.
+
+== Verification ==
+SKILL.md Step 1b (lines 46-52) contains:
+
+  "Run a quick Glob scan to identify top-level and second-level directories with
+  unusually large file counts (>100 files). These directories are likely dependency
+  or generated-content folders that would slow the scan."
+
+  "For each candidate directory, use Glob({ pattern: '{dir}/**/*' }) and count the
+  returned files. If the count exceeds 100, add the directory to the
+  recommended-exclusion list with the file count."
+
+  "Only scan directories not already in the hardcoded exclusion list."
+
+Checks:
+  [PASS] Glob tool specified as the scan mechanism
+  [PASS] >100 file threshold specified
+  [PASS] File count reported with each recommendation
+  [PASS] Hardcoded directories excluded from pre-scan (avoids scanning node_modules twice)
+
+== Gherkin Scenario Coverage ==
+Scenario: Large directories are recommended for exclusion
+  Given a "data/" directory with 150 files -> pre-scan Glob count > 100 -> recommended
+  Given a "src/" directory with 20 files -> pre-scan Glob count < 100 -> not recommended
+  [PASS] Covered by Step 1b logic
+
+Status: PASS

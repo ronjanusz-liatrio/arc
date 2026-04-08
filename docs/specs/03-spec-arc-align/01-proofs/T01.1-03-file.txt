@@ -1,0 +1,29 @@
+Type: file
+Command: verify AskUserQuestion multi-select and custom patterns in SKILL.md Steps 1c-1d
+Expected: Multi-select AskUserQuestion with large dirs + custom patterns option
+Timestamp: 2026-04-08T11:15:00Z
+
+== Requirement ==
+Present all recommended exclusions (defaults + large directories) to the user via
+AskUserQuestion with multi-select, plus an "Add custom patterns" option.
+
+== Verification ==
+SKILL.md Step 1c (lines 54-87):
+  [PASS] AskUserQuestion with multiSelect: true for large directory recommendations
+  [PASS] Large directories shown as "{large_dir_N}/" with "{N} files detected" description
+  [PASS] "Add custom patterns" option included
+  [PASS] Hardcoded exclusions NOT shown in multi-select (always applied silently)
+  [PASS] Fallback prompt when no large directories found (lines 73-87)
+
+SKILL.md Step 1d (lines 89-104):
+  [PASS] Follow-up AskUserQuestion for custom pattern entry when selected
+  [PASS] Instructions for glob pattern format
+
+== Gherkin Scenario Coverage ==
+Scenario: User selects custom exclusion patterns via multi-select
+  Given user adds custom pattern "legacy/"
+  -> Step 1c presents multi-select, Step 1d prompts for patterns
+  -> Step 1e merges custom patterns into exclusion set
+  [PASS] Covered by Steps 1c + 1d + 1e
+
+Status: PASS

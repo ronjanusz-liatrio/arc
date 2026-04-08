@@ -1,0 +1,27 @@
+Type: file
+Command: verify SKILL.md frontmatter and pattern conformance
+Expected: Frontmatter matches arc-capture/arc-review pattern; allowed-tools correct
+Timestamp: 2026-04-08T11:15:00Z
+
+== Verification ==
+SKILL.md frontmatter (lines 1-6):
+  name: arc-align
+  description: "Codebase discovery and migration — consolidate scattered product-direction content into Arc-managed artifacts"
+  user-invocable: true
+  allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
+
+Compared against arc-capture/SKILL.md:
+  name: arc-capture                    -> arc-align [OK]
+  description: "Fast idea capture..."  -> "Codebase discovery..." [OK]
+  user-invocable: true                 -> true [OK]
+  allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion -> same [OK]
+
+Pattern checks:
+  [PASS] Frontmatter format matches arc-capture and arc-review
+  [PASS] Context Marker section present ("Always begin with **ARC-ALIGN**")
+  [PASS] Overview section present
+  [PASS] Critical Constraints section present
+  [PASS] Process section with numbered steps
+  [PASS] References section at bottom
+
+Status: PASS

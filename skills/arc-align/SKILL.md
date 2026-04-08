@@ -31,35 +31,38 @@ You scan a project for product-direction content scattered outside Arc's managed
 
 ### Step 1: Configure Exclusions
 
-Apply hardcoded exclusion defaults, then let the user refine.
+Apply hardcoded exclusion defaults, scan for large directories, then let the user refine.
 
-**1a. Hardcoded exclusions (always applied):**
+**1a. Hardcoded exclusions (always applied, not user-deselectable):**
 
-Directories: `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `docs/specs/`
+These paths are silently excluded from scanning. They never appear in the user-facing multi-select because they must always be excluded:
 
-Arc-managed files: `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/wave-report.md`, `docs/review-report.md`, `docs/shape-report.md`, `docs/align-manifest.md`
-
-Secret-bearing files: `.env`, `credentials.json`, `*.key`
+| Category | Paths |
+|----------|-------|
+| Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `docs/specs/` |
+| Arc-managed files | `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/wave-report.md`, `docs/review-report.md`, `docs/shape-report.md`, `docs/align-manifest.md` |
+| Secret-bearing files | `.env`, `credentials.json`, `*.key` |
 
 **1b. Directory pre-scan:**
 
-Run a quick scan to identify directories with unusually large file counts (>100 files). Recommend these for exclusion.
+Run a quick Glob scan to identify top-level and second-level directories with unusually large file counts (>100 files). These directories are likely dependency or generated-content folders that would slow the scan.
+
+For each candidate directory, use `Glob({ pattern: "{dir}/**/*" })` and count the returned files. If the count exceeds 100, add the directory to the recommended-exclusion list with the file count.
+
+Only scan directories not already in the hardcoded exclusion list.
 
 **1c. Present exclusion confirmation:**
+
+Present the recommended directory exclusions (from 1b) to the user for review. Hardcoded exclusions from 1a are NOT included in this list -- they are always applied silently.
 
 ```
 AskUserQuestion({
   questions: [{
-    question: "These paths will be excluded from scanning. Deselect any you want scanned, or add custom patterns.",
+    question: "These directories will be excluded from scanning. Deselect any you want scanned, or add custom patterns.",
     header: "Exclusions",
     options: [
-      { label: ".git/", description: "Git internals (always excluded)" },
-      { label: "node_modules/", description: "Package dependencies" },
-      { label: "vendor/", description: "Vendored dependencies" },
-      { label: "dist/", description: "Build output" },
-      { label: "build/", description: "Build output" },
-      { label: "docs/specs/", description: "Spec documents" },
-      { label: "{large_dir}/", description: "{N} files detected — recommended for exclusion" },
+      { label: "{large_dir_1}/", description: "{N} files detected — recommended for exclusion" },
+      { label: "{large_dir_2}/", description: "{N} files detected — recommended for exclusion" },
       { label: "Add custom patterns", description: "Provide additional glob patterns to exclude" }
     ],
     multiSelect: true
@@ -67,7 +70,49 @@ AskUserQuestion({
 })
 ```
 
-If the user selects "Add custom patterns," prompt for the patterns and merge them into the exclusion set.
+If no large directories are found, skip the multi-select and instead ask only:
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "No large directories detected. Would you like to add custom exclusion patterns?",
+    header: "Exclusions",
+    options: [
+      { label: "No, continue", description: "Proceed with default exclusions only" },
+      { label: "Add custom patterns", description: "Provide additional glob patterns to exclude" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+**1d. Custom pattern prompt (if selected):**
+
+If the user selects "Add custom patterns," prompt for the patterns:
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "Enter glob patterns to exclude (one per line, e.g., 'test/', '*.generated.md'):",
+    header: "Custom Exclusions",
+    options: [
+      { label: "Provide patterns", description: "Type your exclusion patterns in the text field" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+**1e. Merge exclusion set:**
+
+Build the final exclusion set by combining:
+1. All hardcoded exclusions from 1a (always included)
+2. Large directories the user left selected in 1c
+3. Any custom patterns from 1d
+
+Directories the user deselected in 1c are removed from the exclusion set and will be scanned.
+
+Use this merged exclusion set for all subsequent scanning in Steps 2-8.
 
 ### Step 2: Discover Product-Direction Content
 

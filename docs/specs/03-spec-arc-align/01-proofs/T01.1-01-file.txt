@@ -1,0 +1,43 @@
+Type: file
+Command: grep verification of hardcoded exclusion list in skills/arc-align/SKILL.md
+Expected: All hardcoded exclusions from spec present in SKILL.md Step 1a
+Timestamp: 2026-04-08T11:15:00Z
+
+== Requirement ==
+Define the hardcoded exclusion list: .git/, node_modules/, vendor/, dist/, build/,
+docs/specs/, .env, credentials.json, *.key, and all Arc-managed files (docs/BACKLOG.md,
+docs/ROADMAP.md, docs/VISION.md, docs/CUSTOMER.md, docs/wave-report.md,
+docs/review-report.md, docs/shape-report.md, docs/align-manifest.md)
+
+== Verification ==
+Searched SKILL.md Step 1a for each required path:
+
+Directories (line 42):
+  [FOUND] .git/
+  [FOUND] node_modules/
+  [FOUND] vendor/
+  [FOUND] dist/
+  [FOUND] build/
+  [FOUND] docs/specs/
+
+Arc-managed files (line 43):
+  [FOUND] docs/BACKLOG.md
+  [FOUND] docs/ROADMAP.md
+  [FOUND] docs/VISION.md
+  [FOUND] docs/CUSTOMER.md
+  [FOUND] docs/wave-report.md
+  [FOUND] docs/review-report.md
+  [FOUND] docs/shape-report.md
+  [FOUND] docs/align-manifest.md
+
+Secret-bearing files (line 44):
+  [FOUND] .env
+  [FOUND] credentials.json
+  [FOUND] *.key
+
+== Additional ==
+Step 1a states: "These paths are silently excluded from scanning. They never appear
+in the user-facing multi-select because they must always be excluded."
+This matches the spec requirement that hardcoded exclusions are always applied.
+
+Status: PASS
