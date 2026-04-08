@@ -1,0 +1,58 @@
+Type: file
+File: Scenario text matching between source and implementation
+Description: Verify error-path scenarios match source document
+Expected: All 5 scenarios match source text exactly
+Timestamp: 2026-04-07T00:00:00Z
+
+SCENARIO MATCHING VERIFICATION:
+===============================
+
+Scenario 5: "arc-shape handles no captured ideas in BACKLOG"
+Source (error-path-gherkin-scenarios.feature:36-41)
+Expected text:
+  Given the arc plugin is installed in a project
+  And docs/BACKLOG.md contains only ideas with status "shaped" or "spec-ready"
+  When the user invokes /arc-shape
+  Then the skill displays a message that no captured ideas are available for shaping
+  And no selection prompt is presented
+Implemented (arc-shape-skill.feature:72-77): EXACT MATCH
+
+Scenario 6: "arc-shape handles argument matching no idea"
+Source (error-path-gherkin-scenarios.feature:43-47)
+Expected text:
+  Given docs/BACKLOG.md contains ideas titled "Widget API" and "Search Feature"
+  When the user invokes /arc-shape with argument "Nonexistent Idea"
+  Then the skill displays a message that no idea matching "Nonexistent Idea" was found
+  And the skill lists available captured ideas for the user to choose from
+Implemented (arc-shape-skill.feature:82-86): EXACT MATCH
+
+Scenario 7: "arc-shape handles brief validation failure with multiple criteria"
+Source (error-path-gherkin-scenarios.feature:49-53)
+Expected text:
+  Given the user is shaping an idea and gap-filling is complete
+  When the skill validates the brief and multiple required sections fail validation
+  Then the skill displays each failing section with a specific reason
+  And the skill offers to re-enter the failing sections interactively
+Implemented (arc-shape-skill.feature:91-95): EXACT MATCH
+
+Scenario 8: "arc-shape handles subagent returning incomplete analysis"
+Source (error-path-gherkin-scenarios.feature:55-60)
+Expected text:
+  Given the user has selected an idea for shaping
+  When one of the four parallel dimension subagents returns without analysis results
+  Then the skill marks that dimension as incomplete in the synthesis
+  And the skill warns the user about the missing dimension analysis
+  And the skill proceeds with available dimensions rather than failing entirely
+Implemented (arc-shape-skill.feature:100-105): EXACT MATCH
+
+Scenario 9: "arc-shape handles backward transition from shaped to captured"
+Source (error-path-gherkin-scenarios.feature:62-66)
+Expected text:
+  Given docs/BACKLOG.md contains an idea with status "shaped"
+  When the user invokes /arc-shape on that idea and critical gaps are unresolvable
+  Then the skill transitions the idea status back from "shaped" to "captured" in BACKLOG.md
+  And the skill displays a message explaining the idea needs further development before reshaping
+Implemented (arc-shape-skill.feature:110-114): EXACT MATCH
+
+Status: PASS
+All 5 scenarios match source document exactly

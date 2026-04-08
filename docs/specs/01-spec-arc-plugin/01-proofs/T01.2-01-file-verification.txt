@@ -1,0 +1,30 @@
+Type: file
+File: docs/specs/01-spec-arc-plugin/arc-shape-skill.feature
+Description: Verify error-path scenarios were appended to arc-shape-skill.feature
+Expected: File contains 5 new scenarios for error-path cases
+Timestamp: 2026-04-07T00:00:00Z
+
+VERIFICATION RESULTS:
+====================
+
+1. File exists and is readable: YES
+2. Contains source comment header: YES
+3. Contains pattern annotation: YES
+4. Contains recommended test type: YES
+5. New scenarios count: 5
+6. Existing scenarios preserved: YES (no modifications to original 8 scenarios)
+
+APPENDED SCENARIOS:
+1. "arc-shape handles no captured ideas in BACKLOG" - Lines 72-77
+2. "arc-shape handles argument matching no idea" - Lines 82-86
+3. "arc-shape handles brief validation failure with multiple criteria" - Lines 91-95
+4. "arc-shape handles subagent returning incomplete analysis" - Lines 100-105
+5. "arc-shape handles backward transition from shaped to captured" - Lines 110-114
+
+All scenarios follow existing Gherkin conventions:
+- Source comment header with references
+- Pattern annotation (Error handling + State)
+- Recommended test type (Integration)
+- Given/When/Then structure
+
+Status: PASS

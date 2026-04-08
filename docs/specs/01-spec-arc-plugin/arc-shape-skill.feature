@@ -65,3 +65,50 @@ Feature: /arc-shape Skill
     Given the user has completed shaping an idea
     When the skill presents next steps
     Then the options include shape another idea, approve as spec-ready, plan a wave with /arc-wave, or done
+
+  # Source: docs/specs/02-spec-arc-plugin-enhancement/error-path-gherkin-scenarios.feature
+  # Pattern: Error handling + State (error-path scenarios appended to existing feature files)
+  # Recommended test type: Integration
+  Scenario: arc-shape handles no captured ideas in BACKLOG
+    Given the arc plugin is installed in a project
+    And docs/BACKLOG.md contains only ideas with status "shaped" or "spec-ready"
+    When the user invokes /arc-shape
+    Then the skill displays a message that no captured ideas are available for shaping
+    And no selection prompt is presented
+
+  # Source: docs/specs/02-spec-arc-plugin-enhancement/error-path-gherkin-scenarios.feature
+  # Pattern: Error handling + State (error-path scenarios appended to existing feature files)
+  # Recommended test type: Integration
+  Scenario: arc-shape handles argument matching no idea
+    Given docs/BACKLOG.md contains ideas titled "Widget API" and "Search Feature"
+    When the user invokes /arc-shape with argument "Nonexistent Idea"
+    Then the skill displays a message that no idea matching "Nonexistent Idea" was found
+    And the skill lists available captured ideas for the user to choose from
+
+  # Source: docs/specs/02-spec-arc-plugin-enhancement/error-path-gherkin-scenarios.feature
+  # Pattern: Error handling + State (error-path scenarios appended to existing feature files)
+  # Recommended test type: Integration
+  Scenario: arc-shape handles brief validation failure with multiple criteria
+    Given the user is shaping an idea and gap-filling is complete
+    When the skill validates the brief and multiple required sections fail validation
+    Then the skill displays each failing section with a specific reason
+    And the skill offers to re-enter the failing sections interactively
+
+  # Source: docs/specs/02-spec-arc-plugin-enhancement/error-path-gherkin-scenarios.feature
+  # Pattern: Error handling + State (error-path scenarios appended to existing feature files)
+  # Recommended test type: Integration
+  Scenario: arc-shape handles subagent returning incomplete analysis
+    Given the user has selected an idea for shaping
+    When one of the four parallel dimension subagents returns without analysis results
+    Then the skill marks that dimension as incomplete in the synthesis
+    And the skill warns the user about the missing dimension analysis
+    And the skill proceeds with available dimensions rather than failing entirely
+
+  # Source: docs/specs/02-spec-arc-plugin-enhancement/error-path-gherkin-scenarios.feature
+  # Pattern: Error handling + State (error-path scenarios appended to existing feature files)
+  # Recommended test type: Integration
+  Scenario: arc-shape handles backward transition from shaped to captured
+    Given docs/BACKLOG.md contains an idea with status "shaped"
+    When the user invokes /arc-shape on that idea and critical gaps are unresolvable
+    Then the skill transitions the idea status back from "shaped" to "captured" in BACKLOG.md
+    And the skill displays a message explaining the idea needs further development before reshaping
