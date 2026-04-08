@@ -1,0 +1,22 @@
+Type: file
+Description: Structural scanner implementation — all 4 structural patterns present with Read-based detection
+Command: Grep for ST-\d+ patterns in SKILL.md Step 2b
+Expected: All 4 structural patterns from spec (task lists, numbered lists, heading patterns, kanban markers) present in SKILL.md Step 2b with correct detection logic
+Timestamp: 2026-04-08T16:00:00Z
+
+Verification:
+- Grep for "ST-" in SKILL.md found 4 structural pattern sections
+- ST-1: Markdown Task Lists — detects "- [ ]" and "- [x]" syntax, requires 2+ consecutive items
+- ST-2: Numbered Feature Lists — detects sequential "1. 2. 3." patterns, requires 3+ items
+- ST-3: Heading Patterns — detects "## Roadmap", "## TODO", "## Planned Features", "## Backlog" (case-insensitive)
+- ST-4: Kanban-Style Markers — detects "### To Do", "### In Progress", "### Done" (requires 2 of 3)
+- All structural patterns match the spec definition in 03-spec-arc-align.md line 34
+- All structural patterns match detection-patterns.md reference (ST-1 through ST-4)
+- Step 2b specifies Read tool for line-by-line parsing
+- Step 2b runs after keyword scan to minimize file reads
+- Step 2b excludes files already matched by keyword scan (keyword_matched_files set)
+
+Gherkin coverage: "Structural matching detects task lists as backlog items" — COVERED
+  Step 2b ST-1 detects "- [ ]" task list syntax, records each block as one discovery with detection method "structural"
+
+Status: PASS

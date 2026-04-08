@@ -1,0 +1,18 @@
+Type: file
+Description: Cross-reference consistency — SKILL.md patterns match detection-patterns.md reference document exactly
+Command: Compare keyword and structural pattern IDs between SKILL.md and detection-patterns.md
+Expected: All pattern IDs (KW-1 through KW-17, ST-1 through ST-4) present in both files with consistent definitions
+Timestamp: 2026-04-08T16:00:00Z
+
+Verification:
+- detection-patterns.md defines KW-1 through KW-17 (17 keywords): roadmap, backlog, todo, planned, upcoming, feature list, future work, next steps, milestone, sprint, epic, user story, persona, target audience, mission, vision, north star
+- SKILL.md Step 2a defines KW-1 through KW-17 with identical search terms and target mappings
+- detection-patterns.md defines ST-1 through ST-4 (4 structural patterns): Markdown Task Lists, Numbered Feature Lists, Heading Patterns, Kanban-Style Markers
+- SKILL.md Step 2b defines ST-1 through ST-4 with consistent detection logic:
+  - ST-1: 2+ consecutive task items (matches detection-patterns.md threshold)
+  - ST-2: 3+ sequential numbered items (matches detection-patterns.md threshold)
+  - ST-3: Same 4 heading patterns (## Roadmap, ## TODO, ## Planned Features, ## Backlog)
+  - ST-4: Same 3 kanban headings (### To Do, ### In Progress, ### Done) with 2-of-3 requirement
+- Classification table in Step 2c maps KW/ST patterns to artifact targets consistently with import-rules.md
+
+Status: PASS

@@ -1,0 +1,22 @@
+Type: file
+Description: Keyword scanner implementation — all 17 keywords present with Grep-based detection
+Command: Grep for KW-\d+ patterns in SKILL.md Step 2a
+Expected: All 17 keywords from spec (roadmap, backlog, todo, planned, upcoming, feature list, future work, next steps, milestone, sprint, epic, user story, persona, target audience, mission, vision, north star) present in SKILL.md Step 2a with correct pattern identifiers
+Timestamp: 2026-04-08T16:00:00Z
+
+Verification:
+- Grep for "KW-" in SKILL.md found 17 keyword entries (KW-1 through KW-17)
+- Each keyword matches the spec definition in 03-spec-arc-align.md line 33
+- Each keyword has a Typical Target column mapping to BACKLOG, VISION, or CUSTOMER
+- Keywords KW-1 through KW-12 map to BACKLOG
+- Keywords KW-13, KW-14 map to CUSTOMER (persona, target audience)
+- Keywords KW-15, KW-16, KW-17 map to VISION (mission, vision, north star)
+- Step 2a specifies Grep tool with case-insensitive matching (-i: true)
+- Step 2a specifies context lines (-C: 3) for content snippet capture
+- Step 2a specifies line numbers (-n: true) for line range recording
+- Step 2a specifies glob filtering (glob: "*.md") for file type restriction
+
+Gherkin coverage: "Keyword matching detects roadmap content in markdown files" — COVERED
+  Step 2a runs Grep per keyword, records detection method as "keyword", filters excluded files
+
+Status: PASS

@@ -1,0 +1,15 @@
+Type: file
+Description: Detection ordering — keyword scan runs first (Grep, fast), structural scan runs second (Read, line-by-line) on remaining files only
+Command: Read SKILL.md Step 2 ordering rationale and deduplication logic
+Expected: Explicit ordering: keyword first, structural second, with file-level deduplication
+Timestamp: 2026-04-08T16:00:00Z
+
+Verification:
+- Step 2 opens with detection ordering rationale: "Keyword matching runs first because it uses Grep and completes quickly across the entire non-excluded file set. Structural matching runs second on files not already flagged by keyword matching."
+- Step 2a procedure point 5: "Track all files that received at least one keyword match in a keyword_matched_files set. These files are excluded from the structural scan in Step 2b."
+- Step 2b procedure point 3: "Remove files already in the keyword_matched_files set (Step 2a)"
+- Step 2a procedure point 4: "Deduplicate: If the same file is matched by multiple keywords, merge the entries into a single discovery per section."
+- This matches the spec's Technical Considerations: "Detection ordering: Keyword matches are fast (Grep tool); structural matches require line-by-line parsing (Read tool). Run keyword scan first, then structural scan on non-excluded files, to minimize file reads."
+- This matches detection-patterns.md ordering: "Keyword scan — Grep for each keyword across all non-excluded files. Fast, broad coverage." then "Structural scan — Read remaining unflagged files and parse for structural indicators. Slower."
+
+Status: PASS

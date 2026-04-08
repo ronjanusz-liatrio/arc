@@ -1,0 +1,22 @@
+Type: file
+Description: Discovery list metadata completeness — all required fields present per Gherkin scenario
+Command: Grep for discovery list field definitions in SKILL.md Step 2e
+Expected: Each discovery entry includes source file path, line range, content snippet, detection method, and target artifact
+Timestamp: 2026-04-08T16:00:00Z
+
+Verification:
+- Step 2e defines a table with 6 fields per discovery entry:
+  1. Source file path — "Relative path from repo root" ✓
+  2. Line range — "Start line through end line (e.g., 20-35)" ✓
+  3. Matched content snippet — "First 200 characters of the matched section" ✓
+  4. Detection method — "keyword or structural" ✓
+  5. Pattern identifier — "The specific keyword (KW-1 through KW-17) or structural pattern (ST-1 through ST-4)" ✓
+  6. Target artifact — "BACKLOG, VISION, or CUSTOMER (from Step 2c)" ✓
+- Step 2a keyword entries define: source file path, line range, content snippet, detection method, matched keyword
+- Step 2b structural entries follow the same format plus pattern identifier
+- Discovery list is sorted by source file path then line range (ascending)
+
+Gherkin coverage: "Discovery list records complete metadata for each match" — COVERED
+  Step 2e ensures every entry has source file path, line range, content snippet, detection method, and target artifact classification
+
+Status: PASS
