@@ -1,0 +1,28 @@
+Type: file
+Description: README.md lists arc-help in Mermaid pipeline diagram, skill table, Skills section, Plugin Structure tree, and ASCII pipeline
+Command: grep -n "arc-help\|AH\[" README.md
+Expected: arc-help present in all five locations
+Timestamp: 2026-04-08T22:30:00Z
+
+--- Output ---
+
+Mermaid pipeline diagram node:
+  Line 60: AH["/arc-help\nQuick reference\nguide"]:::arc
+
+Mermaid pipeline diagram edge:
+  Line 77: AH -. "reference anytime" .-> AC
+
+Two-Plugin Pipeline skill table row:
+  Line 92: | `/arc-help` | Quick reference guide — overview of all skills, artifacts, workflow, and installation |
+
+Skills section bullet:
+  Line 102: - **`/arc-help`** — Quick reference guide. Displays an overview of all Arc skills, artifacts, workflow order, and installation instructions.
+
+ASCII pipeline note:
+  Line 113:                                             /arc-help (reference at any time)
+
+Plugin Structure tree entry:
+  Line 182-183:     arc-help/
+                      SKILL.md                              # Quick reference guide
+
+Status: PASS

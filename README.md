@@ -57,6 +57,7 @@ flowchart LR
     AW["/arc-wave\nOrganize into\ndelivery cycle"]:::arc
     AREADME["/arc-readme\nSync README with\nproduct direction"]:::arc
     AR["/arc-review\nAudit pipeline\nhealth"]:::arc
+    AH["/arc-help\nQuick reference\nguide"]:::arc
 
     CS["/cw-spec\nWrite spec and\nGherkin scenarios"]:::cw
     CP["/cw-plan\nTask board\nand sub-tasks"]:::cw
@@ -73,6 +74,7 @@ flowchart LR
     AR -. "audit anytime" .-> AW
     AR -. "audit anytime" .-> CS
     AR -. "WA-7 fix" .-> AREADME
+    AH -. "reference anytime" .-> AC
 
     classDef arc fill:#E8662F,stroke:#C7502A,color:#FFFFFF
     classDef cw fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
@@ -87,6 +89,7 @@ flowchart LR
 | `/arc-wave` | Group shaped ideas into a delivery cycle and hand off to temper + claude-workflow |
 | `/arc-readme` | Keep project README and diagrams in sync with product direction artifacts |
 | `/arc-review` | Audit backlog health and wave alignment across all product artifacts |
+| `/arc-help` | Quick reference guide — overview of all skills, artifacts, workflow, and installation |
 
 ## Skills
 
@@ -96,6 +99,7 @@ flowchart LR
 - **`/arc-wave`** — Delivery cycle management. Groups spec-ready ideas into a wave, updates `ROADMAP`, injects `ARC:product-context` into project CLAUDE.md, and prepares the handoff for `/cw-spec`.
 - **`/arc-readme`** — README synchronization. Scaffolds a complete README from Arc artifacts or selectively updates `ARC:` managed sections to reflect current product direction.
 - **`/arc-review`** — Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts, then offers interactive fixes.
+- **`/arc-help`** — Quick reference guide. Displays an overview of all Arc skills, artifacts, workflow order, and installation instructions.
 
 ## Relationship to Temper and claude-workflow
 
@@ -106,6 +110,7 @@ Arc is **upstream** of both temper and claude-workflow:
                                                 ^                              ^                                                        |
                                                 |                              '-------------------- phase loop --------------------------'
                                             /arc-review (audit at any stage)
+                                            /arc-help (reference at any time)
 ```
 
 Arc requires [temper](https://github.com/ronjanusz-liatrio/temper) and [claude-workflow](https://github.com/ronjanusz-liatrio/claude-workflow). Install them first:
@@ -174,6 +179,8 @@ arc/
       references/
         audit-dimensions.md                 # Health check definitions and thresholds
         review-report-template.md           # Report format
+    arc-help/
+      SKILL.md                              # Quick reference guide
   templates/
     VISION.tmpl.md                          # Product vision (always-required)
     CUSTOMER.tmpl.md                        # Personas and JTBD (always-required)

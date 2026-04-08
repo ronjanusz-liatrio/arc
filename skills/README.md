@@ -1,6 +1,6 @@
 # Skills
 
-Arc provides six skills for managing the product idea lifecycle.
+Arc provides seven skills for managing the product idea lifecycle.
 
 | Skill | Description | Invocation |
 |-------|-------------|------------|
@@ -10,6 +10,7 @@ Arc provides six skills for managing the product idea lifecycle.
 | [arc-wave](arc-wave/SKILL.md) | Delivery cycle management — group shaped ideas into a wave, update the roadmap, and prepare handoff to the SDD pipeline | `/arc-wave` |
 | [arc-readme](arc-readme/SKILL.md) | README lifecycle management — scaffold or update README.md with Arc-managed sections synced to product direction artifacts | `/arc-readme` |
 | [arc-review](arc-review/SKILL.md) | Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts | `/arc-review` |
+| [arc-help](arc-help/SKILL.md) | Quick reference guide — overview of all Arc skills, artifacts, workflow, and installation | `/arc-help` |
 
 ## Workflow
 
@@ -17,6 +18,7 @@ Arc provides six skills for managing the product idea lifecycle.
 /arc-align → /arc-capture → /arc-shape → /arc-wave → /arc-readme → /cw-spec → /cw-plan → /cw-dispatch
                                                   ↑
                                             /arc-review (audit at any time)
+                                            /arc-help (reference at any time)
 ```
 
 1. **Align** scans the codebase for scattered product-direction content and imports it into Arc-managed artifacts
@@ -25,3 +27,4 @@ Arc provides six skills for managing the product idea lifecycle.
 4. **Wave** groups shaped ideas into themed delivery cycles and hands off to the SDD pipeline
 5. **Readme** scaffolds or updates README.md with sections synced to product direction artifacts
 6. **Review** audits pipeline health at any point in the cycle — check backlog health, wave alignment, and cross-reference integrity
+7. **Help** displays a quick reference guide covering all skills, artifacts, and installation — available at any time
