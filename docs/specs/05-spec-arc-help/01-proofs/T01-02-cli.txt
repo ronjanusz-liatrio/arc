@@ -1,0 +1,27 @@
+Type: cli
+Command: grep/content verification of skills/arc-help/SKILL.md against feature scenarios
+Expected: All 8 feature scenarios pass content verification
+Timestamp: 2026-04-08T12:00:00Z
+Status: PASS
+
+Output:
+=== Scenario checks ===
+1. Valid frontmatter fields: 4 (name, description, user-invocable, allowed-tools)
+2. Context marker (ARC-HELP): 1 occurrence
+3. Overview mentions temper: 3 occurrences; claude-workflow: 3 occurrences
+4. Seven skills in table: 7 rows matching /arc-*
+5. Workflow order (/arc-align -> ... -> /arc-readme): 1 match
+6. Four artifacts (VISION, CUSTOMER, ROADMAP, BACKLOG): 5 mentions
+7. Installation commands (claude plugin): 8 occurrences
+8. README link: 3 occurrences
+=== All checks passed ===
+
+Feature Scenario Coverage:
+- arc-help skill has valid frontmatter with required fields: PASS
+- Help output includes an overview of what Arc is: PASS
+- Help output lists all seven skills with descriptions: PASS
+- Help output shows the recommended workflow order: PASS
+- Help output describes all four managed artifacts: PASS
+- Help output includes installation instructions: PASS
+- Help output links to the project README: PASS
+- arc-help accepts no arguments and always outputs the full guide: PASS
