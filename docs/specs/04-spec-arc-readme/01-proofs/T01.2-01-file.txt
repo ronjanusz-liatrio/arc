@@ -1,0 +1,7 @@
+Type: file
+Command: grep -c "### WA-7" skills/arc-review/references/audit-dimensions.md
+Expected: WA-7 section exists in audit-dimensions.md
+Timestamp: 2026-04-08T14:10:00Z
+Status: PASS
+
+Verification: The WA-7 section heading "### WA-7: README Trust-Signal Audit" exists at line 429 of audit-dimensions.md.

@@ -1,0 +1,23 @@
+Type: test
+Command: grep-based structural validation of WA-7 section in audit-dimensions.md
+Expected: All 12 requirements from task description present in file
+Timestamp: 2026-04-08T14:11:00Z
+Status: PASS
+
+Requirement Checks:
+  [PASS] WA-7 section heading exists ("### WA-7: README Trust-Signal Audit") — 1 match
+  [PASS] Purpose mentions trust-signal framework validation — present in section
+  [PASS] Detection logic evaluates TS-1 through TS-8 — present in section
+  [PASS] References trust-signals.md for canonical detection steps — 3 references found
+  [PASS] Evaluability rules: signals only evaluated when source artifact exists — present
+  [PASS] Scorecard output: "N passing / M evaluable" — 1 match
+  [PASS] Severity warning when <75% pass — "fewer than 75%" found (1 match in WA-7 section + 1 in Health Rating)
+  [PASS] Severity info when >=75% pass — present in severity section
+  [PASS] Graceful skip: "No README.md found" — 1 match
+  [PASS] Graceful skip: "No ARC: sections in README" — 1 match
+  [PASS] Interactive fix: "Run /arc-readme" with failing signals — 1 match
+  [PASS] Health Rating Thresholds: WA-7 listed as warning finding — 1 match
+
+Format Compliance:
+  [PASS] Section follows WA-1 through WA-6 structure: Purpose, Detection Logic, Severity, Inputs, Output Format, Interactive Fix
+  [PASS] Cross-reference to trust-signals.md added in Cross-References section
