@@ -39,7 +39,7 @@ Each keyword is searched case-insensitively via Grep. A match flags the file and
 - Q1 2027: Mobile app beta
 ```
 
-**Typical target artifact:** BACKLOG (individual items) or VISION (high-level direction)
+**Typical target artifact:** BACKLOG (individual items)
 
 ---
 
@@ -391,7 +391,7 @@ Structural patterns detect product-direction content through formatting conventi
 
 **Pattern:** Lines matching `- [ ]` or `- [x]` (markdown task list syntax).
 
-**Detection logic:** Count consecutive task list lines. Flag sections with 2 or more task list items as potential backlog content.
+**Detection logic:** Scan for consecutive task list lines. Flag sections with 2 or more items as product-direction content. Each task list item becomes a separate discovery (one captured stub per checkbox item) for maximum import granularity.
 
 **Example match:**
 

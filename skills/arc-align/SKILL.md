@@ -2,7 +2,7 @@
 name: arc-align
 description: "Codebase discovery and migration — consolidate scattered product-direction content into Arc-managed artifacts"
 user-invocable: true
-allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
+allowed-tools: Glob, Grep, Read, Write, Edit, Bash, AskUserQuestion
 ---
 
 # /arc-align — Codebase Discovery and Migration
@@ -40,7 +40,7 @@ These paths are silently excluded from scanning. They never appear in the user-f
 | Category | Paths |
 |----------|-------|
 | Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `docs/specs/` |
-| Arc-managed files | `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/wave-report.md`, `docs/review-report.md`, `docs/shape-report.md`, `docs/align-manifest.md` |
+| Arc-managed files | `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/wave-report.md`, `docs/review-report.md`, `docs/shape-report.md`, `docs/align-manifest.md`, `docs/align-report.md` |
 | Secret-bearing files | `.env`, `credentials.json`, `*.key` |
 
 **1b. Directory pre-scan:**
@@ -157,7 +157,7 @@ Run one Grep call per keyword against all non-excluded files. Use case-insensiti
      output_mode: "content",
      "-C": 3,
      "-n": true,
-     glob: "*.md"
+     glob: "*.{md,txt,rst,adoc}"
    })
    ```
 
@@ -180,7 +180,7 @@ Run one Grep call per keyword against all non-excluded files. Use case-insensiti
 
 After keyword scanning completes, identify files to structurally scan:
 
-1. Use Glob to list all markdown files: `Glob({ pattern: "**/*.md" })`
+1. Use Glob to list all text-format files: `Glob({ pattern: "**/*.{md,txt,rst,adoc}" })`
 2. Remove files in the exclusion set (Step 1e)
 3. Remove files already in the `keyword_matched_files` set (Step 2a)
 4. The remaining files are the structural scan candidates
@@ -191,11 +191,11 @@ For each candidate file, Read the full file content and parse line-by-line for f
 
 Detect lines matching `- [ ]` or `- [x]` (markdown checkbox syntax).
 
-- Scan for consecutive task list lines (lines matching `^\s*- \[([ x])\] .+`)
-- Flag sections with 2 or more consecutive task list items
-- Record the full block of consecutive task items as one discovery
-- **Line range:** First task item line through last consecutive task item line
-- **Content snippet:** All task items in the block (truncate to 200 characters)
+- Scan for lines matching `^\s*- \[([ x])\] .+` (markdown checkbox syntax)
+- Flag sections with 2 or more consecutive task list items as product-direction content
+- Record each task list item as a separate discovery (one stub per checkbox item for maximum granularity)
+- **Line range:** The single line containing the task list item
+- **Content snippet:** The task item text (stripped of checkbox syntax)
 - **Detection method:** `structural`
 
 **ST-2: Numbered Feature Lists**
@@ -703,7 +703,7 @@ Write the report header and run metadata. All fields are derived from data colle
 | Total discoveries | {count of all discoveries before manifest dedup} |
 | New imports | {count of items imported in this run} |
 | Skipped (manifest) | {count of items skipped due to prior manifest entries} |
-| Remaining unmanaged | {count of items below confidence threshold} |
+| Remaining unmanaged | {count of items rejected by user during individual review (Step 3)} |
 ```
 
 **8b. Imported items by artifact section:**
@@ -789,6 +789,7 @@ Separate hardcoded exclusions (from Step 1a) and user-configured exclusions (fro
 | docs/review-report.md | Arc-managed file |
 | docs/shape-report.md | Arc-managed file |
 | docs/align-manifest.md | Arc-managed file |
+| docs/align-report.md | Arc-managed file |
 | .env | Secret-bearing file |
 | credentials.json | Secret-bearing file |
 | *.key | Secret-bearing file |
@@ -811,7 +812,7 @@ No additional exclusions were configured for this run.
 
 **8e. Remaining unmanaged content section:**
 
-List content that was detected as potentially product-direction content but was not imported because it fell below confidence thresholds or was ambiguous. These are weak-signal matches (per the Pattern Confidence section in `detection-patterns.md`) that the skill flagged for manual review rather than automatically importing.
+List content that was detected as product-direction content but was not imported because the user explicitly rejected it during individual review in Step 3. Per the inclusivity principle, all discoveries are imported by default — items only appear here if the user selected "Review individually" and rejected specific items. If the user selected "Import all" (the default), this section will be empty.
 
 ```markdown
 ---
@@ -892,7 +893,7 @@ Show one row per artifact that received at least one import, plus aggregate tota
 | **Imported to VISION** | **{N}** |
 | **Imported to CUSTOMER** | **{N}** |
 | Items skipped (already in manifest) | {N} |
-| Items left behind (below threshold) | {N} |
+| Items left behind (user-rejected) | {N} |
 | Files deleted | {N} |
 | Sections trimmed | {N} |
 ```
@@ -905,7 +906,7 @@ Below the table, add a one-sentence summary per non-zero category:
 
 - Imports: "Imported {N} items into {artifact list} from {M} source files."
 - Skipped: "{N} items skipped -- already captured in a prior alignment run."
-- Left behind: "{N} items below confidence threshold -- listed in `docs/align-report.md` under Remaining Unmanaged Content for manual review."
+- Left behind: "{N} items rejected during individual review -- listed in `docs/align-report.md` under Remaining Unmanaged Content."
 - Cleanup: "Deleted {N} files and trimmed {N} sections to eliminate drift."
 
 Omit sentences for categories with zero counts.

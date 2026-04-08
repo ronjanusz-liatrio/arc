@@ -5,12 +5,12 @@
   },
   "metadata": {
     "description": "Lightweight product direction for spec-driven development. Inspired by Linear's fast capture and clean triage, arc helps shape ideas into spec-ready briefs.",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "plugins": [
     {
       "name": "arc",
-      "description": "Product direction and idea pipeline. Provides /arc-capture for quick idea entry, /arc-shape for refining ideas into spec-ready briefs, /arc-wave for organizing work into delivery cycles, and /arc-review for pipeline health auditing.",
+      "description": "Product direction and idea pipeline. Provides /arc-capture for quick idea entry, /arc-shape for refining ideas into spec-ready briefs, /arc-wave for organizing work into delivery cycles, /arc-review for pipeline health auditing, and /arc-align for discovering and consolidating scattered product-direction content into Arc-managed artifacts.",
       "source": "./",
       "strict": true
     }
