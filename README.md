@@ -51,6 +51,7 @@ Arc and temper cover the full project lifecycle: arc shapes what gets built, tem
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
 flowchart LR
+    AA["/arc-align\nDiscover and\nimport content"]:::arc
     AC["/arc-capture\nQuick idea entry"]:::arc
     AS["/arc-shape\nRefine into\nspec-ready brief"]:::arc
     AW["/arc-wave\nOrganize into\ndelivery cycle"]:::arc
@@ -63,6 +64,7 @@ flowchart LR
     TI["/temper-incept\nBootstrap repo\nand set phase"]:::temper
     TP["/temper-progress\nGate evaluation\nand phase transition"]:::temper
 
+    AA --> AC
     AC --> AS --> AW --> TI
     TI --> CS --> CP --> CD --> TP
     TP -->|"advance"| TI
@@ -77,6 +79,7 @@ flowchart LR
 
 | Skill | Role |
 |-------|------|
+| `/arc-align` | Discover scattered product-direction content and import into Arc-managed artifacts |
 | `/arc-capture` | Record a raw idea quickly — title, one-liner, rough priority |
 | `/arc-shape` | Refine an idea into a structured brief with problem, solution, and success criteria |
 | `/arc-wave` | Group shaped ideas into a delivery cycle and hand off to temper + claude-workflow |
@@ -84,6 +87,7 @@ flowchart LR
 
 ## Skills
 
+- **`/arc-align`** — Codebase discovery and migration. Scans the project for scattered product-direction content (roadmaps, backlogs, TODOs, vision statements, personas) and imports them into Arc-managed artifacts.
 - **`/arc-capture`** — Fast idea entry. Appends a structured stub to `BACKLOG` with minimal friction.
 - **`/arc-shape`** — Interactive refinement. Turns a captured idea into a spec-ready brief using parallel subagent analysis across four dimensions (problem clarity, customer fit, scope boundaries, feasibility).
 - **`/arc-wave`** — Delivery cycle management. Groups spec-ready ideas into a wave, updates `ROADMAP`, injects `ARC:product-context` into project CLAUDE.md, and prepares the handoff for `/cw-spec`.
@@ -94,10 +98,10 @@ flowchart LR
 Arc is **upstream** of both temper and claude-workflow:
 
 ```
-/arc-capture -> /arc-shape -> /arc-wave -> /temper-incept -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-progress
-                                   ^              ^                                                        |
-                                   |              '-------------------- phase loop --------------------------'
-                               /arc-review (audit at any stage)
+/arc-align -> /arc-capture -> /arc-shape -> /arc-wave -> /temper-incept -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-progress
+                                                ^              ^                                                        |
+                                                |              '-------------------- phase loop --------------------------'
+                                            /arc-review (audit at any stage)
 ```
 
 Arc requires [temper](https://github.com/ronjanusz-liatrio/temper) and [claude-workflow](https://github.com/ronjanusz-liatrio/claude-workflow). Install them first:
@@ -137,6 +141,12 @@ arc/
     marketplace.json                        # Marketplace registration
   skills/
     README.md                               # Skill directory hub
+    arc-align/
+      SKILL.md                              # Codebase discovery and migration
+      references/
+        align-report-template.md            # Alignment report format
+        detection-patterns.md               # File and keyword detection rules
+        import-rules.md                     # Import classification and merge rules
     arc-capture/
       SKILL.md                              # Fast idea entry
     arc-shape/

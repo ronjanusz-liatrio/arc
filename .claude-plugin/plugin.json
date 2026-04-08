@@ -1,5 +1,5 @@
 {
   "name": "arc",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Lightweight product direction for spec-driven development. Capture ideas, shape them into spec-ready briefs, and feed them into the claude-workflow SDD pipeline."
 }

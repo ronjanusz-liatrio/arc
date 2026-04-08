@@ -1,0 +1,16 @@
+Type: file
+Description: Mermaid flowchart has correct AA node wiring (AA --> AC at start of arc pipeline)
+Command: grep -A1 "AA\[" README.md && grep "AA -->" README.md
+Expected: AA node defined with arc class, connected to AC node
+Timestamp: 2026-04-08T00:00:00Z
+
+Result:
+Node definition:
+    AA["/arc-align\nDiscover and\nimport content"]:::arc
+
+Edge definition:
+    AA --> AC
+
+The AA node feeds into AC (/arc-capture) as the first step in the arc pipeline.
+
+Status: PASS
