@@ -1,0 +1,21 @@
+Type: file
+Description: Verify arc-wave SKILL.md Step 11 contains "Update README" option with /arc-readme reference
+Command: grep -n "Update README" skills/arc-wave/SKILL.md
+Expected: "Update README" option present in AskUserQuestion options list and handler section
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+302:      { label: "Update README", description: "Run /arc-readme to sync the README with the new wave" },
+313:- **Update README:** Inform the user to run `/arc-readme` to update the project README with the new wave context, roadmap changes, and backlog status
+
+--- Verification ---
+Gherkin scenario: "arc-wave offers arc-readme as next step"
+  Given a user has completed /arc-wave and reached the next steps prompt
+  When the next step options are presented
+  Then /arc-readme is listed as an option alongside /cw-spec
+
+Result: The "Update README" option appears at line 302 in the AskUserQuestion options array,
+positioned between "Hand off to /cw-spec" and "Plan another wave". The handler at line 313
+instructs the user to run /arc-readme. Both the option label and description reference /arc-readme.
+
+Status: PASS

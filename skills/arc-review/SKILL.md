@@ -301,6 +301,10 @@ After applying fixes, update the "Fixes Applied" section of `docs/review-report.
 
 ### Step 8: Offer Next Steps
 
+**Conditionally include "Update README" option:**
+
+If WA-7 detected trust-signal failures (fewer than 100% of evaluable signals passing), include the "Update README" option in the next-steps list. If WA-7 was skipped or all signals passed, omit it.
+
 ```
 AskUserQuestion({
   questions: [{
@@ -308,6 +312,7 @@ AskUserQuestion({
     header: "Next",
     options: [
       { label: "Run review again", description: "Re-audit after fixes to verify health improvement" },
+      { label: "Update README", description: "Run /arc-readme to fix stale or incomplete ARC: sections" },
       { label: "Capture new ideas", description: "Run /arc-capture to add ideas to the backlog" },
       { label: "Plan a wave", description: "Run /arc-wave to organize spec-ready ideas into a delivery cycle" },
       { label: "Done", description: "Finish the review session" }
@@ -317,8 +322,11 @@ AskUserQuestion({
 })
 ```
 
+> **Note:** The "Update README" option above is only included when WA-7 reported one or more failing trust signals. If WA-7 was skipped (no README or no ARC: sections) or all evaluable signals passed, omit that option from the list.
+
 **Handle selection:**
 - **Run review again:** Loop back to Step 1 (re-read all files, re-run all checks)
+- **Update README:** Inform the user to run `/arc-readme` to fix the failing trust signals identified by WA-7, listing which signals failed
 - **Capture new ideas:** Inform the user to run `/arc-capture`
 - **Plan a wave:** Inform the user to run `/arc-wave`
 - **Done:** Summarize the review session (health rating, fixes applied, remaining issues) and exit

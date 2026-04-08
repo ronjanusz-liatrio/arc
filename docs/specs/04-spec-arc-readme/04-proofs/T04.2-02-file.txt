@@ -1,0 +1,25 @@
+Type: file
+Description: Verify arc-review SKILL.md Step 8 contains conditional "Update README" option tied to WA-7
+Command: grep -n "Update README\|WA-7\|trust.signal" skills/arc-review/SKILL.md (lines 302-332)
+Expected: "Update README" option present, conditioned on WA-7 trust-signal failures
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+304:**Conditionally include "Update README" option:**
+306:If WA-7 detected trust-signal failures (fewer than 100% of evaluable signals passing), include the "Update README" option in the next-steps list. If WA-7 was skipped or all signals passed, omit it.
+315:      { label: "Update README", description: "Run /arc-readme to fix stale or incomplete ARC: sections" },
+325:> **Note:** The "Update README" option above is only included when WA-7 reported one or more failing trust signals. If WA-7 was skipped (no README or no ARC: sections) or all evaluable signals passed, omit that option from the list.
+329:- **Update README:** Inform the user to run `/arc-readme` to fix the failing trust signals identified by WA-7, listing which signals failed
+
+--- Verification ---
+Gherkin scenario: "arc-review offers arc-readme when WA-7 triggers"
+  Given a user has completed /arc-review and WA-7 detected staleness
+  When the next step options are presented
+  Then "Run /arc-readme" appears as a recommended action
+
+Result: The "Update README" option appears at line 315 in the AskUserQuestion options array.
+Lines 304-306 provide the conditional logic: the option is only included when WA-7 detected
+trust-signal failures. Line 325 reinforces this with a Note clarifying when to omit the option.
+The handler at line 329 instructs the user to run /arc-readme with details on which signals failed.
+
+Status: PASS

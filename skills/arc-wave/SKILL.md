@@ -299,6 +299,7 @@ AskUserQuestion({
     header: "Next",
     options: [
       { label: "Hand off to /cw-spec", description: "Start the SDD pipeline for the first spec-ready idea" },
+      { label: "Update README", description: "Run /arc-readme to sync the README with the new wave" },
       { label: "Plan another wave", description: "Create another wave for remaining shaped ideas" },
       { label: "Done", description: "Finish wave planning" }
     ],
@@ -309,6 +310,7 @@ AskUserQuestion({
 
 **Handle selection:**
 - **Hand off to /cw-spec:** Present the handoff brief for the first spec-ready idea and suggest the user invoke `/cw-spec` with it
+- **Update README:** Inform the user to run `/arc-readme` to update the project README with the new wave context, roadmap changes, and backlog status
 - **Plan another wave:** Loop back to Step 1
 - **Done:** Summarize what was created and exit
 
