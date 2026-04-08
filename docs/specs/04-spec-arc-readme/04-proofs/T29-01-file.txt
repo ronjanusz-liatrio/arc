@@ -1,0 +1,25 @@
+Type: file
+Description: Verify class directives added to SKILL.md lifecycle diagram
+Command: grep -n "class " skills/arc-readme/SKILL.md
+Expected: Four class directives mapping state nodes to classDef styles
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+
+skills/arc-readme/SKILL.md:338:    class Captured capture
+skills/arc-readme/SKILL.md:339:    class Shaped shape
+skills/arc-readme/SKILL.md:340:    class SpecReady ready
+skills/arc-readme/SKILL.md:341:    class Shipped shipped
+
+--- Verification ---
+
+Node-to-style mapping:
+  Captured -> capture (fill:#1B2A3D, navy)
+  Shaped   -> shape   (fill:#E8662F, orange)
+  SpecReady-> ready   (fill:#11B5A4, teal)
+  Shipped  -> shipped (fill:#0D8F82, dark teal)
+
+All four state nodes from the stateDiagram-v2 (Captured, Shaped, SpecReady, Shipped)
+are now bound to their corresponding classDef styles.
+
+Status: PASS

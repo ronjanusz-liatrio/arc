@@ -1,0 +1,26 @@
+Type: file
+Description: Verify class directives added to readme-mapping.md lifecycle diagram
+Command: grep -n "class " skills/arc-readme/references/readme-mapping.md
+Expected: Four class directives mapping aliased state nodes to classDef styles
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+
+skills/arc-readme/references/readme-mapping.md:221:    class captured capture
+skills/arc-readme/references/readme-mapping.md:222:    class shaped shape
+skills/arc-readme/references/readme-mapping.md:223:    class specready ready
+skills/arc-readme/references/readme-mapping.md:224:    class shipped shipped
+
+--- Verification ---
+
+Node-to-style mapping (using aliases from `state "..." as {alias}`):
+  captured  -> capture (fill:#1B2A3D, navy)
+  shaped    -> shape   (fill:#E8662F, orange)
+  specready -> ready   (fill:#11B5A4, teal)
+  shipped   -> shipped (fill:#0D8F82, dark teal)
+
+All four aliased state nodes (captured, shaped, specready, shipped) are now
+bound to their corresponding classDef styles. Aliases match the `as` targets
+from lines 206-209.
+
+Status: PASS

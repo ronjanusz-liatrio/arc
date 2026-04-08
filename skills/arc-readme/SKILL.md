@@ -334,6 +334,11 @@ stateDiagram-v2
     classDef shape fill:#E8662F,stroke:#C7502A,color:#FFFFFF
     classDef ready fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
     classDef shipped fill:#0D8F82,stroke:#0A6B63,color:#FFFFFF
+
+    class Captured capture
+    class Shaped shape
+    class SpecReady ready
+    class Shipped shipped
 ```
 
 <!--# END ARC:lifecycle-diagram -->
