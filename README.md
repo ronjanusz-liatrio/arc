@@ -1,6 +1,6 @@
 # Arc
 
-Lightweight product direction for spec-driven development — inspired by Linear's fast capture and clean triage, arc is the upstream companion to [temper](https://github.com/liatrio-labs/temper).
+Lightweight product direction for spec-driven development — inspired by Linear's fast capture and clean triage, arc is the upstream companion to [temper](https://github.com/ronjanusz-liatrio/temper).
 
 Arc manages the idea lifecycle from raw thought to spec-ready brief. It keeps product direction as plain markdown files in your repo (`VISION`, `CUSTOMER`, `ROADMAP`, `BACKLOG`) and feeds shaped ideas directly into the claude-workflow SDD pipeline. Where temper governs engineering maturity, arc governs what gets built and why.
 
@@ -100,15 +100,15 @@ Arc is **upstream** of both temper and claude-workflow:
                                /arc-review (audit at any stage)
 ```
 
-Arc requires [temper](https://github.com/liatrio-labs/temper) and [claude-workflow](https://github.com/liatrio-labs/claude-workflow). Install them first:
+Arc requires [temper](https://github.com/ronjanusz-liatrio/temper) and [claude-workflow](https://github.com/ronjanusz-liatrio/claude-workflow). Install them first:
 
 ```bash
 # Install claude-workflow
-claude plugin marketplace add https://github.com/liatrio-labs/claude-workflow.git
+claude plugin marketplace add https://github.com/ronjanusz-liatrio/claude-workflow.git
 claude plugin install claude-workflow@claude-workflow --scope user
 
 # Install temper
-claude plugin marketplace add https://github.com/liatrio-labs/temper.git
+claude plugin marketplace add https://github.com/ronjanusz-liatrio/temper.git
 claude plugin install temper@temper --scope user
 ```
 
@@ -124,7 +124,7 @@ claude plugin install arc@arc --scope project
 ### From Git (distribution)
 
 ```bash
-claude plugin marketplace add https://github.com/liatrio-labs/arc.git
+claude plugin marketplace add https://github.com/ronjanusz-liatrio/arc.git
 claude plugin install arc@arc --scope user
 ```
 

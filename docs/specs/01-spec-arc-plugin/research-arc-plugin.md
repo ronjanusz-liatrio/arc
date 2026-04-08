@@ -8,7 +8,7 @@
 
 ## Summary
 
-Arc is a scaffold-stage Claude Code plugin (v0.1.0) at `/Users/ron/dev/arc/` that will provide three skills (`/arc-capture`, `/arc-shape`, `/arc-wave`) for managing product direction as markdown files in the repository. It is the upstream companion to [Temper](https://github.com/liatrio-labs/temper) in a three-plugin pipeline: `arc → claude-workflow → temper`.
+Arc is a scaffold-stage Claude Code plugin (v0.1.0) at `/Users/ron/dev/arc/` that will provide three skills (`/arc-capture`, `/arc-shape`, `/arc-wave`) for managing product direction as markdown files in the repository. It is the upstream companion to [Temper](https://github.com/ronjanusz-liatrio/temper) in a three-plugin pipeline: `arc → claude-workflow → temper`.
 
 Arc was extracted from the Focus/Temper plugin during the temper-split (PR #4, spec `06-spec-temper-split`). Four product artifact templates (VISION, CUSTOMER, ROADMAP, BACKLOG) and the Product Leadership role were removed from Temper and designated for Arc. The scaffold exists with plugin metadata, README, CLAUDE.md, and empty skill/template/reference directories.
 
@@ -32,7 +32,7 @@ Arc was extracted from the Focus/Temper plugin during the temper-split (PR #4, s
 |-------|-------|
 | Name | arc |
 | Version | 0.1.0 |
-| Owner | liatrio-labs |
+| Owner | ronjanusz-liatrio |
 | Marketplace | strict: true |
 | Type | Pure markdown Claude Code plugin |
 | Dependencies | temper (engineering maturity), claude-workflow (SDD pipeline) |
@@ -44,7 +44,7 @@ Arc was extracted from the Focus/Temper plugin during the temper-split (PR #4, s
 arc/
   .claude-plugin/
     plugin.json               # {"name": "arc", "version": "0.1.0"}
-    marketplace.json          # liatrio-labs owner, strict mode
+    marketplace.json          # ronjanusz-liatrio owner, strict mode
   skills/
     .gitkeep                  # Planned: arc-capture/, arc-shape/, arc-wave/
   templates/
@@ -112,7 +112,7 @@ arc/
 ```json
 {
   "name": "arc",
-  "owner": {"name": "liatrio-labs"},
+  "owner": {"name": "ronjanusz-liatrio"},
   "metadata": {
     "description": "...",
     "version": "0.1.0"
@@ -259,15 +259,15 @@ CLAUDE.md
 
 ```bash
 # 1. Install claude-workflow (execution engine)
-claude plugin marketplace add https://github.com/liatrio-labs/claude-workflow.git
+claude plugin marketplace add https://github.com/ronjanusz-liatrio/claude-workflow.git
 claude plugin install claude-workflow@claude-workflow --scope user
 
 # 2. Install temper (engineering maturity)
-claude plugin marketplace add https://github.com/liatrio-labs/temper.git
+claude plugin marketplace add https://github.com/ronjanusz-liatrio/temper.git
 claude plugin install temper@temper --scope user
 
 # 3. Install arc (product direction)
-claude plugin marketplace add https://github.com/liatrio-labs/arc.git
+claude plugin marketplace add https://github.com/ronjanusz-liatrio/arc.git
 claude plugin install arc@arc --scope user
 ```
 

@@ -25,7 +25,7 @@
 No build step required. Arc is a pure content plugin distributed as-is via Git.
 
 - **Installation**: `claude plugin marketplace add {source}` + `claude plugin install arc@arc --scope {project|user}`
-- **Distribution**: Git-based (`https://github.com/liatrio-labs/arc.git`)
+- **Distribution**: Git-based (`https://github.com/ronjanusz-liatrio/arc.git`)
 - **Strict mode**: `"strict": true` in marketplace.json restricts permissions to declared allowlists
 
 ### Directory Layout
@@ -34,7 +34,7 @@ No build step required. Arc is a pure content plugin distributed as-is via Git.
 arc/
 ├── .claude-plugin/          # Plugin identity & marketplace registration
 │   ├── plugin.json          # Name, version (0.2.0), description
-│   └── marketplace.json     # Owner (liatrio-labs), strict mode, source
+│   └── marketplace.json     # Owner (ronjanusz-liatrio), strict mode, source
 ├── skills/                  # Three user-invocable SKILL.md definitions
 │   ├── arc-capture/SKILL.md # Fast idea entry (185 lines, 5 steps)
 │   ├── arc-shape/           # Interactive refinement (369 lines, 8 steps)
