@@ -1,0 +1,32 @@
+Type: file
+Command: Verify managed section markers in SKILL.md template output
+Expected: All 5 managed sections use correct marker format, all 6 ARC: sections present
+Timestamp: 2026-04-08T14:30:00Z
+
+=== Managed Section Markers ===
+
+Section markers use format: <!--# BEGIN ARC:{section-name} --> / <!--# END ARC:{section-name} -->
+
+Sections defined in scaffold template:
+1. ARC:overview -- PRESENT (Step 3b, lines ~120-128)
+2. ARC:audience -- PRESENT (Step 3c, lines ~144-163, two variants)
+3. ARC:features -- PRESENT (Step 3d, lines ~180-198, two variants)
+4. ARC:roadmap -- PRESENT (Step 3e, lines ~214-236, two variants)
+5. ARC:lifecycle-diagram -- PRESENT (Step 3f, lines ~257-286)
+
+Total BEGIN markers in SKILL.md: 10 (2 per section for with/without variants, except overview and lifecycle)
+All markers use the correct <!--# BEGIN ARC: / <!--# END ARC: format.
+
+=== Marker Count Verification ===
+BEGIN ARC:overview -- 1 occurrence (only with-VISION variant, always present since VISION required)
+BEGIN ARC:audience -- 2 occurrences (with/without CUSTOMER.md)
+BEGIN ARC:features -- 2 occurrences (with/without shipped items)
+BEGIN ARC:roadmap -- 2 occurrences (with/without ROADMAP.md)
+BEGIN ARC:lifecycle-diagram -- 1 occurrence (always generated)
+
+=== Non-Managed Sections ===
+- Getting Started (replaces Install) -- PRESENT
+- Contributing -- PRESENT
+- License -- PRESENT
+
+Status: PASS

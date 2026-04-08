@@ -1,0 +1,43 @@
+Type: file
+Command: Verify trust-signal validation coverage and Liatrio brand colors
+Expected: TS-1 through TS-8 validation defined, Liatrio brand colors in mermaid, traceability link for TS-7
+Timestamp: 2026-04-08T14:30:00Z
+
+=== Trust-Signal Validation (Step 4) ===
+
+Evaluability table present for all 8 signals:
+- TS-1: Overview -- evaluable when VISION.md + ARC:overview exist -- PRESENT
+- TS-2: Audience -- evaluable when CUSTOMER.md + ARC:audience exist -- PRESENT
+- TS-3: Features -- evaluable when BACKLOG.md shipped + ARC:features exist -- PRESENT
+- TS-4: Roadmap -- evaluable when ROADMAP.md + ARC:roadmap exist -- PRESENT
+- TS-5: Lifecycle Diagram -- evaluable when BACKLOG.md + ARC:lifecycle-diagram exist -- PRESENT
+- TS-6: Currency -- evaluable when BACKLOG.md shipped + ARC:features exist -- PRESENT
+- TS-7: Traceability -- evaluable when any docs/ file + any ARC: section exist -- PRESENT
+- TS-8: No Placeholders -- evaluable when any ARC: section exists -- PRESENT
+
+Scorecard output format defined: PASS/FAIL/N/A with detail column -- PRESENT
+Scaffold guarantee stated: "All evaluable signals MUST pass" -- PRESENT
+
+=== TS-7 Traceability Satisfaction ===
+
+Traceability links embedded in scaffold templates:
+- ARC:overview includes: "See [VISION.md](docs/VISION.md) for the full product vision."
+- ARC:audience includes: "See [CUSTOMER.md](docs/CUSTOMER.md) for detailed persona profiles." (when present)
+- ARC:roadmap includes: "See [ROADMAP.md](docs/ROADMAP.md) for wave details." (when present)
+
+At least one ](docs/ link is guaranteed since VISION.md is always required.
+
+=== Liatrio Brand Colors ===
+
+Mermaid theme initialization in Step 3f:
+- primaryColor: '#11B5A4' -- PRESENT (Liatrio teal)
+- secondaryColor: '#E8662F' -- PRESENT (Liatrio orange)
+- tertiaryColor: '#1B2A3D' -- PRESENT (Liatrio dark navy)
+
+classDef colors match references/idea-lifecycle.md pattern:
+- capture fill:#1B2A3D -- PRESENT
+- shape fill:#E8662F -- PRESENT
+- ready fill:#11B5A4 -- PRESENT
+- shipped fill:#0D8F82 -- PRESENT
+
+Status: PASS
