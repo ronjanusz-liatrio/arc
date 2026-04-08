@@ -54,14 +54,16 @@ All managed sections use paired HTML comment markers with a `#` prefix:
 **Output format:**
 
 ```markdown
-<!--# BEGIN ARC:overview -->
 ## Overview
+
+<!--# BEGIN ARC:overview -->
 
 {Problem statement paragraph — 2-3 sentences from VISION.md Problem Statement section.}
 
 {Value proposition paragraph — 1-2 sentences from VISION.md Value Proposition section.}
 
 See [VISION.md](docs/VISION.md) for full product direction.
+
 <!--# END ARC:overview -->
 ```
 
@@ -88,8 +90,9 @@ See [VISION.md](docs/VISION.md) for full product direction.
 **Output format:**
 
 ```markdown
-<!--# BEGIN ARC:audience -->
 ## Who This Is For
+
+<!--# BEGIN ARC:audience -->
 
 **{Persona Name}** — {role or first sentence summary}
 > {JTBD statement, if available}
@@ -98,6 +101,7 @@ See [VISION.md](docs/VISION.md) for full product direction.
 > {JTBD statement, if available}
 
 See [CUSTOMER.md](docs/CUSTOMER.md) for detailed personas.
+
 <!--# END ARC:audience -->
 ```
 
@@ -124,13 +128,15 @@ See [CUSTOMER.md](docs/CUSTOMER.md) for detailed personas.
 **Output format:**
 
 ```markdown
-<!--# BEGIN ARC:features -->
 ## Features
+
+<!--# BEGIN ARC:features -->
 
 - **{Shipped Idea Title}** — {one-line summary}
 - **{Shipped Idea Title}** — {one-line summary}
 
 See [BACKLOG.md](docs/BACKLOG.md) for the full product backlog.
+
 <!--# END ARC:features -->
 ```
 
@@ -155,22 +161,24 @@ See [BACKLOG.md](docs/BACKLOG.md) for the full product backlog.
 2. Collect all wave sections: headings matching `## {Wave Name}` or `### {Wave Name}` that contain a wave-like name (e.g., `Wave 1`, `Wave 2 — Theme`)
 3. For each wave, extract:
    - **Name:** The heading text
+   - **Theme:** The wave theme (from the heading suffix after `—` or from a `Theme:` field)
    - **Status:** One of `planned`, `active`, or `completed` (from a `Status:` field or table row)
-   - **Goal:** The wave goal (first sentence or `Wave Goal` subsection)
 4. Sort waves: active first, then planned, then completed
 
 **Output format:**
 
 ```markdown
-<!--# BEGIN ARC:roadmap -->
 ## Roadmap
 
-| Wave | Status | Goal |
-|------|--------|------|
-| {Wave Name} | {status} | {one-line goal} |
-| {Wave Name} | {status} | {one-line goal} |
+<!--# BEGIN ARC:roadmap -->
+
+| Wave | Theme | Status |
+|------|-------|--------|
+| {Wave Name} | {theme} | {status} |
+| {Wave Name} | {theme} | {status} |
 
 See [ROADMAP.md](docs/ROADMAP.md) for the full delivery plan.
+
 <!--# END ARC:roadmap -->
 ```
 
@@ -195,8 +203,9 @@ See [ROADMAP.md](docs/ROADMAP.md) for the full delivery plan.
 **Output format:**
 
 ```markdown
-<!--# BEGIN ARC:lifecycle-diagram -->
 ## Idea Lifecycle
+
+<!--# BEGIN ARC:lifecycle-diagram -->
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
@@ -225,6 +234,7 @@ stateDiagram-v2
 ```
 
 See [BACKLOG.md](docs/BACKLOG.md) for individual idea details.
+
 <!--# END ARC:lifecycle-diagram -->
 ```
 

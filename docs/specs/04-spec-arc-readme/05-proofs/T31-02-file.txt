@@ -1,0 +1,25 @@
+Type: file
+File: skills/arc-readme/SKILL.md vs skills/arc-readme/references/readme-mapping.md
+Description: Cross-document consistency check — heading placement convention matches between SKILL.md and readme-mapping.md
+Timestamp: 2026-04-08T22:30:00Z
+
+Expected: Both files use identical heading-before-marker convention for all five ARC sections
+Actual:
+
+SKILL.md (canonical):
+  ARC:overview     — "## Overview" at line 174, BEGIN at line 176       (heading OUTSIDE)
+  ARC:audience     — "## Who This Is For" at line 199, BEGIN at line 201 (heading OUTSIDE)
+  ARC:features     — "## Features" at line 234, BEGIN at line 236       (heading OUTSIDE)
+  ARC:roadmap      — "## Roadmap" at line 269, BEGIN at line 271        (heading OUTSIDE)
+  ARC:lifecycle    — "## Idea Lifecycle" at line 312, BEGIN at line 314  (heading OUTSIDE)
+
+readme-mapping.md (updated):
+  ARC:overview     — "## Overview" at line 57, BEGIN at line 59          (heading OUTSIDE)
+  ARC:audience     — "## Who This Is For" at line 93, BEGIN at line 95   (heading OUTSIDE)
+  ARC:features     — "## Features" at line 131, BEGIN at line 133        (heading OUTSIDE)
+  ARC:roadmap      — "## Roadmap" at line 171, BEGIN at line 173         (heading OUTSIDE)
+  ARC:lifecycle    — "## Idea Lifecycle" at line 206, BEGIN at line 208   (heading OUTSIDE)
+
+All five sections match between documents.
+
+Status: PASS

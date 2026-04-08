@@ -1,0 +1,31 @@
+Type: file
+File: skills/arc-readme/references/readme-mapping.md
+Description: Verify all five ARC section output templates have headings OUTSIDE markers
+Timestamp: 2026-04-08T22:30:00Z
+Command: grep -n "## \|BEGIN ARC\|END ARC" skills/arc-readme/references/readme-mapping.md (within markdown code blocks)
+
+Expected: Each "## Heading" appears BEFORE its corresponding "<!--# BEGIN ARC:..." marker
+Actual:
+  Line 57: ## Overview
+  Line 59: <!--# BEGIN ARC:overview -->
+  Line 67: <!--# END ARC:overview -->
+
+  Line 93: ## Who This Is For
+  Line 95: <!--# BEGIN ARC:audience -->
+  Line 105: <!--# END ARC:audience -->
+
+  Line 131: ## Features
+  Line 133: <!--# BEGIN ARC:features -->
+  Line 140: <!--# END ARC:features -->
+
+  Line 171: ## Roadmap
+  Line 173: <!--# BEGIN ARC:roadmap -->
+  Line 182: <!--# END ARC:roadmap -->
+
+  Line 206: ## Idea Lifecycle
+  Line 208: <!--# BEGIN ARC:lifecycle-diagram -->
+  Line 238: <!--# END ARC:lifecycle-diagram -->
+
+All five sections: heading appears OUTSIDE (before) the BEGIN marker.
+
+Status: PASS
