@@ -1,0 +1,58 @@
+Type: test
+Command: grep -based content verification of readme-mapping.md against trust-signals.md and spec requirements
+Expected: All 5 ARC sections mapped, extraction rules satisfy trust signals, fallback behavior matches spec
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Trust-Signal Alignment Verification ---
+
+TS-1 (Overview): readme-mapping.md ARC:overview rules require:
+  - 2+ non-blank content lines [CHECKED - stated in rules]
+  - Verbatim sentence from Problem Statement [CHECKED - stated in rules]
+  Alignment: PASS
+
+TS-2 (Audience): readme-mapping.md ARC:audience rules require:
+  - Persona name matching ## heading in CUSTOMER.md [CHECKED - stated in rules]
+  Alignment: PASS
+
+TS-3 (Features): readme-mapping.md ARC:features rules require:
+  - Idea titles in bold matching shipped ideas in BACKLOG.md [CHECKED - stated in rules]
+  - Case-insensitive substring match [CHECKED - stated in extraction steps]
+  Alignment: PASS
+
+TS-4 (Roadmap): readme-mapping.md ARC:roadmap rules require:
+  - Wave name matching wave heading in ROADMAP.md [CHECKED - stated in rules]
+  Alignment: PASS
+
+TS-5 (Lifecycle Diagram): readme-mapping.md ARC:lifecycle-diagram rules require:
+  - Mermaid code fence [CHECKED - output format includes mermaid block]
+  - Node labels with Status(N) format [CHECKED - stated in rules]
+  - At least one count > 0 [CHECKED - stated in rules]
+  Alignment: PASS
+
+TS-6 (Currency): readme-mapping.md ARC:features rules require:
+  - Bullet count == shipped idea count in BACKLOG.md [CHECKED - stated in rules]
+  Alignment: PASS
+
+TS-7 (Traceability): readme-mapping.md includes traceability links in every section:
+  - ARC:overview -> docs/VISION.md link [CHECKED]
+  - ARC:audience -> docs/CUSTOMER.md link [CHECKED]
+  - ARC:features -> docs/BACKLOG.md link [CHECKED]
+  - ARC:roadmap -> docs/ROADMAP.md link [CHECKED]
+  - ARC:lifecycle-diagram -> docs/BACKLOG.md link [CHECKED]
+  Alignment: PASS
+
+TS-8 (No Placeholders): readme-mapping.md fallback behavior:
+  - Placeholder text only when artifact absent or stub [CHECKED]
+  - Stub threshold: 200 non-whitespace chars [CHECKED - matches trust-signals.md]
+  Alignment: PASS
+
+--- Spec Requirement Verification ---
+
+[PASS] Table mapping each ARC: managed section to source artifact(s) and extraction logic
+[PASS] Extraction rules: what to read from each artifact, how to format for README
+[PASS] Fallback behavior when source artifact is absent or stub (<200 non-whitespace chars)
+[PASS] Marker format convention: <!--# BEGIN ARC:{section-name} --> / <!--# END ARC:{section-name} -->
+[PASS] Insertion priority for README.md: after last ARC: section -> before Contributing/License -> at EOF
+[PASS] Security: priority metadata (P0/P1/P2/P3) explicitly excluded from features output
+
+Status: PASS

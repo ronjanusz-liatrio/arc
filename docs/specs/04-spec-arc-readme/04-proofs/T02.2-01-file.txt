@@ -1,0 +1,27 @@
+Type: file
+Command: test -f skills/arc-readme/references/readme-mapping.md && wc -l skills/arc-readme/references/readme-mapping.md
+Expected: File exists with comprehensive artifact-to-section mapping content
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+File exists: YES
+Path: skills/arc-readme/references/readme-mapping.md
+Line count: 313
+
+--- Content Verification ---
+[PASS] Title: "# README Mapping" present
+[PASS] Section-to-Artifact Map table with 5 mappings (overview, audience, features, roadmap, lifecycle-diagram)
+[PASS] Marker Format section with convention documentation
+[PASS] Extraction Rules section with per-section details:
+  - ARC:overview -> docs/VISION.md (Problem Statement, Value Proposition)
+  - ARC:audience -> docs/CUSTOMER.md (## persona headings, JTBD summaries)
+  - ARC:features -> docs/BACKLOG.md (Status: shipped ideas)
+  - ARC:roadmap -> docs/ROADMAP.md (wave sections, active and planned)
+  - ARC:lifecycle-diagram -> docs/BACKLOG.md (status counts, mermaid diagram)
+[PASS] Fallback Behavior section covers artifact-absent and artifact-stub scenarios
+[PASS] Stub threshold defined as 200 non-whitespace characters (matches trust-signals.md)
+[PASS] Insertion Priority section with 3-tier priority order
+[PASS] Section ordering for scaffold mode defined
+[PASS] Cross-References section links to trust-signals.md, quality-rules.md, bootstrap-protocol.md, templates
+
+Status: PASS
