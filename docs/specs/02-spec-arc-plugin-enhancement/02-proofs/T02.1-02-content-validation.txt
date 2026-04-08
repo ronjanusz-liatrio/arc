@@ -1,0 +1,44 @@
+Type: cli
+Command: grep -E "^### (BH|WA)-[0-9]" skills/arc-review/references/audit-dimensions.md
+Expected: 11 dimension headings (BH-1 through BH-5, WA-1 through WA-6) with severity levels, thresholds, and configurable parameters
+Timestamp: 2026-04-07T00:00:00Z
+
+--- Output ---
+=== Dimension Headings ===
+### BH-1: Stale Ideas
+### BH-2: Priority Imbalance
+### BH-3: Status Distribution
+### BH-4: Missing Brief Fields
+### BH-5: Invalid Status Values
+### WA-1: Broken ROADMAP References
+### WA-2: Status Mismatch
+### WA-3: Orphaned Spec-Ready Ideas
+### WA-4: VISION Alignment
+### WA-5: CUSTOMER Alignment
+### WA-6: Cross-Reference Integrity
+
+=== Severity Levels Present ===
+**Severity:** `warning`           (BH-1)
+**Severity:** `warning`           (BH-2)
+**Severity:** `info` / `warning`  (BH-3)
+**Severity:** `warning`           (BH-4)
+**Severity:** `critical`          (BH-5)
+**Severity:** `critical`          (WA-1)
+**Severity:** `warning`           (WA-2)
+**Severity:** `warning`           (WA-3)
+**Severity:** `info` / `warning`  (WA-4)
+**Severity:** `warning`           (WA-5)
+**Severity:** `critical`          (WA-6)
+
+=== Health Rating Thresholds Present ===
+Rating table present with: Healthy, Needs Attention, Critical criteria
+
+=== Configurable Parameters Present ===
+staleness_threshold_days (default: 14, check: BH-1)
+capture_bottleneck_min (default: 5, check: BH-3)
+shape_bottleneck_min (default: 3, check: BH-3)
+priority_imbalance_pct (default: 50, check: BH-2)
+
+Dimension count: 11 (5 backlog health + 6 wave alignment) - matches spec requirements
+
+Status: PASS

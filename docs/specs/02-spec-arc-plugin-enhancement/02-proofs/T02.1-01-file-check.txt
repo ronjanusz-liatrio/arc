@@ -1,0 +1,9 @@
+Type: file
+Command: test -f skills/arc-review/references/audit-dimensions.md && echo FILE_EXISTS
+Expected: File exists at skills/arc-review/references/audit-dimensions.md
+Timestamp: 2026-04-07T00:00:00Z
+
+--- Output ---
+FILE_EXISTS
+
+Status: PASS
