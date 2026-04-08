@@ -1,0 +1,35 @@
+Type: file
+Description: detection-patterns.md exists with all keyword and structural patterns documented
+Command: ls -la skills/arc-align/references/detection-patterns.md && grep -c "^### KW-" skills/arc-align/references/detection-patterns.md && grep -c "^### ST-" skills/arc-align/references/detection-patterns.md
+Expected: File exists, 17 keyword patterns, 4 structural patterns
+Timestamp: 2026-04-08T11:00:00Z
+
+Result:
+  File: skills/arc-align/references/detection-patterns.md (11414 bytes, 513 lines)
+  Keyword patterns (KW-): 17
+    KW-1: roadmap
+    KW-2: backlog
+    KW-3: todo
+    KW-4: planned
+    KW-5: upcoming
+    KW-6: feature list
+    KW-7: future work
+    KW-8: next steps
+    KW-9: milestone
+    KW-10: sprint
+    KW-11: epic
+    KW-12: user story
+    KW-13: persona
+    KW-14: target audience
+    KW-15: mission
+    KW-16: vision
+    KW-17: north star
+  Structural patterns (ST-): 4
+    ST-1: Markdown Task Lists
+    ST-2: Numbered Feature Lists
+    ST-3: Heading Patterns
+    ST-4: Kanban-Style Markers
+  Detection ordering rationale: Present (keyword first via Grep, then structural via Read)
+  Example file snippets: Present for each pattern (markdown code blocks)
+
+Status: PASS

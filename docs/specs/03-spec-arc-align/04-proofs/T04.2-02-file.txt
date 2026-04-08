@@ -1,0 +1,19 @@
+Type: file
+Description: import-rules.md exists with artifact classification, stub generation, cleanup, and manifest sections
+Command: ls -la skills/arc-align/references/import-rules.md && grep -c "^## " skills/arc-align/references/import-rules.md
+Expected: File exists with all required sections: Artifact Classification, Stub Generation, Source Cleanup, Manifest Format, Inclusivity Principle
+Timestamp: 2026-04-08T11:00:00Z
+
+Result:
+  File: skills/arc-align/references/import-rules.md (12604 bytes, 312 lines)
+  Major sections:
+    - Artifact Classification (BACKLOG, VISION, CUSTOMER targets with signal tables)
+    - Ambiguous Content resolution with inclusivity principle
+    - Stub Generation (format, title derivation, summary extraction, priority, timestamp, aligned-from marker)
+    - BACKLOG Summary Table update logic
+    - VISION and CUSTOMER Imports (append format with source attribution)
+    - Source Cleanup (entire-file deletion and partial-section removal with boundary detection)
+    - Manifest Format (table structure, column definitions, update logic, idempotent re-run check)
+    - Cross-References
+
+Status: PASS

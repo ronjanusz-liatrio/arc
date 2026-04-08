@@ -1,0 +1,16 @@
+Type: file
+Description: SKILL.md references to new reference docs are valid
+Command: grep "detection-patterns.md\|import-rules.md" skills/arc-align/SKILL.md
+Expected: SKILL.md contains references to both new reference docs
+Timestamp: 2026-04-08T11:00:00Z
+
+Result:
+  SKILL.md line 74: "Read `skills/arc-align/references/detection-patterns.md` for the full pattern reference."
+  SKILL.md line 94: "For each match, classify into one of three artifact targets per `skills/arc-align/references/import-rules.md`:"
+  SKILL.md line 160: "Import confirmed items into the appropriate Arc artifacts. Read `skills/arc-align/references/import-rules.md` for detailed rules."
+  SKILL.md line 283: "`skills/arc-align/references/detection-patterns.md` -- All keyword and structural detection patterns with examples"
+  SKILL.md line 284: "`skills/arc-align/references/import-rules.md` -- Artifact classification rules, stub generation logic, and cleanup behavior"
+
+  All SKILL.md references point to files that now exist.
+
+Status: PASS

@@ -1,0 +1,19 @@
+Type: file
+Description: Reference doc style matches existing arc-review/audit-dimensions.md and arc-shape/shaping-dimensions.md conventions
+Command: Manual comparison of document structure
+Expected: Follows established patterns: title, overview paragraph, section IDs, tables, code examples, cross-references
+Timestamp: 2026-04-08T11:00:00Z
+
+Result:
+  Pattern compliance check:
+    [PASS] Top-level heading matches filename convention (# Detection Patterns, # Import Rules)
+    [PASS] Opening paragraph explains what the document covers and which skill uses it
+    [PASS] Sections use consistent ID scheme (KW-N, ST-N for patterns; named sections for rules)
+    [PASS] Each section has Purpose, Detection logic/Signal table, Example match/format
+    [PASS] Code blocks use markdown fenced syntax with language hints
+    [PASS] Tables used for structured data (signals, field derivation, edge cases)
+    [PASS] Cross-References section at the end linking to related docs
+    [PASS] Horizontal rules (---) separate major sections
+    [PASS] No external dependencies — all content is self-contained
+
+Status: PASS

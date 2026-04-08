@@ -1,0 +1,513 @@
+# Detection Patterns
+
+`/arc-align` discovers product-direction content using two detection strategies applied in sequence: **keyword matching** followed by **structural matching**. This document defines every pattern, provides example snippets showing what each pattern matches, and explains the detection ordering rationale.
+
+---
+
+## Detection Ordering
+
+Keyword matching runs first because it uses Grep and completes quickly across the entire non-excluded file set. Structural matching runs second on files not already flagged by keyword matching, since it requires line-by-line parsing with Read and is slower.
+
+**Sequence:**
+
+1. **Keyword scan** — Grep for each keyword across all non-excluded files. Fast, broad coverage.
+2. **Structural scan** — Read remaining unflagged files and parse for structural indicators. Slower, catches content that lacks explicit keywords but uses recognizable formatting patterns.
+
+This ordering minimizes file reads while maximizing coverage. A file matched by keyword scan is not re-scanned for structural patterns — the keyword match is sufficient to flag it for classification.
+
+---
+
+## Keyword Patterns
+
+Each keyword is searched case-insensitively via Grep. A match flags the file and surrounding context for classification in Step 2c.
+
+---
+
+### KW-1: roadmap
+
+**Purpose:** Detect roadmap or planning content that should be consolidated into BACKLOG or ROADMAP.
+
+**Search term:** `roadmap`
+
+**Example match:**
+
+```markdown
+## Roadmap
+
+- Q3: Launch dark mode
+- Q4: Add team collaboration features
+- Q1 2027: Mobile app beta
+```
+
+**Typical target artifact:** BACKLOG (individual items) or VISION (high-level direction)
+
+---
+
+### KW-2: backlog
+
+**Purpose:** Detect explicit backlog content outside Arc's managed `docs/BACKLOG.md`.
+
+**Search term:** `backlog`
+
+**Example match:**
+
+```markdown
+## Product Backlog
+
+| Feature | Priority | Status |
+|---------|----------|--------|
+| SSO login | High | Planned |
+| Export CSV | Medium | In progress |
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-3: todo
+
+**Purpose:** Detect TODO items, task lists, and work-tracking content.
+
+**Search term:** `todo`
+
+**Example match:**
+
+```markdown
+## TODO
+
+- [ ] Refactor authentication module
+- [ ] Add rate limiting to API endpoints
+- [x] Fix broken pagination
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-4: planned
+
+**Purpose:** Detect planned features or work items.
+
+**Search term:** `planned`
+
+**Example match:**
+
+```markdown
+### Planned Features
+
+We have several features planned for the next release:
+
+1. Dashboard analytics
+2. Webhook integrations
+3. Custom themes
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-5: upcoming
+
+**Purpose:** Detect upcoming work or release plans.
+
+**Search term:** `upcoming`
+
+**Example match:**
+
+```markdown
+## Upcoming Changes
+
+- New onboarding flow (targeting v2.1)
+- Performance improvements for large datasets
+- Deprecation of legacy REST endpoints
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-6: feature list
+
+**Purpose:** Detect enumerated feature lists.
+
+**Search term:** `feature list`
+
+**Example match:**
+
+```markdown
+## Feature List
+
+1. Real-time notifications
+2. Role-based access control
+3. Audit logging
+4. Multi-tenant support
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-7: future work
+
+**Purpose:** Detect sections describing future plans or deferred work.
+
+**Search term:** `future work`
+
+**Example match:**
+
+```markdown
+## Future Work
+
+This section tracks ideas we want to explore after the initial release:
+
+- AI-powered search suggestions
+- Plugin marketplace
+- Self-hosted deployment option
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-8: next steps
+
+**Purpose:** Detect action items and follow-up work.
+
+**Search term:** `next steps`
+
+**Example match:**
+
+```markdown
+## Next Steps
+
+1. Finalize the API contract with the mobile team
+2. Write integration tests for the payment flow
+3. Schedule UX review for the new settings page
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-9: milestone
+
+**Purpose:** Detect milestone-based planning content.
+
+**Search term:** `milestone`
+
+**Example match:**
+
+```markdown
+## Milestones
+
+### Milestone 1: Core Platform (March 2026)
+- User authentication
+- Basic CRUD operations
+- CI/CD pipeline
+
+### Milestone 2: Integrations (June 2026)
+- Slack integration
+- GitHub webhook support
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-10: sprint
+
+**Purpose:** Detect sprint-based planning content from agile workflows.
+
+**Search term:** `sprint`
+
+**Example match:**
+
+```markdown
+## Sprint 14 Goals
+
+- Complete checkout redesign
+- Fix 3 critical bugs from QA
+- Deploy monitoring dashboard
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-11: epic
+
+**Purpose:** Detect epic-level work items from agile workflows.
+
+**Search term:** `epic`
+
+**Example match:**
+
+```markdown
+## Epics
+
+### Epic: User Onboarding
+Improve the first-run experience to reduce time-to-value from 15 minutes to under 5.
+
+### Epic: Data Export
+Allow users to export all their data in CSV and JSON formats.
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-12: user story
+
+**Purpose:** Detect user story definitions.
+
+**Search term:** `user story`
+
+**Example match:**
+
+```markdown
+## User Stories
+
+- As a developer, I want to see build logs in real time so I can debug failures faster.
+- As an admin, I want to configure SSO so that team members use corporate credentials.
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### KW-13: persona
+
+**Purpose:** Detect persona definitions or references.
+
+**Search term:** `persona`
+
+**Example match:**
+
+```markdown
+## Personas
+
+### Alex — Platform Engineer
+- Maintains CI/CD pipelines
+- Needs fast feedback on build failures
+- Uses the CLI daily
+
+### Jordan — Product Manager
+- Prioritizes features based on customer feedback
+- Needs visibility into delivery timelines
+```
+
+**Typical target artifact:** CUSTOMER
+
+---
+
+### KW-14: target audience
+
+**Purpose:** Detect audience or market segment descriptions.
+
+**Search term:** `target audience`
+
+**Example match:**
+
+```markdown
+## Target Audience
+
+This tool is designed for:
+
+- **Small engineering teams** (2-10 developers) shipping SaaS products
+- **Product owners** who manage backlogs without dedicated PM tooling
+- **Solo developers** who want lightweight product management
+```
+
+**Typical target artifact:** CUSTOMER
+
+---
+
+### KW-15: mission
+
+**Purpose:** Detect mission statement content.
+
+**Search term:** `mission`
+
+**Example match:**
+
+```markdown
+## Our Mission
+
+To make product management accessible to every engineering team,
+regardless of size or budget.
+```
+
+**Typical target artifact:** VISION
+
+---
+
+### KW-16: vision
+
+**Purpose:** Detect product vision or strategic direction content.
+
+**Search term:** `vision`
+
+**Example match:**
+
+```markdown
+## Product Vision
+
+Arc becomes the default upstream companion for every Claude Code project —
+the place where product direction lives before engineering begins.
+```
+
+**Typical target artifact:** VISION
+
+---
+
+### KW-17: north star
+
+**Purpose:** Detect north-star metric or guiding principle content.
+
+**Search term:** `north star`
+
+**Example match:**
+
+```markdown
+## North Star
+
+Every idea captured in Arc reaches a spec-ready state within one wave cycle.
+Our north star metric is the capture-to-spec-ready conversion rate.
+```
+
+**Typical target artifact:** VISION
+
+---
+
+## Structural Patterns
+
+Structural patterns detect product-direction content through formatting conventions rather than keywords. These are checked via Read on files not already flagged by keyword matching.
+
+---
+
+### ST-1: Markdown Task Lists
+
+**Purpose:** Detect checkbox-style task lists that represent actionable work items.
+
+**Pattern:** Lines matching `- [ ]` or `- [x]` (markdown task list syntax).
+
+**Detection logic:** Count consecutive task list lines. Flag sections with 2 or more task list items as potential backlog content.
+
+**Example match:**
+
+```markdown
+- [ ] Add input validation to signup form
+- [ ] Write API documentation for /users endpoint
+- [x] Fix timezone bug in scheduler
+- [ ] Add retry logic to webhook delivery
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### ST-2: Numbered Feature Lists
+
+**Purpose:** Detect sequential numbered lists that enumerate features or planned work.
+
+**Pattern:** Three or more consecutive lines matching `N. {text}` where N increments sequentially starting from 1.
+
+**Detection logic:** Identify runs of 3+ sequential numbered items. Single numbered items or non-sequential numbering (e.g., `1. ... 3. ...`) are not flagged.
+
+**Example match:**
+
+```markdown
+1. User authentication with OAuth2
+2. Role-based access control
+3. Audit logging for admin actions
+4. Data export in CSV and JSON
+5. Webhook support for external integrations
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### ST-3: Heading Patterns
+
+**Purpose:** Detect section headings that indicate product-direction content by their title.
+
+**Pattern:** Level-2 headings matching these titles (case-insensitive):
+
+- `## Roadmap`
+- `## TODO`
+- `## Planned Features`
+- `## Backlog`
+
+**Detection logic:** Match the heading itself, then flag the entire section (from the heading to the next same-level or higher heading, or end of file) as product-direction content.
+
+**Example match:**
+
+```markdown
+## Planned Features
+
+We're working toward these capabilities for the next major release:
+
+- Real-time collaboration editing
+- Advanced search with filters
+- Custom dashboard widgets
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+### ST-4: Kanban-Style Markers
+
+**Purpose:** Detect kanban board columns rendered as markdown headings, indicating work-tracking content.
+
+**Pattern:** Level-3 headings matching these titles (case-insensitive):
+
+- `### To Do`
+- `### In Progress`
+- `### Done`
+
+**Detection logic:** The presence of any two of these three headings in the same file indicates kanban-style work tracking. Flag the entire kanban structure (from the first kanban heading through the last) as product-direction content.
+
+**Example match:**
+
+```markdown
+### To Do
+
+- Implement search API
+- Add pagination to list views
+
+### In Progress
+
+- Redesign settings page
+- Migrate to new auth provider
+
+### Done
+
+- Deploy monitoring stack
+- Fix memory leak in worker process
+```
+
+**Typical target artifact:** BACKLOG
+
+---
+
+## Pattern Confidence
+
+Not all matches are equally strong signals. The classification step (Step 2c) uses detection method as an input to confidence:
+
+| Signal Strength | Description |
+|----------------|-------------|
+| **Strong** | Keyword match inside a heading (e.g., `## Roadmap`) or structural pattern with 5+ items |
+| **Moderate** | Keyword match in body text with surrounding context confirming product-direction content |
+| **Weak** | Keyword match that may be incidental (e.g., "vision" in a CSS class name) or structural pattern with only 2-3 items |
+
+Weak signals are still imported per the inclusivity principle — when in doubt, import as a captured stub rather than skip. The alignment report marks weak-signal imports so the user can review them.
+
+---
+
+## Cross-References
+
+- `skills/arc-align/references/import-rules.md` — How detected content is classified into artifact targets and imported
+- `references/idea-lifecycle.md` — The Capture stage that imported stubs enter
+- `skills/arc-align/SKILL.md` — Step 2 references this document for the full pattern set
