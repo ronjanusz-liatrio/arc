@@ -1,0 +1,18 @@
+Type: file
+Command: grep -n "Shape imported ideas\|Review pipeline health\|Run again\|Done" skills/arc-align/SKILL.md (filtered to Step 10 AskUserQuestion)
+Expected: Next-steps AskUserQuestion includes all four options matching task spec
+Timestamp: 2026-04-08T18:46:05Z
+
+Output:
+923:      { label: "Shape imported ideas", description: "Run /arc-shape on newly captured stubs to refine them into shaped briefs" },
+924:      { label: "Review pipeline health", description: "Run /arc-review to audit the consolidated backlog and check cross-reference integrity" },
+925:      { label: "Run again", description: "Re-run /arc-align to check for additional content after manual changes" },
+926:      { label: "Done", description: "Finish the alignment session" }
+
+Verification: Step 10 AskUserQuestion includes all four required options with labels matching the task spec:
+  1. "Shape imported ideas" -- runs /arc-shape
+  2. "Review pipeline health" -- runs /arc-review
+  3. "Run again" -- re-runs /arc-align
+  4. "Done" -- finishes session
+
+Status: PASS

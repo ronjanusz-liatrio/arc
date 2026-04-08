@@ -1,0 +1,13 @@
+Type: file
+Command: grep -n "Imported to BACKLOG\|Imported to VISION\|Imported to CUSTOMER" skills/arc-align/SKILL.md
+Expected: Per-artifact import count rows present in Step 9 summary table
+Timestamp: 2026-04-08T18:46:05Z
+
+Output:
+891:| **Imported to BACKLOG** | **{N}** |
+892:| **Imported to VISION** | **{N}** |
+893:| **Imported to CUSTOMER** | **{N}** |
+
+Verification: Step 9 summary table includes per-artifact import counts for BACKLOG, VISION, and CUSTOMER as separate bold rows. Zero-count artifacts are omitted per instructions.
+
+Status: PASS

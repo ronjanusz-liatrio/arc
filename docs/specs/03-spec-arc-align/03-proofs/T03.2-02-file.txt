@@ -1,0 +1,14 @@
+Type: file
+Command: grep -n "Items skipped\|Items left behind\|Files deleted\|Sections trimmed" skills/arc-align/SKILL.md
+Expected: Aggregate metric rows present in Step 9 summary table (skipped, left behind, deleted, trimmed)
+Timestamp: 2026-04-08T18:46:05Z
+
+Output:
+894:| Items skipped (already in manifest) | {N} |
+895:| Items left behind (below threshold) | {N} |
+896:| Files deleted | {N} |
+897:| Sections trimmed | {N} |
+
+Verification: Step 9 summary table includes all four aggregate metrics: items skipped from manifest, items left behind below threshold, files deleted, and sections trimmed. All rows are always shown even when zero for completeness confirmation.
+
+Status: PASS

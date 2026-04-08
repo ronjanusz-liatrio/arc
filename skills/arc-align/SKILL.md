@@ -878,32 +878,51 @@ End the report with pointers to related files:
 
 ### Step 9: Present Summary
 
-Show the run summary inline as a markdown table:
+After the report is written, present the run summary inline to the user as a markdown table. This follows the same pattern as `/arc-review` Step 5/6 -- show findings inline, then offer next steps via AskUserQuestion.
+
+**9a. Per-artifact import counts:**
+
+Show one row per artifact that received at least one import, plus aggregate totals:
 
 ```markdown
 | Metric | Count |
 |--------|-------|
 | Files scanned | {N} |
-| Items imported | {N} |
-| Items skipped (manifest) | {N} |
-| Items left behind | {N} |
+| **Imported to BACKLOG** | **{N}** |
+| **Imported to VISION** | **{N}** |
+| **Imported to CUSTOMER** | **{N}** |
+| Items skipped (already in manifest) | {N} |
+| Items left behind (below threshold) | {N} |
 | Files deleted | {N} |
 | Sections trimmed | {N} |
 ```
 
-Highlight key outcomes: new imports per artifact, skipped items, and remaining unmanaged content.
+Omit artifact rows with zero imports (e.g., if no VISION content was imported, omit the VISION row). Always include the skipped, left-behind, files-deleted, and sections-trimmed rows even when their count is zero -- this confirms completeness.
+
+**9b. Highlight key outcomes:**
+
+Below the table, add a one-sentence summary per non-zero category:
+
+- Imports: "Imported {N} items into {artifact list} from {M} source files."
+- Skipped: "{N} items skipped -- already captured in a prior alignment run."
+- Left behind: "{N} items below confidence threshold -- listed in `docs/align-report.md` under Remaining Unmanaged Content for manual review."
+- Cleanup: "Deleted {N} files and trimmed {N} sections to eliminate drift."
+
+Omit sentences for categories with zero counts.
 
 ### Step 10: Offer Next Steps
+
+Immediately after the inline summary, offer the user a choice of next actions via AskUserQuestion. This mirrors the `/arc-review` Step 6 pattern of presenting findings inline followed by an interactive prompt.
 
 ```
 AskUserQuestion({
   questions: [{
     question: "Alignment complete. What would you like to do next?",
-    header: "Next",
+    header: "Next Steps",
     options: [
-      { label: "Run again", description: "Re-scan after manual changes to find remaining content" },
-      { label: "Review health", description: "Run /arc-review to audit the consolidated backlog" },
-      { label: "Shape ideas", description: "Run /arc-shape to refine imported captured stubs" },
+      { label: "Shape imported ideas", description: "Run /arc-shape on newly captured stubs to refine them into shaped briefs" },
+      { label: "Review pipeline health", description: "Run /arc-review to audit the consolidated backlog and check cross-reference integrity" },
+      { label: "Run again", description: "Re-run /arc-align to check for additional content after manual changes" },
       { label: "Done", description: "Finish the alignment session" }
     ],
     multiSelect: false
@@ -912,10 +931,10 @@ AskUserQuestion({
 ```
 
 **Handle selection:**
+- **Shape imported ideas:** Inform the user to run `/arc-shape` to refine the newly captured stubs into shaped briefs
+- **Review pipeline health:** Inform the user to run `/arc-review` to audit the consolidated backlog
 - **Run again:** Loop back to Step 1 (full re-scan with manifest deduplication)
-- **Review health:** Inform the user to run `/arc-review`
-- **Shape ideas:** Inform the user to run `/arc-shape`
-- **Done:** Summarize total items imported, files cleaned, and exit
+- **Done:** Summarize total items imported across all artifacts, files cleaned, and exit
 
 ## References
 

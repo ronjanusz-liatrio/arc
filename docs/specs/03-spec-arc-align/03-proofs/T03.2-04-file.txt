@@ -1,0 +1,12 @@
+Type: file
+Command: grep -n "arc-review.*Step 5/6\|arc-review.*Step 6" skills/arc-align/SKILL.md
+Expected: Steps 9 and 10 reference arc-review Step 5/6 pattern
+Timestamp: 2026-04-08T18:46:05Z
+
+Output:
+881:After the report is written, present the run summary inline to the user as a markdown table. This follows the same pattern as `/arc-review` Step 5/6 -- show findings inline, then offer next steps via AskUserQuestion.
+915:Immediately after the inline summary, offer the user a choice of next actions via AskUserQuestion. This mirrors the `/arc-review` Step 6 pattern of presenting findings inline followed by an interactive prompt.
+
+Verification: Both Step 9 and Step 10 explicitly reference the arc-review Step 5/6 pattern. Step 9 follows the "present findings inline" pattern, and Step 10 follows the "AskUserQuestion for next steps" pattern.
+
+Status: PASS

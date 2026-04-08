@@ -1,0 +1,15 @@
+Type: file
+Command: grep -n "Handle selection" skills/arc-align/SKILL.md (Step 10 section)
+Expected: Handle selection block documents behavior for all four options
+Timestamp: 2026-04-08T18:46:05Z
+
+Output:
+933:**Handle selection:**
+934:- **Shape imported ideas:** Inform the user to run `/arc-shape` to refine the newly captured stubs into shaped briefs
+935:- **Review pipeline health:** Inform the user to run `/arc-review` to audit the consolidated backlog
+936:- **Run again:** Loop back to Step 1 (full re-scan with manifest deduplication)
+937:- **Done:** Summarize total items imported across all artifacts, files cleaned, and exit
+
+Verification: All four selection handlers are documented with clear behavior descriptions. "Run again" loops back to Step 1. "Done" provides a total summary. The other two inform the user to run the appropriate skill.
+
+Status: PASS
