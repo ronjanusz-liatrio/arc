@@ -1,0 +1,25 @@
+Type: file
+Description: CUSTOMER import logic with Imported Content section and source attribution
+Command: Verify Steps 5c-i and 5c-ii in SKILL.md implement CUSTOMER import with correct structure
+Expected: Step 5c instructs appending persona content to docs/CUSTOMER.md under ## Imported Content with <!-- aligned-from --> attribution, mirroring VISION import procedure
+Timestamp: 2026-04-08T19:30:00Z
+
+Verification:
+- Step 5c (lines 554-580) provides full CUSTOMER import procedure
+- Step 5c explicitly states "The procedure mirrors VISION imports exactly"
+- Step 5c-i (line 558) instructs locating or creating ## Imported Content section:
+  - Read docs/CUSTOMER.md using Read tool
+  - If section found: append at end of section
+  - If section not found: create at end of file
+- Step 5c-ii (line 565) instructs appending each discovery with attribution:
+  - First import includes ## Imported Content heading
+  - Subsequent imports omit heading to prevent duplicates
+  - Each import has <!-- aligned-from: {source_path}:{line_range} --> above content
+  - Original formatting preserved exactly
+  - Multiple discoveries appended in single Edit operation
+
+Gherkin coverage:
+- "Missing CUSTOMER.md is created from template before import" -- COVERED (Step 4c bootstraps, Step 5c appends)
+- "CUSTOMER-targeted content is appended with source attribution" -- COVERED (Step 5c-ii)
+
+Status: PASS

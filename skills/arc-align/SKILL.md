@@ -519,7 +519,18 @@ If multiple stubs are imported, add all rows in a single Edit operation to avoid
 
 **5b. VISION imports:**
 
-Append discovered vision/mission/north-star content to `docs/VISION.md` under a `## Imported Content` section. If the section already exists, append below existing content within it (do not create duplicate `## Imported Content` headings).
+Append discovered vision/mission/north-star content to `docs/VISION.md` under a `## Imported Content` section. Process VISION discoveries in the order they appear in the confirmed discovery list.
+
+**5b-i. Locate or create the `## Imported Content` section:**
+
+1. Read `docs/VISION.md` using the Read tool
+2. Search for an existing `## Imported Content` heading:
+   - **Found:** Identify the end of the section (the line before the next `## ` heading, or end of file). New content will be appended at this position.
+   - **Not found:** The section does not exist yet. It will be created at the end of the file.
+
+**5b-ii. Append each VISION discovery:**
+
+For each VISION-targeted discovery, append a content block with source attribution:
 
 ```markdown
 ## Imported Content
@@ -528,11 +539,32 @@ Append discovered vision/mission/north-star content to `docs/VISION.md` under a 
 {imported content, preserving original formatting}
 ```
 
-Each import gets its own `<!-- aligned-from: ... -->` comment immediately above the content block.
+If appending to an existing `## Imported Content` section, do not repeat the `## Imported Content` heading. Append only the attribution comment and content block, separated by a blank line from the previous import:
+
+```markdown
+
+<!-- aligned-from: {second_source_path}:{line_range} -->
+{second imported content block}
+```
+
+Each import gets its own `<!-- aligned-from: ... -->` comment immediately above the content block. Preserve the original formatting of the source content exactly -- headings, lists, emphasis, and whitespace are kept intact.
+
+If multiple VISION discoveries exist, append all blocks in a single Edit operation to minimize file writes.
 
 **5c. CUSTOMER imports:**
 
-Append discovered persona/audience/JTBD content to `docs/CUSTOMER.md` under a `## Imported Content` section. Same append-within-section rule as VISION imports.
+Append discovered persona/audience/JTBD content to `docs/CUSTOMER.md` under a `## Imported Content` section. The procedure mirrors VISION imports exactly.
+
+**5c-i. Locate or create the `## Imported Content` section:**
+
+1. Read `docs/CUSTOMER.md` using the Read tool
+2. Search for an existing `## Imported Content` heading:
+   - **Found:** Identify the end of the section (the line before the next `## ` heading, or end of file). New content will be appended at this position.
+   - **Not found:** The section does not exist yet. It will be created at the end of the file.
+
+**5c-ii. Append each CUSTOMER discovery:**
+
+For each CUSTOMER-targeted discovery, append a content block with source attribution:
 
 ```markdown
 ## Imported Content
@@ -541,33 +573,110 @@ Append discovered persona/audience/JTBD content to `docs/CUSTOMER.md` under a `#
 {imported persona content, preserving original formatting}
 ```
 
-Each import gets its own `<!-- aligned-from: ... -->` comment immediately above the content block.
+If appending to an existing `## Imported Content` section, do not repeat the heading -- append only the attribution comment and content block, separated by a blank line from the previous import.
+
+Each import gets its own `<!-- aligned-from: ... -->` comment immediately above the content block. Preserve the original formatting of the source content exactly.
+
+If multiple CUSTOMER discoveries exist, append all blocks in a single Edit operation.
 
 ### Step 6: Clean Up Sources
 
-After all imports succeed, remove the original content to eliminate drift.
+After all imports succeed, remove the original content to eliminate drift between Arc-managed and unmanaged content. Process each source file that contributed at least one import. **Deletion is performed only after all imports from a file succeed -- if any import from a file fails, the file is left intact.**
+
+#### Section Boundary Detection
+
+Before removing content, determine the section boundaries using these rules (applied in precedence order):
+
+| Boundary Type | Detection Rule | Example |
+|---------------|---------------|---------|
+| **Heading-delimited** | A section starts at a `##` or `###` heading and ends at the line before the next heading of the same or higher level (`#`, `##`), or at end of file | `## Roadmap` through the line before `## Contributing` |
+| **Blank-line-delimited** | If no heading structure exists, a section is a block of consecutive non-blank lines separated by one or more blank lines from surrounding content | A paragraph block between blank lines |
+| **Task list block** | Consecutive task list items (`- [ ]` / `- [x]`) form a single block, regardless of heading structure | A run of 5 checkbox items with no blank lines between them |
+
+When the imported line range falls within a heading-delimited section, expand the removal range to cover the full section (from the heading line through the last line before the next same-or-higher-level heading). This prevents orphaned content fragments.
 
 **6a. Full-file deletion:**
 
-If the entire file is product-direction content, delete the file.
+Delete the source file when **all** of its content was classified as product-direction and imported.
+
+**Criteria for entire-file deletion:**
+
+1. Every non-blank, non-frontmatter, non-comment line in the file was part of an imported discovery
+2. No non-product-direction sections remain after removing all imported ranges
+3. Common entire-file candidates: `TODO.md`, `PERSONAS.md`, `FEATURES.md`, standalone roadmap files
+
+**Procedure:**
+
+1. Collect all imported line ranges for the file
+2. Read the full file content
+3. Determine whether any meaningful content (non-blank, non-frontmatter) exists outside the imported ranges
+4. If no meaningful content remains: delete the file using the Bash tool (`rm {file_path}`)
+5. If meaningful content remains: proceed to 6b for partial removal
 
 **6b. Partial-section removal:**
 
-If only a section of a file is product-direction content, remove that section from the file, preserving surrounding content. Use section boundaries (markdown headings, blank-line separators) to identify extraction ranges.
+When a file contains both product-direction and non-product content, remove only the imported sections while preserving surrounding content.
+
+**Procedure:**
+
+1. For each imported discovery from this file, identify the exact line range using the section boundary detection rules above
+2. Sort all removal ranges by start line (descending) so that removals from the bottom of the file are processed first -- this prevents line number shifts from invalidating subsequent ranges
+3. For each removal range (processed bottom-up):
+   a. Remove all lines in the range using the Edit tool (replace the section text with an empty string)
+   b. Collapse any resulting double-blank-line sequences to a single blank line
+4. After all removals, read the file again and verify:
+   a. The remaining file is valid markdown (headings still nested correctly, no orphaned list continuations)
+   b. No double-blank-line sequences remain
+   c. The file still has meaningful content
+5. If the file is now empty or contains only whitespace/frontmatter after all removals: delete the file entirely (fall back to 6a behavior)
+
+**Preservation guarantee:** Content outside the identified section boundaries is never modified. The surrounding text, headings, and structure remain intact.
 
 ### Step 7: Update Manifest
 
-Update `docs/align-manifest.md` with a row per import:
+Update `docs/align-manifest.md` with a row per import to enable idempotent re-runs and provide an audit trail.
+
+**7a. Create or read the manifest:**
+
+1. Check if `docs/align-manifest.md` exists using Read
+2. If the file does not exist, create it with the table header:
 
 ```markdown
 # Align Manifest
 
 | Source Path | Line Range | Target Artifact | Imported Title | Timestamp |
 |-------------|-----------|-----------------|----------------|-----------|
+```
+
+3. If the file exists, read it to identify the last line of the table (the position for appending new rows)
+
+**7b. Append import rows:**
+
+For each successfully imported discovery, append one row to the manifest table:
+
+```markdown
 | {source_path} | {line_range} | {target} | {title} | {ISO 8601} |
 ```
 
-If the manifest does not exist, create it with the table header. If it exists, append new rows.
+**Column values:**
+
+| Column | Value |
+|--------|-------|
+| Source Path | Relative path from repo root to the original file (e.g., `README.md`, `docs/TODO.md`) |
+| Line Range | Line numbers of the imported content (single line: `5`, range: `10-25`) |
+| Target Artifact | One of `BACKLOG`, `VISION`, or `CUSTOMER` |
+| Imported Title | For BACKLOG imports: the derived stub title from Step 5a-i. For VISION imports: `(vision content)`. For CUSTOMER imports: `(persona content)`. |
+| Timestamp | Current UTC time in ISO 8601 format (`YYYY-MM-DDTHH:MM:SSZ`) |
+
+**7c. Write all rows in a single operation:**
+
+Append all new rows in a single Edit operation to minimize file writes. Rows are added in the same order as the confirmed discovery list (sorted by source file path, then line range).
+
+**Manifest integrity rules:**
+
+- Never modify or remove existing manifest rows -- only append
+- Each row represents one import event; if the same content is split into multiple discoveries, each gets its own row
+- The manifest is the source of truth for the idempotent re-run check in Step 2d
 
 ### Step 8: Generate Report
 

@@ -1,0 +1,31 @@
+Type: file
+Description: Source cleanup with section boundary detection, full-file deletion, and partial-section removal
+Command: Verify Step 6 in SKILL.md implements source cleanup with section boundary detection logic
+Expected: Step 6 documents section boundary detection rules, full-file deletion criteria and procedure, and partial-section removal procedure with bottom-up processing and preservation guarantees
+Timestamp: 2026-04-08T19:30:00Z
+
+Verification:
+- Step 6 (lines 582-633) provides complete source cleanup procedure
+- Safety constraint: "Deletion is performed only after all imports from a file succeed"
+- Section Boundary Detection subsection (line 586) defines 3 boundary types in precedence order:
+  1. Heading-delimited: ## or ### heading to next same-or-higher-level heading or EOF
+  2. Blank-line-delimited: consecutive non-blank lines between blank lines
+  3. Task list block: consecutive - [ ] / - [x] items as single block
+- Expansion rule: removal range expanded to full section to prevent orphaned fragments
+- Step 6a (line 598) full-file deletion:
+  - 3 criteria: all content imported, no non-product sections remain, common candidates listed
+  - 5-step procedure: collect ranges, read content, check for remaining content, delete or fall through
+- Step 6b (line 616) partial-section removal:
+  - 5-step procedure with bottom-up processing to avoid line-number shift issues
+  - Sort removal ranges by start line descending
+  - Edit tool replaces section text with empty string
+  - Collapse double-blank-line sequences
+  - Post-removal verification (valid markdown, no double blanks, meaningful content check)
+  - Fallback: if file becomes empty after removals, delete it entirely
+- Preservation guarantee (line 633): content outside section boundaries is never modified
+
+Gherkin coverage:
+- "Entire file is deleted when all content is product-direction" -- COVERED (Step 6a)
+- "Only product-direction section is removed from mixed-content file" -- COVERED (Step 6b)
+
+Status: PASS

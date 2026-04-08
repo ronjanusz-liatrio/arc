@@ -1,0 +1,29 @@
+Type: file
+Description: Consistency check between SKILL.md Steps 5b-7 and import-rules.md reference doc
+Command: Verify SKILL.md import/cleanup/manifest logic is consistent with import-rules.md reference doc
+Expected: SKILL.md Steps 5b, 5c, 6, and 7 align with the VISION/CUSTOMER import format, Source Cleanup, and Manifest Format sections of import-rules.md
+Timestamp: 2026-04-08T19:30:00Z
+
+Verification:
+- import-rules.md VISION Import Format (line 184-195):
+  - Append under ## Imported Content section -- matches SKILL.md Step 5b
+  - aligned-from comment above content -- matches SKILL.md Step 5b-ii
+  - Append within existing section without duplicate headings -- matches SKILL.md Step 5b-ii
+- import-rules.md CUSTOMER Import Format (line 197-208):
+  - Same structure as VISION -- matches SKILL.md Step 5c
+- import-rules.md Entire-File Deletion (line 219-225):
+  - Delete when all content is product-direction -- matches SKILL.md Step 6a criteria
+  - Deletion only after all imports succeed -- matches SKILL.md Step 6 intro constraint
+- import-rules.md Partial-Section Removal (line 229-249):
+  - Section boundary detection: heading-delimited, blank-line-delimited, task list block -- matches SKILL.md Step 6 boundary table
+  - Removal procedure: identify range, remove, collapse double blanks, verify -- matches SKILL.md Step 6b
+  - Preservation guarantee: surrounding content unchanged -- matches SKILL.md Step 6 guarantee
+- import-rules.md Manifest Format (line 255-301):
+  - Table structure with 5 columns -- matches SKILL.md Step 7a/7b
+  - Column definitions match SKILL.md Step 7b column values table
+  - Update logic: create if absent, append rows -- matches SKILL.md Step 7a/7c
+  - Idempotent re-run check cross-reference -- matches SKILL.md Step 7 manifest integrity rules
+
+All cross-references are consistent. No conflicts between SKILL.md and import-rules.md.
+
+Status: PASS

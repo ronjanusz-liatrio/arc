@@ -1,0 +1,33 @@
+Type: file
+Description: Manifest update logic with table creation, row append, and column definitions
+Command: Verify Step 7 in SKILL.md implements manifest creation and update with correct table format
+Expected: Step 7 documents manifest creation with table header, row append per import, column value definitions, and manifest integrity rules
+Timestamp: 2026-04-08T19:30:00Z
+
+Verification:
+- Step 7 (lines 635-679) provides full manifest update procedure
+- Step 7a (line 639) manifest creation/read:
+  - Check existence using Read tool
+  - If absent: create with table header (# Align Manifest, 5-column table header + separator)
+  - If exists: read to identify last line for appending
+- Step 7b (line 653) row append:
+  - One row per successfully imported discovery
+  - Row format: | {source_path} | {line_range} | {target} | {title} | {ISO 8601} |
+  - Column value table defines all 5 columns:
+    - Source Path: relative path from repo root
+    - Line Range: single line (5) or range (10-25)
+    - Target Artifact: BACKLOG, VISION, or CUSTOMER
+    - Imported Title: stub title for BACKLOG, (vision content) for VISION, (persona content) for CUSTOMER
+    - Timestamp: current UTC ISO 8601
+- Step 7c (line 671) write operation:
+  - All rows in single Edit operation to minimize file writes
+  - Rows ordered same as confirmed discovery list (source path, then line range)
+- Manifest integrity rules (line 675):
+  - Never modify or remove existing rows
+  - Each import event gets its own row
+  - Manifest is source of truth for Step 2d idempotent re-run check
+
+Gherkin coverage:
+- "Align manifest is updated with import mappings" -- COVERED (Step 7b)
+
+Status: PASS

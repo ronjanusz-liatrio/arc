@@ -1,0 +1,24 @@
+Type: file
+Description: VISION import logic with Imported Content section and source attribution
+Command: Verify Steps 5b-i and 5b-ii in SKILL.md implement VISION import with correct structure
+Expected: Step 5b instructs appending content to docs/VISION.md under ## Imported Content with <!-- aligned-from --> attribution, handling both section creation and append-within-section
+Timestamp: 2026-04-08T19:30:00Z
+
+Verification:
+- Step 5b (lines 520-552) provides full VISION import procedure
+- Step 5b-i (line 524) instructs locating or creating ## Imported Content section:
+  - Read docs/VISION.md using Read tool
+  - If section found: append at end of section (before next ## heading or EOF)
+  - If section not found: create at end of file
+- Step 5b-ii (line 531) instructs appending each discovery with attribution:
+  - First import includes ## Imported Content heading
+  - Subsequent imports omit the heading to prevent duplicates
+  - Each import has <!-- aligned-from: {source_path}:{line_range} --> immediately above content
+  - Original formatting preserved (headings, lists, emphasis, whitespace)
+  - Multiple discoveries appended in single Edit operation
+
+Gherkin coverage:
+- "Missing VISION.md is created from template before import" -- COVERED (Step 4b bootstraps, Step 5b appends)
+- "VISION-targeted content is appended with source attribution" -- COVERED (Step 5b-ii)
+
+Status: PASS
