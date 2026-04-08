@@ -1,0 +1,11 @@
+Type: test
+Description: Validate JSON syntax of modified manifest files
+Command: python3 -m json.tool .claude-plugin/plugin.json && python3 -m json.tool .claude-plugin/marketplace.json
+Expected: Both files parse as valid JSON without errors
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+plugin.json: valid JSON
+marketplace.json: valid JSON
+
+Status: PASS

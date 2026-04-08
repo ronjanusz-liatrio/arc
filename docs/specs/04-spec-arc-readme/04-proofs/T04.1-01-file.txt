@@ -1,0 +1,20 @@
+Type: file
+Description: Verify /arc-readme appears in skills/README.md skill table and workflow diagram
+Command: grep -n "arc-readme" skills/README.md
+Expected: /arc-readme listed in skill table with description and invocation; workflow diagram shows /arc-readme between /arc-wave and /cw-spec
+Timestamp: 2026-04-08T12:00:00Z
+
+--- Output ---
+11:| [arc-readme](arc-readme/SKILL.md) | README lifecycle management — scaffold or update README.md with Arc-managed sections synced to product direction artifacts | `/arc-readme` |
+17:/arc-align → /arc-capture → /arc-shape → /arc-wave → /arc-readme → /cw-spec → /cw-plan → /cw-dispatch
+26:5. **Readme** scaffolds or updates README.md with sections synced to product direction artifacts
+
+--- Verification ---
+- Skill table row present: PASS
+- Description matches SKILL.md frontmatter: PASS
+- Invocation syntax `/arc-readme` present: PASS
+- Workflow diagram shows /arc-readme between /arc-wave and /cw-spec: PASS
+- Numbered list includes Readme step: PASS
+- Skill count updated from "five" to "six": PASS
+
+Status: PASS

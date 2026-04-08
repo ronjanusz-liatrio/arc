@@ -1,0 +1,23 @@
+Type: file
+Description: Verify /arc-readme mentioned in marketplace.json and version bumped in both manifests
+Command: cat .claude-plugin/marketplace.json .claude-plugin/plugin.json
+Expected: marketplace description mentions /arc-readme; both files show version 0.5.0
+Timestamp: 2026-04-08T12:00:00Z
+
+--- marketplace.json verification ---
+Description field contains: "/arc-readme for README lifecycle management"
+Version field: "0.5.0"
+
+--- plugin.json verification ---
+Version field: "0.5.0"
+companions array present with 3 entries:
+  - temper (required: true)
+  - claude-workflow (required: true)
+  - readme-author (required: false)
+
+--- Scenario checks ---
+Scenario "arc-readme registered in marketplace manifest": PASS
+Scenario "Plugin version bumped to 0.5.0": PASS
+Companions array matches spec exactly: PASS
+
+Status: PASS
