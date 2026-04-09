@@ -1,0 +1,23 @@
+Type: file
+Command: grep -n "project_type\|architecture_patterns\|key_dependencies\|product_direction_signals" skills/arc-align/SKILL.md
+Expected: All four structured fields (project_type, architecture_patterns, key_dependencies, product_direction_signals) defined in research_context extraction table
+Timestamp: 2026-04-09T00:00:00Z
+
+--- OUTPUT ---
+86:| `project_type` | The detected project type or category (e.g., `"cli-tool"`, `"web-service"`, `"library"`, `"monorepo"`) | Look for architecture or type declarations in the report's architecture/module structure section. Default to `"unknown"` if not found. |
+87:| `architecture_patterns` | List of architectural patterns identified (e.g., `["plugin-based", "event-driven"]`) | Extract from any architecture, conventions, or module structure sections. Empty list if not found. |
+88:| `key_dependencies` | List of notable dependencies or integrations mentioned (e.g., `["claude-code", "anthropic-sdk"]`) | Extract from any dependencies or integrations sections. Empty list if not found. |
+89:| `product_direction_signals` | List of product-direction signals the research surfaced (e.g., `["backlog items in README.md", "TODO list in docs/plan.md"]`) | Extract from any product-direction content sections. Empty list if not found. |
+95:  project_type: "...",             // string, e.g. "cli-tool" or "unknown"
+96:  architecture_patterns: [...],    // string[], e.g. ["plugin-based"]
+97:  key_dependencies: [...],         // string[], e.g. ["claude-code"]
+98:  product_direction_signals: [...] // string[], e.g. ["backlog items in README.md"]
+
+--- VERIFICATION ---
+R02.2.1: project_type field defined at lines 86, 95 - PASS
+R02.2.1: architecture_patterns field defined at lines 87, 96 - PASS
+R02.2.1: key_dependencies field defined at lines 88, 97 - PASS
+R02.2.1: product_direction_signals field defined at lines 89, 98 - PASS
+R02.2.2: Structured research_context format with all four fields documented - PASS
+
+Status: PASS

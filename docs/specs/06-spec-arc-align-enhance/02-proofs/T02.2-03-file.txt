@@ -1,0 +1,17 @@
+Type: file
+Command: grep -n "Context Extraction\|Step 2.5\|extract structured context" skills/arc-align/SKILL.md
+Expected: Context Extraction section exists and references Step 2.5
+Timestamp: 2026-04-09T00:00:00Z
+
+--- OUTPUT ---
+62:After the agent completes, read the saved report from `docs/specs/research-align/research-align.md` and store findings in a `research_findings` variable, then extract structured context (see **Context Extraction** below).
+72:Store the report contents in `research_findings`, then extract structured context (see **Context Extraction** below). If the file does not exist, inform the user and fall back to "Quick scan only" behavior.
+78:**Context Extraction (deep scan and existing report paths):**
+80:After `research_findings` is populated, extract a structured `research_context` object from the report text. This object is passed forward to the analysis phase (Step 2.5) to enrich discovery summaries and gap analysis.
+104:`research_context` is consumed by Step 2.5 (Analysis Phase) to contextualize the discovery summary and identify content gaps relative to the detected project type.
+
+--- VERIFICATION ---
+R02.2.4: "Context Extraction" section at line 78 explicitly references Step 2.5 at lines 80 and 104 - PASS
+Both "Run deep scan" and "Use existing report" paths reference Context Extraction at lines 62 and 72 - PASS
+
+Status: PASS

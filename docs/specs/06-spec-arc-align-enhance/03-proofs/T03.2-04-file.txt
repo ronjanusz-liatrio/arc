@@ -1,0 +1,17 @@
+Type: file
+Description: Verify classification table updated in SKILL.md with new KW references
+Command: grep -n "BACKLOG.*KW-19\|VISION.*KW-18\|KW-1 through KW-22" skills/arc-align/SKILL.md
+Expected: Classification table rows reference KW-18 through KW-22 appropriately; pattern identifier row updated to KW-22
+Timestamp: 2026-04-09T00:00:00Z
+
+--- OUTPUT ---
+331:| `BACKLOG` | Actionable items: TODOs, features, bugs, ideas, task lists, roadmap items | KW-1 through KW-12, KW-19 (`## User Stories`), KW-20 (`## Non-Goals`), KW-21 (`## Open Questions`), ST-1 through ST-4 |
+332:| `VISION` | Mission/vision/north-star/goal content | KW-15 (`mission`), KW-16 (`vision`), KW-17 (`north star`), KW-18 (`## Goals`), KW-22 (`## Introduction`/`## Overview`, conditional) |
+392:| Pattern identifier | The specific keyword (KW-1 through KW-22) or structural pattern (ST-1 through ST-4) that triggered the match |
+
+--- VERIFICATION ---
+Classification table BACKLOG row includes KW-19, KW-20, KW-21 — PASS
+Classification table VISION row includes KW-18 and KW-22 — PASS
+Pattern identifier field updated to KW-22 — PASS
+
+Status: PASS

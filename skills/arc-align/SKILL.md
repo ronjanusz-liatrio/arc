@@ -59,7 +59,7 @@ Agent({
 })
 ```
 
-After the agent completes, read the saved report from `docs/specs/research-align/research-align.md` and store findings in a `research_findings` variable for use in the analysis phase (Step 2.5).
+After the agent completes, read the saved report from `docs/specs/research-align/research-align.md` and store findings in a `research_findings` variable, then extract structured context (see **Context Extraction** below).
 
 **If "Use existing report" is selected:**
 
@@ -69,11 +69,39 @@ Read the existing report:
 Read({ file_path: "docs/specs/research-align/research-align.md" })
 ```
 
-Store the report contents in `research_findings` for use in the analysis phase (Step 2.5). If the file does not exist, inform the user and fall back to "Quick scan only" behavior.
+Store the report contents in `research_findings`, then extract structured context (see **Context Extraction** below). If the file does not exist, inform the user and fall back to "Quick scan only" behavior.
 
 **If "Quick scan only" is selected:**
 
-Set `research_findings` to `null` and proceed directly to Step 1.
+Set `research_findings` to `null` and `research_context` to `null`. Proceed directly to Step 1.
+
+**Context Extraction (deep scan and existing report paths):**
+
+After `research_findings` is populated, extract a structured `research_context` object from the report text. This object is passed forward to the analysis phase (Step 2.5) to enrich discovery summaries and gap analysis.
+
+Extract the following fields from `research_findings`:
+
+| Field | Description | How to Extract |
+|-------|-------------|----------------|
+| `project_type` | The detected project type or category (e.g., `"cli-tool"`, `"web-service"`, `"library"`, `"monorepo"`) | Look for architecture or type declarations in the report's architecture/module structure section. Default to `"unknown"` if not found. |
+| `architecture_patterns` | List of architectural patterns identified (e.g., `["plugin-based", "event-driven"]`) | Extract from any architecture, conventions, or module structure sections. Empty list if not found. |
+| `key_dependencies` | List of notable dependencies or integrations mentioned (e.g., `["claude-code", "anthropic-sdk"]`) | Extract from any dependencies or integrations sections. Empty list if not found. |
+| `product_direction_signals` | List of product-direction signals the research surfaced (e.g., `["backlog items in README.md", "TODO list in docs/plan.md"]`) | Extract from any product-direction content sections. Empty list if not found. |
+
+Set `research_context` to the extracted object:
+
+```
+research_context = {
+  project_type: "...",             // string, e.g. "cli-tool" or "unknown"
+  architecture_patterns: [...],    // string[], e.g. ["plugin-based"]
+  key_dependencies: [...],         // string[], e.g. ["claude-code"]
+  product_direction_signals: [...] // string[], e.g. ["backlog items in README.md"]
+}
+```
+
+If `research_findings` cannot be parsed (empty or unstructured), set each list field to an empty array and `project_type` to `"unknown"`.
+
+`research_context` is consumed by Step 2.5 (Analysis Phase) to contextualize the discovery summary and identify content gaps relative to the detected project type.
 
 ### Step 1: Configure Exclusions
 
@@ -170,7 +198,7 @@ Scan all non-excluded files using two detection strategies in sequence. Read `sk
 
 Run one Grep call per keyword against all non-excluded files. Use case-insensitive matching. For each keyword, build Grep glob exclusions from the merged exclusion set (Step 1e).
 
-**Keywords to scan (17 total):**
+**Keywords to scan (22 total):**
 
 | # | Search Term | Typical Target |
 |---|-------------|----------------|
@@ -191,6 +219,11 @@ Run one Grep call per keyword against all non-excluded files. Use case-insensiti
 | KW-15 | `mission` | VISION |
 | KW-16 | `vision` | VISION |
 | KW-17 | `north star` | VISION |
+| KW-18 | `## Goals` | VISION |
+| KW-19 | `## User Stories` | BACKLOG |
+| KW-20 | `## Non-Goals` | BACKLOG |
+| KW-21 | `## Open Questions` | BACKLOG |
+| KW-22 | `## Introduction` / `## Overview` | VISION (conditional) |
 
 **Procedure for each keyword:**
 
@@ -207,7 +240,7 @@ Run one Grep call per keyword against all non-excluded files. Use case-insensiti
    })
    ```
 
-   For multi-word keywords (`feature list`, `future work`, `next steps`, `user story`, `target audience`, `north star`), use the exact phrase as the pattern.
+   For multi-word keywords (`feature list`, `future work`, `next steps`, `user story`, `target audience`, `north star`), use the exact phrase as the pattern. For spec-heading keywords (KW-18 through KW-22), use the heading pattern as the search term (e.g., `## Goals`). For KW-22, run two separate Grep calls — one for `## Introduction` and one for `## Overview` — and union the results; classify as VISION only if the matched section contains `mission`, `direction`, `purpose`, or `vision` language, otherwise skip.
 
 2. Filter results against the exclusion set -- discard any matches in excluded paths.
 
@@ -287,16 +320,84 @@ When confirmed:
 
 Collect all structural discoveries into the same list as keyword discoveries. Each entry follows the same format: source file path, line range, content snippet, detection method, and matched pattern identifier (ST-1 through ST-4).
 
-**2c. Classify discoveries:**
+**2c. Code comment scanning (Grep-based):**
 
-For each discovery (from both 2a and 2b), classify into exactly one of three artifact targets. Read `skills/arc-align/references/import-rules.md` for the full classification rules.
+After keyword and structural matching complete, scan source code files for actionable comment markers. Read `skills/arc-align/references/detection-patterns.md` for the CC-1 through CC-4 pattern definitions.
+
+**Scanned file extensions (18 total):**
+
+`.py`, `.ts`, `.tsx`, `.js`, `.jsx`, `.go`, `.rs`, `.java`, `.kt`, `.rb`, `.sh`, `.bash`, `.zsh`, `.swift`, `.c`, `.cpp`, `.h`, `.hpp`, `.cs`
+
+**Comment markers to scan (4 total):**
+
+| # | Marker | Meaning | Priority |
+|---|--------|---------|----------|
+| CC-1 | `TODO` | Actionable work items | P2-Medium |
+| CC-2 | `FIXME` | Known bugs | P1-High |
+| CC-3 | `HACK` | Temporary workarounds | P1-High |
+| CC-4 | `XXX` | Areas needing attention | P2-Medium |
+
+**Procedure for each marker:**
+
+1. Run Grep with case-insensitive matching against all non-excluded source code files:
+
+   ```
+   Grep({
+     pattern: "{marker}",
+     "-i": true,
+     output_mode: "content",
+     "-n": true,
+     glob: "*.{py,ts,tsx,js,jsx,go,rs,java,kt,rb,sh,bash,zsh,swift,c,cpp,h,hpp,cs}"
+   })
+   ```
+
+2. Filter results against the exclusion set (Step 1e) — discard matches in `node_modules/`, `vendor/`, `dist/`, `build/`, and any other excluded paths.
+
+3. For each match, extract the comment text following the marker:
+   a. Strip the marker keyword (`TODO`, `FIXME`, `HACK`, `XXX`) and any following colon
+   b. Strip common comment prefixes: `//`, `#`, `/*`, `*`, `--`, `"""`, `'''`
+   c. Trim leading and trailing whitespace
+
+4. Record a **code comment discovery entry**:
+   - **Source file path:** The file containing the match (relative to repo root)
+   - **Line number:** The exact line of the comment marker
+   - **Matched content snippet:** The extracted comment text (after stripping), truncated to 200 characters
+   - **Detection method:** `code`
+   - **Matched pattern:** The specific marker (CC-1 through CC-4)
+   - **Tag:** `[code]` prefix in the discovery list display
+
+5. Classify all code comment discoveries as **BACKLOG** targets.
+
+6. Assign priorities per the marker mapping:
+   - FIXME → P1-High
+   - HACK → P1-High
+   - TODO → P2-Medium
+   - XXX → P2-Medium
+
+   These priority overrides replace the default P2-Medium used for keyword and structural discoveries.
+
+7. Add the `<!-- aligned-from-code: {file}:{line} -->` traceability marker to each discovery entry. This marker is used in addition to the standard `<!-- aligned-from: ... -->` comment when the stub is generated in Step 5. See `skills/arc-align/references/import-rules.md` for the full marker format.
+
+8. **Deduplication:** If the same comment text (after marker stripping and case normalization) appears in multiple source files, import exactly one stub. Note additional locations in the summary line:
+   - **Single location:** `Code comment from src/handlers/user.py:18`
+   - **Multiple locations:** `Code comment from src/handlers/user.py:18 (also: src/handlers/admin.py:22, src/handlers/org.py:31)`
+
+   The `aligned-from-code` marker references the first occurrence. Additional locations are listed in the summary only. The manifest (Step 2f) records each location as a separate row, all pointing to the same imported stub title.
+
+**Code comment scan output:**
+
+Collect all code comment discoveries into the same discovery list as keyword and structural discoveries. Each entry follows the same format with the addition of the `[code]` tag prefix and the `aligned-from-code` traceability marker.
+
+**2d. Classify discoveries:**
+
+For each discovery (from 2a, 2b, and 2c), classify into exactly one of three artifact targets. Read `skills/arc-align/references/import-rules.md` for the full classification rules.
 
 **Classification table:**
 
 | Target | Content Type | Classification Signals |
 |--------|-------------|----------------------|
-| `BACKLOG` | Actionable items: TODOs, features, bugs, ideas, task lists, roadmap items | KW-1 through KW-12, ST-1 through ST-4 |
-| `VISION` | Mission/vision/north-star content | KW-15 (`mission`), KW-16 (`vision`), KW-17 (`north star`) |
+| `BACKLOG` | Actionable items: TODOs, features, bugs, ideas, task lists, roadmap items | KW-1 through KW-12, KW-19 (`## User Stories`), KW-20 (`## Non-Goals`), KW-21 (`## Open Questions`), ST-1 through ST-4 |
+| `VISION` | Mission/vision/north-star/goal content | KW-15 (`mission`), KW-16 (`vision`), KW-17 (`north star`), KW-18 (`## Goals`), KW-22 (`## Introduction`/`## Overview`, conditional) |
 | `CUSTOMER` | Persona/audience/JTBD content | KW-13 (`persona`), KW-14 (`target audience`) |
 
 **Classification procedure:**
@@ -356,7 +457,7 @@ Assemble the final discovery list from all discoveries that passed the manifest 
 | Line range | Start line through end line (e.g., `20-35`) |
 | Matched content snippet | First 200 characters of the matched section |
 | Detection method | `keyword` or `structural` |
-| Pattern identifier | The specific keyword (KW-1 through KW-17) or structural pattern (ST-1 through ST-4) that triggered the match |
+| Pattern identifier | The specific keyword (KW-1 through KW-22) or structural pattern (ST-1 through ST-4) that triggered the match |
 | Target artifact | `BACKLOG`, `VISION`, or `CUSTOMER` (from Step 2c) |
 
 Sort the discovery list by source file path, then by line range (ascending). This ordering groups discoveries from the same file together for easier user review in Step 3.

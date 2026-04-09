@@ -379,6 +379,117 @@ Our north star metric is the capture-to-spec-ready conversion rate.
 
 ---
 
+### KW-18: ## Goals
+
+**Purpose:** Detect goal statement sections in spec and design documents. Goal sections define intended outcomes and strategic direction, making them a strong VISION signal.
+
+**Search term:** `## Goals`
+
+**Example match:**
+
+```markdown
+## Goals
+
+- Enable teams to consolidate product-direction content into a single source of truth
+- Reduce time from idea capture to spec-ready state
+- Provide full traceability from discovery source to Arc artifact
+```
+
+**Typical target artifact:** VISION
+
+---
+
+### KW-19: ## User Stories
+
+**Purpose:** Detect user story sections in spec and design documents. Each story becomes a separate BACKLOG stub.
+
+**Search term:** `## User Stories`
+
+**Example match:**
+
+```markdown
+## User Stories
+
+- As a product manager, I want to see all captured ideas in one place so I can prioritize effectively.
+- As a developer, I want traceability markers in imported content so I know where each item originated.
+- As a team lead, I want arc-align to run idempotently so repeated scans don't create duplicates.
+```
+
+**Typical target artifact:** BACKLOG (one stub per story)
+
+---
+
+### KW-20: ## Non-Goals
+
+**Purpose:** Detect non-goal sections in spec and design documents. Non-goals document explicitly deferred or out-of-scope items, which are imported as BACKLOG stubs with a `(deferred)` prefix so teams can revisit them later.
+
+**Search term:** `## Non-Goals`
+
+**Example match:**
+
+```markdown
+## Non-Goals
+
+- Real-time collaboration editing is out of scope for this release
+- We will not support importing from Jira or Linear in v1
+- Mobile-native UI is deferred until post-launch feedback is gathered
+```
+
+**Typical target artifact:** BACKLOG (each item imported with `(deferred)` prefix)
+
+---
+
+### KW-21: ## Open Questions
+
+**Purpose:** Detect open question sections in spec and design documents. Unresolved questions represent future decision points and are imported as BACKLOG stubs with an `(open question)` prefix.
+
+**Search term:** `## Open Questions`
+
+**Example match:**
+
+```markdown
+## Open Questions
+
+- Should arc-align support binary file scanning for embedded metadata?
+- How do we handle circular references between spec files?
+- What is the right deduplication strategy when the same idea appears in three different specs?
+```
+
+**Typical target artifact:** BACKLOG (each item imported with `(open question)` prefix)
+
+---
+
+### KW-22: ## Introduction / ## Overview
+
+**Purpose:** Detect introduction and overview sections that contain mission or strategic direction language. These sections are common in specs, READMEs, and design documents. Only sections containing mission/direction language are classified as VISION — generic overviews without directional content are skipped.
+
+**Search term:** `## Introduction` (first Grep call) and `## Overview` (second Grep call); results are unioned.
+
+**Conditional classification:** After matching, scan the section content for any of the following terms: `mission`, `direction`, `purpose`, `vision`. If none are present, do not import — skip the section.
+
+**Example match (qualifies):**
+
+```markdown
+## Overview
+
+Arc is a Claude Code plugin whose purpose is to capture and shape product direction
+before engineering begins. Our mission is to give every team a lightweight, AI-native
+product management layer that lives inside their codebase.
+```
+
+**Example match (does not qualify — skip):**
+
+```markdown
+## Overview
+
+This document describes the configuration format for the arc-align skill.
+Each field is documented with its type, default value, and valid options.
+```
+
+**Typical target artifact:** VISION (conditional on mission/direction language)
+
+---
+
 ## Structural Patterns
 
 Structural patterns detect product-direction content through formatting conventions rather than keywords. These are checked via Read on files not already flagged by keyword matching.
@@ -640,4 +751,4 @@ Weak signals are still imported per the inclusivity principle — when in doubt,
 
 - `skills/arc-align/references/import-rules.md` — How detected content is classified into artifact targets and imported, including code comment priority overrides and the `aligned-from-code` marker format
 - `references/idea-lifecycle.md` — The Capture stage that imported stubs enter
-- `skills/arc-align/SKILL.md` — Step 2 references this document for the full pattern set; Step 2c invokes code comment scanning using CC-1 through CC-4
+- `skills/arc-align/SKILL.md` — Step 2 references this document for the full pattern set; Step 2a uses KW-1 through KW-22 for keyword scanning; Step 2c invokes code comment scanning using CC-1 through CC-4

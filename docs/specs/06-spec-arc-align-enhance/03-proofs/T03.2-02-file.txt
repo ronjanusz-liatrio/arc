@@ -1,0 +1,35 @@
+Type: file
+Description: Verify KW-18 through KW-22 pattern definitions in detection-patterns.md
+Command: grep -n "### KW-1[89]\|### KW-2[012]" skills/arc-align/references/detection-patterns.md
+Expected: 5 section headers for KW-18 through KW-22 with Purpose, Search term, Example match, Typical target
+Timestamp: 2026-04-09T00:00:00Z
+
+--- OUTPUT ---
+382:### KW-18: ## Goals
+402:### KW-19: ## User Stories
+422:### KW-20: ## Non-Goals
+442:### KW-21: ## Open Questions
+462:### KW-22: ## Introduction / ## Overview
+
+--- CONTENT VERIFICATION ---
+KW-18 Purpose: Detect goal statement sections — Purpose present — PASS
+KW-18 Search term: `## Goals` — PASS
+KW-18 Typical target: VISION — PASS
+
+KW-19 Purpose: Detect user story sections — Purpose present — PASS
+KW-19 Search term: `## User Stories` — PASS
+KW-19 Typical target: BACKLOG (one stub per story) — PASS
+
+KW-20 Purpose: Detect non-goal sections — Purpose present — PASS
+KW-20 Search term: `## Non-Goals` — PASS
+KW-20 Typical target: BACKLOG (each item with (deferred) prefix) — PASS
+
+KW-21 Purpose: Detect open question sections — Purpose present — PASS
+KW-21 Search term: `## Open Questions` — PASS
+KW-21 Typical target: BACKLOG (each item with (open question) prefix) — PASS
+
+KW-22 Purpose: Detect introduction/overview with mission language — Purpose present — PASS
+KW-22 Search term: `## Introduction` and `## Overview` (two Grep calls, union) — PASS
+KW-22 Typical target: VISION (conditional on mission/direction language) — PASS
+
+Status: PASS
