@@ -113,15 +113,15 @@ These paths are silently excluded from scanning. They never appear in the user-f
 
 | Category | Paths |
 |----------|-------|
-| Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `docs/specs/*/proofs/`, `docs/specs/*/*.feature`, `docs/specs/*/questions-*.md` |
+| Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `.venv/`, `__pycache__/`, `.mypy_cache/`, `.pytest_cache/`, `.ruff_cache/`, `.tox/`, `*.egg-info/`, `target/`, `.gradle/`, `.next/`, `.nuxt/`, `coverage/`, `docs/specs/*/proofs/`, `docs/specs/*/*.feature`, `docs/specs/*/questions-*.md` |
 | Arc-managed files | `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/skill/arc/wave-report.md`, `docs/skill/arc/review-report.md`, `docs/skill/arc/shape-report.md`, `docs/skill/arc/align-manifest.md`, `docs/skill/arc/align-report.md` |
 | Secret-bearing files | `.env`, `credentials.json`, `*.key` |
 
 **1b. Directory pre-scan:**
 
-Run a quick Glob scan to identify top-level and second-level directories with unusually large file counts (>100 files). These directories are likely dependency or generated-content folders that would slow the scan.
+Run a quick Glob scan to identify top-level and second-level directories with unusually large file counts (>500 files). These directories are likely dependency or generated-content folders that would slow the scan.
 
-For each candidate directory, use `Glob({ pattern: "{dir}/**/*" })` and count the returned files. If the count exceeds 100, add the directory to the recommended-exclusion list with the file count.
+For each candidate directory, use `Glob({ pattern: "{dir}/**/*" })` and count the returned files. If the count exceeds 500, add the directory to the recommended-exclusion list with the file count.
 
 Only scan directories not already in the hardcoded exclusion list.
 
@@ -351,7 +351,7 @@ After keyword and structural matching complete, scan source code files for actio
    })
    ```
 
-2. Filter results against the exclusion set (Step 1e) — discard matches in `node_modules/`, `vendor/`, `dist/`, `build/`, and any other excluded paths.
+2. Filter results against the exclusion set (Step 1e) — discard matches in `node_modules/`, `vendor/`, `dist/`, `build/`, `.venv/`, `__pycache__/`, `.mypy_cache/`, `.pytest_cache/`, `.ruff_cache/`, `.tox/`, `*.egg-info/`, `target/`, `.gradle/`, `.next/`, `.nuxt/`, `coverage/`, and any other excluded paths.
 
 3. For each match, extract the comment text following the marker:
    a. Strip the marker keyword (`TODO`, `FIXME`, `HACK`, `XXX`) and any following colon
@@ -1261,6 +1261,18 @@ Separate hardcoded exclusions (from Step 1a) and user-configured exclusions (fro
 | vendor/ | Directory |
 | dist/ | Directory |
 | build/ | Directory |
+| .venv/ | Directory |
+| __pycache__/ | Directory |
+| .mypy_cache/ | Directory |
+| .pytest_cache/ | Directory |
+| .ruff_cache/ | Directory |
+| .tox/ | Directory |
+| *.egg-info/ | Directory |
+| target/ | Directory |
+| .gradle/ | Directory |
+| .next/ | Directory |
+| .nuxt/ | Directory |
+| coverage/ | Directory |
 | docs/specs/*/proofs/ | Directory |
 | docs/specs/*/*.feature | Directory |
 | docs/specs/*/questions-*.md | Directory |

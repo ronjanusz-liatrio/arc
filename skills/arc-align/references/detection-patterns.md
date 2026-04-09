@@ -609,7 +609,7 @@ Code comment patterns detect actionable content embedded in source code files as
 
 **Scanned file extensions:** `.py`, `.ts`, `.tsx`, `.js`, `.jsx`, `.go`, `.rs`, `.java`, `.kt`, `.rb`, `.sh`, `.bash`, `.zsh`, `.swift`, `.c`, `.cpp`, `.h`, `.hpp`, `.cs`
 
-All code comment discoveries classify as **BACKLOG** targets. The exclusion set applies — files inside excluded directories (`node_modules`, `vendor`, `dist`, `build`) are not scanned.
+All code comment discoveries classify as **BACKLOG** targets. The exclusion set applies — files inside excluded directories (`node_modules`, `vendor`, `dist`, `build`, `.venv`, `__pycache__`, `.mypy_cache`, `.pytest_cache`, `.ruff_cache`, `.tox`, `*.egg-info`, `target`, `.gradle`, `.next`, `.nuxt`, `coverage`) are not scanned.
 
 ---
 

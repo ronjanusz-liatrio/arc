@@ -1,0 +1,25 @@
+Type: file
+File: skills/arc-align/SKILL.md
+Command: Verify all 12 new directory patterns in Step 1a table
+Expected: All new patterns present in Step 1a Directories row
+Timestamp: 2026-04-09T16:30:00Z
+
+VERIFICATION:
+Step 1a table (line 116):
+| Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `.venv/`, `__pycache__/`, `.mypy_cache/`, `.pytest_cache/`, `.ruff_cache/`, `.tox/`, `*.egg-info/`, `target/`, `.gradle/`, `.next/`, `.nuxt/`, `coverage/`, `docs/specs/*/proofs/`, `docs/specs/*/*.feature`, `docs/specs/*/questions-*.md` |
+
+VERIFICATION CHECKLIST:
+✓ .venv/ found
+✓ __pycache__/ found
+✓ .mypy_cache/ found
+✓ .pytest_cache/ found
+✓ .ruff_cache/ found
+✓ .tox/ found
+✓ *.egg-info/ found
+✓ target/ found
+✓ .gradle/ found
+✓ .next/ found
+✓ .nuxt/ found
+✓ coverage/ found
+
+Status: PASS

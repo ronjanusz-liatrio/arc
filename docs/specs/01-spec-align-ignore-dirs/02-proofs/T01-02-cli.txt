@@ -1,0 +1,43 @@
+Type: cli
+Command: grep -c "Directory" skills/arc-align/SKILL.md
+Expected: Increased count reflecting new directory rows in Step 1a and report template
+Timestamp: 2026-04-09T16:30:00Z
+
+COMMAND EXECUTION:
+
+$ grep -c 'Directory' skills/arc-align/SKILL.md
+21
+
+DETAILED VERIFICATION:
+Step 1a table line count:
+$ grep -n '| \..*/ | Directory |' skills/arc-align/SKILL.md | wc -l
+11
+
+Report template section (lines 1259-1279):
+| .git/ | Directory |
+| node_modules/ | Directory |
+| vendor/ | Directory |
+| dist/ | Directory |
+| build/ | Directory |
+| .venv/ | Directory |
+| __pycache__/ | Directory |
+| .mypy_cache/ | Directory |
+| .pytest_cache/ | Directory |
+| .ruff_cache/ | Directory |
+| .tox/ | Directory |
+| *.egg-info/ | Directory |
+| target/ | Directory |
+| .gradle/ | Directory |
+| .next/ | Directory |
+| .nuxt/ | Directory |
+| coverage/ | Directory |
+| docs/specs/*/proofs/ | Directory |
+| docs/specs/*/*.feature | Directory |
+| docs/specs/*/questions-*.md | Directory |
+| docs/BACKLOG.md | Arc-managed file |
+
+Step 2c inline reference (line 354):
+2. Filter results against the exclusion set (Step 1e) — discard matches in `node_modules/`, `vendor/`, `dist/`, `build/`, `.venv/`, `__pycache__/`, `.mypy_cache/`, `.pytest_cache/`, `.ruff_cache/`, `.tox/`, `*.egg-info/`, `target/`, `.gradle/`, `.next/`, `.nuxt/`, `coverage/`, and any other excluded paths.
+
+Status: PASS
+All 4 locations in SKILL.md updated with 12 new directory patterns.
