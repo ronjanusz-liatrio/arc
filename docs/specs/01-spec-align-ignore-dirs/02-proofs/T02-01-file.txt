@@ -1,0 +1,59 @@
+Type: file
+Description: Verify all 12 new directory patterns are present in align-report-template.md
+Timestamp: 2026-04-09T14:50:00Z
+File: skills/arc-align/references/align-report-template.md
+
+Expected: All 12 patterns present in Hardcoded Exclusions table
+
+Extracted Hardcoded Exclusions table:
+| Pattern | Category |
+|---------|----------|
+| .git/ | Directory |
+| node_modules/ | Directory |
+| vendor/ | Directory |
+| dist/ | Directory |
+| build/ | Directory |
+| .venv/ | Directory |
+| __pycache__/ | Directory |
+| .mypy_cache/ | Directory |
+| .pytest_cache/ | Directory |
+| .ruff_cache/ | Directory |
+| .tox/ | Directory |
+| *.egg-info/ | Directory |
+| target/ | Directory |
+| .gradle/ | Directory |
+| .next/ | Directory |
+| .nuxt/ | Directory |
+| coverage/ | Directory |
+| docs/specs/*/proofs/ | Directory |
+| docs/specs/*/*.feature | Directory |
+| docs/specs/*/questions-*.md | Directory |
+| docs/BACKLOG.md | Arc-managed file |
+| docs/ROADMAP.md | Arc-managed file |
+| docs/VISION.md | Arc-managed file |
+| docs/CUSTOMER.md | Arc-managed file |
+| docs/skill/arc/wave-report.md | Arc-managed file |
+| docs/skill/arc/review-report.md | Arc-managed file |
+| docs/skill/arc/shape-report.md | Arc-managed file |
+| docs/skill/arc/align-manifest.md | Arc-managed file |
+| docs/skill/arc/align-report.md | Arc-managed file |
+| .env | Secret-bearing file |
+| credentials.json | Secret-bearing file |
+| *.key | Secret-bearing file |
+
+Pattern Count Check:
+✓ .venv/
+✓ __pycache__/
+✓ .mypy_cache/
+✓ .pytest_cache/
+✓ .ruff_cache/
+✓ .tox/
+✓ *.egg-info/
+✓ target/
+✓ .gradle/
+✓ .next/
+✓ .nuxt/
+✓ coverage/
+
+Status: PASS
+All 12 new directory patterns are correctly added to align-report-template.md

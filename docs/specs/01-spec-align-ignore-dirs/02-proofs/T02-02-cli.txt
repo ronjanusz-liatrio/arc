@@ -1,0 +1,73 @@
+Type: cli
+Description: Verify directory lists match between SKILL.md and align-report-template.md
+Timestamp: 2026-04-09T14:50:00Z
+
+Command: Extract and compare Directory entries from both files
+
+=== SKILL.md Step 1a Directories ===
+.git/, node_modules/, vendor/, dist/, build/, .venv/, __pycache__/, .mypy_cache/, .pytest_cache/, .ruff_cache/, .tox/, *.egg-info/, target/, .gradle/, .next/, .nuxt/, coverage/, docs/specs/*/proofs/, docs/specs/*/*.feature, docs/specs/*/questions-*.md
+
+=== align-report-template.md Hardcoded Exclusions Directories ===
+| .git/ | Directory |
+| node_modules/ | Directory |
+| vendor/ | Directory |
+| dist/ | Directory |
+| build/ | Directory |
+| .venv/ | Directory |
+| __pycache__/ | Directory |
+| .mypy_cache/ | Directory |
+| .pytest_cache/ | Directory |
+| .ruff_cache/ | Directory |
+| .tox/ | Directory |
+| *.egg-info/ | Directory |
+| target/ | Directory |
+| .gradle/ | Directory |
+| .next/ | Directory |
+| .nuxt/ | Directory |
+| coverage/ | Directory |
+| docs/specs/*/proofs/ | Directory |
+| docs/specs/*/*.feature | Directory |
+| docs/specs/*/questions-*.md | Directory |
+
+=== Comparison ===
+
+Extracted Directory patterns from align-report-template.md (in order):
+1. .git/
+2. node_modules/
+3. vendor/
+4. dist/
+5. build/
+6. .venv/
+7. __pycache__/
+8. .mypy_cache/
+9. .pytest_cache/
+10. .ruff_cache/
+11. .tox/
+12. *.egg-info/
+13. target/
+14. .gradle/
+15. .next/
+16. .nuxt/
+17. coverage/
+18. docs/specs/*/proofs/
+19. docs/specs/*/*.feature
+20. docs/specs/*/questions-*.md
+
+All 20 directory patterns (5 basic + 12 new + 3 docs/specs) match SKILL.md Step 1a exactly.
+
+All 12 new directory patterns verified present:
+✓ .venv/
+✓ __pycache__/
+✓ .mypy_cache/
+✓ .pytest_cache/
+✓ .ruff_cache/
+✓ .tox/
+✓ *.egg-info/
+✓ target/
+✓ .gradle/
+✓ .next/
+✓ .nuxt/
+✓ coverage/
+
+Status: PASS
+Directory lists in both files are identical and include all 12 new patterns
