@@ -1,0 +1,13 @@
+Type: file
+Command: grep -n "Step 0\|Step 1:" skills/arc-align/SKILL.md
+Expected: Step 0 appears at a lower line number than Step 1
+Timestamp: 2026-04-09T00:00:00Z
+
+OUTPUT:
+32:### Step 0: Research Phase (Optional)
+78:### Step 1: Configure Exclusions
+
+Step 0 is at line 32, Step 1 is at line 78. Step 0 precedes Step 1.
+
+Status: PASS
+Requirement: R02.1.1 — Step 0 appears before Step 1 in SKILL.md process

@@ -1,0 +1,17 @@
+Type: file
+Command: grep -n "Run deep scan\|Quick scan only\|Use existing report" skills/arc-align/SKILL.md
+Expected: All three AskUserQuestion options present with correct labels
+Timestamp: 2026-04-09T00:00:00Z
+
+OUTPUT:
+42:      { label: "Run deep scan (Recommended)", description: "Invoke cw-research to analyze architecture, conventions, dependencies, and product-direction content before scanning" },
+43:      { label: "Quick scan only", description: "Skip research and proceed directly to codebase scanning with existing behavior" },
+44:      { label: "Use existing report", description: "Load a previously generated research report from docs/specs/research-align/research-align.md" }
+51:**If "Run deep scan (Recommended)" is selected:**
+64:**If "Use existing report" is selected:**
+74:**If "Quick scan only" is selected:**
+
+All three options present with correct labels.
+
+Status: PASS
+Requirement: R02.1.2 — AskUserQuestion offers all three options

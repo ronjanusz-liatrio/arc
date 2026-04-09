@@ -1,0 +1,10 @@
+Type: file
+Command: grep -n "allowed-tools" skills/arc-align/SKILL.md
+Expected: Line 5 contains "Agent" in allowed-tools list
+Timestamp: 2026-04-09T00:00:00Z
+
+OUTPUT:
+5:allowed-tools: Glob, Grep, Read, Write, Edit, Bash, AskUserQuestion, Agent
+
+Status: PASS
+Requirement: R02.1.6 — allowed-tools frontmatter includes Agent

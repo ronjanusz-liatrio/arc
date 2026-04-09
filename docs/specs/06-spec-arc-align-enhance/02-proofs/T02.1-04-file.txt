@@ -1,0 +1,18 @@
+Type: file
+Command: grep -n "subagent_type\|research-align/research-align.md" skills/arc-align/SKILL.md
+Expected: subagent_type is "general-purpose" and report path is docs/specs/research-align/research-align.md
+Timestamp: 2026-04-09T00:00:00Z
+
+OUTPUT:
+44:      { label: "Use existing report", description: "Load a previously generated research report from docs/specs/research-align/research-align.md" }
+57:  subagent_type: "general-purpose",
+58:  prompt: "Run /cw-research on this codebase focused on product-direction discovery. Analyze: (1) architecture and module structure, (2) conventions and naming patterns, (3) dependencies and integrations, (4) any existing product-direction content such as roadmap entries, backlog items, vision statements, personas, and TODOs. Save the research report to docs/specs/research-align/research-align.md."
+62:After the agent completes, read the saved report from `docs/specs/research-align/research-align.md` and store findings in a `research_findings` variable for use in the analysis phase (Step 2.5).
+69:Read({ file_path: "docs/specs/research-align/research-align.md" })
+
+subagent_type is "general-purpose" (R02.1.3).
+Report saved to docs/specs/research-align/research-align.md (R02.1.4).
+"Use existing report" reads from docs/specs/research-align/research-align.md (R02.1.5).
+
+Status: PASS
+Requirements: R02.1.3, R02.1.4, R02.1.5
