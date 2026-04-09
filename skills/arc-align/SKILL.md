@@ -22,8 +22,8 @@ You scan a project for product-direction content scattered outside Arc's managed
 - **NEVER** scan or import files that contain secrets (`.env`, `credentials.json`, `*.key`)
 - **NEVER** modify existing Arc-managed artifact content -- only append imported stubs
 - **ALWAYS** begin your response with `**ARC-ALIGN**`
-- **ALWAYS** generate `docs/align-report.md` after every run
-- **ALWAYS** update `docs/align-manifest.md` after every import
+- **ALWAYS** generate `docs/skill/arc/align-report.md` after every run
+- **ALWAYS** update `docs/skill/arc/align-manifest.md` after every import
 - **ALWAYS** skip source locations already recorded in the manifest (idempotent re-runs)
 - **ALWAYS** be inclusive at import time -- when in doubt, import as a captured stub rather than skip
 
@@ -40,7 +40,7 @@ These paths are silently excluded from scanning. They never appear in the user-f
 | Category | Paths |
 |----------|-------|
 | Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `docs/specs/` |
-| Arc-managed files | `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/wave-report.md`, `docs/review-report.md`, `docs/shape-report.md`, `docs/align-manifest.md`, `docs/align-report.md` |
+| Arc-managed files | `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/skill/arc/wave-report.md`, `docs/skill/arc/review-report.md`, `docs/skill/arc/shape-report.md`, `docs/skill/arc/align-manifest.md`, `docs/skill/arc/align-report.md` |
 | Secret-bearing files | `.env`, `credentials.json`, `*.key` |
 
 **1b. Directory pre-scan:**
@@ -277,11 +277,11 @@ For each discovery, apply the following decision rules in order:
 
 **2d. Check manifest for prior imports:**
 
-Read `docs/align-manifest.md` (if present) to enforce idempotent re-runs. Previously imported source locations are skipped automatically.
+Read `docs/skill/arc/align-manifest.md` (if present) to enforce idempotent re-runs. Previously imported source locations are skipped automatically.
 
 **Manifest parsing procedure:**
 
-1. Read `docs/align-manifest.md` using the Read tool. If the file does not exist, skip this step — all discoveries are treated as new.
+1. Read `docs/skill/arc/align-manifest.md` using the Read tool. If the file does not exist, skip this step — all discoveries are treated as new.
 
 2. Parse the markdown table body (skip the header row and separator row). For each data row, extract `Source Path` and `Line Range` columns.
 
@@ -392,7 +392,8 @@ If `docs/BACKLOG.md` does not exist and there are BACKLOG-targeted discoveries:
 
 1. Read `templates/BACKLOG.tmpl.md` for the Foundation phase format
 2. Create the `docs/` directory if it does not exist
-3. Create `docs/BACKLOG.md` with the following structure (matching `/arc-capture` Step 2 bootstrap logic):
+3. Create the `docs/skill/arc/` directory if it does not exist: `Bash({ command: "mkdir -p docs/skill/arc" })`
+4. Create `docs/BACKLOG.md` with the following structure (matching `/arc-capture` Step 2 bootstrap logic):
 
 ```markdown
 # BACKLOG
@@ -446,6 +447,31 @@ If `docs/CUSTOMER.md` does not exist and there are CUSTOMER-targeted discoveries
 ```
 
 The file starts with a heading and the minimal Spike-phase stub. Imported persona content is appended under a `## Imported Content` section in Step 5c.
+
+**4d. Ensure docs/skill/arc/ directory and migrate legacy artifacts:**
+
+Always ensure the `docs/skill/arc/` directory exists before any artifact writes:
+
+```
+Bash({ command: "mkdir -p docs/skill/arc" })
+```
+
+Then check for legacy artifacts at the old paths and migrate them to the new paths:
+
+| Old Path | New Path |
+|----------|----------|
+| `docs/align-manifest.md` | `docs/skill/arc/align-manifest.md` |
+| `docs/align-report.md` | `docs/skill/arc/align-report.md` |
+
+**Migration procedure for each legacy artifact:**
+
+1. Attempt to Read the old path (e.g., `docs/align-manifest.md`)
+2. If the file exists:
+   a. Write its content to the new path (e.g., `docs/skill/arc/align-manifest.md`)
+   b. Inform the user: "Migrated `{old_path}` to `{new_path}`. The old file can now be safely deleted."
+3. If the file does not exist, skip silently — nothing to migrate.
+
+**Note:** The migration does not delete the old file. The user is responsible for removing it after confirming the migration is correct. Subsequent runs will read from and write to the new path only.
 
 ### Step 5: Import Discoveries
 
@@ -634,11 +660,11 @@ When a file contains both product-direction and non-product content, remove only
 
 ### Step 7: Update Manifest
 
-Update `docs/align-manifest.md` with a row per import to enable idempotent re-runs and provide an audit trail.
+Update `docs/skill/arc/align-manifest.md` with a row per import to enable idempotent re-runs and provide an audit trail.
 
 **7a. Create or read the manifest:**
 
-1. Check if `docs/align-manifest.md` exists using Read
+1. Check if `docs/skill/arc/align-manifest.md` exists using Read
 2. If the file does not exist, create it with the table header:
 
 ```markdown
@@ -680,7 +706,7 @@ Append all new rows in a single Edit operation to minimize file writes. Rows are
 
 ### Step 8: Generate Report
 
-Create `docs/align-report.md` after every run. Read `skills/arc-align/references/align-report-template.md` for the full template. The report captures everything that happened during the run so the user can audit the results without re-running.
+Create `docs/skill/arc/align-report.md` after every run. Read `skills/arc-align/references/align-report-template.md` for the full template. The report captures everything that happened during the run so the user can audit the results without re-running.
 
 **8a. Run metadata section:**
 
@@ -738,7 +764,7 @@ If no items were imported for a given artifact, omit that artifact's subsection 
 
 **8c. Skipped items section:**
 
-List all items that were detected during scanning but skipped because their source location already appeared in `docs/align-manifest.md` from a prior run. These items were removed from the import list during Step 2d.
+List all items that were detected during scanning but skipped because their source location already appeared in `docs/skill/arc/align-manifest.md` from a prior run. These items were removed from the import list during Step 2d.
 
 ```markdown
 ---
@@ -785,11 +811,11 @@ Separate hardcoded exclusions (from Step 1a) and user-configured exclusions (fro
 | docs/ROADMAP.md | Arc-managed file |
 | docs/VISION.md | Arc-managed file |
 | docs/CUSTOMER.md | Arc-managed file |
-| docs/wave-report.md | Arc-managed file |
-| docs/review-report.md | Arc-managed file |
-| docs/shape-report.md | Arc-managed file |
-| docs/align-manifest.md | Arc-managed file |
-| docs/align-report.md | Arc-managed file |
+| docs/skill/arc/wave-report.md | Arc-managed file |
+| docs/skill/arc/review-report.md | Arc-managed file |
+| docs/skill/arc/shape-report.md | Arc-managed file |
+| docs/skill/arc/align-manifest.md | Arc-managed file |
+| docs/skill/arc/align-report.md | Arc-managed file |
 | .env | Secret-bearing file |
 | credentials.json | Secret-bearing file |
 | *.key | Secret-bearing file |
@@ -869,7 +895,7 @@ End the report with pointers to related files:
 
 ## Cross-References
 
-- `docs/align-manifest.md` — Full import history with source→artifact mappings
+- `docs/skill/arc/align-manifest.md` — Full import history with source→artifact mappings
 - `docs/BACKLOG.md` — Imported captured stubs (BACKLOG targets)
 - `docs/VISION.md` — Imported vision/mission content (VISION targets)
 - `docs/CUSTOMER.md` — Imported persona/audience content (CUSTOMER targets)
@@ -906,7 +932,7 @@ Below the table, add a one-sentence summary per non-zero category:
 
 - Imports: "Imported {N} items into {artifact list} from {M} source files."
 - Skipped: "{N} items skipped -- already captured in a prior alignment run."
-- Left behind: "{N} items rejected during individual review -- listed in `docs/align-report.md` under Remaining Unmanaged Content."
+- Left behind: "{N} items rejected during individual review -- listed in `docs/skill/arc/align-report.md` under Remaining Unmanaged Content."
 - Cleanup: "Deleted {N} files and trimmed {N} sections to eliminate drift."
 
 Omit sentences for categories with zero counts.

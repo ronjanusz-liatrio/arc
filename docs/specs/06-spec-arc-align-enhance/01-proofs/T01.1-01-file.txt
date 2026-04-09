@@ -1,0 +1,28 @@
+Type: file
+Command: grep -n "docs/skill/arc/align-report\|docs/skill/arc/align-manifest\|docs/skill/arc/wave-report\|docs/skill/arc/review-report\|docs/skill/arc/shape-report" skills/arc-align/SKILL.md
+Expected: All operational artifact references use docs/skill/arc/ prefix
+Timestamp: 2026-04-09T00:00:00Z
+
+--- OUTPUT ---
+
+25:- **ALWAYS** generate `docs/skill/arc/align-report.md` after every run
+26:- **ALWAYS** update `docs/skill/arc/align-manifest.md` after every import
+43:| Arc-managed files | `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/skill/arc/wave-report.md`, `docs/skill/arc/review-report.md`, `docs/skill/arc/shape-report.md`, `docs/skill/arc/align-manifest.md`, `docs/skill/arc/align-report.md` |
+280:Read `docs/skill/arc/align-manifest.md` (if present) to enforce idempotent re-runs. Previously imported source locations are skipped automatically.
+284:1. Read `docs/skill/arc/align-manifest.md` using the Read tool. If the file does not exist, skip this step — all discoveries are treated as new.
+463:| `docs/align-manifest.md` | `docs/skill/arc/align-manifest.md` |
+464:| `docs/align-report.md` | `docs/skill/arc/align-report.md` |
+470:   a. Write its content to the new path (e.g., `docs/skill/arc/align-manifest.md`)
+663:Update `docs/skill/arc/align-manifest.md` with a row per import to enable idempotent re-runs and provide an audit trail.
+667:1. Check if `docs/skill/arc/align-manifest.md` exists using Read
+709:Create `docs/skill/arc/align-report.md` after every run.
+767:List all items that were detected during scanning but skipped because their source location already appeared in `docs/skill/arc/align-manifest.md` from a prior run.
+814:| docs/skill/arc/wave-report.md | Arc-managed file |
+815:| docs/skill/arc/review-report.md | Arc-managed file |
+816:| docs/skill/arc/shape-report.md | Arc-managed file |
+817:| docs/skill/arc/align-manifest.md | Arc-managed file |
+818:| docs/skill/arc/align-report.md | Arc-managed file |
+898:- `docs/skill/arc/align-manifest.md` — Full import history with source->artifact mappings
+935:- Left behind: "... listed in `docs/skill/arc/align-report.md` under Remaining Unmanaged Content."
+
+Status: PASS

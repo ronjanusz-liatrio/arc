@@ -252,7 +252,7 @@ When a file contains both product-direction and non-product content, remove only
 
 ## Manifest Format
 
-`docs/align-manifest.md` tracks every import for idempotent re-runs and audit purposes.
+`docs/skill/arc/align-manifest.md` tracks every import for idempotent re-runs and audit purposes.
 
 ### Table Structure
 
@@ -281,7 +281,7 @@ When a file contains both product-direction and non-product content, remove only
 
 **Creating the manifest:**
 
-If `docs/align-manifest.md` does not exist, create it with the table header and add rows for all imports in the current run.
+If `docs/skill/arc/align-manifest.md` does not exist, create it with the table header and add rows for all imports in the current run.
 
 **Appending to an existing manifest:**
 
