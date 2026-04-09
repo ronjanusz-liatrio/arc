@@ -2,7 +2,7 @@
 name: arc-align
 description: "Codebase discovery and migration — consolidate scattered product-direction content into Arc-managed artifacts"
 user-invocable: true
-allowed-tools: Glob, Grep, Read, Write, Edit, Bash, AskUserQuestion
+allowed-tools: Glob, Grep, Read, Write, Edit, Bash, AskUserQuestion, Agent
 ---
 
 # /arc-align — Codebase Discovery and Migration
@@ -29,6 +29,52 @@ You scan a project for product-direction content scattered outside Arc's managed
 
 ## Process
 
+### Step 0: Research Phase (Optional)
+
+Before scanning, optionally run a deep codebase research pass to discover architecture patterns, conventions, dependencies, and existing product-direction content. Research findings are passed to the analysis phase to enrich discovery summaries and gap analysis.
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "Would you like to run a research pass before scanning? A deep scan improves discovery accuracy by surfacing architecture context and dependency patterns.",
+    header: "Research Phase",
+    options: [
+      { label: "Run deep scan (Recommended)", description: "Invoke cw-research to analyze architecture, conventions, dependencies, and product-direction content before scanning" },
+      { label: "Quick scan only", description: "Skip research and proceed directly to codebase scanning with existing behavior" },
+      { label: "Use existing report", description: "Load a previously generated research report from docs/specs/research-align/research-align.md" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+**If "Run deep scan (Recommended)" is selected:**
+
+Invoke cw-research as a subagent focused on product-direction discovery:
+
+```
+Agent({
+  subagent_type: "general-purpose",
+  prompt: "Run /cw-research on this codebase focused on product-direction discovery. Analyze: (1) architecture and module structure, (2) conventions and naming patterns, (3) dependencies and integrations, (4) any existing product-direction content such as roadmap entries, backlog items, vision statements, personas, and TODOs. Save the research report to docs/specs/research-align/research-align.md."
+})
+```
+
+After the agent completes, read the saved report from `docs/specs/research-align/research-align.md` and store findings in a `research_findings` variable for use in the analysis phase (Step 2.5).
+
+**If "Use existing report" is selected:**
+
+Read the existing report:
+
+```
+Read({ file_path: "docs/specs/research-align/research-align.md" })
+```
+
+Store the report contents in `research_findings` for use in the analysis phase (Step 2.5). If the file does not exist, inform the user and fall back to "Quick scan only" behavior.
+
+**If "Quick scan only" is selected:**
+
+Set `research_findings` to `null` and proceed directly to Step 1.
+
 ### Step 1: Configure Exclusions
 
 Apply hardcoded exclusion defaults, scan for large directories, then let the user refine.
@@ -39,7 +85,7 @@ These paths are silently excluded from scanning. They never appear in the user-f
 
 | Category | Paths |
 |----------|-------|
-| Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `docs/specs/` |
+| Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `docs/specs/*/proofs/`, `docs/specs/*/*.feature`, `docs/specs/*/questions-*.md` |
 | Arc-managed files | `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/skill/arc/wave-report.md`, `docs/skill/arc/review-report.md`, `docs/skill/arc/shape-report.md`, `docs/skill/arc/align-manifest.md`, `docs/skill/arc/align-report.md` |
 | Secret-bearing files | `.env`, `credentials.json`, `*.key` |
 
@@ -806,7 +852,9 @@ Separate hardcoded exclusions (from Step 1a) and user-configured exclusions (fro
 | vendor/ | Directory |
 | dist/ | Directory |
 | build/ | Directory |
-| docs/specs/ | Directory |
+| docs/specs/*/proofs/ | Directory |
+| docs/specs/*/*.feature | Directory |
+| docs/specs/*/questions-*.md | Directory |
 | docs/BACKLOG.md | Arc-managed file |
 | docs/ROADMAP.md | Arc-managed file |
 | docs/VISION.md | Arc-managed file |

@@ -1,0 +1,15 @@
+Type: file
+Description: Verify docs/specs/ blanket exclusion removed from SKILL.md Step 1a Directories row
+Command: grep -n "docs/specs/" skills/arc-align/SKILL.md
+Expected: No match on bare "docs/specs/" — only granular patterns present
+Timestamp: 2026-04-09T00:00:00Z
+
+--- Output ---
+42:| Directories | `.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`, `docs/specs/*/proofs/`, `docs/specs/*/*.feature`, `docs/specs/*/questions-*.md` |
+809:| docs/specs/*/proofs/ | Directory |
+810:| docs/specs/*/*.feature | Directory |
+811:| docs/specs/*/questions-*.md | Directory |
+
+--- Verification ---
+No bare "docs/specs/" entry present. Only granular exclusions remain.
+Status: PASS
