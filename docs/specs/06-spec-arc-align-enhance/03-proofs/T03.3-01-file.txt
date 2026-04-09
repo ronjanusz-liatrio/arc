@@ -1,0 +1,23 @@
+Type: file
+Check: Spec-Specific Classification section exists in import-rules.md
+Expected: Section heading "## Spec-Specific Classification" present with all six classification rules
+Timestamp: 2026-04-09T00:00:00Z
+
+--- RESULT ---
+
+PASS
+
+Verified presence of "## Spec-Specific Classification" section in:
+  skills/arc-align/references/import-rules.md (line 211)
+
+Six classification rules confirmed present:
+  1. Goals sections -> VISION (KW-18)
+  2. User Stories -> BACKLOG (KW-19), each "As a..." story = one stub
+  3. Non-Goals -> BACKLOG with (deferred) title prefix and P3-Low priority (KW-20)
+  4. Open Questions -> BACKLOG with (open question) title prefix and P2-Medium priority (KW-21)
+  5. Overview/Introduction -> VISION conditional (KW-22)
+  6. Persona references in user stories -> CUSTOMER (extract recurring persona roles)
+
+R03.3.1: PASS — all six rules present
+R03.3.2: PASS — non-goals use (deferred) prefix and P3-Low (lines 223, 237, 245)
+R03.3.3: PASS — open questions use (open question) prefix and P2-Medium (lines 224, 259)

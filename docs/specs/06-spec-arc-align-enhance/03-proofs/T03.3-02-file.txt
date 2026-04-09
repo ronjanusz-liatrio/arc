@@ -1,0 +1,22 @@
+Type: file
+Check: aligned-from-spec marker documented in import-rules.md and SKILL.md Step 5
+Expected: aligned-from-spec marker format present in import-rules.md; SKILL.md Step 5 shows spec-sourced stub format with the marker
+Timestamp: 2026-04-09T00:00:00Z
+
+--- RESULT ---
+
+PASS
+
+import-rules.md — Aligned-From-Spec Marker section (line 305-323):
+  Format documented: <!-- aligned-from-spec: {spec_name} -->
+  Derivation rules present: strip parent directory name from docs/specs/* path
+  Example stub shown with both aligned-from and aligned-from-spec markers
+
+SKILL.md Step 5 — Spec-sourced stub format (lines 693-707):
+  Standard format shown for non-spec sources
+  Spec-sourced format shown with <!-- aligned-from-spec: {spec_name} --> marker
+  Priority field updated to reflect P3-Low for non-goals, P2-Medium for open questions
+  aligned-from-spec derivation explanation present
+
+R03.3.4: PASS — aligned-from-spec marker fully documented in import-rules.md
+R03.3.6: PASS — SKILL.md Step 5 import includes aligned-from-spec marker for spec sources

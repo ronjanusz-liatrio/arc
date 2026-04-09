@@ -398,7 +398,7 @@ For each discovery (from 2a, 2b, and 2c), classify into exactly one of three art
 |--------|-------------|----------------------|
 | `BACKLOG` | Actionable items: TODOs, features, bugs, ideas, task lists, roadmap items, code comments | KW-1 through KW-12, KW-19 (`## User Stories`), KW-20 (`## Non-Goals`), KW-21 (`## Open Questions`), ST-1 through ST-4, CC-1 through CC-4 |
 | `VISION` | Mission/vision/north-star/goal content | KW-15 (`mission`), KW-16 (`vision`), KW-17 (`north star`), KW-18 (`## Goals`), KW-22 (`## Introduction`/`## Overview`, conditional) |
-| `CUSTOMER` | Persona/audience/JTBD content | KW-13 (`persona`), KW-14 (`target audience`) |
+| `CUSTOMER` | Persona/audience/JTBD content | KW-13 (`persona`), KW-14 (`target audience`), persona roles extracted from KW-19 user stories (spec sources only) |
 
 **Classification procedure:**
 
@@ -406,12 +406,23 @@ For each discovery, apply the following decision rules in order:
 
 1. **Pattern-based assignment:** If the discovery was triggered by a single keyword or structural pattern, assign the target directly from the classification table above.
 
-2. **Merged-section handling:** If a discovery was merged from multiple keyword matches in the same heading section (per the deduplication rule in Step 2a), use the majority pattern target. If patterns map to different targets (e.g., a section matched by both `roadmap` and `vision`), split the discovery:
+2. **Spec-specific classification (KW-18 through KW-22):** When a discovery originates from a spec directory (path matches `docs/specs/*/`), apply the spec-specific rules from `skills/arc-align/references/import-rules.md` (Spec-Specific Classification section) instead of general classification rules:
+
+   | Spec Section | Target | Special Handling |
+   |-------------|--------|-----------------|
+   | `## Goals` (KW-18) | VISION | Goals describe product aims — always VISION |
+   | `## User Stories` (KW-19) | BACKLOG | Each "As a..." story = one captured stub; also extract recurring persona roles as CUSTOMER entries |
+   | `## Non-Goals` (KW-20) | BACKLOG | Prepend `(deferred) ` to title; override priority to P3-Low |
+   | `## Open Questions` (KW-21) | BACKLOG | Prepend `(open question) ` to title; use default P2-Medium |
+   | `## Introduction`/`## Overview` (KW-22) | VISION (conditional) | Only if section contains `mission`, `direction`, `purpose`, or `vision` language; otherwise skip |
+   | Persona roles in user stories | CUSTOMER | Extract when same role appears in 2+ stories; create dedicated CUSTOMER stub |
+
+3. **Merged-section handling:** If a discovery was merged from multiple keyword matches in the same heading section (per the deduplication rule in Step 2a), use the majority pattern target. If patterns map to different targets (e.g., a section matched by both `roadmap` and `vision`), split the discovery:
    - Read the full section content
    - Identify sub-sections or distinct content blocks within the merged section
    - Create separate discoveries for each block, each with its own target classification
 
-3. **Ambiguity resolution:** When content does not map cleanly to a single target, apply these rules from `import-rules.md`:
+4. **Ambiguity resolution:** When content does not map cleanly to a single target, apply these rules from `import-rules.md`:
 
    | Ambiguity | Resolution |
    |-----------|-----------|
@@ -420,7 +431,7 @@ For each discovery, apply the following decision rules in order:
    | General "about" content | If it describes what the product does and why, classify as VISION |
    | Mixed file with multiple content types | Split into separate discoveries, each with its own classification |
 
-4. **Inclusivity principle:** When in doubt about whether content is product-direction content, import it as a BACKLOG stub rather than skip it. The user can review and delete false positives from the BACKLOG after import.
+5. **Inclusivity principle:** When in doubt about whether content is product-direction content, import it as a BACKLOG stub rather than skip it. The user can review and delete false positives from the BACKLOG after import.
 
 **2e. Check manifest for prior imports:**
 
@@ -483,6 +494,235 @@ If items were skipped due to manifest deduplication, display them separately:
 |--------|-------|-----------------|
 | TODO.md | 1-10 | 2026-04-01T10:00:00Z |
 ```
+
+### Step 2.5: Analysis Phase
+
+After discovery completes and before the import confirmation prompt, synthesize findings into a structured analysis artifact at `docs/skill/arc/align-analysis.md`. This artifact is overwritten on every run (not appended to) and reflects the current discovery state. The analysis helps the user understand what was found, what is missing, and what to do next.
+
+**Ensure the output directory exists:**
+
+```
+Bash({ command: "mkdir -p docs/skill/arc" })
+```
+
+**Generate `docs/skill/arc/align-analysis.md` with the following sections:**
+
+**2.5a. Discovery Summary:**
+
+Count all discoveries from Step 2 (before manifest dedup filtering) and break them down along two dimensions:
+
+**By source type:**
+
+| Source Type | Description | Counted From |
+|-------------|-------------|--------------|
+| Markdown keywords | Keyword pattern matches (KW-1 through KW-22) | Step 2a discoveries with `detection_method: "keyword"` |
+| Markdown structural | Structural pattern matches (ST-1 through ST-4) | Step 2b discoveries with `detection_method: "structural"` |
+| Spec extraction | Discoveries from `docs/specs/` files | Step 2a/2b discoveries where source file path starts with `docs/specs/` |
+| Code comments | Comment marker matches (CC-1 through CC-4) | Step 2c discoveries with `detection_method: "code"` |
+
+**By target artifact:**
+
+| Target | Count |
+|--------|-------|
+| BACKLOG | {count of discoveries classified as BACKLOG} |
+| VISION | {count of discoveries classified as VISION} |
+| CUSTOMER | {count of discoveries classified as CUSTOMER} |
+
+Write the Discovery Summary section as:
+
+```markdown
+## Discovery Summary
+
+**Total discoveries:** {total_count}
+
+### By Source Type
+
+| Source Type | Count |
+|-------------|-------|
+| Markdown keywords | {count} |
+| Markdown structural | {count} |
+| Spec extraction | {count} |
+| Code comments | {count} |
+
+### By Target Artifact
+
+| Target | Count |
+|--------|-------|
+| BACKLOG | {count} |
+| VISION | {count} |
+| CUSTOMER | {count} |
+```
+
+**2.5b. Gap Analysis:**
+
+Assess presence or absence of content across Arc's four artifact types. For each artifact type, examine the discovery list to determine whether relevant content exists.
+
+| Artifact | Assessment Criteria | Gap Signal |
+|----------|-------------------|------------|
+| VISION | Any discoveries classified as VISION (KW-15, KW-16, KW-17, KW-18, KW-22 conditional) | If zero VISION discoveries: flag as gap — "No mission, vision, or north-star content found in the repository." |
+| CUSTOMER | Any discoveries classified as CUSTOMER (KW-13, KW-14) | If zero CUSTOMER discoveries: flag as gap — "No persona or audience definitions found in the repository." |
+| ROADMAP | Any discoveries matching phased planning content (KW-1 `roadmap`, KW-9 `milestone`, KW-10 `sprint`) | If zero phased planning discoveries: flag as absent — "No phased planning content found. Note: arc-align does not populate ROADMAP directly; use /arc-wave to create wave plans." |
+| BACKLOG | All discoveries classified as BACKLOG | Report count and distribution. If discoveries are concentrated in one directory (>60% from a single directory), note the concentration: "BACKLOG discoveries are concentrated in {dir}/ ({count}/{total})." If scattered across many directories, note: "BACKLOG discoveries are distributed across {N} directories." |
+
+Write the Gap Analysis section as:
+
+```markdown
+## Gap Analysis
+
+| Artifact | Status | Detail |
+|----------|--------|--------|
+| VISION | {Present / Gap} | {detail text} |
+| CUSTOMER | {Present / Gap} | {detail text} |
+| ROADMAP | {Present / Absent} | {detail text} |
+| BACKLOG | {N items} | {distribution detail} |
+```
+
+**2.5c. Theme Analysis:**
+
+Group related discoveries by topic similarity to help the user see patterns and potential wave groupings.
+
+**Grouping procedure:**
+
+1. Collect all discovery content snippets and their source file paths
+2. Identify clusters of discoveries that share a common topic — use file path proximity (same directory), keyword overlap in content snippets, and matching pattern identifiers as grouping signals
+3. For each identified theme:
+   - Assign a descriptive label (e.g., "Authentication", "API endpoints", "Documentation gaps")
+   - List the discoveries belonging to the theme (source path and snippet)
+   - Suggest whether the theme could form a wave grouping
+
+**Theme detection heuristics:**
+
+| Signal | Weight | Example |
+|--------|--------|---------|
+| Same directory | High | 5 TODOs in `src/auth/` suggest an "Authentication" theme |
+| Shared keywords in snippets | Medium | Multiple discoveries mentioning "API" or "endpoint" |
+| Same detection pattern | Low | Multiple ST-1 (task list) discoveries may share a theme if from the same file |
+
+Write the Theme Analysis section as:
+
+```markdown
+## Theme Analysis
+
+### {Theme Label}
+
+- **Discoveries:** {count}
+- **Sources:** {comma-separated list of source file paths}
+- **Wave potential:** {Yes — cohesive enough for a single wave / No — too scattered}
+
+| # | Source | Snippet |
+|---|--------|---------|
+| 1 | {source_path}:{line_range} | {truncated snippet} |
+| 2 | ... | ... |
+```
+
+If no clear themes emerge (fewer than 2 discoveries or all discoveries are unrelated), write:
+
+```markdown
+## Theme Analysis
+
+No clear themes detected — discoveries are too few or too scattered to group meaningfully.
+```
+
+**2.5d. Recommendations:**
+
+Generate an ordered list of suggested next actions based on the gap analysis, theme analysis, and discovery distribution. Each recommendation is a concrete action the user can take.
+
+**Recommendation generation rules (apply in order, include all that match):**
+
+| Condition | Recommendation |
+|-----------|---------------|
+| VISION gap detected | "Create a VISION artifact — run `/arc-shape` with a focus on mission and north-star definition." |
+| CUSTOMER gap detected | "Create a CUSTOMER artifact — run `/arc-shape` with a focus on persona and audience definition." |
+| ROADMAP absent | "Consider creating a ROADMAP — run `/arc-wave` to define wave-based delivery plans." |
+| Theme with 3+ discoveries | "Shape the **{theme label}** theme as a single initiative — {count} related discoveries suggest a cohesive work stream." |
+| BACKLOG concentration >60% in one directory | "Prioritize **{dir}/** — {count} of {total} BACKLOG items originate from this area." |
+| Total discoveries > 20 | "Run `/arc-wave` after import to organize the {count} BACKLOG items into delivery waves." |
+| Zero discoveries | "No product-direction content found — consider running `/arc-capture` to begin capturing ideas manually." |
+
+Write the Recommendations section as:
+
+```markdown
+## Recommendations
+
+1. {First recommendation}
+2. {Second recommendation}
+3. {Third recommendation}
+...
+```
+
+**2.5e. Research Integration (conditional):**
+
+This section is only generated when `research_context` is not `null` (i.e., the user selected "Run deep scan" or "Use existing report" in Step 0).
+
+When `research_context` is available, cross-reference the research findings with the discovery results:
+
+1. **Architecture coverage:** For each pattern in `research_context.architecture_patterns`, check whether any discoveries reference that architectural area. Flag patterns with no corresponding discoveries as potential blind spots.
+
+2. **Dependency alignment:** For each entry in `research_context.key_dependencies`, check whether any discoveries mention that dependency. Dependencies with no corresponding discoveries may indicate under-documented integration points.
+
+3. **Signal validation:** Compare `research_context.product_direction_signals` against the actual discovery list. Note which signals were confirmed by discoveries and which were not found.
+
+4. **Project type context:** Use `research_context.project_type` to contextualize recommendations (e.g., a `"cli-tool"` project type may benefit from different recommendations than a `"web-service"`).
+
+Write the Research Integration section as:
+
+```markdown
+## Research Integration
+
+**Project type:** {research_context.project_type}
+
+### Architecture Coverage
+
+| Pattern | Discoveries Found | Status |
+|---------|-------------------|--------|
+| {pattern} | {count or "None"} | {Covered / Blind spot} |
+
+### Dependency Alignment
+
+| Dependency | Referenced in Discoveries | Status |
+|------------|--------------------------|--------|
+| {dependency} | {Yes / No} | {Aligned / Under-documented} |
+
+### Signal Validation
+
+| Research Signal | Confirmed by Discovery | Notes |
+|----------------|----------------------|-------|
+| {signal} | {Yes / No} | {details} |
+```
+
+When `research_context` is `null`, omit the Research Integration section entirely — do not write an empty section or placeholder.
+
+**2.5f. Write the analysis artifact:**
+
+Assemble all sections into `docs/skill/arc/align-analysis.md` using Write. The artifact structure is:
+
+```markdown
+# Alignment Analysis
+
+**Generated:** {ISO 8601 timestamp}
+
+---
+
+{Discovery Summary from 2.5a}
+
+---
+
+{Gap Analysis from 2.5b}
+
+---
+
+{Theme Analysis from 2.5c}
+
+---
+
+{Recommendations from 2.5d}
+
+---
+
+{Research Integration from 2.5e, if available}
+```
+
+The artifact is overwritten on every run. It reflects the current discovery state, not a cumulative history.
 
 ### Step 3: Confirm Import
 
@@ -659,7 +899,9 @@ Example: "Add Dark Mode Support" -> `#add-dark-mode-support`
 
 **5a-iv. Append captured stub section:**
 
-Append one `## {Title}` section per discovery at the end of `docs/BACKLOG.md`:
+Append one `## {Title}` section per discovery at the end of `docs/BACKLOG.md`.
+
+**Standard stub format (non-spec sources):**
 
 ```markdown
 ## {Title}
@@ -672,11 +914,26 @@ Append one `## {Title}` section per discovery at the end of `docs/BACKLOG.md`:
 {One-line summary}
 ```
 
+**Spec-sourced stub format (source path matches `docs/specs/*/`):**
+
+```markdown
+## {Title}
+
+- **Status:** captured
+- **Priority:** {priority}
+- **Captured:** {ISO 8601 timestamp}
+<!-- aligned-from: {source_path}:{line_range} -->
+<!-- aligned-from-spec: {spec_name} -->
+
+{One-line summary}
+```
+
 Field values:
 - **Status:** Always `captured`
-- **Priority:** Always `P2-Medium` (no automatic inference -- user adjusts after import)
+- **Priority:** `P2-Medium` for standard imports; `P3-Low` for non-goals (KW-20); `P2-Medium` for open questions (KW-21). User adjusts after import.
 - **Captured:** Current UTC time in ISO 8601 format (`YYYY-MM-DDTHH:MM:SSZ`)
-- **aligned-from:** `{source_path}:{line_range}` where source_path is relative to repo root and line_range is the start-end lines (e.g., `README.md:50-70` or `TODO.md:5`)
+- **aligned-from:** `{source_path}:{line_range}` where source_path is relative to repo root and line_range is the start-end lines (e.g., `docs/specs/03-spec-arc-align/03-spec-arc-align.md:45-50`)
+- **aligned-from-spec:** Present only when the source path is inside a `docs/specs/` directory. Derived by extracting the immediate parent directory name of the source file (e.g., source `docs/specs/03-spec-arc-align/03-spec-arc-align.md` → `spec_name` = `03-spec-arc-align`). See `skills/arc-align/references/import-rules.md` (Aligned-From-Spec Marker section) for full derivation rules.
 
 **5a-v. Update the BACKLOG summary table:**
 

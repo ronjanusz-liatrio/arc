@@ -1,0 +1,23 @@
+Type: file
+Check: SKILL.md Step 2d classification handles KW-18 through KW-22 with spec-specific procedure
+Expected: Step 2d classification table and procedure reference spec-specific rules for KW-18 through KW-22
+Timestamp: 2026-04-09T00:00:00Z
+
+--- RESULT ---
+
+PASS
+
+SKILL.md Step 2d classification table (lines 399-401):
+  BACKLOG row updated to include KW-19, KW-20, KW-21
+  VISION row includes KW-18 and KW-22
+  CUSTOMER row updated with "persona roles extracted from KW-19 user stories (spec sources only)"
+
+SKILL.md Step 2d classification procedure (lines 409-417):
+  New rule #2 added: "Spec-specific classification (KW-18 through KW-22)"
+  Inline table for all five spec section types with target and special handling
+  References import-rules.md Spec-Specific Classification section
+  Persona extraction from user stories documented
+
+Prior rules renumbered to 3, 4, 5 (merged-section handling, ambiguity resolution, inclusivity principle)
+
+R03.3.5: PASS — SKILL.md Step 2d fully handles KW-18 through KW-22 with spec-specific rules

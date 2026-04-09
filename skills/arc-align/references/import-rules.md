@@ -208,6 +208,132 @@ Same append-within-section rule as VISION imports.
 
 ---
 
+## Spec-Specific Classification
+
+Content discovered in spec directories (matched via KW-18 through KW-22) follows classification rules that differ from general markdown content. Spec files are structured documents with conventional section headings, and each heading maps to a specific artifact target regardless of surrounding content.
+
+---
+
+### Spec Section Classification Rules
+
+| Spec Section | Target Artifact | Rule |
+|--------------|----------------|------|
+| `## Goals` (KW-18) | VISION | Goals sections describe product aims and strategic direction — classify as VISION |
+| `## User Stories` (KW-19) | BACKLOG | Each "As a {persona}, I want {goal} so that {benefit}" story becomes one captured BACKLOG stub |
+| `## Non-Goals` (KW-20) | BACKLOG | Non-goals are deferred scope items — classify as BACKLOG with `(deferred)` title prefix and P3-Low default priority |
+| `## Open Questions` (KW-21) | BACKLOG | Open questions require follow-up work — classify as BACKLOG with `(open question)` title prefix and P2-Medium default priority |
+| `## Introduction` / `## Overview` (KW-22) | VISION (conditional) | Classify as VISION only if the section contains declarative product-direction language (`mission`, `direction`, `purpose`, `vision`); skip if the section describes features or implementation details |
+| Persona references in user stories | CUSTOMER | When user stories reference a consistent persona role (e.g., "As a Platform Engineer"), extract the persona role and create a CUSTOMER stub for the persona; classify as CUSTOMER |
+
+---
+
+### Non-Goals: Title Prefix and Priority Override
+
+Non-goal items (KW-20 matches) use a mandatory title prefix and a lower default priority:
+
+**Title derivation:**
+
+1. Derive the base title using the standard rules from the Title Derivation section
+2. Prepend `(deferred) ` to the derived title
+
+Example: "Support multi-cloud deployments" → "(deferred) Support multi-cloud deployments"
+
+**Priority override:**
+
+| Field | Value |
+|-------|-------|
+| Priority | P3-Low |
+| Rationale | Non-goals represent intentionally deferred scope — lower priority reflects explicit deferral decision |
+
+This override replaces the default P2-Medium for all non-goal imports. The user can adjust after import.
+
+---
+
+### Open Questions: Title Prefix and Priority
+
+Open question items (KW-21 matches) use a mandatory title prefix and medium default priority:
+
+**Title derivation:**
+
+1. Derive the base title using the standard rules from the Title Derivation section
+2. Prepend `(open question) ` to the derived title
+
+Example: "Should we support SSO on day one?" → "(open question) Should we support SSO on day one?"
+
+**Priority:**
+
+| Field | Value |
+|-------|-------|
+| Priority | P2-Medium |
+| Rationale | Open questions require attention but are not yet confirmed defects or planned items |
+
+---
+
+### Persona Extraction from User Stories
+
+When a `## User Stories` section contains stories with a consistent persona role, extract the persona as a separate CUSTOMER import:
+
+**Extraction procedure:**
+
+1. Parse all "As a {persona}, I want..." patterns in the section
+2. Collect distinct persona role names (e.g., "Platform Engineer", "Team Lead", "Developer")
+3. For each distinct persona role that appears in 2 or more stories: create a CUSTOMER discovery entry with:
+   - **Content:** The persona role name and the list of goals extracted from the matching stories
+   - **Target:** CUSTOMER
+   - **Source:** The same spec file and line range as the user stories section
+4. If a persona role appears in only one story, do not create a separate CUSTOMER entry — the persona context is captured in the BACKLOG stub for that story
+
+**Persona stub format (appended to CUSTOMER.md):**
+
+```markdown
+<!-- aligned-from: {source_path}:{line_range} -->
+<!-- aligned-from-spec: {spec_name} -->
+
+### {Persona Role}
+
+Persona role extracted from user stories in `{spec_name}`.
+
+**Goals observed in stories:**
+- {goal from story 1}
+- {goal from story 2}
+```
+
+---
+
+### Aligned-From-Spec Marker
+
+Stubs imported from spec directories carry an additional traceability marker that identifies the originating spec by name:
+
+```
+<!-- aligned-from-spec: {spec_name} -->
+```
+
+- `spec_name`: The spec directory name, derived by stripping the numeric prefix from the directory name (e.g., `docs/specs/03-spec-arc-align` → `spec_name` = `03-spec-arc-align`)
+
+This marker is used **in addition to** the standard `<!-- aligned-from: ... -->` comment. Both markers are present on spec-sourced stubs:
+
+```markdown
+## (deferred) Support multi-cloud deployments
+
+- **Status:** captured
+- **Priority:** P3-Low
+- **Captured:** 2026-04-08T14:30:00Z
+<!-- aligned-from: docs/specs/03-spec-arc-align/03-spec-arc-align.md:45-50 -->
+<!-- aligned-from-spec: 03-spec-arc-align -->
+
+Imported from docs/specs/03-spec-arc-align/03-spec-arc-align.md
+```
+
+**Spec name derivation:**
+
+1. Take the relative path of the source file (e.g., `docs/specs/03-spec-arc-align/03-spec-arc-align.md`)
+2. Extract the immediate parent directory name (e.g., `03-spec-arc-align`)
+3. Use that directory name as `spec_name`
+
+This enables downstream tools and the manifest to filter or group imports by their originating spec.
+
+---
+
 ## Code Comment Classification
 
 Code comments discovered via CC-1 through CC-4 patterns are always classified as BACKLOG targets. The rules below override the general stub generation defaults for code-sourced imports.
@@ -414,4 +540,4 @@ Before importing, read the manifest and build a set of `{source_path}:{line_rang
 - `templates/BACKLOG.tmpl.md` — Template used to bootstrap BACKLOG.md if absent before import
 - `templates/VISION.tmpl.md` — Template used to bootstrap VISION.md if absent before import
 - `templates/CUSTOMER.tmpl.md` — Template used to bootstrap CUSTOMER.md if absent before import
-- `skills/arc-align/SKILL.md` — Steps 2c, 5, 6, and 7 reference this document for classification and import rules; Step 2c code comment scanning uses the CC-1 through CC-4 priority overrides and aligned-from-code marker format defined here
+- `skills/arc-align/SKILL.md` — Steps 2c, 2d, 5, 6, and 7 reference this document for classification and import rules; Step 2c code comment scanning uses the CC-1 through CC-4 priority overrides and aligned-from-code marker format defined here; Steps 2d and 5 use the Spec-Specific Classification rules and aligned-from-spec marker format defined here
