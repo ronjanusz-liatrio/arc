@@ -1,0 +1,13 @@
+Type: file
+Description: Verify docs/skill/arc/review-report.md path in arc-review SKILL.md (all 4 occurrences)
+Command: grep -n "docs/skill/arc/review-report.md" skills/arc-review/SKILL.md
+Expected: 4 matching lines at lines 24, 235, 300, 337
+Timestamp: 2026-04-09T00:00:00Z
+
+--- Output ---
+24:- **ALWAYS** generate `docs/skill/arc/review-report.md` after analysis
+235:Create `docs/skill/arc/review-report.md` with:
+300:After applying fixes, update the "Fixes Applied" section of `docs/skill/arc/review-report.md` with a checklist of what was changed.
+337:- `skills/arc-review/references/review-report-template.md` — Report format and section layout for `docs/skill/arc/review-report.md`
+
+Status: PASS

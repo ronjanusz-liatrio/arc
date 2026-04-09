@@ -1,0 +1,10 @@
+Type: file
+Description: Verify docs/skill/arc/shape-report.md path in arc-shape SKILL.md
+Command: grep -n "docs/skill/arc/shape-report.md" skills/arc-shape/SKILL.md
+Expected: 1 matching line at line 310
+Timestamp: 2026-04-09T00:00:00Z
+
+--- Output ---
+310:Save a shaping report to `docs/skill/arc/shape-report.md`:
+
+Status: PASS

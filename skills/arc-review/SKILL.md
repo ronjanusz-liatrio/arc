@@ -21,7 +21,7 @@ You audit the health of product artifacts across two dimensions: **backlog healt
 - **NEVER** apply fixes without user confirmation via AskUserQuestion
 - **NEVER** delete content from BACKLOG.md — only add markers
 - **ALWAYS** begin your response with `**ARC-REVIEW**`
-- **ALWAYS** generate `docs/review-report.md` after analysis
+- **ALWAYS** generate `docs/skill/arc/review-report.md` after analysis
 
 ## Process
 
@@ -232,7 +232,7 @@ Apply the thresholds from audit-dimensions.md to determine the overall rating:
 
 Read `skills/arc-review/references/review-report-template.md` for the full report format.
 
-Create `docs/review-report.md` with:
+Create `docs/skill/arc/review-report.md` with:
 
 - Timestamp and staleness threshold
 - Overall health rating with criteria explanation
@@ -297,7 +297,7 @@ AskUserQuestion({
 })
 ```
 
-After applying fixes, update the "Fixes Applied" section of `docs/review-report.md` with a checklist of what was changed.
+After applying fixes, update the "Fixes Applied" section of `docs/skill/arc/review-report.md` with a checklist of what was changed.
 
 ### Step 8: Offer Next Steps
 
@@ -334,7 +334,7 @@ AskUserQuestion({
 ## References
 
 - `skills/arc-review/references/audit-dimensions.md` — Health check definitions, detection logic, thresholds, severity levels, and configurable parameters
-- `skills/arc-review/references/review-report-template.md` — Report format and section layout for `docs/review-report.md`
+- `skills/arc-review/references/review-report-template.md` — Report format and section layout for `docs/skill/arc/review-report.md`
 - `skills/arc-readme/references/trust-signals.md` — Structural trust-signal definitions used by WA-7 (TS-1 through TS-8)
 - `references/idea-lifecycle.md` — Idea status transitions, timestamp fields, and lifecycle phases
 - `references/brief-format.md` — The seven required brief sections used by BH-4

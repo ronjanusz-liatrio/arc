@@ -307,7 +307,7 @@ Update the idea's section in `docs/BACKLOG.md`:
 
 ### Step 7: Generate Shape Report
 
-Save a shaping report to `docs/shape-report.md`:
+Save a shaping report to `docs/skill/arc/shape-report.md`:
 
 ```markdown
 # Shape Report: {Title}

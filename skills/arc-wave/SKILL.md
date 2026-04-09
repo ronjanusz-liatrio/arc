@@ -242,7 +242,7 @@ After writing, verify:
 
 Read `skills/arc-wave/references/wave-report-template.md` for the report format.
 
-Save to `docs/wave-report.md`:
+Save to `docs/skill/arc/wave-report.md`:
 
 ```markdown
 # Wave Report: {Wave Name}

@@ -1,0 +1,10 @@
+Type: file
+Description: Verify audit-dimensions.md contains no old-style report path references
+Command: grep -n "docs/review-report.md\|docs/shape-report.md\|docs/wave-report.md" skills/arc-review/references/audit-dimensions.md
+Expected: No matches (empty output)
+Timestamp: 2026-04-09T00:00:00Z
+
+--- Output ---
+(no output — no matches found)
+
+Status: PASS — R01.2.6 satisfied: audit-dimensions.md contains no old-style report path references requiring update
