@@ -191,6 +191,19 @@ arc/
     idea-lifecycle.md                       # Capture → Shape → Spec-Ready → Shipped model
     brief-format.md                         # Spec-ready brief specification and examples
     wave-planning.md                        # Wave organization, precedence, Temper phase compatibility
+  docs/
+    BACKLOG.md                              # Triaged idea list (product-direction artifact)
+    VISION.md                               # Product vision and direction (product-direction artifact)
+    CUSTOMER.md                             # Personas and success metrics (product-direction artifact)
+    ROADMAP.md                              # Phased delivery plan (product-direction artifact)
+    skill/
+      arc/
+        align-report.md                     # Arc-align discovery report
+        align-manifest.md                   # Import history and source tracking
+        align-analysis.md                   # Analysis of findings and recommendations
+        wave-report.md                      # Wave organization and handoff summary
+        review-report.md                    # Pipeline health audit results
+        shape-report.md                     # Brief refinement details
   README.md
   CLAUDE.md
   .gitignore

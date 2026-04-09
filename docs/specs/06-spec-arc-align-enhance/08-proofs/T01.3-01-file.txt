@@ -1,0 +1,33 @@
+Type: file
+Description: Verify README.md Plugin Structure tree shows docs/skill/arc/ path with operational artifacts
+Expected: Plugin structure tree includes docs/skill/arc/ directory with align-report.md, align-manifest.md, align-analysis.md, wave-report.md, review-report.md, shape-report.md; product-direction artifacts at docs/ level
+Timestamp: 2026-04-09T00:00:00Z
+Status: PASS
+
+File: /Users/ron/dev/arc/README.md
+Section: Plugin Structure (lines 144-210)
+
+REQUIREMENT R01.3.1 - Plugin structure tree shows docs/skill/arc/ directory with operational artifact files
+VERIFICATION:
+✓ Line 194: docs/ directory is shown in the structure
+✓ Line 199-206: docs/skill/arc/ subdirectory is shown with:
+  - align-report.md (line 201)
+  - align-manifest.md (line 202)
+  - align-analysis.md (line 203)
+  - wave-report.md (line 204)
+  - review-report.md (line 205)
+  - shape-report.md (line 206)
+
+REQUIREMENT R01.3.2 - Product-direction artifacts (BACKLOG.md, VISION.md, CUSTOMER.md, ROADMAP.md) remain at docs/ level
+VERIFICATION:
+✓ Line 195: BACKLOG.md marked as "product-direction artifact"
+✓ Line 196: VISION.md marked as "product-direction artifact"
+✓ Line 197: CUSTOMER.md marked as "product-direction artifact"
+✓ Line 198: ROADMAP.md marked as "product-direction artifact"
+✓ All four files are at docs/ level (not under skill/arc/)
+
+REQUIREMENT R01.3.3 - align-analysis.md is listed in docs/skill/arc/
+VERIFICATION:
+✓ Line 203: align-analysis.md is listed under docs/skill/arc/ with comment "Analysis of findings and recommendations"
+
+ALL REQUIREMENTS MET
