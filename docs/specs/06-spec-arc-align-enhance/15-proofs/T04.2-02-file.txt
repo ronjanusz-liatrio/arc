@@ -1,0 +1,25 @@
+Type: file
+Check: Code Comment Classification section in import-rules.md
+Expected: Section with target artifact (BACKLOG), priority overrides, title derivation, summary format, aligned-from-code marker, and deduplication rule
+Timestamp: 2026-04-09T00:00:00Z
+
+--- VERIFICATION ---
+
+Sections present in import-rules.md (Code Comment Classification):
+
+1. Target Artifact — All code comments → BACKLOG (R04.2.2) ✓
+2. Priority Overrides table (R04.2.3):
+   - CC-1 TODO → P2-Medium ✓
+   - CC-2 FIXME → P1-High ✓
+   - CC-3 HACK → P1-High ✓
+   - CC-4 XXX → P2-Medium ✓
+3. Title Derivation — strip marker, comment prefixes; truncate at 80 chars ✓
+4. Summary Format — "Code comment from {file}:{line}" ✓
+5. Aligned-From-Code Marker (R04.2.4):
+   <!-- aligned-from-code: {file}:{line} --> format documented ✓
+   Example stub showing both aligned-from and aligned-from-code markers ✓
+6. Deduplication Rule (R04.2.5):
+   Same text → one stub, additional locations in summary ✓
+   Match criteria: identical derived titles after case normalization ✓
+
+Status: PASS

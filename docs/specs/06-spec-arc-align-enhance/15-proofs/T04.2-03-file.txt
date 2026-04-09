@@ -1,0 +1,18 @@
+Type: file
+Check: Cross-references updated in both detection-patterns.md and import-rules.md (R04.2.6)
+Expected: Cross-reference sections in both files mention code comment patterns and aligned-from-code marker
+Timestamp: 2026-04-09T00:00:00Z
+
+--- VERIFICATION ---
+
+detection-patterns.md Cross-References section (line ~641):
+  - Updated to mention "code comment priority overrides and the aligned-from-code marker format" ✓
+  - Updated to mention "Step 2c invokes code comment scanning using CC-1 through CC-4" ✓
+
+import-rules.md Cross-References section (line ~411):
+  - detection-patterns.md reference updated to include "(CC-1 through CC-4)" ✓
+  - SKILL.md reference updated to mention "Step 2c code comment scanning uses the CC-1 through CC-4 priority overrides and aligned-from-code marker format defined here" ✓
+
+Both cross-reference sections updated as required by R04.2.6.
+
+Status: PASS

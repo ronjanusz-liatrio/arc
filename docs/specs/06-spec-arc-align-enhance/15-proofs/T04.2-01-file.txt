@@ -1,0 +1,18 @@
+Type: file
+Check: CC-1 through CC-4 pattern definitions in detection-patterns.md
+Expected: Four pattern entries (CC-1 TODO, CC-2 FIXME, CC-3 HACK, CC-4 XXX) with Purpose, Search term, Example match, Typical target artifact, and Priority mapping
+Timestamp: 2026-04-09T00:00:00Z
+
+--- VERIFICATION ---
+
+$ grep -c "### CC-[1-4]" skills/arc-align/references/detection-patterns.md
+4
+
+CC-1: TODO (line 505) — Purpose, Search term, Examples in Python/TypeScript/Go, Typical target artifact: BACKLOG, Priority: P2-Medium
+CC-2: FIXME (line 535) — Purpose, Search term, Examples in Python/TypeScript/Go, Typical target artifact: BACKLOG, Priority: P1-High
+CC-3: HACK (line 565) — Purpose, Search term, Examples in Python/TypeScript/Go, Typical target artifact: BACKLOG, Priority: P1-High
+CC-4: XXX (line 595) — Purpose, Search term, Examples in Python/TypeScript/Go, Typical target artifact: BACKLOG, Priority: P2-Medium
+
+All four CC patterns present with required fields.
+
+Status: PASS

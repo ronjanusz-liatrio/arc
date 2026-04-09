@@ -492,6 +492,136 @@ We're working toward these capabilities for the next major release:
 
 ---
 
+## Code Comment Patterns
+
+Code comment patterns detect actionable content embedded in source code files as comment markers. These are checked via Grep against all non-excluded source code files during Step 2c (after keyword and structural matching).
+
+**Scanned file extensions:** `.py`, `.ts`, `.tsx`, `.js`, `.jsx`, `.go`, `.rs`, `.java`, `.kt`, `.rb`, `.sh`, `.bash`, `.zsh`, `.swift`, `.c`, `.cpp`, `.h`, `.hpp`, `.cs`
+
+All code comment discoveries classify as **BACKLOG** targets. The exclusion set applies — files inside excluded directories (`node_modules`, `vendor`, `dist`, `build`) are not scanned.
+
+---
+
+### CC-1: TODO
+
+**Purpose:** Detect actionable work items left in source code as reminders for future implementation.
+
+**Search term:** `TODO` (case-insensitive)
+
+**Example match:**
+
+```python
+# TODO: refactor this module to use the new auth client
+def authenticate(user_id):
+    ...
+```
+
+```typescript
+// TODO: add input validation before calling the API
+function submitForm(data: FormData) {
+```
+
+```go
+// TODO: replace polling with webhook subscription when API supports it
+func pollForUpdates() {
+```
+
+**Typical target artifact:** BACKLOG
+
+**Priority mapping:** P2-Medium
+
+---
+
+### CC-2: FIXME
+
+**Purpose:** Detect known bugs or issues explicitly marked for correction.
+
+**Search term:** `FIXME` (case-insensitive)
+
+**Example match:**
+
+```python
+# FIXME: this breaks when timezone is not UTC — see issue #42
+def parse_timestamp(raw: str) -> datetime:
+    ...
+```
+
+```typescript
+// FIXME: race condition when multiple tabs update the same record
+async function saveRecord(id: string, data: Record) {
+```
+
+```go
+// FIXME: error is silently swallowed here, needs proper propagation
+result, _ := db.Query(query)
+```
+
+**Typical target artifact:** BACKLOG
+
+**Priority mapping:** P1-High (known defect requiring attention)
+
+---
+
+### CC-3: HACK
+
+**Purpose:** Detect temporary workarounds that bypass proper solutions and accumulate technical debt.
+
+**Search term:** `HACK` (case-insensitive)
+
+**Example match:**
+
+```python
+# HACK: force-reload config on every call until we have a watcher
+def get_config():
+    return load_from_disk()
+```
+
+```typescript
+// HACK: setTimeout to work around the modal not rendering in time
+setTimeout(() => modal.focus(), 100);
+```
+
+```go
+// HACK: duplicate the struct because the upstream package doesn't export it
+type internalEvent struct {
+```
+
+**Typical target artifact:** BACKLOG
+
+**Priority mapping:** P1-High (technical debt requiring proper solution)
+
+---
+
+### CC-4: XXX
+
+**Purpose:** Detect areas flagged for review or attention without a specific fix instruction.
+
+**Search term:** `XXX` (case-insensitive)
+
+**Example match:**
+
+```python
+# XXX: is this the right place to initialize the connection pool?
+_pool = create_pool(DB_URL)
+```
+
+```typescript
+// XXX: not sure this handles the empty array case correctly
+const first = items[0];
+```
+
+```go
+// XXX: review this locking strategy under high concurrency
+mu.Lock()
+defer mu.Unlock()
+```
+
+**Typical target artifact:** BACKLOG
+
+**Priority mapping:** P2-Medium (needs review)
+
+---
+
 ## Pattern Confidence
 
 Not all matches are equally strong signals. The classification step (Step 2c) uses detection method as an input to confidence:
@@ -508,6 +638,6 @@ Weak signals are still imported per the inclusivity principle — when in doubt,
 
 ## Cross-References
 
-- `skills/arc-align/references/import-rules.md` — How detected content is classified into artifact targets and imported
+- `skills/arc-align/references/import-rules.md` — How detected content is classified into artifact targets and imported, including code comment priority overrides and the `aligned-from-code` marker format
 - `references/idea-lifecycle.md` — The Capture stage that imported stubs enter
-- `skills/arc-align/SKILL.md` — Step 2 references this document for the full pattern set
+- `skills/arc-align/SKILL.md` — Step 2 references this document for the full pattern set; Step 2c invokes code comment scanning using CC-1 through CC-4

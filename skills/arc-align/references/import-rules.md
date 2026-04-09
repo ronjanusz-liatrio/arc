@@ -208,6 +208,111 @@ Same append-within-section rule as VISION imports.
 
 ---
 
+## Code Comment Classification
+
+Code comments discovered via CC-1 through CC-4 patterns are always classified as BACKLOG targets. The rules below override the general stub generation defaults for code-sourced imports.
+
+---
+
+### Target Artifact
+
+All code comment discoveries map to **BACKLOG**. Code comments are actionable items regardless of marker type — they represent work to be tracked, not vision or persona content.
+
+---
+
+### Priority Overrides
+
+| Marker | Priority | Rationale |
+|--------|----------|-----------|
+| CC-1: TODO | P2-Medium | Standard actionable reminder — normal priority |
+| CC-2: FIXME | P1-High | Known defect requiring correction — elevated priority |
+| CC-3: HACK | P1-High | Technical debt with a temporary workaround — elevated priority |
+| CC-4: XXX | P2-Medium | Needs review but no confirmed defect — normal priority |
+
+These overrides replace the default P2-Medium for all FIXME and HACK imports. The user can adjust priorities after import.
+
+---
+
+### Title Derivation
+
+Strip the comment marker, any surrounding comment syntax, and leading/trailing whitespace from the extracted text:
+
+1. Remove the marker (`TODO`, `FIXME`, `HACK`, `XXX`) and any following colon
+2. Strip common comment prefixes: `//`, `#`, `/*`, `*`, `--`, `"""`, `'''`
+3. Use the remaining text as the title, truncated to 80 characters at the last word boundary
+
+**Examples:**
+
+| Raw comment | Derived title |
+|-------------|---------------|
+| `// TODO: refactor this module to use the new auth client` | "Refactor this module to use the new auth client" |
+| `# FIXME: breaks when timezone is not UTC` | "Breaks when timezone is not UTC" |
+| `// HACK: setTimeout to work around modal rendering delay` | "SetTimeout to work around modal rendering delay" |
+| `# XXX: review locking strategy under high concurrency` | "Review locking strategy under high concurrency" |
+
+---
+
+### Summary Format
+
+The one-line summary for code comment stubs uses the following format:
+
+```
+Code comment from {file}:{line}
+```
+
+Example: `Code comment from src/auth/client.py:42`
+
+---
+
+### Aligned-From-Code Marker
+
+Code comment stubs use a distinct traceability marker to distinguish them from markdown-sourced imports:
+
+```
+<!-- aligned-from-code: {file}:{line} -->
+```
+
+- `file`: Relative path from the repository root to the source file (e.g., `src/auth/client.py`)
+- `line`: The exact line number of the comment marker
+
+Example: `<!-- aligned-from-code: src/auth/client.py:42 -->`
+
+This marker is used in addition to the standard `<!-- aligned-from: ... -->` comment on the stub. Both markers are present on code comment stubs:
+
+```markdown
+## Refactor this module to use the new auth client
+
+- **Status:** captured
+- **Priority:** P2-Medium
+- **Captured:** 2026-04-08T14:30:00Z
+<!-- aligned-from: src/auth/client.py:42 -->
+<!-- aligned-from-code: src/auth/client.py:42 -->
+
+Code comment from src/auth/client.py:42
+```
+
+---
+
+### Deduplication Rule
+
+If the same comment text (after marker stripping) appears in multiple source files — for example, copy-pasted boilerplate or a shared pattern — import exactly one stub and note the additional locations in the summary:
+
+**Single-location stub (standard):**
+```
+Code comment from src/handlers/user.py:18
+```
+
+**Multi-location stub (deduplicated):**
+```
+Code comment from src/handlers/user.py:18 (also: src/handlers/admin.py:22, src/handlers/org.py:31)
+```
+
+The `aligned-from-code` marker on deduplicated stubs references the first occurrence. Additional locations are listed in the summary line only. The manifest records each location as a separate row, all pointing to the same imported stub title.
+
+**Deduplication match criteria:** Two comments are considered duplicates when their derived titles (post-stripping) are identical after case normalization. Comments with the same marker but different text are not deduplicated.
+
+---
+
 ## Source Cleanup
 
 After all imports succeed, remove the original content to eliminate drift between Arc-managed and unmanaged content.
@@ -303,10 +408,10 @@ Before importing, read the manifest and build a set of `{source_path}:{line_rang
 
 ## Cross-References
 
-- `skills/arc-align/references/detection-patterns.md` — Keyword and structural patterns used to discover content before classification
+- `skills/arc-align/references/detection-patterns.md` — Keyword, structural, and code comment patterns (CC-1 through CC-4) used to discover content before classification
 - `references/idea-lifecycle.md` — The Capture stage definition and required fields for imported stubs
 - `references/brief-format.md` — The brief format that captured stubs will eventually be shaped into
 - `templates/BACKLOG.tmpl.md` — Template used to bootstrap BACKLOG.md if absent before import
 - `templates/VISION.tmpl.md` — Template used to bootstrap VISION.md if absent before import
 - `templates/CUSTOMER.tmpl.md` — Template used to bootstrap CUSTOMER.md if absent before import
-- `skills/arc-align/SKILL.md` — Steps 2c, 5, 6, and 7 reference this document for classification and import rules
+- `skills/arc-align/SKILL.md` — Steps 2c, 5, 6, and 7 reference this document for classification and import rules; Step 2c code comment scanning uses the CC-1 through CC-4 priority overrides and aligned-from-code marker format defined here
