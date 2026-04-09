@@ -1,0 +1,61 @@
+Type: file
+Command: grep -based content verification of Step 2c section in skills/arc-align/SKILL.md
+Expected: All 9 requirements (R04.1.1 through R04.1.9) satisfied in SKILL.md
+Timestamp: 2026-04-09T12:00:00Z
+
+--- Requirement Verification ---
+
+R04.1.1 (Step 2c position): PASS
+  Step 2c "Code comment scanning (Grep-based)" at line 323
+  Follows 2b "Structural matching" at line 258
+  Precedes 2d "Classify discoveries" at line 391
+
+R04.1.2 (Grep-based CC-1 through CC-4 with case-insensitive): PASS
+  Grep call template includes "-i": true at line 347
+  Four markers documented: CC-1 (TODO), CC-2 (FIXME), CC-3 (HACK), CC-4 (XXX)
+  Marker table at lines 333-338
+
+R04.1.3 (18 source code file extensions): PASS
+  Extensions listed at line 329: .py, .ts, .tsx, .js, .jsx, .go, .rs, .java, .kt, .rb, .sh, .bash, .zsh, .swift, .c, .cpp, .h, .hpp, .cs
+  Glob pattern at line 350: *.{py,ts,tsx,js,jsx,go,rs,java,kt,rb,sh,bash,zsh,swift,c,cpp,h,hpp,cs}
+
+R04.1.4 (Comment prefix stripping): PASS
+  Stripping procedure at lines 356-359:
+    a. Strip marker keyword and following colon
+    b. Strip comment prefixes: //, #, /*, *, --, """, '''
+    c. Trim whitespace
+
+R04.1.5 (Priority assignment): PASS
+  Priority mapping at lines 371-375:
+    FIXME -> P1-High
+    HACK -> P1-High
+    TODO -> P2-Medium
+    XXX -> P2-Medium
+
+R04.1.6 (aligned-from-code marker): PASS
+  Marker format at line 379: <!-- aligned-from-code: {file}:{line} -->
+  References import-rules.md for full format
+
+R04.1.7 (Deduplication logic): PASS
+  Deduplication at lines 381-385:
+    Same text after stripping + case normalization = one stub
+    Additional locations noted in summary
+    Single: "Code comment from src/handlers/user.py:18"
+    Multi: "Code comment from src/handlers/user.py:18 (also: ...)"
+
+R04.1.8 ([code] tag): PASS
+  Tag field at line 367: [code] prefix in discovery list display
+  Detection method at line 365: "code"
+
+R04.1.9 (Renumbering and cross-references): PASS
+  Sub-steps: 2a, 2b, 2c (new), 2d (was 2c), 2e (was 2d), 2f (was 2e)
+  Cross-references updated:
+    - "from Step 2d" (classify) at line 461
+    - "Step 2e" (manifest check) at lines 452, 852, 914
+    - "Steps 2a, 2b, and 2c" (scanning) at line 875
+    - "from 2a, 2b, and 2c" (classify input) at line 393
+    - Classification table includes CC-1 through CC-4 at line 399
+    - Detection method includes "code" at line 459
+    - References section updated at line 1117
+
+Status: PASS

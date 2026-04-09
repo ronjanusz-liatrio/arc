@@ -190,9 +190,9 @@ Use this merged exclusion set for all subsequent scanning in Steps 2-8.
 
 ### Step 2: Discover Product-Direction Content
 
-Scan all non-excluded files using two detection strategies in sequence. Read `skills/arc-align/references/detection-patterns.md` for the full pattern reference.
+Scan all non-excluded files using three detection strategies in sequence. Read `skills/arc-align/references/detection-patterns.md` for the full pattern reference.
 
-**Detection ordering rationale:** Keyword matching runs first because it uses Grep and completes quickly across the entire non-excluded file set. Structural matching runs second on files not already flagged by keyword matching, since it requires line-by-line parsing with Read and is slower. A file matched by keyword scan is not re-scanned for structural patterns.
+**Detection ordering rationale:** Keyword matching runs first because it uses Grep and completes quickly across the entire non-excluded file set. Structural matching runs second on files not already flagged by keyword matching, since it requires line-by-line parsing with Read and is slower. A file matched by keyword scan is not re-scanned for structural patterns. Code comment scanning runs third, targeting source code files (not markdown) for actionable markers (TODO, FIXME, HACK, XXX) that represent work items to import as BACKLOG stubs.
 
 **2a. Keyword matching (Grep-based, fast):**
 
@@ -382,7 +382,7 @@ After keyword and structural matching complete, scan source code files for actio
    - **Single location:** `Code comment from src/handlers/user.py:18`
    - **Multiple locations:** `Code comment from src/handlers/user.py:18 (also: src/handlers/admin.py:22, src/handlers/org.py:31)`
 
-   The `aligned-from-code` marker references the first occurrence. Additional locations are listed in the summary only. The manifest (Step 2f) records each location as a separate row, all pointing to the same imported stub title.
+   The `aligned-from-code` marker references the first occurrence. Additional locations are listed in the summary only. The manifest (Step 7) records each location as a separate row, all pointing to the same imported stub title.
 
 **Code comment scan output:**
 
@@ -396,7 +396,7 @@ For each discovery (from 2a, 2b, and 2c), classify into exactly one of three art
 
 | Target | Content Type | Classification Signals |
 |--------|-------------|----------------------|
-| `BACKLOG` | Actionable items: TODOs, features, bugs, ideas, task lists, roadmap items | KW-1 through KW-12, KW-19 (`## User Stories`), KW-20 (`## Non-Goals`), KW-21 (`## Open Questions`), ST-1 through ST-4 |
+| `BACKLOG` | Actionable items: TODOs, features, bugs, ideas, task lists, roadmap items, code comments | KW-1 through KW-12, KW-19 (`## User Stories`), KW-20 (`## Non-Goals`), KW-21 (`## Open Questions`), ST-1 through ST-4, CC-1 through CC-4 |
 | `VISION` | Mission/vision/north-star/goal content | KW-15 (`mission`), KW-16 (`vision`), KW-17 (`north star`), KW-18 (`## Goals`), KW-22 (`## Introduction`/`## Overview`, conditional) |
 | `CUSTOMER` | Persona/audience/JTBD content | KW-13 (`persona`), KW-14 (`target audience`) |
 
@@ -422,7 +422,7 @@ For each discovery, apply the following decision rules in order:
 
 4. **Inclusivity principle:** When in doubt about whether content is product-direction content, import it as a BACKLOG stub rather than skip it. The user can review and delete false positives from the BACKLOG after import.
 
-**2d. Check manifest for prior imports:**
+**2e. Check manifest for prior imports:**
 
 Read `docs/skill/arc/align-manifest.md` (if present) to enforce idempotent re-runs. Previously imported source locations are skipped automatically.
 
@@ -447,18 +447,18 @@ Read `docs/skill/arc/align-manifest.md` (if present) to enforce idempotent re-ru
 | Manifest file was deleted | All source locations are treated as new — full re-import occurs (with user confirmation via the standard import flow in Step 3). |
 | Manifest file is empty (header only) | No keys to match — all discoveries are treated as new. |
 
-**2e. Build discovery list:**
+**2f. Build discovery list:**
 
-Assemble the final discovery list from all discoveries that passed the manifest check (Step 2d). Each entry contains:
+Assemble the final discovery list from all discoveries that passed the manifest check (Step 2e). Each entry contains:
 
 | Field | Description |
 |-------|-------------|
 | Source file path | Relative path from repo root |
 | Line range | Start line through end line (e.g., `20-35`) |
 | Matched content snippet | First 200 characters of the matched section |
-| Detection method | `keyword` or `structural` |
-| Pattern identifier | The specific keyword (KW-1 through KW-22) or structural pattern (ST-1 through ST-4) that triggered the match |
-| Target artifact | `BACKLOG`, `VISION`, or `CUSTOMER` (from Step 2c) |
+| Detection method | `keyword`, `structural`, or `code` |
+| Pattern identifier | The specific keyword (KW-1 through KW-22), structural pattern (ST-1 through ST-4), or code comment marker (CC-1 through CC-4) that triggered the match |
+| Target artifact | `BACKLOG`, `VISION`, or `CUSTOMER` (from Step 2d) |
 
 Sort the discovery list by source file path, then by line range (ascending). This ordering groups discoveries from the same file together for easier user review in Step 3.
 
@@ -849,7 +849,7 @@ Append all new rows in a single Edit operation to minimize file writes. Rows are
 
 - Never modify or remove existing manifest rows -- only append
 - Each row represents one import event; if the same content is split into multiple discoveries, each gets its own row
-- The manifest is the source of truth for the idempotent re-run check in Step 2d
+- The manifest is the source of truth for the idempotent re-run check in Step 2e
 
 ### Step 8: Generate Report
 
@@ -872,7 +872,7 @@ Write the report header and run metadata. All fields are derived from data colle
 |-------|-------|
 | Timestamp | {ISO 8601 timestamp} |
 | Exclusion patterns | {comma-separated list of all exclusion patterns from Step 1e} |
-| Total files scanned | {count of files examined during Steps 2a and 2b} |
+| Total files scanned | {count of files examined during Steps 2a, 2b, and 2c} |
 | Total discoveries | {count of all discoveries before manifest dedup} |
 | New imports | {count of items imported in this run} |
 | Skipped (manifest) | {count of items skipped due to prior manifest entries} |
@@ -911,7 +911,7 @@ If no items were imported for a given artifact, omit that artifact's subsection 
 
 **8c. Skipped items section:**
 
-List all items that were detected during scanning but skipped because their source location already appeared in `docs/skill/arc/align-manifest.md` from a prior run. These items were removed from the import list during Step 2d.
+List all items that were detected during scanning but skipped because their source location already appeared in `docs/skill/arc/align-manifest.md` from a prior run. These items were removed from the import list during Step 2e.
 
 ```markdown
 ---
@@ -1114,7 +1114,7 @@ AskUserQuestion({
 
 ## References
 
-- `skills/arc-align/references/detection-patterns.md` -- All keyword and structural detection patterns with examples
+- `skills/arc-align/references/detection-patterns.md` -- All keyword, structural, and code comment detection patterns with examples
 - `skills/arc-align/references/import-rules.md` -- Artifact classification rules, stub generation logic, and cleanup behavior
 - `skills/arc-align/references/align-report-template.md` -- Full template and field descriptions for the alignment report
 - `references/idea-lifecycle.md` -- Capture stage definition, entry/exit criteria

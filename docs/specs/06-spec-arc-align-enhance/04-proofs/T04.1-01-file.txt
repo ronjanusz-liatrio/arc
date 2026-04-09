@@ -1,0 +1,20 @@
+Type: file
+Command: grep -n "2[a-f]\." skills/arc-align/SKILL.md (sub-step labels)
+Expected: Step 2c inserted between 2b and 2d, subsequent steps renumbered through 2f
+Timestamp: 2026-04-09T12:00:00Z
+
+--- Output ---
+
+197:**2a. Keyword matching (Grep-based, fast):**
+258:**2b. Structural matching (Read-based, line-by-line):**
+323:**2c. Code comment scanning (Grep-based):**
+391:**2d. Classify discoveries:**
+425:**2e. Check manifest for prior imports:**
+450:**2f. Build discovery list:**
+
+--- Verification ---
+
+R04.1.1: PASS - Step 2c added between structural matching (2b) and classify (now 2d)
+R04.1.9: PASS - Sub-steps renumbered: 2c->2d (Classify), 2d->2e (Manifest), 2e->2f (Build)
+
+Status: PASS
