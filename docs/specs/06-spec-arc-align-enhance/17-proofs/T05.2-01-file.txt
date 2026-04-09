@@ -1,0 +1,33 @@
+Type: file
+Description: Verify 2.5f Discovery Distribution Diagram section added to SKILL.md
+Expected: Section "2.5f. Discovery Distribution Diagram:" exists with Mermaid pie chart template using Liatrio brand colors
+Timestamp: 2026-04-09T00:00:00Z
+
+--- OUTPUT ---
+
+GREP: pattern="2\.5f\. Discovery Distribution Diagram" in skills/arc-align/SKILL.md
+
+Match found at line 695:
+**2.5f. Discovery Distribution Diagram:**
+
+GREP: pattern="pie1.*#11B5A4" in skills/arc-align/SKILL.md
+
+Match found at line 706:
+%%{init: {'theme': 'base', 'themeVariables': {'pie1': '#11B5A4', 'pie2': '#E8662F', 'pie3': '#1B2A3D', 'pie4': '#7EC8C8'}}}%%
+
+GREP: pattern="pie2.*#E8662F" in skills/arc-align/SKILL.md
+
+Match found at line 706 (same line as above)
+
+GREP: pattern="pie3.*#1B2A3D" in skills/arc-align/SKILL.md
+
+Match found at line 706 (same line as above)
+
+GREP: pattern="pie title Discoveries by Source Type" in skills/arc-align/SKILL.md
+
+Match found at line 707:
+pie title Discoveries by Source Type
+
+--- RESULT: PASS ---
+R05.2.1 satisfied: Mermaid diagram uses Liatrio brand colors (#11B5A4, #E8662F, #1B2A3D, #7EC8C8)
+R05.2.2 satisfied: Diagram shows distribution by source type (Markdown keywords, Markdown structural, Spec extraction, Code comments)

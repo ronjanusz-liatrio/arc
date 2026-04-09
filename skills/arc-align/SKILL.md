@@ -692,7 +692,30 @@ Write the Research Integration section as:
 
 When `research_context` is `null`, omit the Research Integration section entirely — do not write an empty section or placeholder.
 
-**2.5f. Write the analysis artifact:**
+**2.5f. Discovery Distribution Diagram:**
+
+Generate a Mermaid pie chart showing the distribution of discoveries by source type. Use Liatrio brand colors: `#11B5A4` (teal) for Markdown keywords, `#E8662F` (orange) for Markdown structural, `#1B2A3D` (dark blue) for Spec extraction, and `#7EC8C8` (light teal) for Code comments.
+
+Build the diagram from the source-type counts computed in step 2.5a. Include the following as a section in the analysis artifact:
+
+**Section heading:** `## Discovery Distribution`
+
+**Diagram template:**
+
+```
+%%{init: {'theme': 'base', 'themeVariables': {'pie1': '#11B5A4', 'pie2': '#E8662F', 'pie3': '#1B2A3D', 'pie4': '#7EC8C8'}}}%%
+pie title Discoveries by Source Type
+    "Markdown keywords" : {markdown_keywords_count}
+    "Markdown structural" : {markdown_structural_count}
+    "Spec extraction" : {spec_extraction_count}
+    "Code comments" : {code_comments_count}
+```
+
+Wrap the diagram template in a `mermaid` code fence when writing to the artifact file.
+
+Omit any slice with a count of zero — the Mermaid `pie` chart requires non-zero values to render correctly. If all four counts are zero, omit the diagram section entirely.
+
+**2.5g. Write the analysis artifact:**
 
 Assemble all sections into `docs/skill/arc/align-analysis.md` using Write. The artifact structure is:
 
@@ -711,6 +734,10 @@ Assemble all sections into `docs/skill/arc/align-analysis.md` using Write. The a
 
 ---
 
+{Discovery Distribution from 2.5f}
+
+---
+
 {Theme Analysis from 2.5c}
 
 ---
@@ -723,6 +750,30 @@ Assemble all sections into `docs/skill/arc/align-analysis.md` using Write. The a
 ```
 
 The artifact is overwritten on every run. It reflects the current discovery state, not a cumulative history.
+
+**2.5h. Inline Chat Summary:**
+
+After writing the analysis artifact, present a condensed summary directly in the chat. This summary is displayed in the conversation — it is not written to any file. Keep the summary under 20 lines.
+
+The summary format is:
+
+```
+## Alignment Analysis — Quick Summary
+
+**Total discoveries:** {total_count}  ({backlog_count} BACKLOG · {vision_count} VISION · {customer_count} CUSTOMER)
+
+**Gaps detected:**
+{For each gap from 2.5b: one bullet per artifact with Gap or Absent status. If none: "No gaps detected."}
+
+**Top recommendations:**
+1. {First recommendation from 2.5d}
+2. {Second recommendation from 2.5d}
+3. {Third recommendation from 2.5d}
+
+Full analysis: `docs/skill/arc/align-analysis.md`
+```
+
+If fewer than three recommendations were generated in 2.5d, include only the recommendations that exist. Do not pad with placeholders.
 
 ### Step 3: Confirm Import
 

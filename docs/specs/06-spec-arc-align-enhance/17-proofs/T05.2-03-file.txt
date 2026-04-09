@@ -1,0 +1,27 @@
+Type: file
+Description: Verify inline summary appears before Step 3 (import prompt) in SKILL.md
+Expected: Section 2.5h precedes "### Step 3: Confirm Import"
+Timestamp: 2026-04-09T00:00:00Z
+
+--- OUTPUT ---
+
+GREP: line numbers of key sections
+
+Line 695: **2.5f. Discovery Distribution Diagram:**
+Line 718: **2.5g. Write the analysis artifact:**
+Line 754: **2.5h. Inline Chat Summary:**
+Line 778: ### Step 3: Confirm Import
+
+ORDER CHECK:
+  2.5f (695) < 2.5g (718) < 2.5h (754) < Step 3 (778)
+
+All sections in correct order: YES
+
+GREP: pattern="If fewer than three recommendations" in skills/arc-align/SKILL.md
+
+Match found at line 776:
+If fewer than three recommendations were generated in 2.5d, include only the recommendations that exist. Do not pad with placeholders.
+
+--- RESULT: PASS ---
+R05.2.3 satisfied: 2.5h Inline Chat Summary (line 754) precedes Step 3: Confirm Import (line 778)
+Sequence ordering is correct: 2.5f → 2.5g → 2.5h → Step 3
