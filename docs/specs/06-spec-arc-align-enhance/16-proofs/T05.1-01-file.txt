@@ -1,0 +1,23 @@
+Type: file
+Description: Verify Step 2.5 exists between Step 2 and Step 3 in SKILL.md (R05.1.1)
+Command: git show HEAD:skills/arc-align/SKILL.md | grep -n "^### Step"
+Expected: Step 2.5 heading appears between Step 2 (line 191) and Step 3 (line 727)
+Timestamp: 2026-04-09T18:15:00Z
+
+Output:
+32:### Step 0: Research Phase (Optional)
+106:### Step 1: Configure Exclusions
+191:### Step 2: Discover Product-Direction Content
+498:### Step 2.5: Analysis Phase
+727:### Step 3: Confirm Import
+772:### Step 4: Bootstrap Artifacts
+863:### Step 5: Import Discoveries
+1012:### Step 6: Clean Up Sources
+1065:### Step 7: Update Manifest
+1111:### Step 8: Generate Report
+1312:### Step 9: Present Summary
+1346:### Step 10: Offer Next Steps
+
+Analysis: Step 2.5 appears at line 498, correctly positioned between Step 2 (line 191) and Step 3 (line 727).
+
+Status: PASS

@@ -1,0 +1,21 @@
+Type: file
+Description: Verify Recommendations section with ordered next actions (R05.1.5)
+Command: git show HEAD:skills/arc-align/SKILL.md | sed -n '/2.5d. Recommendations/,/2.5e. Research Integration/p'
+Expected: Ordered recommendation generation rules table and numbered list output template
+Timestamp: 2026-04-09T18:15:00Z
+
+Section 2.5d content (line 626):
+Recommendation generation rules (7 conditions, applied in order):
+1. VISION gap -> "Create a VISION artifact -- run /arc-shape..."
+2. CUSTOMER gap -> "Create a CUSTOMER artifact -- run /arc-shape..."
+3. ROADMAP absent -> "Consider creating a ROADMAP -- run /arc-wave..."
+4. Theme with 3+ discoveries -> "Shape the {theme label} theme as a single initiative..."
+5. BACKLOG concentration >60% in one directory -> "Prioritize {dir}/..."
+6. Total discoveries > 20 -> "Run /arc-wave after import..."
+7. Zero discoveries -> "No product-direction content found -- consider running /arc-capture..."
+
+Output format: Numbered markdown list (1. 2. 3. ...)
+
+Analysis: Recommendations section provides 7 condition-based rules that produce concrete, ordered next actions. Each rule maps a specific analysis finding to a specific Arc command.
+
+Status: PASS

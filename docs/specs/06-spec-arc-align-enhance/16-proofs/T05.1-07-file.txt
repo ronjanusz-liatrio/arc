@@ -1,0 +1,16 @@
+Type: file
+Description: Verify output path is docs/skill/arc/align-analysis.md (R05.1.7)
+Command: git show HEAD:skills/arc-align/SKILL.md | grep "docs/skill/arc/align-analysis.md"
+Expected: Multiple references to docs/skill/arc/align-analysis.md as the output path
+Timestamp: 2026-04-09T18:15:00Z
+
+Output:
+Line 500: ...structured analysis artifact at `docs/skill/arc/align-analysis.md`. This artifact is overwritten...
+Line 508: **Generate `docs/skill/arc/align-analysis.md` with the following sections:**
+Line 697: Assemble all sections into `docs/skill/arc/align-analysis.md` using Write.
+
+Additional: Step 2.5 begins with mkdir -p docs/skill/arc to ensure directory exists.
+
+Analysis: Output path docs/skill/arc/align-analysis.md is consistently referenced throughout Step 2.5 (intro, generation instructions, and assembly instructions).
+
+Status: PASS

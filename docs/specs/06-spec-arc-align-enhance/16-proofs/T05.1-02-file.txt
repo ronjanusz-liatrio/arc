@@ -1,0 +1,31 @@
+Type: file
+Description: Verify Discovery Summary section with counts by source type and target artifact (R05.1.2)
+Command: git show HEAD:skills/arc-align/SKILL.md | grep -A5 "2.5a. Discovery Summary"
+Expected: Section 2.5a defines counts by source type (markdown keywords, markdown structural, spec extraction, code comments) and by target artifact (BACKLOG, VISION, CUSTOMER)
+Timestamp: 2026-04-09T18:15:00Z
+
+Output (line 510):
+**2.5a. Discovery Summary:**
+
+Count all discoveries from Step 2 (before manifest dedup filtering) and break them down along two dimensions:
+
+**By source type:**
+
+| Source Type | Description | Counted From |
+|-------------|-------------|--------------|
+| Markdown keywords | Keyword pattern matches (KW-1 through KW-22) | Step 2a discoveries with `detection_method: "keyword"` |
+| Markdown structural | Structural pattern matches (ST-1 through ST-4) | Step 2b discoveries with `detection_method: "structural"` |
+| Spec extraction | Discoveries from `docs/specs/` files | Step 2a/2b discoveries where source file path starts with `docs/specs/` |
+| Code comments | Comment marker matches (CC-1 through CC-4) | Step 2c discoveries with `detection_method: "code"` |
+
+**By target artifact:**
+
+| Target | Count |
+|--------|-------|
+| BACKLOG | {count of discoveries classified as BACKLOG} |
+| VISION | {count of discoveries classified as VISION} |
+| CUSTOMER | {count of discoveries classified as CUSTOMER} |
+
+Analysis: Discovery Summary section includes both source type breakdown (4 types) and target artifact breakdown (3 targets). Template markdown for the output artifact is provided.
+
+Status: PASS

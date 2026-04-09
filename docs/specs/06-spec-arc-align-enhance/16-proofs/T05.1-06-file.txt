@@ -1,0 +1,20 @@
+Type: file
+Description: Verify Research Integration consumes research_context from Step 0 (R05.1.6)
+Command: git show HEAD:skills/arc-align/SKILL.md | sed -n '/2.5e. Research Integration/,/2.5f. Write the analysis/p'
+Expected: Conditional section that cross-references research_context fields with discovery results
+Timestamp: 2026-04-09T18:15:00Z
+
+Section 2.5e content (line 653):
+- Conditional: only generated when research_context is not null
+- Consumes research_context from Step 0 (set during "Run deep scan" or "Use existing report")
+- Cross-references 4 dimensions:
+  1. Architecture coverage: research_context.architecture_patterns vs discoveries
+  2. Dependency alignment: research_context.key_dependencies vs discoveries
+  3. Signal validation: research_context.product_direction_signals vs discovery list
+  4. Project type context: research_context.project_type for contextualizing recommendations
+- Output template includes tables for Architecture Coverage, Dependency Alignment, Signal Validation
+- When research_context is null: section is omitted entirely (no placeholder)
+
+Analysis: Research Integration section correctly references all four research_context fields defined in Step 0 (project_type, architecture_patterns, key_dependencies, product_direction_signals).
+
+Status: PASS

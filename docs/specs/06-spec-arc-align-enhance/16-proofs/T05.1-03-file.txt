@@ -1,0 +1,30 @@
+Type: file
+Description: Verify Gap Analysis section covers VISION, CUSTOMER, ROADMAP, BACKLOG (R05.1.3)
+Command: git show HEAD:skills/arc-align/SKILL.md | sed -n '/2.5b. Gap Analysis/,/2.5c. Theme Analysis/p'
+Expected: Gap Analysis table with assessment criteria and gap signals for all four artifact types
+Timestamp: 2026-04-09T18:15:00Z
+
+Output (line 556):
+**2.5b. Gap Analysis:**
+
+Assess presence or absence of content across Arc's four artifact types.
+
+| Artifact | Assessment Criteria | Gap Signal |
+|----------|-------------------|------------|
+| VISION | Any discoveries classified as VISION (KW-15, KW-16, KW-17, KW-18, KW-22 conditional) | If zero VISION discoveries: flag as gap |
+| CUSTOMER | Any discoveries classified as CUSTOMER (KW-13, KW-14) | If zero CUSTOMER discoveries: flag as gap |
+| ROADMAP | Any discoveries matching phased planning content (KW-1, KW-9, KW-10) | If zero: flag as absent with note about /arc-wave |
+| BACKLOG | All discoveries classified as BACKLOG | Report count and distribution with concentration analysis (>60% threshold) |
+
+Gap Analysis output template:
+
+| Artifact | Status | Detail |
+|----------|--------|--------|
+| VISION | {Present / Gap} | {detail text} |
+| CUSTOMER | {Present / Gap} | {detail text} |
+| ROADMAP | {Present / Absent} | {detail text} |
+| BACKLOG | {N items} | {distribution detail} |
+
+Analysis: All four artifact types (VISION, CUSTOMER, ROADMAP, BACKLOG) have defined assessment criteria and gap signals. ROADMAP correctly notes arc-align does not populate it directly.
+
+Status: PASS

@@ -1,0 +1,19 @@
+Type: file
+Description: Verify Theme Analysis groups related discoveries (R05.1.4)
+Command: git show HEAD:skills/arc-align/SKILL.md | grep -c "Theme Analysis"
+Expected: Theme Analysis section with grouping procedure, detection heuristics, and output template
+Timestamp: 2026-04-09T18:15:00Z
+
+Section 2.5c content (line 580):
+- Grouping procedure: 3-step process (collect snippets, identify clusters, assign labels)
+- Theme detection heuristics table with 3 signals:
+  - Same directory (High weight)
+  - Shared keywords in snippets (Medium weight)
+  - Same detection pattern (Low weight)
+- Output template includes: Theme Label, Discoveries count, Sources, Wave potential assessment
+- Per-theme discovery table with Source and Snippet columns
+- Fallback for no clear themes: "fewer than 2 discoveries or all discoveries are unrelated"
+
+Analysis: Theme Analysis section provides complete grouping methodology with heuristics and wave potential assessment.
+
+Status: PASS
