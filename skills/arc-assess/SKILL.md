@@ -1,11 +1,11 @@
 ---
-name: arc-align
+name: arc-assess
 description: "Codebase discovery and migration — consolidate scattered product-direction content into Arc-managed artifacts"
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, Bash, AskUserQuestion, Agent
 ---
 
-# /arc-align — Codebase Discovery and Migration
+# /arc-assess — Codebase Discovery and Migration
 
 ## Context Marker
 
@@ -13,7 +13,7 @@ Always begin your response with: **ARC-ALIGN**
 
 ## Overview
 
-You scan a project for product-direction content scattered outside Arc's managed artifacts -- roadmap entries, backlog items, TODO lists, feature plans, vision statements, and persona descriptions -- then automatically import them into `docs/BACKLOG.md`, `docs/VISION.md`, and `docs/CUSTOMER.md`. The goal is to consolidate all product-direction content under Arc's governance so that `/arc-shape`, `/arc-wave`, and `/arc-review` operate on a complete picture.
+You scan a project for product-direction content scattered outside Arc's managed artifacts -- roadmap entries, backlog items, TODO lists, feature plans, vision statements, and persona descriptions -- then automatically import them into `docs/BACKLOG.md`, `docs/VISION.md`, and `docs/CUSTOMER.md`. The goal is to consolidate all product-direction content under Arc's governance so that `/arc-shape`, `/arc-wave`, and `/arc-audit` operate on a complete picture.
 
 ## Critical Constraints
 
@@ -190,7 +190,7 @@ Use this merged exclusion set for all subsequent scanning in Steps 2-8.
 
 ### Step 2: Discover Product-Direction Content
 
-Scan all non-excluded files using three detection strategies in sequence. Read `skills/arc-align/references/detection-patterns.md` for the full pattern reference.
+Scan all non-excluded files using three detection strategies in sequence. Read `skills/arc-assess/references/detection-patterns.md` for the full pattern reference.
 
 **Detection ordering rationale:** Keyword matching runs first because it uses Grep and completes quickly across the entire non-excluded file set. Structural matching runs second on files not already flagged by keyword matching, since it requires line-by-line parsing with Read and is slower. A file matched by keyword scan is not re-scanned for structural patterns. Code comment scanning runs third, targeting source code files (not markdown) for actionable markers (TODO, FIXME, HACK, XXX) that represent work items to import as BACKLOG stubs.
 
@@ -322,7 +322,7 @@ Collect all structural discoveries into the same list as keyword discoveries. Ea
 
 **2c. Code comment scanning (Grep-based):**
 
-After keyword and structural matching complete, scan source code files for actionable comment markers. Read `skills/arc-align/references/detection-patterns.md` for the CC-1 through CC-4 pattern definitions.
+After keyword and structural matching complete, scan source code files for actionable comment markers. Read `skills/arc-assess/references/detection-patterns.md` for the CC-1 through CC-4 pattern definitions.
 
 **Scanned file extensions (18 total):**
 
@@ -376,7 +376,7 @@ After keyword and structural matching complete, scan source code files for actio
 
    These priority overrides replace the default P2-Medium used for keyword and structural discoveries.
 
-7. Add the `<!-- aligned-from-code: {file}:{line} -->` traceability marker to each discovery entry. This marker is used in addition to the standard `<!-- aligned-from: ... -->` comment when the stub is generated in Step 5. See `skills/arc-align/references/import-rules.md` for the full marker format.
+7. Add the `<!-- aligned-from-code: {file}:{line} -->` traceability marker to each discovery entry. This marker is used in addition to the standard `<!-- aligned-from: ... -->` comment when the stub is generated in Step 5. See `skills/arc-assess/references/import-rules.md` for the full marker format.
 
 8. **Deduplication:** If the same comment text (after marker stripping and case normalization) appears in multiple source files, import exactly one stub. Note additional locations in the summary line:
    - **Single location:** `Code comment from src/handlers/user.py:18`
@@ -390,7 +390,7 @@ Collect all code comment discoveries into the same discovery list as keyword and
 
 **2d. Classify discoveries:**
 
-For each discovery (from 2a, 2b, and 2c), classify into exactly one of three artifact targets. Read `skills/arc-align/references/import-rules.md` for the full classification rules.
+For each discovery (from 2a, 2b, and 2c), classify into exactly one of three artifact targets. Read `skills/arc-assess/references/import-rules.md` for the full classification rules.
 
 **Classification table:**
 
@@ -406,7 +406,7 @@ For each discovery, apply the following decision rules in order:
 
 1. **Pattern-based assignment:** If the discovery was triggered by a single keyword or structural pattern, assign the target directly from the classification table above.
 
-2. **Spec-specific classification (KW-18 through KW-22):** When a discovery originates from a spec directory (path matches `docs/specs/*/`), apply the spec-specific rules from `skills/arc-align/references/import-rules.md` (Spec-Specific Classification section) instead of general classification rules:
+2. **Spec-specific classification (KW-18 through KW-22):** When a discovery originates from a spec directory (path matches `docs/specs/*/`), apply the spec-specific rules from `skills/arc-assess/references/import-rules.md` (Spec-Specific Classification section) instead of general classification rules:
 
    | Spec Section | Target | Special Handling |
    |-------------|--------|-----------------|
@@ -561,7 +561,7 @@ Assess presence or absence of content across Arc's four artifact types. For each
 |----------|-------------------|------------|
 | VISION | Any discoveries classified as VISION (KW-15, KW-16, KW-17, KW-18, KW-22 conditional) | If zero VISION discoveries: flag as gap — "No mission, vision, or north-star content found in the repository." |
 | CUSTOMER | Any discoveries classified as CUSTOMER (KW-13, KW-14) | If zero CUSTOMER discoveries: flag as gap — "No persona or audience definitions found in the repository." |
-| ROADMAP | Any discoveries matching phased planning content (KW-1 `roadmap`, KW-9 `milestone`, KW-10 `sprint`) | If zero phased planning discoveries: flag as absent — "No phased planning content found. Note: arc-align does not populate ROADMAP directly; use /arc-wave to create wave plans." |
+| ROADMAP | Any discoveries matching phased planning content (KW-1 `roadmap`, KW-9 `milestone`, KW-10 `sprint`) | If zero phased planning discoveries: flag as absent — "No phased planning content found. Note: arc-assess does not populate ROADMAP directly; use /arc-wave to create wave plans." |
 | BACKLOG | All discoveries classified as BACKLOG | Report count and distribution. If discoveries are concentrated in one directory (>60% from a single directory), note the concentration: "BACKLOG discoveries are concentrated in {dir}/ ({count}/{total})." If scattered across many directories, note: "BACKLOG discoveries are distributed across {N} directories." |
 
 Write the Gap Analysis section as:
@@ -913,7 +913,7 @@ Then check for legacy artifacts at the old paths and migrate them to the new pat
 
 ### Step 5: Import Discoveries
 
-Import confirmed items into the appropriate Arc artifacts. Read `skills/arc-align/references/import-rules.md` for the full classification rules, stub generation logic, and field derivation details.
+Import confirmed items into the appropriate Arc artifacts. Read `skills/arc-assess/references/import-rules.md` for the full classification rules, stub generation logic, and field derivation details.
 
 **5a. BACKLOG imports:**
 
@@ -984,7 +984,7 @@ Field values:
 - **Priority:** `P2-Medium` for standard imports; `P3-Low` for non-goals (KW-20); `P2-Medium` for open questions (KW-21). User adjusts after import.
 - **Captured:** Current UTC time in ISO 8601 format (`YYYY-MM-DDTHH:MM:SSZ`)
 - **aligned-from:** `{source_path}:{line_range}` where source_path is relative to repo root and line_range is the start-end lines (e.g., `docs/specs/03-spec-arc-align/03-spec-arc-align.md:45-50`)
-- **aligned-from-spec:** Present only when the source path is inside a `docs/specs/` directory. Derived by extracting the immediate parent directory name of the source file (e.g., source `docs/specs/03-spec-arc-align/03-spec-arc-align.md` → `spec_name` = `03-spec-arc-align`). See `skills/arc-align/references/import-rules.md` (Aligned-From-Spec Marker section) for full derivation rules.
+- **aligned-from-spec:** Present only when the source path is inside a `docs/specs/` directory. Derived by extracting the immediate parent directory name of the source file (e.g., source `docs/specs/03-spec-arc-align/03-spec-arc-align.md` → `spec_name` = `03-spec-arc-align`). See `skills/arc-assess/references/import-rules.md` (Aligned-From-Spec Marker section) for full derivation rules.
 
 **5a-v. Update the BACKLOG summary table:**
 
@@ -1161,7 +1161,7 @@ Append all new rows in a single Edit operation to minimize file writes. Rows are
 
 ### Step 8: Generate Report
 
-Create `docs/skill/arc/align-report.md` after every run. Read `skills/arc-align/references/align-report-template.md` for the full template. The report captures everything that happened during the run so the user can audit the results without re-running.
+Create `docs/skill/arc/align-report.md` after every run. Read `skills/arc-assess/references/align-report-template.md` for the full template. The report captures everything that happened during the run so the user can audit the results without re-running.
 
 **8a. Run metadata section:**
 
@@ -1368,13 +1368,13 @@ End the report with pointers to related files:
 - `docs/BACKLOG.md` — Imported captured stubs (BACKLOG targets)
 - `docs/VISION.md` — Imported vision/mission content (VISION targets)
 - `docs/CUSTOMER.md` — Imported persona/audience content (CUSTOMER targets)
-- `skills/arc-align/references/detection-patterns.md` — Detection pattern definitions
-- `skills/arc-align/references/import-rules.md` — Classification and import rules
+- `skills/arc-assess/references/detection-patterns.md` — Detection pattern definitions
+- `skills/arc-assess/references/import-rules.md` — Classification and import rules
 ```
 
 ### Step 9: Present Summary
 
-After the report is written, present the run summary inline to the user as a markdown table. This follows the same pattern as `/arc-review` Step 5/6 -- show findings inline, then offer next steps via AskUserQuestion.
+After the report is written, present the run summary inline to the user as a markdown table. This follows the same pattern as `/arc-audit` Step 5/6 -- show findings inline, then offer next steps via AskUserQuestion.
 
 **9a. Per-artifact import counts:**
 
@@ -1408,7 +1408,7 @@ Omit sentences for categories with zero counts.
 
 ### Step 10: Offer Next Steps
 
-Immediately after the inline summary, offer the user a choice of next actions via AskUserQuestion. This mirrors the `/arc-review` Step 6 pattern of presenting findings inline followed by an interactive prompt.
+Immediately after the inline summary, offer the user a choice of next actions via AskUserQuestion. This mirrors the `/arc-audit` Step 6 pattern of presenting findings inline followed by an interactive prompt.
 
 ```
 AskUserQuestion({
@@ -1417,8 +1417,8 @@ AskUserQuestion({
     header: "Next Steps",
     options: [
       { label: "Shape imported ideas", description: "Run /arc-shape on newly captured stubs to refine them into shaped briefs" },
-      { label: "Review pipeline health", description: "Run /arc-review to audit the consolidated backlog and check cross-reference integrity" },
-      { label: "Run again", description: "Re-run /arc-align to check for additional content after manual changes" },
+      { label: "Review pipeline health", description: "Run /arc-audit to audit the consolidated backlog and check cross-reference integrity" },
+      { label: "Run again", description: "Re-run /arc-assess to check for additional content after manual changes" },
       { label: "Done", description: "Finish the alignment session" }
     ],
     multiSelect: false
@@ -1428,15 +1428,15 @@ AskUserQuestion({
 
 **Handle selection:**
 - **Shape imported ideas:** Inform the user to run `/arc-shape` to refine the newly captured stubs into shaped briefs
-- **Review pipeline health:** Inform the user to run `/arc-review` to audit the consolidated backlog
+- **Review pipeline health:** Inform the user to run `/arc-audit` to audit the consolidated backlog
 - **Run again:** Loop back to Step 1 (full re-scan with manifest deduplication)
 - **Done:** Summarize total items imported across all artifacts, files cleaned, and exit
 
 ## References
 
-- `skills/arc-align/references/detection-patterns.md` -- All keyword, structural, and code comment detection patterns with examples
-- `skills/arc-align/references/import-rules.md` -- Artifact classification rules, stub generation logic, and cleanup behavior
-- `skills/arc-align/references/align-report-template.md` -- Full template and field descriptions for the alignment report
+- `skills/arc-assess/references/detection-patterns.md` -- All keyword, structural, and code comment detection patterns with examples
+- `skills/arc-assess/references/import-rules.md` -- Artifact classification rules, stub generation logic, and cleanup behavior
+- `skills/arc-assess/references/align-report-template.md` -- Full template and field descriptions for the alignment report
 - `references/idea-lifecycle.md` -- Capture stage definition, entry/exit criteria
 - `references/brief-format.md` -- Brief format for shaped ideas
 - `templates/BACKLOG.tmpl.md` -- Template for creating BACKLOG.md if absent

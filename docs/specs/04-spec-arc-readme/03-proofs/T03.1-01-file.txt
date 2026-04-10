@@ -5,7 +5,7 @@ Timestamp: 2026-04-08T12:00:00Z
 
 === Verification ===
 
-File: skills/arc-readme/SKILL.md
+File: skills/arc-sync/SKILL.md
 
 Step 2 routing check:
 - Line 63: "README.md exists with <!--# BEGIN ARC: markers | **Update** -- proceed to Step 7"

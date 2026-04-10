@@ -1,6 +1,6 @@
 Type: file
 Command: Verify spec Unit 3 functional requirements coverage
-Expected: All Unit 3 requirements from 04-spec-arc-readme.md are implemented
+Expected: All Unit 3 requirements from 04-spec-arc-sync.md are implemented
 Timestamp: 2026-04-08T12:00:00Z
 
 === Spec Unit 3 Functional Requirements ===

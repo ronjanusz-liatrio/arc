@@ -1,6 +1,6 @@
 Type: file
 Description: Verify Step 2.5 exists between Step 2 and Step 3 in SKILL.md (R05.1.1)
-Command: git show HEAD:skills/arc-align/SKILL.md | grep -n "^### Step"
+Command: git show HEAD:skills/arc-assess/SKILL.md | grep -n "^### Step"
 Expected: Step 2.5 heading appears between Step 2 (line 191) and Step 3 (line 727)
 Timestamp: 2026-04-09T18:15:00Z
 

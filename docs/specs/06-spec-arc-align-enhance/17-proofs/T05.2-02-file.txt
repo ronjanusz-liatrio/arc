@@ -5,27 +5,27 @@ Timestamp: 2026-04-09T00:00:00Z
 
 --- OUTPUT ---
 
-GREP: pattern="2\.5h\. Inline Chat Summary" in skills/arc-align/SKILL.md
+GREP: pattern="2\.5h\. Inline Chat Summary" in skills/arc-assess/SKILL.md
 
 Match found at line 754:
 **2.5h. Inline Chat Summary:**
 
-GREP: pattern="Top recommendations" in skills/arc-align/SKILL.md
+GREP: pattern="Top recommendations" in skills/arc-assess/SKILL.md
 
 Match found at line 768:
 **Top recommendations:**
 
-GREP: pattern="Gaps detected" in skills/arc-align/SKILL.md
+GREP: pattern="Gaps detected" in skills/arc-assess/SKILL.md
 
 Match found at line 764:
 **Gaps detected:**
 
-GREP: pattern="not written to any file\|is not written to any file" in skills/arc-align/SKILL.md
+GREP: pattern="not written to any file\|is not written to any file" in skills/arc-assess/SKILL.md
 
 Match found at line 755-756:
 After writing the analysis artifact, present a condensed summary directly in the chat. This summary is displayed in the conversation — it is not written to any file. Keep the summary under 20 lines.
 
-GREP: pattern="Full analysis.*align-analysis\.md" in skills/arc-align/SKILL.md
+GREP: pattern="Full analysis.*align-analysis\.md" in skills/arc-assess/SKILL.md
 
 Match found at line 773:
 Full analysis: `docs/skill/arc/align-analysis.md`

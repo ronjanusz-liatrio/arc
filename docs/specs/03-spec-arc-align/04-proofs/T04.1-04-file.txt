@@ -1,5 +1,5 @@
 Type: file
-Command: grep '^### Step' skills/arc-align/SKILL.md
+Command: grep '^### Step' skills/arc-assess/SKILL.md
 Expected: Process skeleton covers all 4 phases: exclusion setup, discovery scan, import, and report
 Timestamp: 2026-04-08T00:00:00Z
 

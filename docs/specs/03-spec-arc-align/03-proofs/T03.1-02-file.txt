@@ -1,15 +1,15 @@
 Type: file
-File: skills/arc-align/references/align-report-template.md
+File: skills/arc-assess/references/align-report-template.md
 Check: Reference template file exists with full report structure and field descriptions
 Timestamp: 2026-04-08T20:00:00Z
 
-Expected: A reference template file at skills/arc-align/references/align-report-template.md
-  that mirrors the arc-review review-report-template.md pattern, containing:
+Expected: A reference template file at skills/arc-assess/references/align-report-template.md
+  that mirrors the arc-audit review-report-template.md pattern, containing:
   - Full markdown template with all sections
   - Field descriptions for each section
   - Cross-references to related files
 
-Actual: File created at skills/arc-align/references/align-report-template.md (228 lines)
+Actual: File created at skills/arc-assess/references/align-report-template.md (228 lines)
   Structure:
   - Template section: Complete markdown report template with all 5 content sections
     plus Discovery Flow diagram and Cross-References footer

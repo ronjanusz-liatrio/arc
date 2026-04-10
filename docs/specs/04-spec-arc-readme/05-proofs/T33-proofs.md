@@ -6,7 +6,7 @@
 
 ## Changes Made
 
-File modified: `skills/arc-readme/SKILL.md`
+File modified: `skills/arc-sync/SKILL.md`
 
 ### Fallback text corrections (2 locations x 2 occurrences = 4 edits)
 

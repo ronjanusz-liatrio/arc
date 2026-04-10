@@ -1,15 +1,15 @@
 Type: file
 Description: Verify class directives added to readme-mapping.md lifecycle diagram
-Command: grep -n "class " skills/arc-readme/references/readme-mapping.md
+Command: grep -n "class " skills/arc-sync/references/readme-mapping.md
 Expected: Four class directives mapping aliased state nodes to classDef styles
 Timestamp: 2026-04-08T12:00:00Z
 
 --- Output ---
 
-skills/arc-readme/references/readme-mapping.md:221:    class captured capture
-skills/arc-readme/references/readme-mapping.md:222:    class shaped shape
-skills/arc-readme/references/readme-mapping.md:223:    class specready ready
-skills/arc-readme/references/readme-mapping.md:224:    class shipped shipped
+skills/arc-sync/references/readme-mapping.md:221:    class captured capture
+skills/arc-sync/references/readme-mapping.md:222:    class shaped shape
+skills/arc-sync/references/readme-mapping.md:223:    class specready ready
+skills/arc-sync/references/readme-mapping.md:224:    class shipped shipped
 
 --- Verification ---
 

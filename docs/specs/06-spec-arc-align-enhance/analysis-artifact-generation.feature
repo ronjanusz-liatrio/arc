@@ -1,11 +1,11 @@
-# Source: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md
+# Source: docs/specs/06-spec-arc-assess-enhance/06-spec-arc-assess-enhance.md
 # Pattern: CLI/Process + State
 # Recommended test type: Integration
 
 Feature: Analysis Artifact Generation
 
   Scenario: Analysis artifact is generated after discovery
-    Given a repository where /arc-align has completed all discovery phases
+    Given a repository where /arc-assess has completed all discovery phases
     When the analysis phase executes
     Then docs/align-analysis.md is created before the import confirmation prompt
 
@@ -30,7 +30,7 @@ Feature: Analysis Artifact Generation
     Given a repository with no phased planning content
     When the analysis phase generates docs/align-analysis.md
     Then the Gap Analysis section flags ROADMAP as absent
-    And notes that arc-align does not populate ROADMAP directly
+    And notes that arc-assess does not populate ROADMAP directly
 
   Scenario: Gap analysis reports BACKLOG distribution
     Given a repository where 12 TODO comments were found in src/auth/ and 2 in src/utils/
@@ -78,7 +78,7 @@ Feature: Analysis Artifact Generation
     And the diagram uses Liatrio brand colors
 
   Scenario: Analysis artifact is overwritten on subsequent runs
-    Given a repository where /arc-align was previously run and docs/align-analysis.md exists
-    When the user runs /arc-align again and the analysis phase completes
+    Given a repository where /arc-assess was previously run and docs/align-analysis.md exists
+    When the user runs /arc-assess again and the analysis phase completes
     Then docs/align-analysis.md is overwritten with fresh analysis
     And the content reflects the current discovery results, not appended history

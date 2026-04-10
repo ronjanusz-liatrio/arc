@@ -14,24 +14,24 @@ Feature: Plugin Metadata and Documentation Update
     When the version bump is applied
     Then .claude-plugin/marketplace.json contains version "0.3.0"
 
-  Scenario: Skills README includes arc-review entry
+  Scenario: Skills README includes arc-audit entry
     Given skills/README.md lists existing skills
     When the documentation update is applied
-    Then skills/README.md contains a section for /arc-review
+    Then skills/README.md contains a section for /arc-audit
     And the section includes a one-line description
     And the section includes invocation syntax
-    And the section includes a link to arc-review/SKILL.md
+    And the section includes a link to arc-audit/SKILL.md
 
-  Scenario: Project README includes arc-review in Skills section
+  Scenario: Project README includes arc-audit in Skills section
     Given README.md documents existing skills
     When the documentation update is applied
-    Then README.md contains /arc-review in the Skills section
-    And /arc-review is described alongside /arc-capture, /arc-shape, and /arc-wave
+    Then README.md contains /arc-audit in the Skills section
+    And /arc-audit is described alongside /arc-capture, /arc-shape, and /arc-wave
 
-  Scenario: Project README includes arc-review in Plugin Structure
+  Scenario: Project README includes arc-audit in Plugin Structure
     Given README.md contains a Plugin Structure file tree
     When the documentation update is applied
-    Then README.md Plugin Structure section includes the arc-review/ directory
+    Then README.md Plugin Structure section includes the arc-audit/ directory
 
   Scenario: No internal links are broken after updates
     Given all documentation files have been updated for 0.3.0

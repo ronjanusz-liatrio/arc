@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "project_type\|architecture_patterns\|key_dependencies\|product_direction_signals" skills/arc-align/SKILL.md
+Command: grep -n "project_type\|architecture_patterns\|key_dependencies\|product_direction_signals" skills/arc-assess/SKILL.md
 Expected: All four structured fields (project_type, architecture_patterns, key_dependencies, product_direction_signals) defined in research_context extraction table
 Timestamp: 2026-04-09T00:00:00Z
 

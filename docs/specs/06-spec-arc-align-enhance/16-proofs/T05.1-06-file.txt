@@ -1,6 +1,6 @@
 Type: file
 Description: Verify Research Integration consumes research_context from Step 0 (R05.1.6)
-Command: git show HEAD:skills/arc-align/SKILL.md | sed -n '/2.5e. Research Integration/,/2.5f. Write the analysis/p'
+Command: git show HEAD:skills/arc-assess/SKILL.md | sed -n '/2.5e. Research Integration/,/2.5f. Write the analysis/p'
 Expected: Conditional section that cross-references research_context fields with discovery results
 Timestamp: 2026-04-09T18:15:00Z
 

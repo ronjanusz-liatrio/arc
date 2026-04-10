@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "Step 0\|Step 1:" skills/arc-align/SKILL.md
+Command: grep -n "Step 0\|Step 1:" skills/arc-assess/SKILL.md
 Expected: Step 0 appears at a lower line number than Step 1
 Timestamp: 2026-04-09T00:00:00Z
 

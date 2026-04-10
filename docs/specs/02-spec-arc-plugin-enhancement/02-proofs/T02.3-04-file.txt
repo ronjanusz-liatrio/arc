@@ -8,7 +8,7 @@ Timestamp: 2026-04-07T19:00:00Z
 Convention compliance (compared against arc-capture, arc-shape, arc-wave):
 
 Frontmatter format (YAML between --- delimiters):
-  - name: arc-review                             [MATCH: arc-capture pattern]
+  - name: arc-audit                             [MATCH: arc-capture pattern]
   - description: quoted string                   [MATCH: arc-capture pattern]
   - user-invocable: true                         [MATCH: all three skills]
   - allowed-tools: comma-separated list          [MATCH: arc-capture pattern]

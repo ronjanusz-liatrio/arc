@@ -1,9 +1,9 @@
 Type: file
-Check: All report sections use markdown tables consistent with arc-review report format
+Check: All report sections use markdown tables consistent with arc-audit report format
 Timestamp: 2026-04-08T20:00:00Z
 
 Expected: Each report section uses markdown tables (pipe-delimited) matching
-  the pattern established by skills/arc-review/references/review-report-template.md.
+  the pattern established by skills/arc-audit/references/review-report-template.md.
 
 Actual: All 5 main sections use markdown tables:
   - Run Metadata: 2-column table (Field | Value) with 7 rows
@@ -20,7 +20,7 @@ Table format verification (pipe-delimited with header + separator):
     |----------|----------|
     | data     | data     |
 
-This matches the arc-review report template pattern where each finding section
+This matches the arc-audit report template pattern where each finding section
 uses a markdown table rather than bullet lists.
 
 Status: PASS

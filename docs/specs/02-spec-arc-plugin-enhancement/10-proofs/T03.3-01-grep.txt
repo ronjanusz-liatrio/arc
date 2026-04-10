@@ -1,20 +1,20 @@
 Type: grep
-Command: grep -n "arc-review" /Users/ron/dev/arc/README.md
-Expected: Multiple matches showing /arc-review in mermaid diagram, skill table, Skills section, ASCII diagram, and Plugin Structure
+Command: grep -n "arc-audit" /Users/ron/dev/arc/README.md
+Expected: Multiple matches showing /arc-audit in mermaid diagram, skill table, Skills section, ASCII diagram, and Plugin Structure
 Timestamp: 2026-04-07T00:00:00Z
 
 --- OUTPUT ---
-57:    AR["/arc-review\nAudit pipeline\nhealth"]:::arc
-83:| `/arc-review` | Audit backlog health and wave alignment across all product artifacts |
-90:- **`/arc-review`** — Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts, then offers interactive fixes.
-100:                               /arc-review (audit at any stage)
-152:    arc-review/
+57:    AR["/arc-audit\nAudit pipeline\nhealth"]:::arc
+83:| `/arc-audit` | Audit backlog health and wave alignment across all product artifacts |
+90:- **`/arc-audit`** — Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts, then offers interactive fixes.
+100:                               /arc-audit (audit at any stage)
+152:    arc-audit/
 
 --- RESULT ---
 Status: PASS
-All 5 expected references to /arc-review found in README.md:
-  Line 57: /arc-review node in mermaid flowchart (AR node definition)
-  Line 83: /arc-review row in Two-Plugin Pipeline skill table
-  Line 90: /arc-review entry in Skills section
-  Line 100: /arc-review in ASCII pipeline diagram
-  Line 152: arc-review/ directory in Plugin Structure section
+All 5 expected references to /arc-audit found in README.md:
+  Line 57: /arc-audit node in mermaid flowchart (AR node definition)
+  Line 83: /arc-audit row in Two-Plugin Pipeline skill table
+  Line 90: /arc-audit entry in Skills section
+  Line 100: /arc-audit in ASCII pipeline diagram
+  Line 152: arc-audit/ directory in Plugin Structure section

@@ -1,6 +1,6 @@
 Type: file
 Description: Verify docs/specs/ blanket exclusion removed from SKILL.md Step 1a Directories row
-Command: grep -n "docs/specs/" skills/arc-align/SKILL.md
+Command: grep -n "docs/specs/" skills/arc-assess/SKILL.md
 Expected: No match on bare "docs/specs/" — only granular patterns present
 Timestamp: 2026-04-09T00:00:00Z
 

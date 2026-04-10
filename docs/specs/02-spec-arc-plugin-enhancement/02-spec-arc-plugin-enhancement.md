@@ -2,13 +2,13 @@
 
 ## Introduction/Overview
 
-Arc v0.2.0 delivered three skills, four templates, and three reference docs — all 7 demoable units from spec 01 are implemented. This enhancement iteration hardens quality by adding error-path Gherkin scenarios for all three existing skills, and extends the plugin with a new `/arc-review` skill that audits backlog health and wave alignment across all product artifacts, offering interactive fixes for issues found.
+Arc v0.2.0 delivered three skills, four templates, and three reference docs — all 7 demoable units from spec 01 are implemented. This enhancement iteration hardens quality by adding error-path Gherkin scenarios for all three existing skills, and extends the plugin with a new `/arc-audit` skill that audits backlog health and wave alignment across all product artifacts, offering interactive fixes for issues found.
 
 ## Goals
 
 1. **Error-path coverage** — Add negative and edge-case Gherkin scenarios for `/arc-capture`, `/arc-shape`, and `/arc-wave` to cover missing files, empty inputs, validation failures, and graceful degradation paths
-2. **Pipeline audit skill** — Deliver `/arc-review` for full pipeline health checks: stale ideas, priority imbalances, broken cross-references, wave coherence, and VISION/CUSTOMER alignment
-3. **Interactive remediation** — `/arc-review` produces a diagnostic report and offers to fix identified issues interactively, not just flag them
+2. **Pipeline audit skill** — Deliver `/arc-audit` for full pipeline health checks: stale ideas, priority imbalances, broken cross-references, wave coherence, and VISION/CUSTOMER alignment
+3. **Interactive remediation** — `/arc-audit` produces a diagnostic report and offers to fix identified issues interactively, not just flag them
 4. **Plugin continuity** — Bump version to 0.3.0, update skill directory and README to reflect the new skill
 
 ## User Stories
@@ -36,12 +36,12 @@ Arc v0.2.0 delivered three skills, four templates, and three reference docs — 
 - File: `docs/specs/01-spec-arc-plugin/arc-shape-skill.feature` contains scenarios covering "no captured ideas" and "validation failure"
 - File: `docs/specs/01-spec-arc-plugin/arc-wave-skill.feature` contains scenarios covering "BACKLOG.md is absent" and "CLAUDE.md absent"
 
-### Unit 2: `/arc-review` Skill
+### Unit 2: `/arc-audit` Skill
 
 **Purpose:** Provide a pipeline health audit skill that reads all product artifacts, identifies issues across two dimensions (backlog health and wave alignment), generates a diagnostic report, and offers interactive fixes.
 
 **Functional Requirements:**
-- The system shall provide `skills/arc-review/SKILL.md` with frontmatter (`name: arc-review`, `description`, `user-invocable: true`, `allowed-tools: [Glob, Grep, Read, Write, Edit, AskUserQuestion]`) following the same SKILL.md conventions as the existing three skills
+- The system shall provide `skills/arc-audit/SKILL.md` with frontmatter (`name: arc-audit`, `description`, `user-invocable: true`, `allowed-tools: [Glob, Grep, Read, Write, Edit, AskUserQuestion]`) following the same SKILL.md conventions as the existing three skills
 - The skill shall begin every response with the context marker `**ARC-REVIEW**`
 - The skill shall read `docs/BACKLOG.md`, `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md`, and `docs/management-report.md` (all optional except BACKLOG.md — if BACKLOG.md is absent, report "No backlog found" and exit gracefully)
 - The skill shall perform **backlog health** checks:
@@ -65,46 +65,46 @@ Arc v0.2.0 delivered three skills, four templates, and three reference docs — 
   - Remove broken ROADMAP wave references with user confirmation
 - The skill shall never modify VISION.md or CUSTOMER.md content — only report on their state
 - The skill shall offer next steps: run review again after fixes, proceed to `/arc-capture` or `/arc-wave`, or done
-- The skill shall provide reference docs: `skills/arc-review/references/audit-dimensions.md` (health check definitions, thresholds, severity levels) and `skills/arc-review/references/review-report-template.md` (report format and sections)
+- The skill shall provide reference docs: `skills/arc-audit/references/audit-dimensions.md` (health check definitions, thresholds, severity levels) and `skills/arc-audit/references/review-report-template.md` (report format and sections)
 
 **Proof Artifacts:**
-- File: `skills/arc-review/SKILL.md` contains frontmatter with `name: arc-review` and `user-invocable: true`
-- File: `skills/arc-review/references/audit-dimensions.md` contains backlog health and wave alignment check definitions
-- File: `skills/arc-review/references/review-report-template.md` contains report format
-- CLI: Invoking `/arc-review` with a BACKLOG.md containing stale and misaligned ideas produces a review report
+- File: `skills/arc-audit/SKILL.md` contains frontmatter with `name: arc-audit` and `user-invocable: true`
+- File: `skills/arc-audit/references/audit-dimensions.md` contains backlog health and wave alignment check definitions
+- File: `skills/arc-audit/references/review-report-template.md` contains report format
+- CLI: Invoking `/arc-audit` with a BACKLOG.md containing stale and misaligned ideas produces a review report
 - File: After review, `docs/review-report.md` contains health rating, findings, and recommended actions
 - File: After interactive fixes, `docs/BACKLOG.md` contains `<!-- stale: reviewed -->` or `<!-- TODO: fill -->` markers on affected ideas
 
 ### Unit 3: Plugin Metadata and Documentation Update
 
-**Purpose:** Bump plugin version to 0.3.0 and update all metadata, skill directory, and README to reflect the addition of `/arc-review`.
+**Purpose:** Bump plugin version to 0.3.0 and update all metadata, skill directory, and README to reflect the addition of `/arc-audit`.
 
 **Functional Requirements:**
 - The system shall update `.claude-plugin/plugin.json` version to `0.3.0`
 - The system shall update `.claude-plugin/marketplace.json` version to `0.3.0`
-- The system shall update `skills/README.md` to include `/arc-review` with a one-line description, invocation syntax, and link to SKILL.md
-- The system shall update `README.md` to add `/arc-review` to the Skills section, the Two-Plugin Pipeline description (where relevant), and the Plugin Structure file tree
+- The system shall update `skills/README.md` to include `/arc-audit` with a one-line description, invocation syntax, and link to SKILL.md
+- The system shall update `README.md` to add `/arc-audit` to the Skills section, the Two-Plugin Pipeline description (where relevant), and the Plugin Structure file tree
 - The system shall ensure no internal links are broken after the update
 
 **Proof Artifacts:**
 - File: `.claude-plugin/plugin.json` contains `"version": "0.3.0"`
 - File: `.claude-plugin/marketplace.json` contains `"version": "0.3.0"`
-- File: `skills/README.md` contains a link to `arc-review/SKILL.md`
-- Grep: `README.md` contains `/arc-review`
-- File: `README.md` Plugin Structure section includes `arc-review/` directory
+- File: `skills/README.md` contains a link to `arc-audit/SKILL.md`
+- Grep: `README.md` contains `/arc-audit`
+- File: `README.md` Plugin Structure section includes `arc-audit/` directory
 
 ## Non-Goals (Out of Scope)
 
 - **CI/CD pipeline** — No GitHub Actions or automation in this iteration
 - **Proof execution for spec 01 units 3-7** — Proofs of the original spec are tracked separately
-- **Automated fix application** — `/arc-review` offers interactive fixes with user confirmation, not batch auto-fixes
+- **Automated fix application** — `/arc-audit` offers interactive fixes with user confirmation, not batch auto-fixes
 - **VISION or CUSTOMER content editing** — Review reports on their state but never modifies their content
-- **New templates or reference docs** — No changes to existing templates/ or references/ beyond what `/arc-review` needs
+- **New templates or reference docs** — No changes to existing templates/ or references/ beyond what `/arc-audit` needs
 - **Backward-incompatible changes** — All existing skills, templates, and references remain unchanged
 
 ## Design Considerations
 
-- `/arc-review` follows the same SKILL.md conventions as the existing three skills: YAML frontmatter, context marker, critical constraints, numbered process steps, references section
+- `/arc-audit` follows the same SKILL.md conventions as the existing three skills: YAML frontmatter, context marker, critical constraints, numbered process steps, references section
 - The review report uses the same markdown formatting patterns as `shape-report.md` and `wave-report.md` (timestamp header, structured sections, actionable findings)
 - Interactive fix offers use AskUserQuestion with multi-select (user picks which fixes to apply) and descriptions explaining what each fix does
 - Health rating thresholds (Healthy / Needs Attention / Critical) are defined in `audit-dimensions.md` to keep them configurable without changing SKILL.md
@@ -114,15 +114,15 @@ Arc v0.2.0 delivered three skills, four templates, and three reference docs — 
 
 - **Commit convention:** `type(scope): description` — types: feat, fix, docs, chore; scopes: skills, plugin, docs
 - **Plugin conventions:** Follow existing SKILL.md frontmatter format, template YAML format, and reference doc structure
-- **File naming:** Lowercase with hyphens; skill in `skills/arc-review/`
+- **File naming:** Lowercase with hyphens; skill in `skills/arc-audit/`
 - **Version:** Semantic versioning; 0.2.0 -> 0.3.0 (minor bump for new skill)
 
 ## Technical Considerations
 
-- **Stateless audit:** `/arc-review` reads all artifacts fresh on each invocation — no cached state between runs
+- **Stateless audit:** `/arc-audit` reads all artifacts fresh on each invocation — no cached state between runs
 - **Timestamp parsing:** Stale idea detection requires parsing ISO 8601 timestamps from BACKLOG.md `Captured:` fields. The 14-day default threshold is adjustable via AskUserQuestion at the start of each review
 - **Anchor matching:** Cross-reference validation between ROADMAP wave entries and BACKLOG section headings uses the same anchor generation rules as `/arc-wave` (lowercase, hyphens, strip special characters)
-- **Summary table sync:** The BACKLOG summary table and `## {Title}` sections can drift if manual edits occur. `/arc-review` detects and offers to reconcile mismatches
+- **Summary table sync:** The BACKLOG summary table and `## {Title}` sections can drift if manual edits occur. `/arc-audit` detects and offers to reconcile mismatches
 - **Non-destructive fixes:** All interactive fixes add markers or reconcile existing content — no content deletion without explicit user confirmation
 
 ## Security Considerations
@@ -134,10 +134,10 @@ Arc v0.2.0 delivered three skills, four templates, and three reference docs — 
 ## Success Metrics
 
 - All three existing `.feature` files gain error-path scenarios covering the edge cases defined in each SKILL.md
-- `/arc-review` detects stale ideas, priority imbalances, broken cross-references, and missing brief fields in a test BACKLOG
+- `/arc-audit` detects stale ideas, priority imbalances, broken cross-references, and missing brief fields in a test BACKLOG
 - `docs/review-report.md` includes health rating, per-dimension findings, and recommended actions
 - Interactive fixes correctly add markers and reconcile summary table mismatches
-- Plugin version is 0.3.0 with `/arc-review` in README and skill directory
+- Plugin version is 0.3.0 with `/arc-audit` in README and skill directory
 
 ## Open Questions
 

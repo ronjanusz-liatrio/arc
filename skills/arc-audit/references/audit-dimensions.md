@@ -1,6 +1,6 @@
 # Audit Dimensions
 
-`/arc-review` performs health checks across two dimension groups: **Backlog Health** and **Wave Alignment**. Each dimension defines what is checked, how to detect issues, severity levels, configurable parameters, and the output format for reporting.
+`/arc-audit` performs health checks across two dimension groups: **Backlog Health** and **Wave Alignment**. Each dimension defines what is checked, how to detect issues, severity levels, configurable parameters, and the output format for reporting.
 
 ---
 
@@ -435,8 +435,8 @@ Recommended Action: Reconcile summary table and idea sections — add missing en
 1. Check whether `README.md` exists at the project root
    - If absent: report severity `info` with message "No README.md found" — skip remaining detection
 2. Check whether `README.md` contains at least one `<!--# BEGIN ARC:` marker
-   - If no markers found: report severity `info` with message "No ARC: sections in README — run /arc-readme to scaffold" — skip remaining detection
-3. Evaluate all 8 trust signals (TS-1 through TS-8) following the canonical detection steps in `skills/arc-readme/references/trust-signals.md`
+   - If no markers found: report severity `info` with message "No ARC: sections in README — run /arc-sync to scaffold" — skip remaining detection
+3. Evaluate all 8 trust signals (TS-1 through TS-8) following the canonical detection steps in `skills/arc-sync/references/trust-signals.md`
 4. A signal is **evaluable** only when its source artifact exists AND the corresponding `ARC:` managed section exists in README.md (see Evaluability Rules in trust-signals.md)
 5. Non-evaluable signals are excluded from the scorecard denominator and reported as `N/A`
 6. Compute scorecard: `N passing / M evaluable` (where M ≤ 8)
@@ -473,16 +473,16 @@ Recommended Action: Reconcile summary table and idea sections — add missing en
 **Result:** {N} of {M} evaluable signals passing
 **Severity:** info | warning
 
-Recommended Action: Run /arc-readme — failing signals: {list of failing signal IDs and names}
+Recommended Action: Run /arc-sync — failing signals: {list of failing signal IDs and names}
 ```
 
-**Interactive Fix:** Recommend "Run `/arc-readme`" listing which signals failed. `/arc-readme` will re-derive the failing sections from their source artifacts.
+**Interactive Fix:** Recommend "Run `/arc-sync`" listing which signals failed. `/arc-sync` will re-derive the failing sections from their source artifacts.
 
 ---
 
 ## Health Rating Thresholds
 
-After all checks complete, `/arc-review` computes an overall health rating by counting critical and warning findings:
+After all checks complete, `/arc-audit` computes an overall health rating by counting critical and warning findings:
 
 | Rating | Criteria |
 |--------|----------|
@@ -527,7 +527,7 @@ All other thresholds (critical/warning counts for health rating, allowed status 
 
 ## Cross-References
 
-- `references/review-report-template.md` — Report format and section layout produced by `/arc-review`
+- `references/review-report-template.md` — Report format and section layout produced by `/arc-audit`
 - `references/idea-lifecycle.md` — Idea status transitions, timestamp fields, and lifecycle phases
 - `references/brief-format.md` — The seven required brief sections used by BH-4
-- `skills/arc-readme/references/trust-signals.md` — Canonical trust-signal definitions used by WA-7
+- `skills/arc-sync/references/trust-signals.md` — Canonical trust-signal definitions used by WA-7

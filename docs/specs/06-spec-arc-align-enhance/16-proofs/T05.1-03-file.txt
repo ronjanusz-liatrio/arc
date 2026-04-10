@@ -1,6 +1,6 @@
 Type: file
 Description: Verify Gap Analysis section covers VISION, CUSTOMER, ROADMAP, BACKLOG (R05.1.3)
-Command: git show HEAD:skills/arc-align/SKILL.md | sed -n '/2.5b. Gap Analysis/,/2.5c. Theme Analysis/p'
+Command: git show HEAD:skills/arc-assess/SKILL.md | sed -n '/2.5b. Gap Analysis/,/2.5c. Theme Analysis/p'
 Expected: Gap Analysis table with assessment criteria and gap signals for all four artifact types
 Timestamp: 2026-04-09T18:15:00Z
 
@@ -25,6 +25,6 @@ Gap Analysis output template:
 | ROADMAP | {Present / Absent} | {detail text} |
 | BACKLOG | {N items} | {distribution detail} |
 
-Analysis: All four artifact types (VISION, CUSTOMER, ROADMAP, BACKLOG) have defined assessment criteria and gap signals. ROADMAP correctly notes arc-align does not populate it directly.
+Analysis: All four artifact types (VISION, CUSTOMER, ROADMAP, BACKLOG) have defined assessment criteria and gap signals. ROADMAP correctly notes arc-assess does not populate it directly.
 
 Status: PASS

@@ -44,7 +44,7 @@ For each spec-ready idea in this wave, proceed with the SDD pipeline:
 
 2. After spec generation, continue with `/cw-plan` → `/cw-dispatch`
 
-3. After implementation, run `/temper-progress` to evaluate gate status
+3. After implementation, run `/temper-audit` to evaluate gate status
 
 ### Per-Idea Handoff
 

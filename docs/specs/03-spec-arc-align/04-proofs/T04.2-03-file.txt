@@ -1,5 +1,5 @@
 Type: file
-Description: Reference doc style matches existing arc-review/audit-dimensions.md and arc-shape/shaping-dimensions.md conventions
+Description: Reference doc style matches existing arc-audit/audit-dimensions.md and arc-shape/shaping-dimensions.md conventions
 Command: Manual comparison of document structure
 Expected: Follows established patterns: title, overview paragraph, section IDs, tables, code examples, cross-references
 Timestamp: 2026-04-08T11:00:00Z

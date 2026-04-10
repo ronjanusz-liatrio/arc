@@ -1,6 +1,6 @@
 Type: file
 Description: Verify keyword count updated from 17 to 22 in SKILL.md
-Command: grep -n "Keywords to scan" skills/arc-align/SKILL.md
+Command: grep -n "Keywords to scan" skills/arc-assess/SKILL.md
 Expected: "Keywords to scan (22 total)"
 Timestamp: 2026-04-09T00:00:00Z
 

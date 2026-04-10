@@ -8,9 +8,9 @@ Verification:
 - Frontmatter contains: name (arc-help), description, user-invocable (true), allowed-tools ([])
 - Context Marker section present: instructs agent to begin with **ARC-HELP**
 - Overview section present: explains Arc, relationship to temper and claude-workflow
-- Skills table present: 7 rows (arc-align, arc-capture, arc-shape, arc-wave, arc-readme, arc-review, arc-help)
-- Workflow section present: /arc-align -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-readme
-- /arc-review noted as "audit at any time", /arc-help noted as "reference at any time"
+- Skills table present: 7 rows (arc-assess, arc-capture, arc-shape, arc-wave, arc-sync, arc-audit, arc-help)
+- Workflow section present: /arc-assess -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-sync
+- /arc-audit noted as "audit at any time", /arc-help noted as "reference at any time"
 - Artifacts section present: VISION (docs/VISION.md), CUSTOMER (docs/CUSTOMER.md), ROADMAP (docs/ROADMAP.md), BACKLOG (docs/BACKLOG.md)
 - Installation section present: Arc (git + local), temper, claude-workflow
 - README link present: ../../README.md

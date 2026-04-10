@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "Context Extraction\|Step 2.5\|extract structured context" skills/arc-align/SKILL.md
+Command: grep -n "Context Extraction\|Step 2.5\|extract structured context" skills/arc-assess/SKILL.md
 Expected: Context Extraction section exists and references Step 2.5
 Timestamp: 2026-04-09T00:00:00Z
 

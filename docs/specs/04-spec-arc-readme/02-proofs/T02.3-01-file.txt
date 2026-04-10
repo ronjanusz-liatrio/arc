@@ -1,13 +1,13 @@
 Type: file
-Command: test -f skills/arc-readme/references/readme-quality-rules.md
-Expected: File exists at skills/arc-readme/references/readme-quality-rules.md
+Command: test -f skills/arc-sync/references/readme-quality-rules.md
+Expected: File exists at skills/arc-sync/references/readme-quality-rules.md
 Timestamp: 2026-04-08T12:00:00Z
 Status: PASS
 
 Output:
-File exists: skills/arc-readme/references/readme-quality-rules.md (229 lines)
+File exists: skills/arc-sync/references/readme-quality-rules.md (229 lines)
 
 Verification:
-- File created at skills/arc-readme/references/readme-quality-rules.md
-- Located alongside trust-signals.md in the arc-readme references directory
+- File created at skills/arc-sync/references/readme-quality-rules.md
+- Located alongside trust-signals.md in the arc-sync references directory
 - Follows the same structural pattern as other Arc reference docs (title, intro paragraph, horizontal rules, tables)

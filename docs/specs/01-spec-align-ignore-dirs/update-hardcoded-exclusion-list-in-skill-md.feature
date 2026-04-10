@@ -5,7 +5,7 @@
 Feature: Update hardcoded exclusion list in SKILL.md
 
   Background:
-    Given the file skills/arc-align/SKILL.md exists
+    Given the file skills/arc-assess/SKILL.md exists
     And it contains a hardcoded exclusion table in Step 1a
 
   Scenario: Python directories are added to the Step 1a exclusion table

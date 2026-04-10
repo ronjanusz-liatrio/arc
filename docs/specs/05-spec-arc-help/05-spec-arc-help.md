@@ -29,7 +29,7 @@ Arc-help is a new skill (`/arc-help`) that provides a comprehensive, self-contai
 - The SKILL.md shall include a Context Marker section instructing the agent to begin with `**ARC-HELP**`
 - The help content shall include an overview section explaining what Arc is and its relationship to temper and claude-workflow
 - The help content shall include a skill table listing all seven skills (including arc-help itself) with name, one-line description, and invocation syntax
-- The help content shall include a workflow section showing the recommended skill execution order (`/arc-align → /arc-capture → /arc-shape → /arc-wave → /arc-readme`, with `/arc-review` as an anytime audit)
+- The help content shall include a workflow section showing the recommended skill execution order (`/arc-assess → /arc-capture → /arc-shape → /arc-wave → /arc-sync`, with `/arc-audit` as an anytime audit)
 - The help content shall include an artifacts section describing VISION, CUSTOMER, ROADMAP, and BACKLOG with their purposes and file paths
 - The help content shall include an installation section with commands for Arc, temper, and claude-workflow
 - The help content shall include a link to the project README for full documentation
@@ -46,8 +46,8 @@ Arc-help is a new skill (`/arc-help`) that provides a comprehensive, self-contai
 
 **Functional Requirements:**
 - The system shall add an arc-help row to the skill table in `skills/README.md` with description and invocation syntax
-- The arc-help entry shall be positioned logically in the table (after arc-review, as a meta/utility skill)
-- The workflow section in `skills/README.md` shall note `/arc-help` as available at any time (similar to `/arc-review`)
+- The arc-help entry shall be positioned logically in the table (after arc-audit, as a meta/utility skill)
+- The workflow section in `skills/README.md` shall note `/arc-help` as available at any time (similar to `/arc-audit`)
 - The README.md skill table and Plugin Structure tree shall include arc-help
 
 **Proof Artifacts:**

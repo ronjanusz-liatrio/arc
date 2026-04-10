@@ -14,9 +14,9 @@ OK: skills/arc-shape/references/brief-validation.md
 OK: skills/arc-wave/SKILL.md
 OK: skills/arc-wave/references/wave-report-template.md
 OK: skills/arc-wave/references/bootstrap-protocol.md
-OK: skills/arc-review/SKILL.md
-OK: skills/arc-review/references/audit-dimensions.md
-OK: skills/arc-review/references/review-report-template.md
+OK: skills/arc-audit/SKILL.md
+OK: skills/arc-audit/references/audit-dimensions.md
+OK: skills/arc-audit/references/review-report-template.md
 OK: templates/VISION.tmpl.md
 OK: templates/CUSTOMER.tmpl.md
 OK: templates/ROADMAP.tmpl.md

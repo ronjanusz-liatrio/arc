@@ -1,6 +1,6 @@
 Type: file
 Description: Verify classification table updated in SKILL.md with new KW references
-Command: grep -n "BACKLOG.*KW-19\|VISION.*KW-18\|KW-1 through KW-22" skills/arc-align/SKILL.md
+Command: grep -n "BACKLOG.*KW-19\|VISION.*KW-18\|KW-1 through KW-22" skills/arc-assess/SKILL.md
 Expected: Classification table rows reference KW-18 through KW-22 appropriately; pattern identifier row updated to KW-22
 Timestamp: 2026-04-09T00:00:00Z
 

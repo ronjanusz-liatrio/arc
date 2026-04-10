@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "Imported to BACKLOG\|Imported to VISION\|Imported to CUSTOMER" skills/arc-align/SKILL.md
+Command: grep -n "Imported to BACKLOG\|Imported to VISION\|Imported to CUSTOMER" skills/arc-assess/SKILL.md
 Expected: Per-artifact import count rows present in Step 9 summary table
 Timestamp: 2026-04-08T18:46:05Z
 

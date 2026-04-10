@@ -1,7 +1,7 @@
 Type: file
 Description: skills/README.md contains arc-help row in skill table, workflow note, and updated skill count
 Command: grep -n "arc-help" skills/README.md
-Expected: arc-help row in skill table after arc-review, workflow note, updated count to seven
+Expected: arc-help row in skill table after arc-audit, workflow note, updated count to seven
 Timestamp: 2026-04-08T22:30:00Z
 
 --- Output ---
@@ -9,7 +9,7 @@ Timestamp: 2026-04-08T22:30:00Z
 Skill count updated:
   Line 3: Arc provides seven skills for managing the product idea lifecycle.
 
-Skill table row (after arc-review on line 12):
+Skill table row (after arc-audit on line 12):
   Line 13: | [arc-help](arc-help/SKILL.md) | Quick reference guide — overview of all Arc skills, artifacts, workflow, and installation | `/arc-help` |
 
 Workflow section note:

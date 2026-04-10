@@ -14,7 +14,7 @@ Register arc-help in the skill index (skills/README.md) and the project README (
 
 ### skills/README.md
 - Intro line updated from "six skills" to "seven skills"
-- arc-help row added after arc-review in skill table
+- arc-help row added after arc-audit in skill table
 - Workflow diagram includes `/arc-help (reference at any time)`
 - Numbered list includes item 7 for Help
 

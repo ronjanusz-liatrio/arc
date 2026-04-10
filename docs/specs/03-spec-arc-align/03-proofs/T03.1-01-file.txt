@@ -1,5 +1,5 @@
 Type: file
-File: skills/arc-align/SKILL.md
+File: skills/arc-assess/SKILL.md
 Check: Step 8 contains all 5 required report sections with markdown table templates
 Timestamp: 2026-04-08T20:00:00Z
 

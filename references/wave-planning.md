@@ -117,7 +117,7 @@ flowchart LR
     PLAN["Plan Wave\n(theme, scope,\ndependencies)"]:::arc
     ROADMAP["Update ROADMAP\n(append wave entry)"]:::ready
     HANDOFF["Handoff to SDD\n(/cw-spec per idea)"]:::ready
-    RETRO["Wave Retrospective\n(via /temper-progress)"]:::cw
+    RETRO["Wave Retrospective\n(via /temper-audit)"]:::cw
 
     SELECT --> PLAN --> ROADMAP --> HANDOFF --> RETRO
     RETRO -->|"informs next"| SELECT

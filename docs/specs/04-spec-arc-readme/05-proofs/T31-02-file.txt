@@ -1,5 +1,5 @@
 Type: file
-File: skills/arc-readme/SKILL.md vs skills/arc-readme/references/readme-mapping.md
+File: skills/arc-sync/SKILL.md vs skills/arc-sync/references/readme-mapping.md
 Description: Cross-document consistency check — heading placement convention matches between SKILL.md and readme-mapping.md
 Timestamp: 2026-04-08T22:30:00Z
 

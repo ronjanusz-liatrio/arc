@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "subagent_type\|research-align/research-align.md" skills/arc-align/SKILL.md
+Command: grep -n "subagent_type\|research-align/research-align.md" skills/arc-assess/SKILL.md
 Expected: subagent_type is "general-purpose" and report path is docs/specs/research-align/research-align.md
 Timestamp: 2026-04-09T00:00:00Z
 

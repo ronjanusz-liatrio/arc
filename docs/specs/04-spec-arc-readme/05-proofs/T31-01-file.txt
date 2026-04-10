@@ -1,8 +1,8 @@
 Type: file
-File: skills/arc-readme/references/readme-mapping.md
+File: skills/arc-sync/references/readme-mapping.md
 Description: Verify all five ARC section output templates have headings OUTSIDE markers
 Timestamp: 2026-04-08T22:30:00Z
-Command: grep -n "## \|BEGIN ARC\|END ARC" skills/arc-readme/references/readme-mapping.md (within markdown code blocks)
+Command: grep -n "## \|BEGIN ARC\|END ARC" skills/arc-sync/references/readme-mapping.md (within markdown code blocks)
 
 Expected: Each "## Heading" appears BEFORE its corresponding "<!--# BEGIN ARC:..." marker
 Actual:

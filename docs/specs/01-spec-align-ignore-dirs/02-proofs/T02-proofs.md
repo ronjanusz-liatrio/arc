@@ -4,7 +4,7 @@
 Update hardcoded exclusion list in align-report-template.md
 
 ## Requirements
-1. Add the same 12 directory patterns to the Hardcoded Exclusions table in `skills/arc-align/references/align-report-template.md`
+1. Add the same 12 directory patterns to the Hardcoded Exclusions table in `skills/arc-assess/references/align-report-template.md`
 2. Use the same `| {pattern} | Directory |` format
 3. Group entries by category for readability
 4. Verify the directory list matches SKILL.md exactly
@@ -16,7 +16,7 @@ Update hardcoded exclusion list in align-report-template.md
 - Verified all 12 new directory patterns are present in align-report-template.md
 - Patterns: .venv/, __pycache__/, .mypy_cache/, .pytest_cache/, .ruff_cache/, .tox/, *.egg-info/, target/, .gradle/, .next/, .nuxt/, coverage/
 - Formatting: All entries use the standard `| {pattern} | Directory |` format
-- Location: skills/arc-align/references/align-report-template.md lines 69-80
+- Location: skills/arc-assess/references/align-report-template.md lines 69-80
 
 ### T02-02-cli.txt - CLI Comparison
 **Status: PASS**

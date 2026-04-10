@@ -6,7 +6,7 @@ Timestamp: 2026-04-08T00:00:00Z
 
 Result:
 Node definition:
-    AA["/arc-align\nDiscover and\nimport content"]:::arc
+    AA["/arc-assess\nDiscover and\nimport content"]:::arc
 
 Edge definition:
     AA --> AC

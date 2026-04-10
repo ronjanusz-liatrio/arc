@@ -4,20 +4,20 @@ Arc provides seven skills for managing the product idea lifecycle.
 
 | Skill | Description | Invocation |
 |-------|-------------|------------|
-| [arc-align](arc-align/SKILL.md) | Codebase discovery and migration — scan the project for scattered product-direction content and import into Arc-managed artifacts | `/arc-align` |
+| [arc-assess](arc-assess/SKILL.md) | Codebase discovery and migration — scan the project for scattered product-direction content and import into Arc-managed artifacts | `/arc-assess` |
 | [arc-capture](arc-capture/SKILL.md) | Fast idea entry — record a raw idea to the backlog in under 30 seconds | `/arc-capture` |
 | [arc-shape](arc-shape/SKILL.md) | Interactive refinement — transform a captured idea into a spec-ready brief using parallel subagent analysis | `/arc-shape` or `/arc-shape "Idea Title"` |
 | [arc-wave](arc-wave/SKILL.md) | Delivery cycle management — group shaped ideas into a wave, update the roadmap, and prepare handoff to the SDD pipeline | `/arc-wave` |
-| [arc-readme](arc-readme/SKILL.md) | README lifecycle management — scaffold or update README.md with Arc-managed sections synced to product direction artifacts | `/arc-readme` |
-| [arc-review](arc-review/SKILL.md) | Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts | `/arc-review` |
+| [arc-sync](arc-sync/SKILL.md) | README lifecycle management — scaffold or update README.md with Arc-managed sections synced to product direction artifacts | `/arc-sync` |
+| [arc-audit](arc-audit/SKILL.md) | Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts | `/arc-audit` |
 | [arc-help](arc-help/SKILL.md) | Quick reference guide — overview of all Arc skills, artifacts, workflow, and installation | `/arc-help` |
 
 ## Workflow
 
 ```
-/arc-align → /arc-capture → /arc-shape → /arc-wave → /arc-readme → /cw-spec → /cw-plan → /cw-dispatch
+/arc-assess → /arc-capture → /arc-shape → /arc-wave → /arc-sync → /cw-spec → /cw-plan → /cw-dispatch
                                                   ↑
-                                            /arc-review (audit at any time)
+                                            /arc-audit (audit at any time)
                                             /arc-help (reference at any time)
 ```
 

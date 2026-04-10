@@ -1,6 +1,6 @@
 Type: file
 Description: Verify output path is docs/skill/arc/align-analysis.md (R05.1.7)
-Command: git show HEAD:skills/arc-align/SKILL.md | grep "docs/skill/arc/align-analysis.md"
+Command: git show HEAD:skills/arc-assess/SKILL.md | grep "docs/skill/arc/align-analysis.md"
 Expected: Multiple references to docs/skill/arc/align-analysis.md as the output path
 Timestamp: 2026-04-09T18:15:00Z
 

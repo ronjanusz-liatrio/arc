@@ -1,5 +1,5 @@
 Type: file
-Command: grep -c "### WA-7" skills/arc-review/references/audit-dimensions.md
+Command: grep -c "### WA-7" skills/arc-audit/references/audit-dimensions.md
 Expected: WA-7 section exists in audit-dimensions.md
 Timestamp: 2026-04-08T14:10:00Z
 Status: PASS

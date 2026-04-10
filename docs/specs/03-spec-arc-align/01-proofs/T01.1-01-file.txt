@@ -1,5 +1,5 @@
 Type: file
-Command: grep verification of hardcoded exclusion list in skills/arc-align/SKILL.md
+Command: grep verification of hardcoded exclusion list in skills/arc-assess/SKILL.md
 Expected: All hardcoded exclusions from spec present in SKILL.md Step 1a
 Timestamp: 2026-04-08T11:15:00Z
 

@@ -51,20 +51,20 @@ Arc and temper cover the full project lifecycle: arc shapes what gets built, tem
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
 flowchart LR
-    AA["/arc-align\nDiscover and\nimport content"]:::arc
+    AA["/arc-assess\nDiscover and\nimport content"]:::arc
     AC["/arc-capture\nQuick idea entry"]:::arc
     AS["/arc-shape\nRefine into\nspec-ready brief"]:::arc
     AW["/arc-wave\nOrganize into\ndelivery cycle"]:::arc
-    AREADME["/arc-readme\nSync README with\nproduct direction"]:::arc
-    AR["/arc-review\nAudit pipeline\nhealth"]:::arc
+    AREADME["/arc-sync\nSync README with\nproduct direction"]:::arc
+    AR["/arc-audit\nAudit pipeline\nhealth"]:::arc
     AH["/arc-help\nQuick reference\nguide"]:::arc
 
     CS["/cw-spec\nWrite spec and\nGherkin scenarios"]:::cw
     CP["/cw-plan\nTask board\nand sub-tasks"]:::cw
     CD["/cw-dispatch\nParallel coding\nworkers"]:::cw
 
-    TI["/temper-incept\nBootstrap repo\nand set phase"]:::temper
-    TP["/temper-progress\nGate evaluation\nand phase transition"]:::temper
+    TI["/temper-assess\nBootstrap repo\nand set phase"]:::temper
+    TP["/temper-audit\nGate evaluation\nand phase transition"]:::temper
 
     AA --> AC
     AC --> AS --> AW --> AREADME --> TI
@@ -83,22 +83,22 @@ flowchart LR
 
 | Skill | Role |
 |-------|------|
-| `/arc-align` | Discover scattered product-direction content and import into Arc-managed artifacts |
+| `/arc-assess` | Discover scattered product-direction content and import into Arc-managed artifacts |
 | `/arc-capture` | Record a raw idea quickly — title, one-liner, rough priority |
 | `/arc-shape` | Refine an idea into a structured brief with problem, solution, and success criteria |
 | `/arc-wave` | Group shaped ideas into a delivery cycle and hand off to temper + claude-workflow |
-| `/arc-readme` | Keep project README and diagrams in sync with product direction artifacts |
-| `/arc-review` | Audit backlog health and wave alignment across all product artifacts |
+| `/arc-sync` | Keep project README and diagrams in sync with product direction artifacts |
+| `/arc-audit` | Audit backlog health and wave alignment across all product artifacts |
 | `/arc-help` | Quick reference guide — overview of all skills, artifacts, workflow, and installation |
 
 ## Skills
 
-- **`/arc-align`** — Codebase discovery and migration. Scans the project for scattered product-direction content (roadmaps, backlogs, TODOs, vision statements, personas) and imports them into Arc-managed artifacts.
+- **`/arc-assess`** — Codebase discovery and migration. Scans the project for scattered product-direction content (roadmaps, backlogs, TODOs, vision statements, personas) and imports them into Arc-managed artifacts.
 - **`/arc-capture`** — Fast idea entry. Appends a structured stub to `BACKLOG` with minimal friction.
 - **`/arc-shape`** — Interactive refinement. Turns a captured idea into a spec-ready brief using parallel subagent analysis across four dimensions (problem clarity, customer fit, scope boundaries, feasibility).
 - **`/arc-wave`** — Delivery cycle management. Groups spec-ready ideas into a wave, updates `ROADMAP`, injects `ARC:product-context` into project CLAUDE.md, and prepares the handoff for `/cw-spec`.
-- **`/arc-readme`** — README synchronization. Scaffolds a complete README from Arc artifacts or selectively updates `ARC:` managed sections to reflect current product direction.
-- **`/arc-review`** — Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts, then offers interactive fixes.
+- **`/arc-sync`** — README synchronization. Scaffolds a complete README from Arc artifacts or selectively updates `ARC:` managed sections to reflect current product direction.
+- **`/arc-audit`** — Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts, then offers interactive fixes.
 - **`/arc-help`** — Quick reference guide. Displays an overview of all Arc skills, artifacts, workflow order, and installation instructions.
 
 ## Relationship to Temper and claude-workflow
@@ -106,10 +106,10 @@ flowchart LR
 Arc is **upstream** of both temper and claude-workflow:
 
 ```
-/arc-align -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-readme -> /temper-incept -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-progress
+/arc-assess -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-sync -> /temper-assess -> /cw-spec -> /cw-plan -> /cw-dispatch -> /temper-audit
                                                 ^                              ^                                                        |
                                                 |                              '-------------------- phase loop --------------------------'
-                                            /arc-review (audit at any stage)
+                                            /arc-audit (audit at any stage)
                                             /arc-help (reference at any time)
 ```
 
@@ -150,7 +150,7 @@ arc/
     marketplace.json                        # Marketplace registration
   skills/
     README.md                               # Skill directory hub
-    arc-align/
+    arc-assess/
       SKILL.md                              # Codebase discovery and migration
       references/
         align-report-template.md            # Alignment report format
@@ -158,7 +158,7 @@ arc/
         import-rules.md                     # Import classification and merge rules
     arc-capture/
       SKILL.md                              # Fast idea entry
-    arc-readme/
+    arc-sync/
       SKILL.md                              # README synchronization with product direction
       references/
         trust-signals.md                    # Structural trust-signal definitions (shared with WA-7)
@@ -174,7 +174,7 @@ arc/
       references/
         wave-report-template.md             # Wave report format
         bootstrap-protocol.md               # ARC: namespace CLAUDE.md injection rules
-    arc-review/
+    arc-audit/
       SKILL.md                              # Pipeline health audit
       references/
         audit-dimensions.md                 # Health check definitions and thresholds

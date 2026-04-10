@@ -5,7 +5,7 @@
 Feature: Update hardcoded exclusion list in align-report-template.md
 
   Background:
-    Given the file skills/arc-align/references/align-report-template.md exists
+    Given the file skills/arc-assess/references/align-report-template.md exists
     And it contains a Hardcoded Exclusions table
 
   Scenario: All 12 new directory patterns are present in the report template

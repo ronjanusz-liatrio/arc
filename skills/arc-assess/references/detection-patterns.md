@@ -1,6 +1,6 @@
 # Detection Patterns
 
-`/arc-align` discovers product-direction content using two detection strategies applied in sequence: **keyword matching** followed by **structural matching**. This document defines every pattern, provides example snippets showing what each pattern matches, and explains the detection ordering rationale.
+`/arc-assess` discovers product-direction content using two detection strategies applied in sequence: **keyword matching** followed by **structural matching**. This document defines every pattern, provides example snippets showing what each pattern matches, and explains the detection ordering rationale.
 
 ---
 
@@ -412,7 +412,7 @@ Our north star metric is the capture-to-spec-ready conversion rate.
 
 - As a product manager, I want to see all captured ideas in one place so I can prioritize effectively.
 - As a developer, I want traceability markers in imported content so I know where each item originated.
-- As a team lead, I want arc-align to run idempotently so repeated scans don't create duplicates.
+- As a team lead, I want arc-assess to run idempotently so repeated scans don't create duplicates.
 ```
 
 **Typical target artifact:** BACKLOG (one stub per story)
@@ -450,7 +450,7 @@ Our north star metric is the capture-to-spec-ready conversion rate.
 ```markdown
 ## Open Questions
 
-- Should arc-align support binary file scanning for embedded metadata?
+- Should arc-assess support binary file scanning for embedded metadata?
 - How do we handle circular references between spec files?
 - What is the right deduplication strategy when the same idea appears in three different specs?
 ```
@@ -482,7 +482,7 @@ product management layer that lives inside their codebase.
 ```markdown
 ## Overview
 
-This document describes the configuration format for the arc-align skill.
+This document describes the configuration format for the arc-assess skill.
 Each field is documented with its type, default value, and valid options.
 ```
 
@@ -751,4 +751,4 @@ Weak signals are still imported per the inclusivity principle — when in doubt,
 
 - `skills/arc-align/references/import-rules.md` — How detected content is classified into artifact targets and imported, including code comment priority overrides and the `aligned-from-code` marker format
 - `references/idea-lifecycle.md` — The Capture stage that imported stubs enter
-- `skills/arc-align/SKILL.md` — Step 2 references this document for the full pattern set; Step 2a uses KW-1 through KW-22 for keyword scanning; Step 2c invokes code comment scanning using CC-1 through CC-4
+- `skills/arc-assess/SKILL.md` — Step 2 references this document for the full pattern set; Step 2a uses KW-1 through KW-22 for keyword scanning; Step 2c invokes code comment scanning using CC-1 through CC-4

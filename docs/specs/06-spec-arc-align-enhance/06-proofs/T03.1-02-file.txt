@@ -1,6 +1,6 @@
 Type: file
 Description: Verify align-report-template.md exclusion table matches SKILL.md
-Command: grep -n "docs/specs/" skills/arc-align/references/align-report-template.md
+Command: grep -n "docs/specs/" skills/arc-assess/references/align-report-template.md
 Expected: Three granular patterns present (proofs/, .feature, questions-*.md), no bare docs/specs/
 Timestamp: 2026-04-09T00:00:00Z
 

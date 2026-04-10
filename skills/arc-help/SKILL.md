@@ -23,12 +23,12 @@ Arc provides seven skills for managing the product idea lifecycle:
 
 | Skill | Description | Invocation |
 |-------|-------------|------------|
-| `/arc-align` | Codebase discovery and migration -- scan for scattered product-direction content and import into Arc artifacts | `/arc-align` |
+| `/arc-assess` | Codebase discovery and migration -- scan for scattered product-direction content and import into Arc artifacts | `/arc-assess` |
 | `/arc-capture` | Fast idea entry -- record a raw idea to the backlog in under 30 seconds | `/arc-capture` |
 | `/arc-shape` | Interactive refinement -- transform a captured idea into a spec-ready brief using parallel analysis | `/arc-shape` or `/arc-shape "Idea Title"` |
 | `/arc-wave` | Delivery cycle management -- group shaped ideas into a wave and hand off to the SDD pipeline | `/arc-wave` |
-| `/arc-readme` | README synchronization -- scaffold or update README.md with sections synced to product direction | `/arc-readme` |
-| `/arc-review` | Pipeline health audit -- check backlog health, wave alignment, and cross-reference integrity | `/arc-review` |
+| `/arc-sync` | README synchronization -- scaffold or update README.md with sections synced to product direction | `/arc-sync` |
+| `/arc-audit` | Pipeline health audit -- check backlog health, wave alignment, and cross-reference integrity | `/arc-audit` |
 | `/arc-help` | Quick reference guide -- this help output | `/arc-help` |
 
 ## Workflow
@@ -36,9 +36,9 @@ Arc provides seven skills for managing the product idea lifecycle:
 The recommended skill execution order:
 
 ```
-/arc-align -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-readme -> /cw-spec -> /cw-plan -> /cw-dispatch
+/arc-assess -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-sync -> /cw-spec -> /cw-plan -> /cw-dispatch
                                                     ^
-                                              /arc-review (audit at any time)
+                                              /arc-audit (audit at any time)
                                               /arc-help (reference at any time)
 ```
 
@@ -48,7 +48,7 @@ The recommended skill execution order:
 4. **Wave** -- Group shaped ideas into themed delivery cycles and hand off to the SDD pipeline
 5. **Readme** -- Scaffold or update README.md with sections synced to product direction artifacts
 
-`/arc-review` and `/arc-help` are utility skills available at any point in the cycle.
+`/arc-audit` and `/arc-help` are utility skills available at any point in the cycle.
 
 ## Artifacts
 

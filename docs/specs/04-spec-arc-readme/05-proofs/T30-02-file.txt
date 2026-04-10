@@ -21,7 +21,7 @@ Matches Spec-Ready? YES -- character class [\w-] includes hyphen
 - "Shipped(7)"     -> [\w-]+ matches "Shipped"      -> MATCH
 
 === No old-syntax remnants ===
-Searched entire skills/arc-readme/ directory for:
+Searched entire skills/arc-sync/ directory for:
   - Inline label syntax (e.g., "Captured : Captured("): 0 matches
   - Capitalized transition targets (e.g., "[*] --> Captured"): 0 matches
   - Old regex pattern "\w+\(\d+\)": 0 matches (only updated version exists)

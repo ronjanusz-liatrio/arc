@@ -27,8 +27,8 @@ Feature: SKILL.md with Static Help Content
     Given the Arc plugin is installed locally
     When the user invokes /arc-help
     Then the output contains a workflow section
-    And the workflow lists skills in order: /arc-align, /arc-capture, /arc-shape, /arc-wave, /arc-readme
-    And /arc-review is noted as available at any time
+    And the workflow lists skills in order: /arc-assess, /arc-capture, /arc-shape, /arc-wave, /arc-sync
+    And /arc-audit is noted as available at any time
 
   Scenario: Help output describes all four managed artifacts
     Given the Arc plugin is installed locally

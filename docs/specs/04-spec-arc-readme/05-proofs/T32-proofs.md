@@ -10,7 +10,7 @@
 
 ## Fix Applied
 
-Updated `skills/arc-readme/references/readme-mapping.md`:
+Updated `skills/arc-sync/references/readme-mapping.md`:
 
 1. **Extraction step 3**: Changed from extracting "Goal" (first sentence or Wave Goal subsection) to extracting "Theme" (from heading suffix after `—` or from a `Theme:` field)
 2. **Output format table**: Changed column order from `Wave | Status | Goal` to `Wave | Theme | Status`
@@ -26,6 +26,6 @@ Updated `skills/arc-readme/references/readme-mapping.md`:
 ## Verification
 
 All three documents now use identical column structure `Wave | Theme | Status`:
-- `skills/arc-readme/references/readme-mapping.md` line 168
-- `skills/arc-readme/SKILL.md` line 272
-- `skills/arc-readme/references/readme-quality-rules.md` line 101
+- `skills/arc-sync/references/readme-mapping.md` line 168
+- `skills/arc-sync/SKILL.md` line 272
+- `skills/arc-sync/references/readme-quality-rules.md` line 101

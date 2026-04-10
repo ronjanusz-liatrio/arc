@@ -30,7 +30,7 @@ Update hardcoded exclusion list in SKILL.md
    - Status: ✓ PASS
 
 ## Additional Files Updated
-- `skills/arc-align/references/detection-patterns.md` (line 612) — Updated code comment intro to include new directories
+- `skills/arc-assess/references/detection-patterns.md` (line 612) — Updated code comment intro to include new directories
 
 ## Proof Artifacts
 - T01-01-file.txt: File verification confirming all 12 patterns present in SKILL.md

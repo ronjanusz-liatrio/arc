@@ -1,16 +1,16 @@
 Type: file
-Command: Verify skills/arc-readme/SKILL.md exists with complete skill definition
+Command: Verify skills/arc-sync/SKILL.md exists with complete skill definition
 Expected: File exists with frontmatter, context marker, overview, constraints, and scaffold steps 1-6
 Timestamp: 2026-04-08T14:30:00Z
 
 === Detection ===
 
-File: skills/arc-readme/SKILL.md
+File: skills/arc-sync/SKILL.md
 Exists: YES
 Line count: 391
 
 === Frontmatter Check ===
-- name: arc-readme -- PRESENT
+- name: arc-sync -- PRESENT
 - description: "README lifecycle management..." -- PRESENT
 - user-invocable: true -- PRESENT
 - allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion -- PRESENT
@@ -19,7 +19,7 @@ Line count: 391
 - "Always begin your response with: **ARC-README**" -- PRESENT (line 12)
 
 === Section Structure ===
-- # /arc-readme heading -- PRESENT
+- # /arc-sync heading -- PRESENT
 - ## Context Marker -- PRESENT
 - ## Overview -- PRESENT (scaffold vs update modes described)
 - ## Critical Constraints -- PRESENT (9 constraints: 5 NEVER, 4 ALWAYS)

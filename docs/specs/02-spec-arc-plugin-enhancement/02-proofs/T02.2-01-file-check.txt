@@ -1,12 +1,12 @@
 Type: file
-File: skills/arc-review/references/review-report-template.md
+File: skills/arc-audit/references/review-report-template.md
 Expected: File created with template structure, field descriptions, and cross-references
 Timestamp: 2026-04-07T17:30:00Z
 
 VERIFICATION RESULTS:
 ====================
 
-✓ File exists: /Users/ron/dev/arc/skills/arc-review/references/review-report-template.md
+✓ File exists: /Users/ron/dev/arc/skills/arc-audit/references/review-report-template.md
 
 ✓ Content structure verified:
   - Header section (title, format description)

@@ -5,7 +5,7 @@ Expected: Classification rules in SKILL.md are consistent with import-rules.md; 
 Timestamp: 2026-04-08T17:00:00Z
 
 Verification:
-- SKILL.md Step 2c references import-rules.md: "Read skills/arc-align/references/import-rules.md for the full classification rules"
+- SKILL.md Step 2c references import-rules.md: "Read skills/arc-assess/references/import-rules.md for the full classification rules"
 - Classification targets in SKILL.md match import-rules.md:
   - BACKLOG: actionable items (TODOs, features, bugs, ideas, task lists, roadmap items) — matches import-rules.md "BACKLOG - Actionable Items" section
   - VISION: mission/vision/north-star content — matches import-rules.md "VISION - Mission and Direction" section

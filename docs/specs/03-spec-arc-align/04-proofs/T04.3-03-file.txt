@@ -1,16 +1,16 @@
 Type: file
-Description: skills/README.md contains /arc-align in table, workflow diagram, and numbered list
-Command: grep -n "arc-align" skills/README.md
-Expected: arc-align appears in skills table row, workflow ASCII diagram, and numbered workflow description
+Description: skills/README.md contains /arc-assess in table, workflow diagram, and numbered list
+Command: grep -n "arc-assess" skills/README.md
+Expected: arc-assess appears in skills table row, workflow ASCII diagram, and numbered workflow description
 Timestamp: 2026-04-08T00:00:00Z
 
 Result:
-Line 7: | [arc-align](arc-align/SKILL.md) | Codebase discovery and migration... | `/arc-align` |  (skills table)
-Line 16: /arc-align -> /arc-capture -> /arc-shape -> ...                                          (workflow diagram)
+Line 7: | [arc-assess](arc-assess/SKILL.md) | Codebase discovery and migration... | `/arc-assess` |  (skills table)
+Line 16: /arc-assess -> /arc-capture -> /arc-shape -> ...                                          (workflow diagram)
 Line 21: 1. **Align** scans the codebase for scattered product-direction content...              (numbered list)
 
 Header updated from "four skills" to "five skills" (line 3).
 
-All 3 required sections contain /arc-align.
+All 3 required sections contain /arc-assess.
 
 Status: PASS

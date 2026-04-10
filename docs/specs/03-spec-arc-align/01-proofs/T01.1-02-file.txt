@@ -1,5 +1,5 @@
 Type: file
-Command: verify directory pre-scan logic in skills/arc-align/SKILL.md Step 1b
+Command: verify directory pre-scan logic in skills/arc-assess/SKILL.md Step 1b
 Expected: Pre-scan uses Glob to identify directories >100 files, recommends for exclusion
 Timestamp: 2026-04-08T11:15:00Z
 

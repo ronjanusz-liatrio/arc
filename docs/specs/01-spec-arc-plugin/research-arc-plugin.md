@@ -19,7 +19,7 @@ Arc was extracted from the Focus/Temper plugin during the temper-split (PR #4, s
 - **Idea lifecycle model:** Capture → Shape → Spec-Ready → Shipped — inspired by Linear's Triage → Backlog → In Progress → Done but adapted for markdown-native, terminal-driven usage
 - **CLAUDE.md managed sections:** Arc will inject `ARC:` namespace markers alongside Temper's `TEMPER:` markers, following the same bootstrap-protocol coexistence rules
 - **Three reference docs** needed: idea-lifecycle.md (progression model), brief-format.md (spec-ready brief specification), wave-planning.md (delivery cycle organization)
-- **Pipeline position:** Arc produces spec-ready briefs consumed by `/cw-spec`; `/temper-progress` gate results feed back to inform arc's next wave planning
+- **Pipeline position:** Arc produces spec-ready briefs consumed by `/cw-spec`; `/temper-audit` gate results feed back to inform arc's next wave planning
 - **No executable code:** Pure markdown plugin — testing = spec-driven verification with proof artifacts, Gherkin BDD scenarios, and gate evaluation
 
 ---
@@ -159,9 +159,9 @@ Followed by: Phase-graduated sections (Spike → Maturity), each with required s
 
 | Skill | Analogue in Temper | Steps | Primary Action | Output |
 |-------|-------------------|-------|----------------|--------|
-| `/arc-capture` | temper-update (change detection) | 3-4 | Append idea stub to BACKLOG | BACKLOG entry (captured status) |
-| `/arc-shape` | temper-update (interactive update) | 5-7 | Refine idea into structured brief | Shaped brief in BACKLOG (shaped status) |
-| `/arc-wave` | temper-incept (project bootstrap) | 4-5 | Group ideas into delivery cycle | ROADMAP wave + ARC: CLAUDE.md sections |
+| `/arc-capture` | temper-sync (change detection) | 3-4 | Append idea stub to BACKLOG | BACKLOG entry (captured status) |
+| `/arc-shape` | temper-sync (interactive update) | 5-7 | Refine idea into structured brief | Shaped brief in BACKLOG (shaped status) |
+| `/arc-wave` | temper-assess (project bootstrap) | 4-5 | Group ideas into delivery cycle | ROADMAP wave + ARC: CLAUDE.md sections |
 
 ### Context Markers
 
@@ -224,7 +224,7 @@ Each skill produces a timestamped report:
 ### Three-Plugin Pipeline
 
 ```
-/arc-capture → /arc-shape → /arc-wave → /temper-incept → /cw-spec → /cw-plan → /cw-dispatch → /temper-progress
+/arc-capture → /arc-shape → /arc-wave → /temper-assess → /cw-spec → /cw-plan → /cw-dispatch → /temper-audit
                                               ↑                                                          |
                                               '-------------------- phase loop --------------------------'
 ```
@@ -233,9 +233,9 @@ Each skill produces a timestamped report:
 
 | From | To | Artifact | Content |
 |------|----|----------|---------|
-| `/arc-wave` | `/temper-incept` | Wave brief (markdown) | Selected ideas, vision context, customer focus, wave dependencies |
+| `/arc-wave` | `/temper-assess` | Wave brief (markdown) | Selected ideas, vision context, customer focus, wave dependencies |
 | `/arc-wave` | `/cw-spec` | Spec-ready brief | Problem, solution, success criteria, constraints, assumptions |
-| `/temper-progress` | `/arc-wave` | Management report | Gate results, phase, coverage matrix — informs next wave planning |
+| `/temper-audit` | `/arc-wave` | Management report | Gate results, phase, coverage matrix — informs next wave planning |
 
 ### CLAUDE.md as Central Hub
 
@@ -244,13 +244,13 @@ All three plugins write to and read from the project's CLAUDE.md:
 ```
 CLAUDE.md
   ├── ARC:product-context     ← written by /arc-wave
-  ├── TEMPER:project-context   ← written by /temper-incept
-  ├── TEMPER:rules             ← written by /temper-incept
-  ├── TEMPER:architecture      ← written by /temper-incept
-  ├── TEMPER:testing           ← written by /temper-incept
-  ├── TEMPER:development       ← written by /temper-incept
-  ├── TEMPER:specs             ← written by /temper-incept
-  └── TEMPER:ecosystem         ← written by /temper-incept
+  ├── TEMPER:project-context   ← written by /temper-assess
+  ├── TEMPER:rules             ← written by /temper-assess
+  ├── TEMPER:architecture      ← written by /temper-assess
+  ├── TEMPER:testing           ← written by /temper-assess
+  ├── TEMPER:development       ← written by /temper-assess
+  ├── TEMPER:specs             ← written by /temper-assess
+  └── TEMPER:ecosystem         ← written by /temper-assess
 ```
 
 **Stateless skill invocation:** Each skill reads CLAUDE.md at invocation time. No hidden state persists between skill runs.
@@ -273,7 +273,7 @@ claude plugin install arc@arc --scope user
 
 ### Feedback Loop: Temper → Arc
 
-`/temper-progress` produces `docs/management-report.md` containing:
+`/temper-audit` produces `docs/management-report.md` containing:
 - **Current phase** — informs what complexity arc can plan next
 - **Hard gate failures** — blocks arc from planning features the project can't absorb
 - **Coverage matrix** — shows engineering artifact completeness
@@ -294,7 +294,7 @@ For a pure markdown plugin, "testing" is fundamentally different from code-based
 
 1. **Specs with proof artifacts** — each demoable unit defines explicit proof artifacts (file existence, grep assertions, content checks, CLI output)
 2. **Gherkin BDD scenarios** — `.feature` files define acceptance criteria in Given/When/Then format
-3. **Gate evaluation** — `/temper-progress` gates A-B verify artifact existence and maturity
+3. **Gate evaluation** — `/temper-audit` gates A-B verify artifact existence and maturity
 4. **No automated test suite** — validation via `/cw-validate` and `/cw-review-team`
 
 ### Proof Artifact Types
@@ -545,8 +545,8 @@ The following is a ready-to-use `/cw-spec` starter prompt enriched with codebase
 7. README update (reflect implemented skills, remove "Planned" labels)
 
 **Code References:**
-- Temper SKILL.md examples: `/Users/ron/dev/temper/skills/temper-incept/SKILL.md`, `temper-progress/SKILL.md`, `temper-update/SKILL.md`
-- Temper bootstrap protocol: `/Users/ron/dev/temper/skills/temper-incept/references/bootstrap-protocol.md`
+- Temper SKILL.md examples: `/Users/ron/dev/temper/skills/temper-assess/SKILL.md`, `temper-audit/SKILL.md`, `temper-sync/SKILL.md`
+- Temper bootstrap protocol: `/Users/ron/dev/temper/skills/temper-assess/references/bootstrap-protocol.md`
 - Temper template examples: `/Users/ron/dev/temper/templates/always-required/PROJECT_CHARTER.tmpl.md`, `DECISIONS.tmpl.md`
 - Temper reference examples: `/Users/ron/dev/temper/references/maturity-model.md`, `ecosystem-model.md`
 - Recovered product templates: git history at commits `913b964`, `4f9522a`, `d5b17e3` in Temper repo

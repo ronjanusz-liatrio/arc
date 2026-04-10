@@ -1,6 +1,6 @@
 Type: file
-Command: test -f skills/arc-align/SKILL.md && echo FILE_EXISTS
-Expected: File exists at skills/arc-align/SKILL.md
+Command: test -f skills/arc-assess/SKILL.md && echo FILE_EXISTS
+Expected: File exists at skills/arc-assess/SKILL.md
 Timestamp: 2026-04-08T00:00:00Z
 
 --- Output ---

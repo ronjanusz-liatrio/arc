@@ -136,7 +136,7 @@ No external APIs, databases, webhooks, or network calls. All operations are loca
 3. Hard gate failure handling (reduce scope, add stabilization work)
 4. CLAUDE.md managed section coexistence (ARC: namespace respects TEMPER: boundaries)
 5. Phase-graduated templates align with 7 Temper maturity phases
-6. `/temper-progress` feedback loop after SDD pipeline completion
+6. `/temper-audit` feedback loop after SDD pipeline completion
 
 **Claude-workflow handoff (3 mechanisms):**
 1. Brief format (`references/brief-format.md`) is the contract between Arc and `/cw-spec`

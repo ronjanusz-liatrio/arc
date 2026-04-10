@@ -1,11 +1,11 @@
 Type: file
-Command: test -f skills/arc-readme/references/readme-mapping.md && wc -l skills/arc-readme/references/readme-mapping.md
+Command: test -f skills/arc-sync/references/readme-mapping.md && wc -l skills/arc-sync/references/readme-mapping.md
 Expected: File exists with comprehensive artifact-to-section mapping content
 Timestamp: 2026-04-08T12:00:00Z
 
 --- Output ---
 File exists: YES
-Path: skills/arc-readme/references/readme-mapping.md
+Path: skills/arc-sync/references/readme-mapping.md
 Line count: 313
 
 --- Content Verification ---

@@ -1,10 +1,10 @@
 # README Quality Rules
 
-`/arc-readme` enforces quality gates on every scaffolded and updated README. These rules are adapted from [readme-author](https://github.com/liatrio-labs/claude-plugins/tree/main/plugins/readme-author) conventions and tailored for Arc-managed READMEs. Both scaffold mode and update mode validate output against these gates before presenting for user approval.
+`/arc-sync` enforces quality gates on every scaffolded and updated README. These rules are adapted from [readme-author](https://github.com/liatrio-labs/claude-plugins/tree/main/plugins/readme-author) conventions and tailored for Arc-managed READMEs. Both scaffold mode and update mode validate output against these gates before presenting for user approval.
 
 This document is consumed by:
-- **`/arc-readme` scaffold mode** --- validates the generated README before user approval
-- **`/arc-readme` update mode** --- validates managed section changes before writing
+- **`/arc-sync` scaffold mode** --- validates the generated README before user approval
+- **`/arc-sync` update mode** --- validates managed section changes before writing
 
 ---
 
@@ -201,7 +201,7 @@ The features section lists shipped capabilities as user-facing descriptions. The
 
 ## Validation Checklist
 
-`/arc-readme` runs this checklist before presenting output for user approval:
+`/arc-sync` runs this checklist before presenting output for user approval:
 
 | # | Gate | Pass criteria |
 |---|------|---------------|
@@ -224,6 +224,6 @@ The features section lists shipped capabilities as user-facing descriptions. The
 
 ## Cross-References
 
-- `skills/arc-readme/references/trust-signals.md` --- Trust-signal definitions that validate structural quality post-write
-- `skills/arc-readme/references/readme-mapping.md` --- Artifact-to-section mapping rules
+- `skills/arc-sync/references/trust-signals.md` --- Trust-signal definitions that validate structural quality post-write
+- `skills/arc-sync/references/readme-mapping.md` --- Artifact-to-section mapping rules
 - `references/idea-lifecycle.md` --- Status values used in lifecycle diagrams and features lists

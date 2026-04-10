@@ -1,5 +1,5 @@
 Type: file
-Command: grep -based content verification of Step 2c section in skills/arc-align/SKILL.md
+Command: grep -based content verification of Step 2c section in skills/arc-assess/SKILL.md
 Expected: All 9 requirements (R04.1.1 through R04.1.9) satisfied in SKILL.md
 Timestamp: 2026-04-09T12:00:00Z
 

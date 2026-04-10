@@ -1,6 +1,6 @@
 Type: file
 Command: Verify Gherkin scenario coverage in SKILL.md update mode steps
-Expected: All update mode Gherkin scenarios from arc-readme-update-mode.feature are addressed
+Expected: All update mode Gherkin scenarios from arc-sync-update-mode.feature are addressed
 Timestamp: 2026-04-08T12:00:00Z
 
 === Scenario Coverage ===
@@ -65,6 +65,6 @@ Scenario 10: "Reports summary after update"
 
 === Summary ===
 
-All 10 Gherkin scenarios from arc-readme-update-mode.feature are covered by the update mode steps.
+All 10 Gherkin scenarios from arc-sync-update-mode.feature are covered by the update mode steps.
 
 Status: PASS

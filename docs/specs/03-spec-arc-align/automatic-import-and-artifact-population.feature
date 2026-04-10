@@ -1,4 +1,4 @@
-# Source: docs/specs/03-spec-arc-align/03-spec-arc-align.md
+# Source: docs/specs/03-spec-arc-assess/03-spec-arc-assess.md
 # Pattern: State + CLI/Process
 # Recommended test type: Integration
 

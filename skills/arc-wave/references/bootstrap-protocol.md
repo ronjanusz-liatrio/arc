@@ -79,7 +79,7 @@ If the insertion algorithm detects that the insertion point would place the ARC 
 
 If no CLAUDE.md exists in the project root:
 - Do **not** create one solely for ARC sections
-- Warn the user: "No CLAUDE.md found. Run `/temper-incept` to bootstrap the project, then re-run `/arc-wave` to inject product context."
+- Warn the user: "No CLAUDE.md found. Run `/temper-assess` to bootstrap the project, then re-run `/arc-wave` to inject product context."
 - Continue wave creation without CLAUDE.md injection
 
 ## Update Behavior

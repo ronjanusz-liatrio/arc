@@ -26,4 +26,4 @@
 
 - SKILL.md Mermaid syntax structurally matches readme-mapping.md canonical syntax
 - TS-5 regex handles all four state labels including hyphenated Spec-Ready
-- No remnants of old syntax found in skills/arc-readme/ directory
+- No remnants of old syntax found in skills/arc-sync/ directory

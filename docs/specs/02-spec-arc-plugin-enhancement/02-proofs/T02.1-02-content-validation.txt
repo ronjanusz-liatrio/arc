@@ -1,5 +1,5 @@
 Type: cli
-Command: grep -E "^### (BH|WA)-[0-9]" skills/arc-review/references/audit-dimensions.md
+Command: grep -E "^### (BH|WA)-[0-9]" skills/arc-audit/references/audit-dimensions.md
 Expected: 11 dimension headings (BH-1 through BH-5, WA-1 through WA-6) with severity levels, thresholds, and configurable parameters
 Timestamp: 2026-04-07T00:00:00Z
 

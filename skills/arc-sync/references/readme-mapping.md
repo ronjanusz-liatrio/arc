@@ -1,6 +1,6 @@
 # README Mapping
 
-`/arc-readme` uses a deterministic mapping between Arc artifacts and `ARC:` managed README sections. This document defines which artifact feeds each section, what content to extract, how to format it for the README, and what to do when a source artifact is absent or incomplete.
+`/arc-sync` uses a deterministic mapping between Arc artifacts and `ARC:` managed README sections. This document defines which artifact feeds each section, what content to extract, how to format it for the README, and what to do when a source artifact is absent or incomplete.
 
 Both scaffold mode and update mode follow these rules identically.
 
@@ -31,10 +31,10 @@ All managed sections use paired HTML comment markers with a `#` prefix:
 **Conventions:**
 
 - Section names are lowercase kebab-case within the `ARC:` namespace
-- Content between markers is fully managed — replaced on every `/arc-readme` invocation
+- Content between markers is fully managed — replaced on every `/arc-sync` invocation
 - Markers themselves are never moved once placed; only the content between them changes
-- `/arc-readme` never modifies content outside `ARC:` markers
-- `/arc-readme` never modifies `TEMPER:` or `MM:` managed sections
+- `/arc-sync` never modifies content outside `ARC:` markers
+- `/arc-sync` never modifies `TEMPER:` or `MM:` managed sections
 
 ---
 
@@ -250,7 +250,7 @@ See [BACKLOG.md](docs/BACKLOG.md) for individual idea details.
 
 ## Fallback Behavior
 
-When a source artifact is absent or has insufficient content, `/arc-readme` uses fallback rules to produce valid output without false trust-signal failures.
+When a source artifact is absent or has insufficient content, `/arc-sync` uses fallback rules to produce valid output without false trust-signal failures.
 
 ### Artifact Absent
 
@@ -258,7 +258,7 @@ The source file does not exist at the expected path.
 
 | ARC Section | Fallback Content |
 |-------------|-----------------|
-| `ARC:overview` | **Do not scaffold or update.** VISION.md is a prerequisite; `/arc-readme` exits with a warning if absent. |
+| `ARC:overview` | **Do not scaffold or update.** VISION.md is a prerequisite; `/arc-sync` exits with a warning if absent. |
 | `ARC:audience` | `Not yet defined — create [CUSTOMER.md](docs/CUSTOMER.md) to define target personas.` |
 | `ARC:features` | `No features shipped yet.` |
 | `ARC:roadmap` | `Not yet defined — create [ROADMAP.md](docs/ROADMAP.md) to plan delivery waves.` |
@@ -286,7 +286,7 @@ The source file exists but contains fewer than 200 non-whitespace characters.
 
 ## Insertion Priority
 
-When injecting `ARC:` managed sections into an existing README.md that has no markers, `/arc-readme` uses the following insertion priority to determine where to place the marker block.
+When injecting `ARC:` managed sections into an existing README.md that has no markers, `/arc-sync` uses the following insertion priority to determine where to place the marker block.
 
 ### Priority Order
 
@@ -317,8 +317,8 @@ After insertion, verify:
 
 ## Cross-References
 
-- `skills/arc-readme/references/trust-signals.md` — Signal definitions that validate the output of these mapping rules
-- `skills/arc-readme/references/readme-quality-rules.md` — Quality gates for README length, structure, and readability
+- `skills/arc-sync/references/trust-signals.md` — Signal definitions that validate the output of these mapping rules
+- `skills/arc-sync/references/readme-quality-rules.md` — Quality gates for README length, structure, and readability
 - `skills/arc-wave/references/bootstrap-protocol.md` — Marker format and coexistence rules (ARC: namespace in CLAUDE.md)
 - `references/idea-lifecycle.md` — Status values used by ARC:features and ARC:lifecycle-diagram extraction
 - `templates/VISION.tmpl.md` — VISION.md structure that ARC:overview extraction depends on

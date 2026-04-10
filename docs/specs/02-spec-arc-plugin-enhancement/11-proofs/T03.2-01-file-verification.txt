@@ -1,5 +1,5 @@
 Type: file
-Description: Verify skills/README.md includes all required updates for /arc-review
+Description: Verify skills/README.md includes all required updates for /arc-audit
 Command: git diff skills/README.md
 Timestamp: 2026-04-07T18:52:00Z
 
@@ -11,12 +11,12 @@ CHANGES MADE:
    - After:  "Arc provides four skills for managing the product idea lifecycle."
 
 2. Added new row to skills table (line 10):
-   | [arc-review](arc-review/SKILL.md) | Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts | `/arc-review` |
+   | [arc-audit](arc-audit/SKILL.md) | Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts | `/arc-audit` |
 
 3. Updated workflow diagram (lines 15-17):
    /arc-capture → /arc-shape → /arc-wave → /cw-spec → /cw-plan → /cw-dispatch
                                         ↑
-                                  /arc-review (audit at any time)
+                                  /arc-audit (audit at any time)
 
 4. Added new workflow description (line 23):
    4. **Review** audits pipeline health at any point in the cycle — check backlog health, wave alignment, and cross-reference integrity

@@ -27,7 +27,7 @@ Before fix, scaffold mode used different text:
   audience: "for detailed persona profiles" vs canonical "for detailed personas"
   roadmap: "for wave details" vs canonical "for the full delivery plan"
 
-These divergences would cause unnecessary diffs when /arc-readme first ran in update mode
+These divergences would cause unnecessary diffs when /arc-sync first ran in update mode
 on a previously scaffolded README. Now scaffold and update modes produce identical text.
 
 Status: PASS

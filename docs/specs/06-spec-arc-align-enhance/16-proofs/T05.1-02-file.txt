@@ -1,6 +1,6 @@
 Type: file
 Description: Verify Discovery Summary section with counts by source type and target artifact (R05.1.2)
-Command: git show HEAD:skills/arc-align/SKILL.md | grep -A5 "2.5a. Discovery Summary"
+Command: git show HEAD:skills/arc-assess/SKILL.md | grep -A5 "2.5a. Discovery Summary"
 Expected: Section 2.5a defines counts by source type (markdown keywords, markdown structural, spec extraction, code comments) and by target artifact (BACKLOG, VISION, CUSTOMER)
 Timestamp: 2026-04-09T18:15:00Z
 

@@ -1,6 +1,6 @@
 # Import Rules
 
-`/arc-align` classifies discovered content into artifact targets, generates captured stubs, cleans up original sources, and maintains an import manifest. This document defines the classification rules, stub generation logic, cleanup behavior, and manifest format.
+`/arc-assess` classifies discovered content into artifact targets, generates captured stubs, cleans up original sources, and maintains an import manifest. This document defines the classification rules, stub generation logic, cleanup behavior, and manifest format.
 
 ---
 
@@ -82,7 +82,7 @@ When content does not clearly map to a single target:
 
 ## Stub Generation
 
-When importing a discovery into BACKLOG as a captured stub, `/arc-align` generates the following structure per idea.
+When importing a discovery into BACKLOG as a captured stub, `/arc-assess` generates the following structure per idea.
 
 ### Stub Format
 
@@ -308,7 +308,7 @@ Stubs imported from spec directories carry an additional traceability marker tha
 <!-- aligned-from-spec: {spec_name} -->
 ```
 
-- `spec_name`: The spec directory name, derived by stripping the numeric prefix from the directory name (e.g., `docs/specs/03-spec-arc-align` → `spec_name` = `03-spec-arc-align`)
+- `spec_name`: The spec directory name, derived by stripping the numeric prefix from the directory name (e.g., `docs/specs/03-spec-arc-assess` → `spec_name` = `03-spec-arc-assess`)
 
 This marker is used **in addition to** the standard `<!-- aligned-from: ... -->` comment. Both markers are present on spec-sourced stubs:
 
@@ -321,13 +321,13 @@ This marker is used **in addition to** the standard `<!-- aligned-from: ... -->`
 <!-- aligned-from: docs/specs/03-spec-arc-align/03-spec-arc-align.md:45-50 -->
 <!-- aligned-from-spec: 03-spec-arc-align -->
 
-Imported from docs/specs/03-spec-arc-align/03-spec-arc-align.md
+Imported from docs/specs/03-spec-arc-assess/03-spec-arc-assess.md
 ```
 
 **Spec name derivation:**
 
-1. Take the relative path of the source file (e.g., `docs/specs/03-spec-arc-align/03-spec-arc-align.md`)
-2. Extract the immediate parent directory name (e.g., `03-spec-arc-align`)
+1. Take the relative path of the source file (e.g., `docs/specs/03-spec-arc-assess/03-spec-arc-assess.md`)
+2. Extract the immediate parent directory name (e.g., `03-spec-arc-assess`)
 3. Use that directory name as `spec_name`
 
 This enables downstream tools and the manifest to filter or group imports by their originating spec.
@@ -534,7 +534,7 @@ Before importing, read the manifest and build a set of `{source_path}:{line_rang
 
 ## Cross-References
 
-- `skills/arc-align/references/detection-patterns.md` — Keyword, structural, and code comment patterns (CC-1 through CC-4) used to discover content before classification
+- `skills/arc-assess/references/detection-patterns.md` — Keyword, structural, and code comment patterns (CC-1 through CC-4) used to discover content before classification
 - `references/idea-lifecycle.md` — The Capture stage definition and required fields for imported stubs
 - `references/brief-format.md` — The brief format that captured stubs will eventually be shaped into
 - `templates/BACKLOG.tmpl.md` — Template used to bootstrap BACKLOG.md if absent before import

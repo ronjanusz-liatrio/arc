@@ -6,14 +6,14 @@ Timestamp: 2026-04-07T19:00:00Z
 --- Output ---
 
 References section content:
-  - skills/arc-review/references/audit-dimensions.md       [PASS]
-  - skills/arc-review/references/review-report-template.md [PASS]
+  - skills/arc-audit/references/audit-dimensions.md       [PASS]
+  - skills/arc-audit/references/review-report-template.md [PASS]
   - references/idea-lifecycle.md                           [PASS]
   - references/brief-format.md                             [PASS]
 
 Inline references throughout SKILL.md:
-  - "per skills/arc-review/references/audit-dimensions.md" in Step 2  [PASS]
-  - "per skills/arc-review/references/audit-dimensions.md" in Step 3  [PASS]
+  - "per skills/arc-audit/references/audit-dimensions.md" in Step 2  [PASS]
+  - "per skills/arc-audit/references/audit-dimensions.md" in Step 3  [PASS]
   - "from audit-dimensions.md" in Step 4 rating thresholds             [PASS]
   - "Read review-report-template.md" in Step 5                        [PASS]
 

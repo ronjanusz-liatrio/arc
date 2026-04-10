@@ -17,7 +17,7 @@ Verification:
 
 - This matches arc-capture SKILL.md Step 3a format (line 132):
   | [{Title}](#{anchor}) | captured | {Priority} | -- |
-  With priority always P2-Medium for arc-align imports
+  With priority always P2-Medium for arc-assess imports
 
 Gherkin coverage: "BACKLOG summary table is updated with new rows" -- COVERED
   Step 5a-v specifies row format, insertion location, batch operation

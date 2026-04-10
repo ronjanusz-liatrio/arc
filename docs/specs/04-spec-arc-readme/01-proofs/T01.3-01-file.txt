@@ -1,5 +1,5 @@
 Type: file
-Command: Grep for WA-7 sections in skills/arc-review/SKILL.md
+Command: Grep for WA-7 sections in skills/arc-audit/SKILL.md
 Expected: WA-7 subsection exists in Step 3, WA-7 listed as warning finding in Step 4, seven wave alignment checks referenced
 Timestamp: 2026-04-08T14:15:00-07:00
 Status: PASS
@@ -12,7 +12,7 @@ Status: PASS
    - Detection logic references trust-signals.md
    - Scorecard format: N of M signals passing
    - Severity: info (>=75%) / warning (<75%)
-   - Recommended action: "Run /arc-readme to fix failing signals"
+   - Recommended action: "Run /arc-sync to fix failing signals"
 
 2. Step 3 header updated:
    - Line 116: "Execute all seven wave alignment checks" (was "six")
@@ -26,4 +26,4 @@ Status: PASS
 5. References section updated:
    - Line 329: trust-signals.md cross-reference added
 
-All expected changes present in skills/arc-review/SKILL.md.
+All expected changes present in skills/arc-audit/SKILL.md.

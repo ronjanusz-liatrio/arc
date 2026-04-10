@@ -1,5 +1,5 @@
 Type: file
-Command: Grep for WA-7 row in skills/arc-review/references/review-report-template.md
+Command: Grep for WA-7 row in skills/arc-audit/references/review-report-template.md
 Expected: WA-7 row in Wave Alignment Findings table, updated Field Descriptions section
 Timestamp: 2026-04-08T14:15:00-07:00
 Status: PASS
@@ -7,7 +7,7 @@ Status: PASS
 --- Verification ---
 
 1. Wave Alignment Findings table (inside template code fence):
-   - Line 46: '| README trust signals | {N of M signals passing, or "No README" or "No ARC: sections"} | info / warning | Run /arc-readme to fix failing signals |'
+   - Line 46: '| README trust signals | {N of M signals passing, or "No README" or "No ARC: sections"} | info / warning | Run /arc-sync to fix failing signals |'
    - Row follows same format as WA-1 through WA-6 rows
 
 2. Cross-References in template code fence updated:

@@ -1,7 +1,7 @@
 Type: file
 File: .claude-plugin/marketplace.json
-Description: Verify version is 0.3.0 and description includes /arc-review in marketplace.json
-Expected: "version": "0.3.0" and description containing "/arc-review for pipeline health auditing"
+Description: Verify version is 0.3.0 and description includes /arc-audit in marketplace.json
+Expected: "version": "0.3.0" and description containing "/arc-audit for pipeline health auditing"
 Timestamp: 2026-04-07T00:00:00Z
 
 Content:
@@ -17,7 +17,7 @@ Content:
   "plugins": [
     {
       "name": "arc",
-      "description": "Product direction and idea pipeline. Provides /arc-capture for quick idea entry, /arc-shape for refining ideas into spec-ready briefs, /arc-wave for organizing work into delivery cycles, and /arc-review for pipeline health auditing.",
+      "description": "Product direction and idea pipeline. Provides /arc-capture for quick idea entry, /arc-shape for refining ideas into spec-ready briefs, /arc-wave for organizing work into delivery cycles, and /arc-audit for pipeline health auditing.",
       "source": "./",
       "strict": true
     }

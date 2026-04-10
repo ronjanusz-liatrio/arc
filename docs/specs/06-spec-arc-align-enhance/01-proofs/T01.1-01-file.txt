@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "docs/skill/arc/align-report\|docs/skill/arc/align-manifest\|docs/skill/arc/wave-report\|docs/skill/arc/review-report\|docs/skill/arc/shape-report" skills/arc-align/SKILL.md
+Command: grep -n "docs/skill/arc/align-report\|docs/skill/arc/align-manifest\|docs/skill/arc/wave-report\|docs/skill/arc/review-report\|docs/skill/arc/shape-report" skills/arc-assess/SKILL.md
 Expected: All operational artifact references use docs/skill/arc/ prefix
 Timestamp: 2026-04-09T00:00:00Z
 

@@ -1,6 +1,6 @@
 Type: file
 Description: Verify Theme Analysis groups related discoveries (R05.1.4)
-Command: git show HEAD:skills/arc-align/SKILL.md | grep -c "Theme Analysis"
+Command: git show HEAD:skills/arc-assess/SKILL.md | grep -c "Theme Analysis"
 Expected: Theme Analysis section with grouping procedure, detection heuristics, and output template
 Timestamp: 2026-04-09T18:15:00Z
 

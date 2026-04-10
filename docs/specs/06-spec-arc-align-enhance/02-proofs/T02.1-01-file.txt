@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "allowed-tools" skills/arc-align/SKILL.md
+Command: grep -n "allowed-tools" skills/arc-assess/SKILL.md
 Expected: Line 5 contains "Agent" in allowed-tools list
 Timestamp: 2026-04-09T00:00:00Z
 

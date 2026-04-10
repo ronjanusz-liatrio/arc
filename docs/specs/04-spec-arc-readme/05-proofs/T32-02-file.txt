@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "Goal" skills/arc-readme/references/readme-mapping.md
+Command: grep -n "Goal" skills/arc-sync/references/readme-mapping.md
 Expected: No occurrences of "Goal" in the ARC:roadmap section of readme-mapping.md
 Timestamp: 2026-04-08T15:00:00Z
 

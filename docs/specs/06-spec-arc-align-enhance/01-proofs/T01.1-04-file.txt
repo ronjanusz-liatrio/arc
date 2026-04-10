@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "Migration procedure\|Migrated\|old_path\|old path" skills/arc-align/SKILL.md
+Command: grep -n "Migration procedure\|Migrated\|old_path\|old path" skills/arc-assess/SKILL.md
 Expected: Migration logic present in Step 4d to read old paths and copy to new paths
 Timestamp: 2026-04-09T00:00:00Z
 

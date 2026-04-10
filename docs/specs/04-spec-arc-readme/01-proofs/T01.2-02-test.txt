@@ -15,7 +15,7 @@ Requirement Checks:
   [PASS] Severity info when >=75% pass — present in severity section
   [PASS] Graceful skip: "No README.md found" — 1 match
   [PASS] Graceful skip: "No ARC: sections in README" — 1 match
-  [PASS] Interactive fix: "Run /arc-readme" with failing signals — 1 match
+  [PASS] Interactive fix: "Run /arc-sync" with failing signals — 1 match
   [PASS] Health Rating Thresholds: WA-7 listed as warning finding — 1 match
 
 Format Compliance:

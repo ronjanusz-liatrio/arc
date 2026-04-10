@@ -1,7 +1,7 @@
-# Validation Report: arc-align
+# Validation Report: arc-assess
 
 **Validated**: 2026-04-08T20:15:00Z
-**Spec**: docs/specs/03-spec-arc-align/03-spec-arc-align.md
+**Spec**: docs/specs/03-spec-arc-assess/03-spec-arc-assess.md
 **Overall**: PASS
 **Gates**: A[P] B[P] C[P] D[P] E[P] F[P]
 
@@ -62,22 +62,22 @@
 
 | # | Requirement | Status | Evidence |
 |---|-------------|--------|----------|
-| R04.1 | SKILL.md with standard frontmatter and process protocol | Verified | skills/arc-align/SKILL.md exists, 949 lines, frontmatter matches arc-capture exactly |
-| R04.2 | detection-patterns.md with all patterns | Verified | skills/arc-align/references/detection-patterns.md: 17 KW + 4 ST patterns with examples |
-| R04.3 | import-rules.md with classification and import logic | Verified | skills/arc-align/references/import-rules.md: classification, stub gen, cleanup, manifest, inclusivity |
+| R04.1 | SKILL.md with standard frontmatter and process protocol | Verified | skills/arc-assess/SKILL.md exists, 949 lines, frontmatter matches arc-capture exactly |
+| R04.2 | detection-patterns.md with all patterns | Verified | skills/arc-assess/references/detection-patterns.md: 17 KW + 4 ST patterns with examples |
+| R04.3 | import-rules.md with classification and import logic | Verified | skills/arc-assess/references/import-rules.md: classification, stub gen, cleanup, manifest, inclusivity |
 | R04.4 | plugin.json version bump | Verified | .claude-plugin/plugin.json: version 0.4.0 |
-| R04.5 | README.md references /arc-align | Verified | 5 locations: Mermaid diagram, skills table, bullet list, ASCII pipeline, plugin structure tree |
-| R04.6 | skills/README.md references /arc-align | Verified | Skills table row + workflow diagram |
+| R04.5 | README.md references /arc-assess | Verified | 5 locations: Mermaid diagram, skills table, bullet list, ASCII pipeline, plugin structure tree |
+| R04.6 | skills/README.md references /arc-assess | Verified | Skills table row + workflow diagram |
 
 ## Coverage Matrix: Repository Standards
 
 | Standard | Status | Evidence |
 |----------|--------|----------|
 | SKILL.md frontmatter format | Verified | Matches arc-capture exactly: name, description, user-invocable, allowed-tools |
-| Process step pattern | Verified | Numbered steps with AskUserQuestion, follows arc-review pattern |
-| Reference doc location | Verified | skills/arc-align/references/ following arc-shape/arc-wave conventions |
-| Conventional commits | Verified | All 10 commits use feat(arc-align) or docs(arc-align) format |
-| Marker comments | Verified | `<!-- aligned-from: ... -->` follows arc-review's `<!-- stale: reviewed ... -->` pattern |
+| Process step pattern | Verified | Numbered steps with AskUserQuestion, follows arc-audit pattern |
+| Reference doc location | Verified | skills/arc-assess/references/ following arc-shape/arc-wave conventions |
+| Conventional commits | Verified | All 10 commits use feat(arc-assess) or docs(arc-assess) format |
+| Marker comments | Verified | `<!-- aligned-from: ... -->` follows arc-audit's `<!-- stale: reviewed ... -->` pattern |
 
 ## Coverage Matrix: Proof Artifacts
 
@@ -107,24 +107,24 @@
 ### Git Commits (10 implementation commits, newest first)
 
 ```
-91c55bc feat(arc-align): integrate /arc-align into plugin metadata and documentation hubs
-ec64c07 feat(arc-align): implement inline summary and next-steps AskUserQuestion flow in SKILL.md Steps 9-10
-aea8542 feat(arc-align): implement VISION/CUSTOMER import, source cleanup, and manifest update in SKILL.md Steps 5b-7
-ba5bba4 feat(arc-align): implement align-report.md generation with all required sections in SKILL.md Step 8
-477d16b feat(arc-align): implement artifact classification and manifest idempotency in SKILL.md Steps 2c-3
-92b03d2 feat(arc-align): implement artifact bootstrap and BACKLOG stub generation in SKILL.md Steps 4-5a
-d0491e0 feat(arc-align): implement keyword and structural detection scanners in SKILL.md Step 2
-9559d19 feat(arc-align): implement exclusion defaults and directory pre-scan in SKILL.md Step 1
-c6529b1 docs(arc-align): create detection-patterns.md and import-rules.md reference docs
-0f0becd feat(arc-align): create SKILL.md skeleton with frontmatter and process protocol
+91c55bc feat(arc-assess): integrate /arc-assess into plugin metadata and documentation hubs
+ec64c07 feat(arc-assess): implement inline summary and next-steps AskUserQuestion flow in SKILL.md Steps 9-10
+aea8542 feat(arc-assess): implement VISION/CUSTOMER import, source cleanup, and manifest update in SKILL.md Steps 5b-7
+ba5bba4 feat(arc-assess): implement align-report.md generation with all required sections in SKILL.md Step 8
+477d16b feat(arc-assess): implement artifact classification and manifest idempotency in SKILL.md Steps 2c-3
+92b03d2 feat(arc-assess): implement artifact bootstrap and BACKLOG stub generation in SKILL.md Steps 4-5a
+d0491e0 feat(arc-assess): implement keyword and structural detection scanners in SKILL.md Step 2
+9559d19 feat(arc-assess): implement exclusion defaults and directory pre-scan in SKILL.md Step 1
+c6529b1 docs(arc-assess): create detection-patterns.md and import-rules.md reference docs
+0f0becd feat(arc-assess): create SKILL.md skeleton with frontmatter and process protocol
 ```
 
 ### File Scope Check
 
 All 66 changed files are within scope:
-- 4 implementation files: `skills/arc-align/SKILL.md`, `skills/arc-align/references/detection-patterns.md`, `skills/arc-align/references/import-rules.md`, `skills/arc-align/references/align-report-template.md`
+- 4 implementation files: `skills/arc-assess/SKILL.md`, `skills/arc-assess/references/detection-patterns.md`, `skills/arc-assess/references/import-rules.md`, `skills/arc-assess/references/align-report-template.md`
 - 3 integration files: `.claude-plugin/plugin.json`, `README.md`, `skills/README.md`
-- 59 proof and spec artifacts in `docs/specs/03-spec-arc-align/`
+- 59 proof and spec artifacts in `docs/specs/03-spec-arc-assess/`
 
 ### Credential Scan
 

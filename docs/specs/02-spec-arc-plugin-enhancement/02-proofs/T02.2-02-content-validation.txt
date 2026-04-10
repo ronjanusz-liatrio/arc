@@ -1,5 +1,5 @@
 Type: file
-File: skills/arc-review/references/review-report-template.md
+File: skills/arc-audit/references/review-report-template.md
 Expected: Content validates against task requirements
 Timestamp: 2026-04-07T17:31:00Z
 

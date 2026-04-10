@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "Run deep scan\|Quick scan only\|Use existing report" skills/arc-align/SKILL.md
+Command: grep -n "Run deep scan\|Quick scan only\|Use existing report" skills/arc-assess/SKILL.md
 Expected: All three AskUserQuestion options present with correct labels
 Timestamp: 2026-04-09T00:00:00Z
 

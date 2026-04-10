@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "Items skipped\|Items left behind\|Files deleted\|Sections trimmed" skills/arc-align/SKILL.md
+Command: grep -n "Items skipped\|Items left behind\|Files deleted\|Sections trimmed" skills/arc-assess/SKILL.md
 Expected: Aggregate metric rows present in Step 9 summary table (skipped, left behind, deleted, trimmed)
 Timestamp: 2026-04-08T18:46:05Z
 

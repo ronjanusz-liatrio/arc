@@ -1,6 +1,6 @@
 Type: file
 Description: Verify KW-18 through KW-22 pattern definitions in detection-patterns.md
-Command: grep -n "### KW-1[89]\|### KW-2[012]" skills/arc-align/references/detection-patterns.md
+Command: grep -n "### KW-1[89]\|### KW-2[012]" skills/arc-assess/references/detection-patterns.md
 Expected: 5 section headers for KW-18 through KW-22 with Purpose, Search term, Example match, Typical target
 Timestamp: 2026-04-09T00:00:00Z
 

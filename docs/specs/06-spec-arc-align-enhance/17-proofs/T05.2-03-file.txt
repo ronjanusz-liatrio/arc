@@ -17,7 +17,7 @@ ORDER CHECK:
 
 All sections in correct order: YES
 
-GREP: pattern="If fewer than three recommendations" in skills/arc-align/SKILL.md
+GREP: pattern="If fewer than three recommendations" in skills/arc-assess/SKILL.md
 
 Match found at line 776:
 If fewer than three recommendations were generated in 2.5d, include only the recommendations that exist. Do not pad with placeholders.

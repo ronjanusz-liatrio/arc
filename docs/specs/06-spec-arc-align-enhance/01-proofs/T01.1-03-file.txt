@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "mkdir -p docs/skill/arc" skills/arc-align/SKILL.md
+Command: grep -n "mkdir -p docs/skill/arc" skills/arc-assess/SKILL.md
 Expected: Step 4 bootstrap creates docs/skill/arc/ directory
 Timestamp: 2026-04-09T00:00:00Z
 

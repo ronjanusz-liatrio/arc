@@ -1,6 +1,6 @@
 Type: file
 Description: Validate all required documentation elements in skills/README.md
-Command: grep -n "arc-review\|four skills\|audit at any time" /Users/ron/dev/arc/skills/README.md
+Command: grep -n "arc-audit\|four skills\|audit at any time" /Users/ron/dev/arc/skills/README.md
 Timestamp: 2026-04-07T18:52:01Z
 
 REQUIREMENT VALIDATION:
@@ -10,18 +10,18 @@ Requirement 1: Change "three" to "four" skills
   Line 3: "Arc provides four skills for managing the product idea lifecycle."
   Status: PASS ✓
 
-Requirement 2: Add arc-review to skills table
-  Line 10: "| [arc-review](arc-review/SKILL.md) | Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts | `/arc-review` |"
+Requirement 2: Add arc-audit to skills table
+  Line 10: "| [arc-audit](arc-audit/SKILL.md) | Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts | `/arc-audit` |"
   Status: PASS ✓
 
-Requirement 3: Update workflow diagram with /arc-review
+Requirement 3: Update workflow diagram with /arc-audit
   Lines 15-17 include:
     /arc-capture → /arc-shape → /arc-wave → /cw-spec → /cw-plan → /cw-dispatch
                                         ↑
-                                  /arc-review (audit at any time)
+                                  /arc-audit (audit at any time)
   Status: PASS ✓
 
-Requirement 4: Add /arc-review to workflow description
+Requirement 4: Add /arc-audit to workflow description
   Line 23: "4. **Review** audits pipeline health at any point in the cycle — check backlog health, wave alignment, and cross-reference integrity"
   Status: PASS ✓
 
@@ -30,7 +30,7 @@ OVERALL VALIDATION:
 All requirements from task T03.2 have been satisfied.
 - Skills count updated: 3 → 4
 - Arc-review row added to table with correct description and invocation
-- Workflow diagram updated to show arc-review as audit point
+- Workflow diagram updated to show arc-audit as audit point
 - Workflow step description added
 
 Status: PASS

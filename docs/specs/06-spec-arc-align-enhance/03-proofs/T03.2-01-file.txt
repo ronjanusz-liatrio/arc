@@ -1,6 +1,6 @@
 Type: file
 Description: Verify KW-18 through KW-22 are present in SKILL.md keyword table
-Command: grep -n "KW-1[89]\|KW-2[012]" skills/arc-align/SKILL.md
+Command: grep -n "KW-1[89]\|KW-2[012]" skills/arc-assess/SKILL.md
 Expected: 5 rows for KW-18, KW-19, KW-20, KW-21, KW-22 in keyword table
 Timestamp: 2026-04-09T00:00:00Z
 

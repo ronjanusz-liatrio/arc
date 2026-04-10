@@ -1,7 +1,7 @@
 Type: file
 Description: Verify all 12 new directory patterns are present in align-report-template.md
 Timestamp: 2026-04-09T14:50:00Z
-File: skills/arc-align/references/align-report-template.md
+File: skills/arc-assess/references/align-report-template.md
 
 Expected: All 12 patterns present in Hardcoded Exclusions table
 

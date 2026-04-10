@@ -1,6 +1,6 @@
 Type: file
 Description: Verify Recommendations section with ordered next actions (R05.1.5)
-Command: git show HEAD:skills/arc-align/SKILL.md | sed -n '/2.5d. Recommendations/,/2.5e. Research Integration/p'
+Command: git show HEAD:skills/arc-assess/SKILL.md | sed -n '/2.5d. Recommendations/,/2.5e. Research Integration/p'
 Expected: Ordered recommendation generation rules table and numbered list output template
 Timestamp: 2026-04-09T18:15:00Z
 

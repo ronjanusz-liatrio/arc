@@ -8,7 +8,7 @@ Timestamp: 2026-04-09T00:00:00Z
 PASS
 
 Verified presence of "## Spec-Specific Classification" section in:
-  skills/arc-align/references/import-rules.md (line 211)
+  skills/arc-assess/references/import-rules.md (line 211)
 
 Six classification rules confirmed present:
   1. Goals sections -> VISION (KW-18)

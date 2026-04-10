@@ -1,16 +1,16 @@
 Type: cli
-Command: grep -c "Directory" skills/arc-align/SKILL.md
+Command: grep -c "Directory" skills/arc-assess/SKILL.md
 Expected: Increased count reflecting new directory rows in Step 1a and report template
 Timestamp: 2026-04-09T16:30:00Z
 
 COMMAND EXECUTION:
 
-$ grep -c 'Directory' skills/arc-align/SKILL.md
+$ grep -c 'Directory' skills/arc-assess/SKILL.md
 21
 
 DETAILED VERIFICATION:
 Step 1a table line count:
-$ grep -n '| \..*/ | Directory |' skills/arc-align/SKILL.md | wc -l
+$ grep -n '| \..*/ | Directory |' skills/arc-assess/SKILL.md | wc -l
 11
 
 Report template section (lines 1259-1279):

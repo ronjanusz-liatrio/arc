@@ -1,6 +1,6 @@
 Type: file
 Description: Verify scaffold fallback text no longer references wrong skills (/arc-capture, /arc-wave)
-Command: grep -n "arc-capture\|arc-wave" skills/arc-readme/SKILL.md (filtered to scaffold sections)
+Command: grep -n "arc-capture\|arc-wave" skills/arc-sync/SKILL.md (filtered to scaffold sections)
 Expected: No matches for /arc-capture in audience fallback or /arc-wave in roadmap fallback
 Timestamp: 2026-04-08T12:00:00Z
 

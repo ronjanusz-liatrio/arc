@@ -5,7 +5,7 @@ Timestamp: 2026-04-09T00:00:00Z
 
 --- VERIFICATION ---
 
-$ grep -c "### CC-[1-4]" skills/arc-align/references/detection-patterns.md
+$ grep -c "### CC-[1-4]" skills/arc-assess/references/detection-patterns.md
 4
 
 CC-1: TODO (line 505) — Purpose, Search term, Examples in Python/TypeScript/Go, Typical target artifact: BACKLOG, Priority: P2-Medium

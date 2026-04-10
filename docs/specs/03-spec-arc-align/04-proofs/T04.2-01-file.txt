@@ -1,11 +1,11 @@
 Type: file
 Description: detection-patterns.md exists with all keyword and structural patterns documented
-Command: ls -la skills/arc-align/references/detection-patterns.md && grep -c "^### KW-" skills/arc-align/references/detection-patterns.md && grep -c "^### ST-" skills/arc-align/references/detection-patterns.md
+Command: ls -la skills/arc-assess/references/detection-patterns.md && grep -c "^### KW-" skills/arc-assess/references/detection-patterns.md && grep -c "^### ST-" skills/arc-assess/references/detection-patterns.md
 Expected: File exists, 17 keyword patterns, 4 structural patterns
 Timestamp: 2026-04-08T11:00:00Z
 
 Result:
-  File: skills/arc-align/references/detection-patterns.md (11414 bytes, 513 lines)
+  File: skills/arc-assess/references/detection-patterns.md (11414 bytes, 513 lines)
   Keyword patterns (KW-): 17
     KW-1: roadmap
     KW-2: backlog

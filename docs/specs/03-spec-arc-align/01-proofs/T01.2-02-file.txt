@@ -10,7 +10,7 @@ Verification:
 - ST-2: Numbered Feature Lists — detects sequential "1. 2. 3." patterns, requires 3+ items
 - ST-3: Heading Patterns — detects "## Roadmap", "## TODO", "## Planned Features", "## Backlog" (case-insensitive)
 - ST-4: Kanban-Style Markers — detects "### To Do", "### In Progress", "### Done" (requires 2 of 3)
-- All structural patterns match the spec definition in 03-spec-arc-align.md line 34
+- All structural patterns match the spec definition in 03-spec-arc-assess.md line 34
 - All structural patterns match detection-patterns.md reference (ST-1 through ST-4)
 - Step 2b specifies Read tool for line-by-line parsing
 - Step 2b runs after keyword scan to minimize file reads

@@ -11,7 +11,7 @@ Verification:
 - Step 5a inclusivity principle (lines 431):
   "When in doubt about whether a discovery is genuine product-direction content, import it as a captured stub rather than skip it. The user can review and delete false positives from the BACKLOG. It is better to over-import than to miss genuine content."
 
-- This matches the spec requirement (03-spec-arc-align.md):
+- This matches the spec requirement (03-spec-arc-assess.md):
   "The system shall be inclusive at import time -- when in doubt about whether content is product-direction, import it as a captured stub rather than skip it"
 
 - Also matches import-rules.md inclusivity principle:

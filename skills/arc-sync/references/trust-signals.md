@@ -3,8 +3,8 @@
 Arc-managed README sections are validated against 8 structural trust signals. Each signal is a Grep/Read-detectable proxy for product direction credibility — it proves the content is real, current, and traceable to source artifacts, without evaluating prose quality.
 
 This document is the canonical single source of truth for trust-signal definitions. It is consumed by:
-- **WA-7** (`/arc-review`) — audit mode, evaluates signals and reports a scorecard
-- **`/arc-readme`** — post-update validation, confirms no regressions after writing
+- **WA-7** (`/arc-audit`) — audit mode, evaluates signals and reports a scorecard
+- **`/arc-sync`** — post-update validation, confirms no regressions after writing
 
 ---
 
@@ -236,7 +236,7 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 
 ## Section-to-Artifact Mapping
 
-This mapping defines which source artifact each ARC: managed section derives from. Both WA-7 and `/arc-readme` use this mapping to determine evaluability and to cross-reference content.
+This mapping defines which source artifact each ARC: managed section derives from. Both WA-7 and `/arc-sync` use this mapping to determine evaluability and to cross-reference content.
 
 | ARC Section | Source Artifact | Signals |
 |-------------|----------------|---------|
@@ -279,8 +279,8 @@ Both consumers produce a scorecard using this format:
 
 ## Cross-References
 
-- `skills/arc-review/references/audit-dimensions.md` — WA-7 uses these signal definitions for the README trust-signal audit
-- `skills/arc-review/references/review-report-template.md` — Report format includes the trust-signal scorecard
-- `skills/arc-review/SKILL.md` — Step 3 (Wave Alignment Audit) includes WA-7
+- `skills/arc-audit/references/audit-dimensions.md` — WA-7 uses these signal definitions for the README trust-signal audit
+- `skills/arc-audit/references/review-report-template.md` — Report format includes the trust-signal scorecard
+- `skills/arc-audit/SKILL.md` — Step 3 (Wave Alignment Audit) includes WA-7
 - `references/idea-lifecycle.md` — Status values referenced by TS-3, TS-5, TS-6
 - `references/brief-format.md` — Brief fields referenced by source artifact structure

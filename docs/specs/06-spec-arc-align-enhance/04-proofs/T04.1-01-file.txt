@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "2[a-f]\." skills/arc-align/SKILL.md (sub-step labels)
+Command: grep -n "2[a-f]\." skills/arc-assess/SKILL.md (sub-step labels)
 Expected: Step 2c inserted between 2b and 2d, subsequent steps renumbered through 2f
 Timestamp: 2026-04-09T12:00:00Z
 

@@ -6,7 +6,7 @@ Timestamp: 2026-04-08T16:00:00Z
 
 Verification:
 - Grep for "KW-" in SKILL.md found 17 keyword entries (KW-1 through KW-17)
-- Each keyword matches the spec definition in 03-spec-arc-align.md line 33
+- Each keyword matches the spec definition in 03-spec-arc-assess.md line 33
 - Each keyword has a Typical Target column mapping to BACKLOG, VISION, or CUSTOMER
 - Keywords KW-1 through KW-12 map to BACKLOG
 - Keywords KW-13, KW-14 map to CUSTOMER (persona, target audience)

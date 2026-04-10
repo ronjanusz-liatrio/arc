@@ -1,16 +1,16 @@
 Type: file
-Description: README.md contains /arc-align in all five required sections
-Command: grep -n "arc-align" README.md
-Expected: arc-align appears in Mermaid flowchart, skills role table, skills bullet list, ASCII diagram, and plugin structure tree
+Description: README.md contains /arc-assess in all five required sections
+Command: grep -n "arc-assess" README.md
+Expected: arc-assess appears in Mermaid flowchart, skills role table, skills bullet list, ASCII diagram, and plugin structure tree
 Timestamp: 2026-04-08T00:00:00Z
 
 Result:
-Line 54:    AA["/arc-align\nDiscover and\nimport content"]:::arc    (Mermaid flowchart)
-Line 82:| `/arc-align` | Discover scattered product-direction content... (skills role table)
-Line 90:- **`/arc-align`** -- Codebase discovery and migration...       (skills bullet list)
-Line 101:/arc-align -> /arc-capture -> /arc-shape -> ...              (ASCII diagram)
-Line 144:    arc-align/                                               (plugin structure tree)
+Line 54:    AA["/arc-assess\nDiscover and\nimport content"]:::arc    (Mermaid flowchart)
+Line 82:| `/arc-assess` | Discover scattered product-direction content... (skills role table)
+Line 90:- **`/arc-assess`** -- Codebase discovery and migration...       (skills bullet list)
+Line 101:/arc-assess -> /arc-capture -> /arc-shape -> ...              (ASCII diagram)
+Line 144:    arc-assess/                                               (plugin structure tree)
 
-All 5 required sections contain /arc-align.
+All 5 required sections contain /arc-assess.
 
 Status: PASS

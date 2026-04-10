@@ -1,8 +1,8 @@
-# 06-spec-arc-align-enhance
+# 06-spec-arc-assess-enhance
 
 ## Introduction/Overview
 
-Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan for deep codebase exploration, spec-directory scanning to extract product-direction content from existing specifications, source-code comment scanning for TODO/FIXME/HACK/XXX markers, an analysis artifact that synthesizes all findings into gap analysis and recommendations before prompting the user for import confirmation, and relocation of all Arc operational artifacts (reports, manifests, analysis) from `docs/` to `docs/skill/arc/` to separate Arc's internal files from the repo's product-direction artifacts.
+Enhance `/arc-assess` with five new capabilities: a cw-research subagent pre-scan for deep codebase exploration, spec-directory scanning to extract product-direction content from existing specifications, source-code comment scanning for TODO/FIXME/HACK/XXX markers, an analysis artifact that synthesizes all findings into gap analysis and recommendations before prompting the user for import confirmation, and relocation of all Arc operational artifacts (reports, manifests, analysis) from `docs/` to `docs/skill/arc/` to separate Arc's internal files from the repo's product-direction artifacts.
 
 ## Goals
 
@@ -10,14 +10,14 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 2. Scan `docs/specs/` for product-direction content embedded in existing specifications — extracting goals to VISION, user stories to BACKLOG, non-goals and open questions to BACKLOG as future ideas, and persona references to CUSTOMER
 3. Scan source code files for TODO, FIXME, HACK, and XXX comment markers and import them as BACKLOG captured stubs
 4. Generate `docs/skill/arc/align-analysis.md` after discovery but before the import prompt, containing structured findings, gap analysis, and recommendations based on what the codebase has and what it lacks
-5. Relocate all Arc operational artifacts (reports, manifests, analysis) from `docs/` to `docs/skill/arc/`, keeping product-direction artifacts (BACKLOG, VISION, CUSTOMER, ROADMAP) at `docs/` — this separation applies across all Arc skills, not just arc-align
+5. Relocate all Arc operational artifacts (reports, manifests, analysis) from `docs/` to `docs/skill/arc/`, keeping product-direction artifacts (BACKLOG, VISION, CUSTOMER, ROADMAP) at `docs/` — this separation applies across all Arc skills, not just arc-assess
 
 ## User Stories
 
-- As a product owner adopting Arc on a mature repo with existing specs, I want arc-align to extract product-direction content from those specs so I don't manually re-enter goals and user stories into Arc artifacts.
-- As a developer with scattered TODO/FIXME comments in source code, I want arc-align to consolidate those into BACKLOG stubs so they enter the idea lifecycle alongside markdown-based discoveries.
-- As a team lead running arc-align for the first time, I want to see an analysis of what the codebase has vs. what it lacks (e.g., "no vision statement found", "3 specs share a common theme") so I can make informed decisions about what to import and what to create manually.
-- As a developer on an unfamiliar codebase, I want arc-align to leverage cw-research's deep exploration so the analysis is grounded in architecture and conventions, not just keyword matches.
+- As a product owner adopting Arc on a mature repo with existing specs, I want arc-assess to extract product-direction content from those specs so I don't manually re-enter goals and user stories into Arc artifacts.
+- As a developer with scattered TODO/FIXME comments in source code, I want arc-assess to consolidate those into BACKLOG stubs so they enter the idea lifecycle alongside markdown-based discoveries.
+- As a team lead running arc-assess for the first time, I want to see an analysis of what the codebase has vs. what it lacks (e.g., "no vision statement found", "3 specs share a common theme") so I can make informed decisions about what to import and what to create manually.
+- As a developer on an unfamiliar codebase, I want arc-assess to leverage cw-research's deep exploration so the analysis is grounded in architecture and conventions, not just keyword matches.
 - As a repo maintainer, I want Arc's internal reports and manifests stored separately from my product-direction artifacts so that `docs/` isn't cluttered with operational files that only Arc reads.
 
 ## Demoable Units of Work
@@ -28,7 +28,7 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 
 **Functional Requirements:**
 
-- The system shall add a new Step 0 ("Research Phase") to the arc-align process, executed before the existing Step 1 (Configure Exclusions)
+- The system shall add a new Step 0 ("Research Phase") to the arc-assess process, executed before the existing Step 1 (Configure Exclusions)
 - The system shall prompt the user via AskUserQuestion whether to run the research phase, with options: "Run deep scan (Recommended)" (invokes cw-research), "Quick scan only" (skip research, proceed with existing behavior), and "Use existing report" (if a prior research report exists)
 - When the user selects "Run deep scan," the system shall invoke cw-research as a subagent using the Agent tool with `subagent_type: "general-purpose"`, passing a prompt that instructs it to run `/cw-research` focused on product-direction discovery — architecture, conventions, dependencies, and any product/planning content found in code, config, and documentation
 - The research report shall be saved to `docs/specs/research-align/research-align.md` following cw-research's standard output format
@@ -38,7 +38,7 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 
 **Proof Artifacts:**
 
-- CLI: Running `/arc-align` presents the research phase prompt as the first interaction
+- CLI: Running `/arc-assess` presents the research phase prompt as the first interaction
 - File: `docs/specs/research-align/research-align.md` exists after selecting "Run deep scan"
 - File: Research findings are referenced in `docs/skill/arc/align-analysis.md` (Unit 4 output)
 
@@ -98,7 +98,7 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 **Proof Artifacts:**
 
 - File: `docs/BACKLOG.md` contains stubs from code comments with `<!-- aligned-from-code: ... -->` markers
-- CLI: Running `/arc-align` on a repo with TODO comments in `.py` files produces discoveries in the discovery list
+- CLI: Running `/arc-assess` on a repo with TODO comments in `.py` files produces discoveries in the discovery list
 - File: `detection-patterns.md` documents CC-1 through CC-4 patterns
 
 ### Unit 4: Analysis Artifact Generation
@@ -113,7 +113,7 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
   - **Gap Analysis:** Identify what the codebase has vs. what it lacks across Arc's four artifact types:
     - VISION: Does the repo have any mission/vision/north-star content? If not, flag as a gap.
     - CUSTOMER: Does the repo have persona or audience definitions? If not, flag as a gap.
-    - ROADMAP: Does the repo have phased planning content? (Note: arc-align doesn't manage ROADMAP directly, but can flag its absence)
+    - ROADMAP: Does the repo have phased planning content? (Note: arc-assess doesn't manage ROADMAP directly, but can flag its absence)
     - BACKLOG: How many actionable items were discovered? Are they concentrated in a few files or scattered?
   - **Theme Analysis:** Group related discoveries by topic similarity (e.g., "3 specs and 5 TODOs relate to authentication") and suggest potential wave groupings
   - **Recommendations:** Ordered list of suggested next actions based on findings, such as:
@@ -130,7 +130,7 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 
 **Proof Artifacts:**
 
-- File: `docs/skill/arc/align-analysis.md` exists after running `/arc-align` with all required sections populated
+- File: `docs/skill/arc/align-analysis.md` exists after running `/arc-assess` with all required sections populated
 - CLI: Inline summary before the import prompt shows gap analysis and top recommendations
 - File: Analysis references cw-research report findings when available
 
@@ -152,22 +152,22 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
   - `docs/VISION.md` — unchanged
   - `docs/CUSTOMER.md` — unchanged
   - `docs/ROADMAP.md` — unchanged
-- The system shall update the hardcoded exclusion list in arc-align's Step 1a to reference the new `docs/skill/arc/` paths for Arc-managed operational files
-- The system shall update all SKILL.md files across all Arc skills (`arc-align`, `arc-capture`, `arc-shape`, `arc-wave`, `arc-review`, `arc-readme`) to reference the new `docs/skill/arc/` paths wherever they read or write operational artifacts
+- The system shall update the hardcoded exclusion list in arc-assess's Step 1a to reference the new `docs/skill/arc/` paths for Arc-managed operational files
+- The system shall update all SKILL.md files across all Arc skills (`arc-assess`, `arc-capture`, `arc-shape`, `arc-wave`, `arc-audit`, `arc-sync`) to reference the new `docs/skill/arc/` paths wherever they read or write operational artifacts
 - The system shall update all reference documents that mention operational artifact paths:
-  - `skills/arc-align/references/align-report-template.md` — update output path
-  - `skills/arc-align/references/import-rules.md` — update manifest path references
-  - `skills/arc-review/references/review-report-template.md` — update output path
-  - `skills/arc-review/references/audit-dimensions.md` — update any report path references
+  - `skills/arc-assess/references/align-report-template.md` — update output path
+  - `skills/arc-assess/references/import-rules.md` — update manifest path references
+  - `skills/arc-audit/references/review-report-template.md` — update output path
+  - `skills/arc-audit/references/audit-dimensions.md` — update any report path references
   - `skills/arc-wave/references/wave-report-template.md` — update output path
 - The system shall update `README.md` to reflect the new path structure in the plugin structure tree and any path references
 - The system shall create the `docs/skill/arc/` directory as part of artifact bootstrap (same pattern as `docs/` directory creation in the current Step 4)
-- The system shall handle migration gracefully: if old-path artifacts exist (e.g., `docs/align-manifest.md` from a prior run), arc-align shall read from the old path, copy content to the new path, and inform the user that the old file can be deleted
+- The system shall handle migration gracefully: if old-path artifacts exist (e.g., `docs/align-manifest.md` from a prior run), arc-assess shall read from the old path, copy content to the new path, and inform the user that the old file can be deleted
 
 **Proof Artifacts:**
 
-- File: `docs/skill/arc/align-report.md` is created at the new path after an arc-align run
-- File: `docs/skill/arc/align-manifest.md` is created at the new path after an arc-align run
+- File: `docs/skill/arc/align-report.md` is created at the new path after an arc-assess run
+- File: `docs/skill/arc/align-manifest.md` is created at the new path after an arc-assess run
 - CLI: `docs/BACKLOG.md` remains at its current path — product artifacts are unaffected
 - File: All SKILL.md files reference `docs/skill/arc/` for operational artifacts
 - File: README.md plugin structure tree shows the `docs/skill/arc/` path
@@ -175,7 +175,7 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 ## Non-Goals (Out of Scope)
 
 - **Automatic spec deduplication** — the analysis flags overlapping specs but does not merge or deduplicate them
-- **ROADMAP artifact population** — the analysis flags ROADMAP gaps but arc-align does not create or populate `docs/ROADMAP.md` (that's `/arc-wave`'s responsibility)
+- **ROADMAP artifact population** — the analysis flags ROADMAP gaps but arc-assess does not create or populate `docs/ROADMAP.md` (that's `/arc-wave`'s responsibility)
 - **Code refactoring suggestions** — code comment scanning extracts TODOs but does not suggest code changes
 - **Modifying existing specs** — spec scanning is read-only; original specs are never modified or deleted (they are reference documents, not scattered content to be cleaned up)
 - **Automatic wave assignment** — theme analysis suggests wave groupings but does not assign items to waves
@@ -192,7 +192,7 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 
 - SKILL.md modifications: add new steps while preserving existing step numbering (use 0 for research, 2.5 for analysis, 2c for code comments)
 - Reference doc updates: append new patterns to existing detection-patterns.md and import-rules.md rather than creating new files
-- Conventional commits: `feat(arc-align): ...` for behavior changes, `docs(arc-align): ...` for reference doc updates
+- Conventional commits: `feat(arc-assess): ...` for behavior changes, `docs(arc-assess): ...` for reference doc updates
 - New comments follow existing patterns: `<!-- aligned-from-spec: ... -->` and `<!-- aligned-from-code: ... -->` mirror `<!-- aligned-from: ... -->`
 
 ## Technical Considerations
@@ -202,7 +202,7 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 - **Research subagent cost:** The cw-research subagent invocation adds wall-clock time. Making it optional (with "Quick scan only" as an alternative) keeps the fast-path available for users who want lightweight alignment.
 - **Analysis artifact idempotency:** `docs/skill/arc/align-analysis.md` is overwritten on every run (not appended to). It reflects the current state, not a history. The align-report.md (at `docs/skill/arc/`) continues to serve the history/audit role.
 - **Source code file extensions:** The extension list covers the most common languages. Users can add additional extensions via the custom exclusion patterns (inverted — they'd need to modify detection-patterns.md for new extensions, which is documented as a limitation).
-- **Step numbering:** Using 0 and 2.5 avoids renumbering all existing steps, which would invalidate cross-references in reference docs and the existing spec (03-spec-arc-align).
+- **Step numbering:** Using 0 and 2.5 avoids renumbering all existing steps, which would invalidate cross-references in reference docs and the existing spec (03-spec-arc-assess).
 - **Path restructuring scope:** The `docs/skill/arc/` relocation is cross-cutting — it touches every Arc skill's SKILL.md, the hardcoded exclusion list, reference docs, and the README. Implementing it as part of this spec (rather than a separate spec) avoids a mid-flight migration where some skills write to old paths and others to new paths.
 - **Migration from old paths:** Old-path artifacts from prior runs are read (for manifest continuity) then written to the new location. The old files are not deleted automatically — the user is informed and can clean up manually. This preserves the non-destructive principle.
 
@@ -215,11 +215,11 @@ Enhance `/arc-align` with five new capabilities: a cw-research subagent pre-scan
 
 ## Success Metrics
 
-- Running `/arc-align` on a repo with 3+ existing specs extracts at least one item per spec into Arc artifacts
-- Running `/arc-align` on a repo with TODO/FIXME comments in source code produces corresponding BACKLOG stubs
+- Running `/arc-assess` on a repo with 3+ existing specs extracts at least one item per spec into Arc artifacts
+- Running `/arc-assess` on a repo with TODO/FIXME comments in source code produces corresponding BACKLOG stubs
 - The analysis artifact correctly identifies gaps (e.g., no VISION content) when those artifacts don't exist
 - The cw-research integration enriches the analysis with architecture context not available from keyword/structural scanning alone
-- Re-running `/arc-align` after import produces zero new imports from previously scanned specs and code comments (idempotent via manifest)
+- Re-running `/arc-assess` after import produces zero new imports from previously scanned specs and code comments (idempotent via manifest)
 - The analysis artifact is generated in under 10 seconds (excluding cw-research subagent time)
 
 ## Open Questions

@@ -1,11 +1,11 @@
 ---
-name: arc-readme
+name: arc-sync
 description: "README lifecycle management — scaffold or update README.md with Arc-managed sections synced to product direction artifacts"
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 ---
 
-# /arc-readme — README Lifecycle Management
+# /arc-sync — README Lifecycle Management
 
 ## Context Marker
 
@@ -43,15 +43,15 @@ Read the following files (graceful no-op if absent, except VISION.md):
 3. `docs/BACKLOG.md` — Shipped items for features, status counts for the lifecycle diagram.
 4. `docs/ROADMAP.md` — Wave names, themes, and status for the roadmap section.
 
-Read `skills/arc-readme/references/trust-signals.md` for the trust-signal framework definitions.
-Read `skills/arc-readme/references/readme-mapping.md` for the artifact-to-section mapping rules.
-Read `skills/arc-readme/references/readme-quality-rules.md` for quality gates.
+Read `skills/arc-sync/references/trust-signals.md` for the trust-signal framework definitions.
+Read `skills/arc-sync/references/readme-mapping.md` for the artifact-to-section mapping rules.
+Read `skills/arc-sync/references/readme-quality-rules.md` for quality gates.
 
 **VISION.md gate check:**
 
 Count non-whitespace characters in `docs/VISION.md`:
 - If the file does not exist, warn and exit: "Run `/arc-capture` or create VISION.md first."
-- If the file has fewer than 200 non-whitespace characters, warn and exit: "VISION.md has insufficient content ({count} non-whitespace characters, minimum 200). Add a Problem Statement and Vision Summary before running `/arc-readme`."
+- If the file has fewer than 200 non-whitespace characters, warn and exit: "VISION.md has insufficient content ({count} non-whitespace characters, minimum 200). Add a Problem Statement and Vision Summary before running `/arc-sync`."
 
 ### Step 2: Detect Mode
 
@@ -145,7 +145,7 @@ After successful injection, proceed to Step 4 (Trust-Signal Validation) to valid
 
 Generate a complete README.md with managed and non-managed sections. Follow the structure below exactly.
 
-Read `skills/arc-readme/references/readme-mapping.md` for the artifact-to-section extraction rules. Apply the quality gates from `skills/arc-readme/references/readme-quality-rules.md` throughout.
+Read `skills/arc-sync/references/readme-mapping.md` for the artifact-to-section extraction rules. Apply the quality gates from `skills/arc-sync/references/readme-quality-rules.md` throughout.
 
 #### 3a. Title and Description
 
@@ -365,7 +365,7 @@ Generate static placeholder sections for the user to fill in. These are NOT mana
 
 ### Step 4: Trust-Signal Validation
 
-Run TS-1 through TS-8 against the scaffolded README content (in memory, before writing to disk). Follow the detection steps defined in `skills/arc-readme/references/trust-signals.md`.
+Run TS-1 through TS-8 against the scaffolded README content (in memory, before writing to disk). Follow the detection steps defined in `skills/arc-sync/references/trust-signals.md`.
 
 **Validation procedure:**
 
@@ -445,7 +445,7 @@ Managed sections: {count} ARC: sections created
 Total lines: {line_count}
 Trust signals: {N}/{M} evaluable passing
 
-Run /arc-readme again after shipping features or planning waves to update managed sections.
+Run /arc-sync again after shipping features or planning waves to update managed sections.
 ```
 
 ### Step 7: Capture Before-State
@@ -460,11 +460,11 @@ This step begins the **update mode** flow (entered from Step 2 when README.md co
    - Total README line count
 4. Verify no nesting conflicts: no `ARC:` section is nested inside another `ARC:`, `TEMPER:`, or `MM:` section.
 
-**If nesting conflict detected:** Warn the user and exit: "Nesting conflict detected — {section} is inside {parent}. Fix the marker structure manually before running `/arc-readme`."
+**If nesting conflict detected:** Warn the user and exit: "Nesting conflict detected — {section} is inside {parent}. Fix the marker structure manually before running `/arc-sync`."
 
 ### Step 8: Rebuild Managed Sections
 
-For each `ARC:` managed section found in Step 7, regenerate its content using the extraction rules from `skills/arc-readme/references/readme-mapping.md`. Apply the quality gates from `skills/arc-readme/references/readme-quality-rules.md` throughout.
+For each `ARC:` managed section found in Step 7, regenerate its content using the extraction rules from `skills/arc-sync/references/readme-mapping.md`. Apply the quality gates from `skills/arc-sync/references/readme-quality-rules.md` throughout.
 
 **For each section, rebuild content as follows:**
 
@@ -531,7 +531,7 @@ Regenerate the mermaid state diagram from `docs/BACKLOG.md`:
 
 **Rules for all sections:**
 
-- Follow extraction rules from `skills/arc-readme/references/readme-mapping.md` exactly
+- Follow extraction rules from `skills/arc-sync/references/readme-mapping.md` exactly
 - Replace content between markers only — never move marker positions
 - Never modify content outside `ARC:` managed sections
 - Never modify `TEMPER:` or `MM:` managed sections
@@ -561,7 +561,7 @@ Scan files in `docs/` for additional `ARC:` managed diagram markers that live ou
 
 ### Step 10: Trust-Signal Validation
 
-Run TS-1 through TS-8 against the **updated** README content (in memory, before writing to disk). Follow the detection steps defined in `skills/arc-readme/references/trust-signals.md`.
+Run TS-1 through TS-8 against the **updated** README content (in memory, before writing to disk). Follow the detection steps defined in `skills/arc-sync/references/trust-signals.md`.
 
 **Validation procedure:**
 
@@ -695,13 +695,13 @@ Line count delta: {delta} ({before_total} → {after_total})
 Trust signals: {N}/{M} evaluable passing
 Regressions: {count}
 
-Run /arc-readme again after shipping features or planning waves to keep managed sections current.
+Run /arc-sync again after shipping features or planning waves to keep managed sections current.
 ```
 
 ## References
 
-- [`skills/arc-readme/references/trust-signals.md`](references/trust-signals.md) — Trust-signal definitions (TS-1 through TS-8) used for post-scaffold and post-update validation
-- [`skills/arc-readme/references/readme-mapping.md`](references/readme-mapping.md) — Artifact-to-section extraction rules for all ARC: managed sections
-- [`skills/arc-readme/references/readme-quality-rules.md`](references/readme-quality-rules.md) — Quality gates for line count, heading hierarchy, accessibility, and conciseness
+- [`skills/arc-sync/references/trust-signals.md`](references/trust-signals.md) — Trust-signal definitions (TS-1 through TS-8) used for post-scaffold and post-update validation
+- [`skills/arc-sync/references/readme-mapping.md`](references/readme-mapping.md) — Artifact-to-section extraction rules for all ARC: managed sections
+- [`skills/arc-sync/references/readme-quality-rules.md`](references/readme-quality-rules.md) — Quality gates for line count, heading hierarchy, accessibility, and conciseness
 - [`skills/arc-wave/references/bootstrap-protocol.md`](../arc-wave/references/bootstrap-protocol.md) — Marker format and coexistence rules for ARC: namespace in project files
 - [`references/idea-lifecycle.md`](../../references/idea-lifecycle.md) — Idea lifecycle stages and status values referenced by ARC:features and ARC:lifecycle-diagram

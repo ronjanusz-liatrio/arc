@@ -1,11 +1,11 @@
 ---
-name: arc-review
+name: arc-audit
 description: "Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts"
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 ---
 
-# /arc-review — Pipeline Health Audit
+# /arc-audit — Pipeline Health Audit
 
 ## Context Marker
 
@@ -59,7 +59,7 @@ If the user selects "Custom," prompt for the value.
 
 ### Step 2: Backlog Health Audit
 
-Execute all five backlog health checks per `skills/arc-review/references/audit-dimensions.md`.
+Execute all five backlog health checks per `skills/arc-audit/references/audit-dimensions.md`.
 
 Read the reference file for exact detection logic, thresholds, and output formats.
 
@@ -113,7 +113,7 @@ Report in the format defined in audit-dimensions.md (BH-5 section).
 
 ### Step 3: Wave Alignment Audit
 
-Execute all seven wave alignment checks per `skills/arc-review/references/audit-dimensions.md`.
+Execute all seven wave alignment checks per `skills/arc-audit/references/audit-dimensions.md`.
 
 **If `docs/ROADMAP.md` is absent:** Skip WA-1, WA-2, and WA-3 (report as info: "No ROADMAP.md found — wave alignment checks skipped").
 
@@ -174,14 +174,14 @@ Report in the format defined in audit-dimensions.md (WA-6 section).
 
 #### WA-7: README Trust-Signal Audit
 
-Evaluate the structural trust signals defined in `skills/arc-readme/references/trust-signals.md` against the project's README.md `ARC:` managed sections.
+Evaluate the structural trust signals defined in `skills/arc-sync/references/trust-signals.md` against the project's README.md `ARC:` managed sections.
 
 **Skip conditions:**
 - If `README.md` does not exist at the project root: report as info ("No README.md found") and skip
-- If `README.md` exists but contains no `<!--# BEGIN ARC:... -->` markers: report as info ("No ARC: sections in README — run `/arc-readme` to scaffold") and skip
+- If `README.md` exists but contains no `<!--# BEGIN ARC:... -->` markers: report as info ("No ARC: sections in README — run `/arc-sync` to scaffold") and skip
 
 **Detection logic:**
-- Read `skills/arc-readme/references/trust-signals.md` for the canonical signal definitions and evaluability rules
+- Read `skills/arc-sync/references/trust-signals.md` for the canonical signal definitions and evaluability rules
 - Evaluate each of the 8 trust signals (TS-1 through TS-8) per the detection steps in trust-signals.md
 - A signal is evaluable only when its source artifact exists AND the corresponding `ARC:` managed section exists in README.md
 - For each evaluable signal, cross-reference README.md content against the source artifact (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) to determine pass/fail
@@ -196,7 +196,7 @@ Evaluate the structural trust signals defined in `skills/arc-readme/references/t
 - `info` — 75% or more of evaluable signals pass
 - `warning` — fewer than 75% of evaluable signals pass
 
-**Recommended action:** "Run `/arc-readme` to fix failing signals" with a list of which signals failed.
+**Recommended action:** "Run `/arc-sync` to fix failing signals" with a list of which signals failed.
 
 Report in the format defined in audit-dimensions.md (WA-7 section).
 
@@ -230,7 +230,7 @@ Apply the thresholds from audit-dimensions.md to determine the overall rating:
 
 ### Step 5: Generate Report
 
-Read `skills/arc-review/references/review-report-template.md` for the full report format.
+Read `skills/arc-audit/references/review-report-template.md` for the full report format.
 
 Create `docs/skill/arc/review-report.md` with:
 
@@ -312,7 +312,7 @@ AskUserQuestion({
     header: "Next",
     options: [
       { label: "Run review again", description: "Re-audit after fixes to verify health improvement" },
-      { label: "Update README", description: "Run /arc-readme to fix stale or incomplete ARC: sections" },
+      { label: "Update README", description: "Run /arc-sync to fix stale or incomplete ARC: sections" },
       { label: "Capture new ideas", description: "Run /arc-capture to add ideas to the backlog" },
       { label: "Plan a wave", description: "Run /arc-wave to organize spec-ready ideas into a delivery cycle" },
       { label: "Done", description: "Finish the review session" }
@@ -326,15 +326,15 @@ AskUserQuestion({
 
 **Handle selection:**
 - **Run review again:** Loop back to Step 1 (re-read all files, re-run all checks)
-- **Update README:** Inform the user to run `/arc-readme` to fix the failing trust signals identified by WA-7, listing which signals failed
+- **Update README:** Inform the user to run `/arc-sync` to fix the failing trust signals identified by WA-7, listing which signals failed
 - **Capture new ideas:** Inform the user to run `/arc-capture`
 - **Plan a wave:** Inform the user to run `/arc-wave`
 - **Done:** Summarize the review session (health rating, fixes applied, remaining issues) and exit
 
 ## References
 
-- `skills/arc-review/references/audit-dimensions.md` — Health check definitions, detection logic, thresholds, severity levels, and configurable parameters
-- `skills/arc-review/references/review-report-template.md` — Report format and section layout for `docs/skill/arc/review-report.md`
-- `skills/arc-readme/references/trust-signals.md` — Structural trust-signal definitions used by WA-7 (TS-1 through TS-8)
+- `skills/arc-audit/references/audit-dimensions.md` — Health check definitions, detection logic, thresholds, severity levels, and configurable parameters
+- `skills/arc-audit/references/review-report-template.md` — Report format and section layout for `docs/skill/arc/review-report.md`
+- `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions used by WA-7 (TS-1 through TS-8)
 - `references/idea-lifecycle.md` — Idea status transitions, timestamp fields, and lifecycle phases
 - `references/brief-format.md` — The seven required brief sections used by BH-4

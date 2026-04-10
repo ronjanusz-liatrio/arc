@@ -10,16 +10,16 @@ Feature: Plugin Registration and Skill Index Update
     Then the skill table contains a row for arc-help
     And the row includes a description and invocation syntax
 
-  Scenario: arc-help is positioned after arc-review in the skill table
+  Scenario: arc-help is positioned after arc-audit in the skill table
     Given the arc-help skill has been registered in skills/README.md
     When a contributor reads the skill table
-    Then the arc-help row appears after the arc-review row
+    Then the arc-help row appears after the arc-audit row
     And arc-help is categorized as a meta/utility skill
 
   Scenario: skills/README.md workflow section notes arc-help as available anytime
     Given the arc-help skill has been registered in skills/README.md
     When a contributor reads the workflow section
-    Then /arc-help is listed alongside /arc-review as available at any time
+    Then /arc-help is listed alongside /arc-audit as available at any time
     And /arc-help is not part of the sequential workflow order
 
   Scenario: Root README.md skill table includes arc-help

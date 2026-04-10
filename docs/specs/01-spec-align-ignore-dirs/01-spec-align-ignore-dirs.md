@@ -2,7 +2,7 @@
 
 ## Introduction/Overview
 
-The arc-align hardcoded exclusion list currently only covers JS/generic build directories (`.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`). This leaves common Python, Rust, Java, and modern JS framework directories to be caught by the >100 file heuristic or user-added patterns. This spec adds 12 new directory patterns to the hardcoded list so they are silently excluded without user intervention.
+The arc-assess hardcoded exclusion list currently only covers JS/generic build directories (`.git/`, `node_modules/`, `vendor/`, `dist/`, `build/`). This leaves common Python, Rust, Java, and modern JS framework directories to be caught by the >100 file heuristic or user-added patterns. This spec adds 12 new directory patterns to the hardcoded list so they are silently excluded without user intervention.
 
 ## Goals
 
@@ -12,7 +12,7 @@ The arc-align hardcoded exclusion list currently only covers JS/generic build di
 
 ## User Stories
 
-- As a Python developer running `/arc-align`, I want `.venv/`, `__pycache__/`, and tool caches excluded automatically so I don't have to add them manually every run.
+- As a Python developer running `/arc-assess`, I want `.venv/`, `__pycache__/`, and tool caches excluded automatically so I don't have to add them manually every run.
 - As a Rust or Java developer, I want `target/` excluded by default so cargo/maven build output doesn't slow the scan.
 - As a Next.js developer, I want `.next/` excluded automatically so build artifacts aren't scanned for product-direction content.
 
@@ -20,7 +20,7 @@ The arc-align hardcoded exclusion list currently only covers JS/generic build di
 
 ### Unit 1: Update hardcoded exclusion list in SKILL.md
 
-**Purpose:** Add the 12 new directory patterns to the three locations in `skills/arc-align/SKILL.md` where the hardcoded exclusion list is defined or referenced.
+**Purpose:** Add the 12 new directory patterns to the three locations in `skills/arc-assess/SKILL.md` where the hardcoded exclusion list is defined or referenced.
 
 **Functional Requirements:**
 
@@ -36,8 +36,8 @@ The arc-align hardcoded exclusion list currently only covers JS/generic build di
 
 **Proof Artifacts:**
 
-- File: `skills/arc-align/SKILL.md` contains all 12 new directory patterns in the Step 1a table
-- CLI: `grep -c 'Directory' skills/arc-align/SKILL.md` returns increased count reflecting new rows
+- File: `skills/arc-assess/SKILL.md` contains all 12 new directory patterns in the Step 1a table
+- CLI: `grep -c 'Directory' skills/arc-assess/SKILL.md` returns increased count reflecting new rows
 
 ### Unit 2: Update hardcoded exclusion list in align-report-template.md
 
@@ -45,13 +45,13 @@ The arc-align hardcoded exclusion list currently only covers JS/generic build di
 
 **Functional Requirements:**
 
-- The system shall add the same 12 directory patterns to the Hardcoded Exclusions table in `skills/arc-align/references/align-report-template.md` (~lines 64-68)
+- The system shall add the same 12 directory patterns to the Hardcoded Exclusions table in `skills/arc-assess/references/align-report-template.md` (~lines 64-68)
 - The directory entries shall use the same `| {pattern} | Directory |` format as existing entries
 - The entries shall be grouped by category (existing, Python, Rust/Java, JS frameworks, Testing) for readability
 
 **Proof Artifacts:**
 
-- File: `skills/arc-align/references/align-report-template.md` contains all 12 new directory patterns
+- File: `skills/arc-assess/references/align-report-template.md` contains all 12 new directory patterns
 - CLI: `diff` between the SKILL.md report section and align-report-template.md shows identical directory lists
 
 ## Non-Goals (Out of Scope)
@@ -67,18 +67,18 @@ No specific design requirements identified.
 
 ## Repository Standards
 
-- Conventional commits: `fix(arc-align): expand hardcoded exclusion list`
+- Conventional commits: `fix(arc-assess): expand hardcoded exclusion list`
 - Markdown tables use `|` alignment consistent with existing style
 - No trailing whitespace in table rows
 
 ## Technical Considerations
 
 - The hardcoded list appears in **5 locations across 2 files** — all must stay in sync:
-  1. `skills/arc-align/SKILL.md` Step 1a table (~line 116)
-  2. `skills/arc-align/SKILL.md` Step 2c inline reference (~line 354)
-  3. `skills/arc-align/SKILL.md` code comment intro (~line 612)
-  4. `skills/arc-align/SKILL.md` report template section (~line 1260)
-  5. `skills/arc-align/references/align-report-template.md` (~line 64)
+  1. `skills/arc-assess/SKILL.md` Step 1a table (~line 116)
+  2. `skills/arc-assess/SKILL.md` Step 2c inline reference (~line 354)
+  3. `skills/arc-assess/SKILL.md` code comment intro (~line 612)
+  4. `skills/arc-assess/SKILL.md` report template section (~line 1260)
+  5. `skills/arc-assess/references/align-report-template.md` (~line 64)
 - `*.egg-info/` uses a glob pattern rather than a literal directory name — consistent with existing `*.key` in the secret-bearing category
 
 ## Security Considerations

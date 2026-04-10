@@ -1,5 +1,5 @@
 Type: file
-Command: grep -n "research_context" skills/arc-align/SKILL.md
+Command: grep -n "research_context" skills/arc-assess/SKILL.md
 Expected: research_context variable documented and referenced in Step 0
 Timestamp: 2026-04-09T00:00:00Z
 
