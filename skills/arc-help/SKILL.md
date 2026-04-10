@@ -33,22 +33,33 @@ Arc provides seven skills for managing the product idea lifecycle:
 
 ## Workflow
 
-The recommended skill execution order:
+Recommended workflow (Arc + Temper):
 
 ```
-/arc-assess -> /arc-capture -> /arc-shape -> /arc-wave -> /arc-sync -> /cw-spec -> /cw-plan -> /cw-dispatch
-                                                    ^
-                                              /arc-audit (audit at any time)
-                                              /arc-help (reference at any time)
+Assess:
+  /arc-assess     → Discover product content (reads Temper engineering context)
+  /temper-assess  → Bootstrap engineering docs + README engineering sections
+
+Develop ideas:
+  /arc-capture    → Record new ideas
+  /arc-shape      → Refine ideas (reads Temper engineering context)
+  /arc-wave       → Plan delivery cycles (validates against Temper phase)
+
+Sync documentation:
+  /arc-sync       → Sync README product sections (what + why)
+  /temper-sync    → Sync README engineering sections (how)
+
+Implement:
+  /cw-spec → /cw-plan → /cw-dispatch → /cw-validate
+
+Audit health:
+  /arc-audit      → Product pipeline + engineering maturity summary
+  /temper-audit   → Engineering gates + product direction summary
+
+Shared verbs: assess, sync, audit — same intent, different domain.
 ```
 
-1. **Align** -- Scan the codebase for scattered product-direction content and import into Arc-managed artifacts
-2. **Capture** -- Record ideas quickly as they come to mind
-3. **Shape** -- Refine captured ideas into structured briefs with problem framing, customer fit, and scope
-4. **Wave** -- Group shaped ideas into themed delivery cycles and hand off to the SDD pipeline
-5. **Readme** -- Scaffold or update README.md with sections synced to product direction artifacts
-
-`/arc-audit` and `/arc-help` are utility skills available at any point in the cycle.
+`/arc-help` is available at any point for this reference.
 
 ## Artifacts
 
