@@ -24,6 +24,7 @@ Rules for injecting and maintaining `ARC:` managed sections in the project CLAUD
 ## Product Context
 
 - **Vision:** {one-line vision summary from docs/VISION.md, or "Not yet defined"}
+- **Phase:** {Temper phase from docs/skill/temper/management-report.md, or omit if unavailable}
 - **Current Wave:** {wave name from docs/ROADMAP.md, or "No active wave"}
 - **Primary Personas:** {comma-separated persona names from docs/CUSTOMER.md, or "Not yet defined"}
 - **Backlog:** {N} captured, {N} shaped, {N} spec-ready, {N} shipped
@@ -46,7 +47,7 @@ Search for `<!--# BEGIN ARC:product-context -->` in the file.
 
 When inserting a new `ARC:product-context` section, choose the first matching position:
 
-1. **After the last `TEMPER:` section end marker** — If any `<!--# END TEMPER:... -->` markers exist, insert after the last one (with one blank line separator)
+1. **Before the first `TEMPER:` section begin marker** — If any `<!--# BEGIN TEMPER:... -->` markers exist, insert before the first one (with one blank line separator). ARC:product-context provides product context that TEMPER sections build upon, so it appears first.
 2. **Before the Snyk block** — If a Snyk-related section exists (identifiable by `snyk` or `Snyk` in a marker or heading), insert before it
 3. **At EOF** — Append to the end of the file with one blank line separator
 
@@ -89,6 +90,7 @@ Each `/arc-wave` invocation updates the `ARC:product-context` section with curre
 | Field | Source | Fallback |
 |-------|--------|----------|
 | Vision | First sentence of `docs/VISION.md` Summary section | "Not yet defined" |
+| Phase | Temper phase from `docs/skill/temper/management-report.md` | Omit line if unavailable |
 | Current Wave | Most recent active wave from `docs/ROADMAP.md` | "No active wave" |
 | Primary Personas | Primary persona names from `docs/CUSTOMER.md` | "Not yet defined" |
 | Backlog | Status counts from `docs/BACKLOG.md` summary table | "0 captured, 0 shaped, 0 spec-ready, 0 shipped" |

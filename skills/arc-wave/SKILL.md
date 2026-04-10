@@ -32,7 +32,7 @@ You organize spec-ready ideas into themed delivery waves. This involves selectin
 Read the following files (graceful no-op if any are absent):
 
 1. `docs/BACKLOG.md` — **Required.** If absent, inform the user to run `/arc-capture` first.
-2. `docs/management-report.md` — Temper feedback loop. Extract:
+2. `docs/skill/temper/management-report.md` — Temper feedback loop. Extract:
    - Current Temper phase (Spike → Maturity)
    - Hard gate failures (if any)
    - Coverage matrix summary
@@ -41,6 +41,35 @@ Read the following files (graceful no-op if any are absent):
 5. `docs/ROADMAP.md` — Existing waves and current state
 
 Read `references/wave-planning.md` for wave sizing guidance based on Temper phase.
+
+### Step 1.5: Engineering Readiness Assessment
+
+Before composing the wave, assess engineering readiness. All reads are conditional — if Temper is not installed, skip this step entirely.
+
+**Read these Temper artifacts if they exist:**
+
+| Artifact | Purpose |
+|----------|---------|
+| `docs/skill/temper/management-report.md` | Phase and gate status |
+| `docs/ARCHITECTURE.md` | System constraints and technical debt |
+| `docs/TESTING.md` | Test coverage and strategy |
+| `docs/DEPLOYMENT.md` | Deployment complexity |
+
+**Add to the wave report (Step 10):**
+
+```markdown
+## Engineering Readiness
+
+- **Temper Phase:** {phase, or "Not available — Temper not configured"}
+- **Gate Status:** {summary, e.g., "5/7 passing", or "Not available"}
+- **Failing Gates:** {list with brief descriptions}
+- **Delivery Risk:** {Low/Medium/High based on phase + gates + wave scope}
+- **Recommendation:** {e.g., "Consider addressing Gate D before shipping this wave"}
+```
+
+**Decision rules:**
+- If hard gates are failing, warn the user and suggest including a stabilization idea in the wave
+- Validate wave scope against phase: spike=1, poc=1-2, vertical-slice=2-3, foundation+=3-5
 
 ### Step 2: Assess Wave Scope
 
@@ -214,7 +243,7 @@ If CLAUDE.md does not exist in the project root:
 Search for `<!--# BEGIN ARC:product-context -->`:
 - **If found:** Replace content between markers with updated values
 - **If not found:** Insert at the appropriate position per the insertion priority:
-  1. After the last `<!--# END TEMPER:... -->` marker
+  1. Before the first `<!--# BEGIN TEMPER:... -->` marker (ARC provides product context that TEMPER builds upon)
   2. Before any Snyk-related section
   3. At EOF
 
@@ -225,6 +254,7 @@ Search for `<!--# BEGIN ARC:product-context -->`:
 ## Product Context
 
 - **Vision:** {first sentence of docs/VISION.md summary, or "Not yet defined"}
+- **Phase:** {Temper phase from management-report, or omit this line if unavailable}
 - **Current Wave:** {wave name just created}
 - **Primary Personas:** {persona names from docs/CUSTOMER.md, or "Not yet defined"}
 - **Backlog:** {N} captured, {N} shaped, {N} spec-ready, {N} shipped
