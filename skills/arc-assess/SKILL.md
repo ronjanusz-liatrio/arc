@@ -188,6 +188,34 @@ Directories the user deselected in 1c are removed from the exclusion set and wil
 
 Use this merged exclusion set for all subsequent scanning in Steps 2-8.
 
+### Step 1.5: Read Temper Engineering Context (Optional)
+
+If Temper engineering artifacts exist, read them for context that helps classify discovered product content. All reads are conditional — if a file does not exist, skip it silently. Temper may not be installed.
+
+**Read the following artifacts if they exist:**
+
+| Artifact | Purpose |
+|----------|---------|
+| `docs/ARCHITECTURE.md` | System context for classifying discovered product content |
+| `docs/TECH_STACK.md` | Technology context that informs feasibility of discovered ideas |
+| `docs/skill/temper/management-report.md` | Project phase for report header context |
+
+Store any discovered context in a `temper_context` object:
+
+```
+temper_context = {
+  architecture_exists: true/false,
+  tech_stack_exists: true/false,
+  management_report_exists: true/false,
+  project_phase: "{phase from management-report, or null}",
+  temper_artifacts: ["ARCHITECTURE (draft)", "TESTING (full)", ...]  // list of detected artifacts with maturity
+}
+```
+
+If none of the artifacts exist, set `temper_context` to `null` and proceed — this simply means Temper is not configured for this project.
+
+**Do NOT import Temper artifacts into BACKLOG** — they are engineering artifacts, not product ideas. Arc reads them for context only.
+
 ### Step 2: Discover Product-Direction Content
 
 Scan all non-excluded files using three detection strategies in sequence. Read `skills/arc-assess/references/detection-patterns.md` for the full pattern reference.
@@ -1185,7 +1213,22 @@ Write the report header and run metadata. All fields are derived from data colle
 | New imports | {count of items imported in this run} |
 | Skipped (manifest) | {count of items skipped due to prior manifest entries} |
 | Remaining unmanaged | {count of items rejected by user during individual review (Step 3)} |
+| Temper phase | {project_phase from temper_context, or "Not available"} |
 ```
+
+**8a-ii. Temper engineering context (if detected):**
+
+If `temper_context` is not null, add a Temper artifacts section after the run metadata:
+
+```markdown
+## Temper Engineering Context
+
+Temper artifacts detected: {comma-separated list, e.g., "ARCHITECTURE (draft), TESTING (full), DEPLOYMENT (stub)"}
+
+Project phase: {phase, or "Not available — Temper not configured"}
+```
+
+If `temper_context` is null, omit this section entirely.
 
 **8b. Imported items by artifact section:**
 
