@@ -480,6 +480,119 @@ Recommended Action: Run /arc-sync — failing signals: {list of failing signal I
 
 ---
 
+### WA-8: Phase Alignment
+
+**Purpose:** Check whether the current wave scope is appropriate for the project's Temper maturity phase. Overscoped waves at early phases (spike, poc) lead to incomplete delivery.
+
+**Detection Logic:**
+- Read `docs/skill/temper/management-report.md` for current phase
+- If absent: report as info "Temper not configured — phase alignment check skipped" and skip
+- Count spec-ready ideas assigned to the current wave in `docs/ROADMAP.md`
+- Compare against phase-based sizing from `references/wave-planning.md`:
+  - spike=1, poc=1-2, vertical-slice=2-3, foundation+=3-5
+- Flag if wave scope exceeds the recommended maximum for the current phase
+
+**Severity:** `warning`
+
+**Inputs:**
+- `docs/skill/temper/management-report.md` — current phase
+- `docs/ROADMAP.md` — current wave idea count
+- `references/wave-planning.md` — phase-based sizing guidance
+
+**Output Format:**
+
+```markdown
+**WA-8 Phase Alignment**
+
+Temper phase: {phase}
+Current wave size: {N} ideas
+Recommended max for {phase}: {M} ideas
+
+{If overscoped:}
+Warning: Wave scope ({N}) exceeds phase recommendation ({M}) for {phase}. Consider reducing scope or acknowledging increased delivery risk.
+```
+
+**Interactive Fix:** No automated fix; scope reduction requires product decision.
+
+---
+
+### WA-9: Gate Awareness
+
+**Purpose:** Surface failing Temper gates that could block delivery of the current wave, so product planning accounts for engineering constraints.
+
+**Detection Logic:**
+- Read `docs/skill/temper/management-report.md` for gate status
+- If absent: report as info "Temper not configured — gate awareness check skipped" and skip
+- Parse gate results (Gates A through G) for failures (F) or warnings (W)
+- Flag if any gate has status F (failing)
+
+**Severity:** `warning`
+
+**Inputs:**
+- `docs/skill/temper/management-report.md` — gate status summary
+
+**Output Format:**
+
+```markdown
+**WA-9 Gate Awareness**
+
+Gate status: A[{status}] B[{status}] C[{status}] D[{status}] E[{status}] F[{status}] G[{status}]
+
+{If failing gates exist:}
+Warning: Gates {list} are failing. Consider including stabilization work in the current wave.
+
+Failing gate details:
+| Gate | Name | Status | Impact |
+|------|------|--------|--------|
+| {letter} | {name} | Failing | {brief impact description} |
+```
+
+**Interactive Fix:** No automated fix; recommend including stabilization ideas in the wave or deferring delivery until gates pass.
+
+---
+
+### WA-10: Engineering Artifacts
+
+**Purpose:** At Foundation phase and above, verify that key Temper engineering artifacts exist. Missing artifacts at mature phases indicate incomplete engineering documentation.
+
+**Detection Logic:**
+- Read `docs/skill/temper/management-report.md` for phase
+- If absent: report as info "Temper not configured — engineering artifact check skipped" and skip
+- If phase is earlier than Foundation (spike, poc, vertical-slice): report as info "Phase {phase} — engineering artifact check not required" and skip
+- If phase is Foundation or later: check for existence of:
+  - `docs/ARCHITECTURE.md`
+  - `docs/TESTING.md`
+  - `docs/DEPLOYMENT.md`
+- Report which artifacts exist and which are missing
+
+**Severity:** `info`
+
+**Inputs:**
+- `docs/skill/temper/management-report.md` — current phase
+- Filesystem check for `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `docs/DEPLOYMENT.md`
+
+**Output Format:**
+
+```markdown
+**WA-10 Engineering Artifacts**
+
+Phase: {phase}
+Required artifacts at {phase}:
+
+| Artifact | Status |
+|----------|--------|
+| ARCHITECTURE.md | Present / Missing |
+| TESTING.md | Present / Missing |
+| DEPLOYMENT.md | Present / Missing |
+
+{If any missing:}
+Info: {N} engineering artifacts missing at {phase}. Run /temper-assess to scaffold missing artifacts.
+```
+
+**Interactive Fix:** No automated fix; recommend running `/temper-assess` to scaffold missing artifacts.
+
+---
+
 ## Health Rating Thresholds
 
 After all checks complete, `/arc-audit` computes an overall health rating by counting critical and warning findings:
@@ -505,6 +618,8 @@ After all checks complete, `/arc-audit` computes an overall health rating by cou
 - WA-4: VISION stub or missing
 - WA-5: CUSTOMER undefined personas (≥1 reference)
 - WA-7: README trust-signal audit (<75% of evaluable signals passing)
+- WA-8: Phase alignment (wave scope exceeds phase recommendation)
+- WA-9: Gate awareness (hard gates failing)
 
 **Info findings** do not affect the health rating — they are reported for visibility only.
 

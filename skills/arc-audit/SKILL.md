@@ -35,7 +35,7 @@ Read the following files (graceful no-op if absent, except BACKLOG.md):
 2. `docs/ROADMAP.md` — Wave structure and idea assignments
 3. `docs/VISION.md` — Product direction
 4. `docs/CUSTOMER.md` — Personas and JTBD
-5. `docs/management-report.md` — Temper feedback loop
+5. `docs/skill/temper/management-report.md` — Temper feedback loop
 
 Ask the user if they want to adjust the staleness threshold:
 
@@ -200,6 +200,40 @@ Evaluate the structural trust signals defined in `skills/arc-sync/references/tru
 
 Report in the format defined in audit-dimensions.md (WA-7 section).
 
+#### WA-8: Phase Alignment
+
+Check whether the current wave scope fits the Temper phase. All reads are conditional — if Temper is not installed, skip this check and report as info.
+
+- Read `docs/skill/temper/management-report.md` for the current phase
+- Count spec-ready ideas assigned to the current wave in ROADMAP.md
+- Compare against phase-based sizing from `references/wave-planning.md`:
+  - spike=1, poc=1-2, vertical-slice=2-3, foundation+=3-5
+- Flag as warning if wave scope exceeds phase recommendation
+
+**Severity:** warning
+
+#### WA-9: Gate Awareness
+
+Check whether hard gates are failing that could block delivery. Conditional on Temper being installed.
+
+- Read `docs/skill/temper/management-report.md` for gate status
+- Parse gate results (A through G) for failures
+- Flag as warning if any hard gate is failing
+
+**Severity:** warning
+
+#### WA-10: Engineering Artifacts
+
+At Foundation phase and above, check whether key Temper artifacts exist. Conditional on Temper being installed.
+
+- Read `docs/skill/temper/management-report.md` for phase
+- If phase is Foundation, MVP, Growth, or Maturity:
+  - Check for existence of `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `docs/DEPLOYMENT.md`
+  - Report which artifacts exist and which are missing
+- If phase is earlier than Foundation, skip and report as info
+
+**Severity:** info
+
 ### Step 4: Calculate Health Rating
 
 Apply the thresholds from audit-dimensions.md to determine the overall rating:
@@ -225,6 +259,8 @@ Apply the thresholds from audit-dimensions.md to determine the overall rating:
 - WA-4: VISION stub or missing
 - WA-5: CUSTOMER undefined personas (1+ reference)
 - WA-7: README trust signals (<75% of evaluable signals passing)
+- WA-8: Phase alignment (wave scope exceeds phase recommendation)
+- WA-9: Gate awareness (hard gates failing)
 
 **Info findings** do not affect the health rating.
 
@@ -237,9 +273,22 @@ Create `docs/skill/arc/review-report.md` with:
 - Timestamp and staleness threshold
 - Overall health rating with criteria explanation
 - Backlog health findings table (all 5 checks)
-- Wave alignment findings table (all 7 checks)
+- Wave alignment findings table (all 10 checks: WA-1 through WA-10)
 - Status distribution summary with pipeline health assessment
 - Recommended actions grouped by severity (critical, warnings, info)
+- Engineering Maturity section (if Temper is installed):
+  ```markdown
+  ## Engineering Maturity (Temper)
+
+  - **Phase:** {phase}
+  - **Gates:** A[P] B[P] C[F] D[W] E[P] F[N] G[W]
+  - **Artifact Coverage:** {N}/{M} at required level
+  - **Implication:** {one sentence on what this means for product pipeline}
+
+  ### Related Reports
+  - [Temper Management Report](../temper/management-report.md) — Full engineering maturity assessment
+  ```
+  If Temper is not installed, omit this section entirely.
 - Fixes applied section (initially empty, populated if user applies fixes)
 - Cross-references to audit-dimensions.md, idea-lifecycle.md, and brief-format.md
 
