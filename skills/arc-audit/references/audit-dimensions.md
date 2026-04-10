@@ -428,7 +428,7 @@ Recommended Action: Reconcile summary table and idea sections — add missing en
 
 ### WA-7: README Trust-Signal Audit
 
-**Purpose:** Validate Arc-managed README sections against the structural trust-signal framework by evaluating all 8 trust signals (TS-1 through TS-8). Each signal cross-references `ARC:` managed sections in README.md against source artifacts (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) to detect drift, staleness, and missing traceability.
+**Purpose:** Validate Arc-managed README sections against the structural trust-signal framework by evaluating all 10 trust signals (TS-1 through TS-10). Each signal cross-references `ARC:` managed sections in README.md against source artifacts (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) to detect drift, staleness, and missing traceability.
 
 **Detection Logic:**
 
@@ -436,7 +436,7 @@ Recommended Action: Reconcile summary table and idea sections — add missing en
    - If absent: report severity `info` with message "No README.md found" — skip remaining detection
 2. Check whether `README.md` contains at least one `<!--# BEGIN ARC:` marker
    - If no markers found: report severity `info` with message "No ARC: sections in README — run /arc-sync to scaffold" — skip remaining detection
-3. Evaluate all 8 trust signals (TS-1 through TS-8) following the canonical detection steps in `skills/arc-sync/references/trust-signals.md`
+3. Evaluate all 10 trust signals (TS-1 through TS-10) following the canonical detection steps in `skills/arc-sync/references/trust-signals.md`
 4. A signal is **evaluable** only when its source artifact exists AND the corresponding `ARC:` managed section exists in README.md (see Evaluability Rules in trust-signals.md)
 5. Non-evaluable signals are excluded from the scorecard denominator and reported as `N/A`
 6. Compute scorecard: `N passing / M evaluable` (where M ≤ 8)
@@ -469,6 +469,8 @@ Recommended Action: Reconcile summary table and idea sections — add missing en
 | TS-6 | Currency | PASS / FAIL / N/A | {detail or reason} |
 | TS-7 | Traceability | PASS / FAIL / N/A | {detail or reason} |
 | TS-8 | No Placeholders | PASS / FAIL / N/A | {detail or reason} |
+| TS-9 | Reader Journey | PASS / FAIL / N/A | {detail or reason} |
+| TS-10 | Engineering Presence | PASS / FAIL / N/A | {detail or reason} |
 
 **Result:** {N} of {M} evaluable signals passing
 **Severity:** info | warning

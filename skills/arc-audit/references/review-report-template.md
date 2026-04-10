@@ -96,7 +96,7 @@ If you chose to apply interactive fixes during this review session, record them 
 ## Cross-References
 
 - `references/audit-dimensions.md` — Detailed definitions of each health check, thresholds, and severity levels
-- `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions (TS-1 through TS-8) used by WA-7
+- `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions (TS-1 through TS-10) used by WA-7
 - `references/idea-lifecycle.md` — Idea status transitions and lifecycle phases
 - `references/brief-format.md` — Brief section requirements (used to identify missing fields)
 ```
@@ -140,7 +140,7 @@ Seven checks that verify consistency between BACKLOG, ROADMAP, VISION, CUSTOMER,
 4. **VISION alignment** — VISION.md must exist and contain substantial content (not auto-created stub)
 5. **CUSTOMER alignment** — If shaped ideas reference personas, those personas must exist in CUSTOMER.md
 6. **Cross-reference integrity** — BACKLOG summary table rows must match the `## {Title}` sections (and vice versa)
-7. **README trust signals** — Arc-managed README sections are validated against 8 structural trust signals (TS-1 through TS-8); reports a scorecard of N/M evaluable signals passing
+7. **README trust signals** — Arc-managed README sections are validated against 10 structural trust signals (TS-1 through TS-10); reports a scorecard of N/M evaluable signals passing
 
 ### Status Distribution Summary
 
@@ -170,7 +170,7 @@ The checklist helps stakeholders understand which specific corrections were made
 ## Cross-References
 
 - `references/audit-dimensions.md` — Threshold definitions and severity calibration for each check
-- `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions (TS-1 through TS-8) used by WA-7
+- `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions (TS-1 through TS-10) used by WA-7
 - `references/idea-lifecycle.md` — Status meaning, transitions, and timestamps (Captured, Shaped, Spec-Ready, Shipped)
 - `references/brief-format.md` — The seven required brief sections used by the "Missing brief fields" check
 

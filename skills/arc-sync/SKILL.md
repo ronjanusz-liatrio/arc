@@ -99,13 +99,19 @@ For each `ARC:` section to be injected, find the insertion point using this prio
 
 #### Section Ordering
 
-When injecting all sections at once, maintain this order relative to each other:
+When injecting all sections at once, maintain this order relative to each other. TEMPER placeholder sections are placed between ARC:roadmap and ARC:lifecycle-diagram:
 
-1. `ARC:overview`
-2. `ARC:audience`
-3. `ARC:features`
-4. `ARC:roadmap`
-5. `ARC:lifecycle-diagram`
+1. `ARC:overview` (what + why — Arc)
+2. `ARC:audience` (who it's for — Arc)
+3. `ARC:features` (what's shipped — Arc)
+4. `ARC:roadmap` (what's next — Arc)
+5. `TEMPER:architecture` placeholder (how it works — Temper)
+6. `TEMPER:getting-started` placeholder (how to use it — Temper)
+7. `TEMPER:testing` placeholder (how to test — Temper)
+8. `TEMPER:contributing` placeholder (how to contribute — Temper)
+9. `ARC:lifecycle-diagram` (combined health — Arc)
+
+Arc never writes content to TEMPER sections. When scaffolding, place empty marker placeholders for TEMPER sections with a comment: `<!-- Run /temper-assess to populate engineering sections -->`.
 
 #### Injection Procedure
 
@@ -345,19 +351,41 @@ Replace `{captured_count}`, `{shaped_count}`, `{spec_ready_count}`, and `{shippe
 
 **Constraint:** At least one status count must be non-zero to satisfy TS-5. If BACKLOG.md is absent (all counts zero), the diagram is still generated but TS-5 will be marked N/A.
 
-#### 3g. Non-Managed Sections
+#### 3g. TEMPER Placeholder Sections
 
-Generate static placeholder sections for the user to fill in. These are NOT managed by Arc and will not be modified by update mode.
+Place empty TEMPER marker placeholders between ARC:roadmap and ARC:lifecycle-diagram. Arc never writes content to these sections — Temper populates them via `/temper-assess`.
 
 ```markdown
+## Architecture
+
+<!--# BEGIN TEMPER:architecture -->
+<!-- Run /temper-assess to populate engineering sections -->
+<!--# END TEMPER:architecture -->
+
 ## Getting Started
 
-> Replace this section with installation and setup instructions for your project.
+<!--# BEGIN TEMPER:getting-started -->
+<!-- Run /temper-assess to populate engineering sections -->
+<!--# END TEMPER:getting-started -->
+
+## Testing
+
+<!--# BEGIN TEMPER:testing -->
+<!-- Run /temper-assess to populate engineering sections -->
+<!--# END TEMPER:testing -->
 
 ## Contributing
 
-> Replace this section with contribution guidelines for your project.
+<!--# BEGIN TEMPER:contributing -->
+<!-- Run /temper-assess to populate engineering sections -->
+<!--# END TEMPER:contributing -->
+```
 
+#### 3h. Non-Managed Sections
+
+Generate a static License placeholder section. This is NOT managed by Arc or Temper.
+
+```markdown
 ## License
 
 > Replace this section with your project's license information.
@@ -365,7 +393,7 @@ Generate static placeholder sections for the user to fill in. These are NOT mana
 
 ### Step 4: Trust-Signal Validation
 
-Run TS-1 through TS-8 against the scaffolded README content (in memory, before writing to disk). Follow the detection steps defined in `skills/arc-sync/references/trust-signals.md`.
+Run TS-1 through TS-10 against the scaffolded README content (in memory, before writing to disk). Follow the detection steps defined in `skills/arc-sync/references/trust-signals.md`.
 
 **Validation procedure:**
 
@@ -381,6 +409,8 @@ For each trust signal, determine evaluability first:
 | TS-6: Currency | `docs/BACKLOG.md` exists with shipped items AND `ARC:features` section exists |
 | TS-7: Traceability | Any `docs/` file exists AND any `ARC:` section exists |
 | TS-8: No Placeholders | Any `ARC:` section exists (per-section check against source artifact) |
+| TS-9: Reader Journey | Any `TEMPER:` section exists AND Temper is installed |
+| TS-10: Engineering Presence | Any `TEMPER:` section exists AND Temper is installed |
 
 For each evaluable signal, run the detection steps from `trust-signals.md` and record PASS or FAIL with detail.
 
@@ -401,12 +431,14 @@ For non-evaluable signals, record N/A.
 | TS-6 | Currency | PASS / FAIL / N/A | {detail} |
 | TS-7 | Traceability | PASS / FAIL / N/A | {detail} |
 | TS-8 | No Placeholders | PASS / FAIL / N/A | {detail} |
+| TS-9 | Reader Journey | PASS / FAIL / N/A | {detail} |
+| TS-10 | Engineering Presence | PASS / FAIL / N/A | {detail} |
 
 **Result:** {N} of {M} evaluable signals passing
 **Severity:** info | warning
 ```
 
-**Scaffold guarantee:** All evaluable signals MUST pass on scaffold output. If any evaluable signal fails, fix the scaffolded content before proceeding. Do not present a failing scaffold to the user.
+**Scaffold guarantee:** All evaluable signals MUST pass on scaffold output (TS-9 and TS-10 are expected to be N/A on fresh scaffold if Temper is not installed). If any evaluable signal fails, fix the scaffolded content before proceeding. Do not present a failing scaffold to the user.
 
 ### Step 5: Present for Approval
 
@@ -537,6 +569,28 @@ Regenerate the mermaid state diagram from `docs/BACKLOG.md`:
 - Never modify `TEMPER:` or `MM:` managed sections
 - Do not expose priority metadata (P0/P1/P2/P3)
 
+### Step 8.5: Validate TEMPER Section Presence
+
+During update mode, check for TEMPER-managed sections in README.md. Arc never modifies TEMPER sections but validates their presence and coherence with ARC sections.
+
+**Check for TEMPER sections:**
+
+Search for `<!--# BEGIN TEMPER:` markers in README.md. Check for:
+- `TEMPER:architecture`
+- `TEMPER:getting-started`
+- `TEMPER:testing`
+- `TEMPER:contributing`
+
+**If no TEMPER sections exist:**
+- Recommend: "No TEMPER: sections found in README. Run `/temper-assess` to populate engineering sections."
+
+**If TEMPER sections exist, validate reader journey coherence:**
+- Does `ARC:overview` link to or flow into `TEMPER:architecture`? (is there a logical transition from "what this does" to "how it works"?)
+- Does `ARC:features` flow into `TEMPER:getting-started`? (shipped features → how to use them)
+- Record coherence findings for TS-9 evaluation in Step 10.
+
+**Arc never modifies TEMPER: section content.** This step only reads and validates.
+
 ### Step 9: Scan docs/ for ARC: Diagram Markers
 
 Scan files in `docs/` for additional `ARC:` managed diagram markers that live outside README.md:
@@ -561,7 +615,7 @@ Scan files in `docs/` for additional `ARC:` managed diagram markers that live ou
 
 ### Step 10: Trust-Signal Validation
 
-Run TS-1 through TS-8 against the **updated** README content (in memory, before writing to disk). Follow the detection steps defined in `skills/arc-sync/references/trust-signals.md`.
+Run TS-1 through TS-10 against the **updated** README content (in memory, before writing to disk). Follow the detection steps defined in `skills/arc-sync/references/trust-signals.md`.
 
 **Validation procedure:**
 
@@ -700,7 +754,7 @@ Run /arc-sync again after shipping features or planning waves to keep managed se
 
 ## References
 
-- [`skills/arc-sync/references/trust-signals.md`](references/trust-signals.md) — Trust-signal definitions (TS-1 through TS-8) used for post-scaffold and post-update validation
+- [`skills/arc-sync/references/trust-signals.md`](references/trust-signals.md) — Trust-signal definitions (TS-1 through TS-10) used for post-scaffold and post-update validation
 - [`skills/arc-sync/references/readme-mapping.md`](references/readme-mapping.md) — Artifact-to-section extraction rules for all ARC: managed sections
 - [`skills/arc-sync/references/readme-quality-rules.md`](references/readme-quality-rules.md) — Quality gates for line count, heading hierarchy, accessibility, and conciseness
 - [`skills/arc-wave/references/bootstrap-protocol.md`](../arc-wave/references/bootstrap-protocol.md) — Marker format and coexistence rules for ARC: namespace in project files

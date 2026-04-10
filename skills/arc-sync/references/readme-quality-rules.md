@@ -15,7 +15,8 @@ This document is consumed by:
 | Total README lines | 100--200 | Warn if outside range |
 | Managed section lines (all `ARC:` sections combined) | 40--100 | Refactor if exceeding |
 | Single managed section | 5--25 lines | Split or condense if outside range |
-| Non-managed sections (Install, Contributing, License) | 30--60 combined | Keep minimal but useful |
+| TEMPER: managed sections (all combined) | 30--80 | Arc does not manage line count — Temper controls these |
+| Non-managed sections (License, etc.) | 5--15 combined | Keep minimal |
 
 A README under 100 lines likely lacks enough context for onboarding. A README over 200 lines should move detail into `docs/` and link from the README.
 
@@ -126,21 +127,22 @@ Content between `ARC:` markers must follow these constraints:
 
 ---
 
+## TEMPER Section Guidance
+
+TEMPER-managed sections are owned by Temper. Arc scaffolds empty placeholder markers but never writes content to them.
+
+| Section | Owner | Arc's Role |
+|---------|-------|------------|
+| `TEMPER:architecture` | Temper | Scaffold placeholder, validate presence |
+| `TEMPER:getting-started` | Temper | Scaffold placeholder, validate presence |
+| `TEMPER:testing` | Temper | Scaffold placeholder, validate presence |
+| `TEMPER:contributing` | Temper | Scaffold placeholder, validate presence |
+
+When TEMPER sections are present and populated, Arc validates reader journey coherence (TS-9) and engineering presence (TS-10) but never modifies TEMPER section content.
+
 ## Non-Managed Section Guidance
 
-Scaffold mode generates static placeholder sections for content outside Arc's scope. These sections should have enough structure to be useful, not just empty `<!-- TODO -->` comments.
-
-### Install
-
-- Include a code block with the primary install command (even if it is a placeholder command)
-- Mention prerequisites if known from the project context
-- Keep to 5--10 lines
-
-### Contributing
-
-- One sentence linking to CONTRIBUTING.md if it exists
-- If no CONTRIBUTING.md, include 3--5 bullet points covering: fork, branch, test, PR
-- Keep to 5--10 lines
+Scaffold mode generates a License placeholder. Other engineering sections (install, contributing) are managed by Temper via TEMPER: markers.
 
 ### License
 

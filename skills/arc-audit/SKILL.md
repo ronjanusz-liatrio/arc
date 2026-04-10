@@ -182,7 +182,7 @@ Evaluate the structural trust signals defined in `skills/arc-sync/references/tru
 
 **Detection logic:**
 - Read `skills/arc-sync/references/trust-signals.md` for the canonical signal definitions and evaluability rules
-- Evaluate each of the 8 trust signals (TS-1 through TS-8) per the detection steps in trust-signals.md
+- Evaluate each of the 10 trust signals (TS-1 through TS-10) per the detection steps in trust-signals.md
 - A signal is evaluable only when its source artifact exists AND the corresponding `ARC:` managed section exists in README.md
 - For each evaluable signal, cross-reference README.md content against the source artifact (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) to determine pass/fail
 - TS-8 (No Placeholders) only fails when the source artifact has substantive content (>200 non-whitespace chars) — placeholder text is permitted when the artifact is absent or a stub
@@ -384,6 +384,6 @@ AskUserQuestion({
 
 - `skills/arc-audit/references/audit-dimensions.md` — Health check definitions, detection logic, thresholds, severity levels, and configurable parameters
 - `skills/arc-audit/references/review-report-template.md` — Report format and section layout for `docs/skill/arc/review-report.md`
-- `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions used by WA-7 (TS-1 through TS-8)
+- `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions used by WA-7 (TS-1 through TS-10)
 - `references/idea-lifecycle.md` — Idea status transitions, timestamp fields, and lifecycle phases
 - `references/brief-format.md` — The seven required brief sections used by BH-4

@@ -1,6 +1,6 @@
 # Trust Signals
 
-Arc-managed README sections are validated against 8 structural trust signals. Each signal is a Grep/Read-detectable proxy for product direction credibility — it proves the content is real, current, and traceable to source artifacts, without evaluating prose quality.
+Arc-managed README sections are validated against 10 structural trust signals. Each signal is a Grep/Read-detectable proxy for product direction credibility — it proves the content is real, current, and traceable to source artifacts, without evaluating prose quality.
 
 This document is the canonical single source of truth for trust-signal definitions. It is consumed by:
 - **WA-7** (`/arc-audit`) — audit mode, evaluates signals and reports a scorecard
@@ -19,7 +19,7 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 | `ARC:` section missing | Not evaluable — exclude from scorecard |
 | Source artifact is a stub (<200 non-whitespace chars) | Evaluable for TS-1 through TS-7 (may fail); TS-8 passes (placeholder permitted) |
 
-**Scorecard formula:** `N passing / M evaluable` (where M <= 8)
+**Scorecard formula:** `N passing / M evaluable` (where M <= 10)
 
 **Severity assignment:**
 - `info` — 75% or more of evaluable signals pass
@@ -181,7 +181,7 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 
 **Managed section:** Any `ARC:` managed section
 
-**Detectable proxy:** At least one `ARC:` managed section contains a `](docs/` link that resolves to an existing file.
+**Detectable proxy:** At least one `ARC:` managed section contains a `](docs/` link that resolves to an existing file. Links to Temper engineering artifacts (e.g., `docs/ARCHITECTURE.md`, `docs/TESTING.md`) also count as valid traceability evidence.
 
 **Detection steps:**
 
@@ -189,10 +189,11 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 2. Search for Markdown links containing `docs/` in the path: pattern `\]\(docs/[^)]+\)`
 3. For each matched link, extract the relative file path
 4. Check whether the referenced file exists on disk (relative to project root)
+5. Also check TEMPER: managed sections for `](docs/` links — these count toward traceability
 
-**Pass criteria:** At least one `](docs/...)` link found in any ARC: section AND the referenced file exists.
+**Pass criteria:** At least one `](docs/...)` link found in any ARC: or TEMPER: section AND the referenced file exists.
 
-**Fail criteria:** No `](docs/...)` links found in any ARC: section, OR all such links point to non-existent files.
+**Fail criteria:** No `](docs/...)` links found in any managed section, OR all such links point to non-existent files.
 
 ---
 
@@ -234,6 +235,60 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 
 ---
 
+### TS-9: Reader Journey
+
+**Trust statement:** "A reader can move from product context to engineering context without confusion."
+
+**Source artifact:** TEMPER: managed sections in README.md
+
+**Managed section:** All `ARC:` and `TEMPER:` managed sections
+
+**Detectable proxy:** TEMPER sections exist in the README, ARC:overview links to or is followed by TEMPER:architecture, and TEMPER:getting-started follows ARC:features in document order.
+
+**Detection steps:**
+
+1. Check whether any `<!--# BEGIN TEMPER:` markers exist in README.md
+   - If none exist: check whether Temper is installed (look for `docs/skill/temper/` directory)
+   - If Temper is not installed: signal is not evaluable — report N/A
+   - If Temper is installed but no TEMPER sections: signal fails
+2. Verify section ordering: TEMPER:architecture appears after ARC:roadmap in the file
+3. Verify section ordering: TEMPER:getting-started appears after ARC:features in the file
+4. Check that at least one TEMPER section has non-placeholder content (not just `<!-- Run /temper-assess to populate engineering sections -->`)
+
+**Pass criteria:** TEMPER sections exist in correct order relative to ARC sections, AND at least one has non-placeholder content.
+
+**Fail criteria:** TEMPER sections missing when Temper is installed, OR wrong ordering, OR all TEMPER sections are still placeholders.
+
+---
+
+### TS-10: Engineering Presence
+
+**Trust statement:** "The README reflects engineering maturity, not just product vision."
+
+**Source artifact:** TEMPER: managed sections in README.md
+
+**Managed section:** `TEMPER:architecture`, `TEMPER:getting-started`
+
+**Detectable proxy:** At least one TEMPER: section has substantive content (not placeholder).
+
+**Detection steps:**
+
+1. Check whether any `<!--# BEGIN TEMPER:` markers exist in README.md
+   - If none exist: check whether Temper is installed (look for `docs/skill/temper/` directory)
+   - If Temper is not installed: signal is not evaluable — report N/A
+   - If Temper is installed but no TEMPER sections: signal fails
+2. For each TEMPER: section found, extract content between markers
+3. Check whether the content is a placeholder only:
+   - Contains only `<!-- Run /temper-assess to populate engineering sections -->` or similar comment
+   - Has fewer than 50 non-whitespace characters
+4. If at least one TEMPER: section has >50 non-whitespace characters of real content: pass
+
+**Pass criteria:** At least one TEMPER: section has non-placeholder content (>50 non-whitespace characters).
+
+**Fail criteria:** All TEMPER: sections are placeholders or empty, AND Temper is installed.
+
+---
+
 ## Section-to-Artifact Mapping
 
 This mapping defines which source artifact each ARC: managed section derives from. Both WA-7 and `/arc-sync` use this mapping to determine evaluability and to cross-reference content.
@@ -246,6 +301,10 @@ This mapping defines which source artifact each ARC: managed section derives fro
 | `ARC:roadmap` | `docs/ROADMAP.md` | TS-4, TS-8 |
 | `ARC:lifecycle-diagram` | `docs/BACKLOG.md` | TS-5, TS-8 |
 | *(any ARC: section)* | *(any docs/ file)* | TS-7 |
+| `TEMPER:architecture` | TEMPER-managed | TS-9, TS-10 |
+| `TEMPER:getting-started` | TEMPER-managed | TS-9, TS-10 |
+| `TEMPER:testing` | TEMPER-managed | TS-9 |
+| `TEMPER:contributing` | TEMPER-managed | TS-9 |
 
 ---
 
@@ -266,6 +325,8 @@ Both consumers produce a scorecard using this format:
 | TS-6 | Currency | PASS / FAIL / N/A | {detail or reason} |
 | TS-7 | Traceability | PASS / FAIL / N/A | {detail or reason} |
 | TS-8 | No Placeholders | PASS / FAIL / N/A | {detail or reason} |
+| TS-9 | Reader Journey | PASS / FAIL / N/A | {detail or reason} |
+| TS-10 | Engineering Presence | PASS / FAIL / N/A | {detail or reason} |
 
 **Result:** {N} of {M} evaluable signals passing
 **Severity:** info | warning
