@@ -130,6 +130,10 @@ Read these files for context:
 - docs/VISION.md (if present) — scope boundaries
 - docs/ROADMAP.md (if present) — existing wave commitments
 
+If Temper engineering artifacts exist in docs/, read them for context. If they don't exist, proceed without — Temper may not be installed:
+- docs/TESTING.md (if present) — test strategy, what's hard to test (affects scope)
+- docs/ARCHITECTURE.md (if present) — component boundaries for natural scope cuts
+
 Answer these questions:
 - Are constraints explicit?
 - What is intentionally excluded?
@@ -154,9 +158,14 @@ Idea: {title}
 Summary: {one-line summary}
 
 Read these files for context:
-- docs/management-report.md (if present) — Temper phase, gate results
-- Project CLAUDE.md — TEMPER: sections for project context
 - docs/ROADMAP.md (if present) — current wave load
+- Project CLAUDE.md — TEMPER: sections for project context
+
+If Temper engineering artifacts exist in docs/, read them for context. If they don't exist, proceed without — Temper may not be installed:
+- docs/ARCHITECTURE.md (if present) — system boundaries, constraints, technical debt
+- docs/TECH_STACK.md (if present) — current stack, framework constraints
+- docs/DEPLOYMENT.md (if present) — deployment complexity, environment count
+- docs/skill/temper/management-report.md (if present) — current phase and gate status (a project at "spike" has different feasibility than one at "foundation")
 
 Answer these questions:
 - Given the current project context, can this work be absorbed?
