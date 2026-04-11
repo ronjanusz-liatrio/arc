@@ -1,0 +1,17 @@
+Type: file
+Description: SKILL.md contains single-AskUserQuestion confirmation+priority flow
+Command: grep -n "AskUserQuestion" skills/arc-capture/SKILL.md
+Expected: Path A uses one AskUserQuestion call with two questions (Confirm + Priority); no separate title, summary, or priority prompts
+Timestamp: 2026-04-10T12:00:00Z
+
+--- Output ---
+Line 40: 2. Present a single AskUserQuestion with **two questions** — confirmation and priority:
+Line 43: AskUserQuestion({
+  - Question 1 (header: "Confirm"): confirmation with "Looks good" / "Adjust"
+  - Question 2 (header: "Priority"): P0-Critical, P1-High, P2-Medium, P3-Low
+
+Path B (no inline idea) uses one free-text AskUserQuestion (line 76-79), then the same two-question prompt.
+
+No separate title prompt, no separate summary prompt, no separate priority-only prompt exists.
+
+Status: PASS

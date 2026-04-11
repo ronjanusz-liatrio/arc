@@ -1,0 +1,25 @@
+Type: cli
+Description: /arc-capture with inline idea triggers exactly 1 AskUserQuestion interaction before writing to backlog
+Command: Manual trace of SKILL.md flow for "/arc-capture add dark mode support"
+Expected: Exactly 1 AskUserQuestion call (with 2 questions) between invocation and backlog write
+Timestamp: 2026-04-10T12:00:00Z
+
+--- Flow Trace ---
+1. User invokes: /arc-capture add dark mode support
+2. Step 1, Path A activates (inline idea provided)
+3. AI parses "add dark mode support" -> Title: "Dark Mode Support", Summary: "Add dark mode support for the application"
+4. AI presents ONE AskUserQuestion call with TWO questions:
+   - Q1 (Confirm): "Looks good" / "Adjust" showing parsed title+summary
+   - Q2 (Priority): P0/P1/P2/P3
+5. User answers both questions in one interaction
+6. Step 2: Ensure BACKLOG exists
+7. Step 3: Append idea to BACKLOG (write happens HERE, after both confirmation and priority collected)
+8. Step 4: Print confirmation line
+9. Control returns — no Step 5, no further prompts
+
+Total AskUserQuestion interactions before backlog write: 1
+
+Note: This is a prompt-only skill (SKILL.md is pure markdown instructions). The flow is verified
+by reading the skill definition. Runtime testing requires invoking the plugin in Claude Code.
+
+Status: PASS

@@ -1,0 +1,13 @@
+Type: file
+Description: SKILL.md does not contain Step 5 "Offer Next Steps" or "What would you like to do next?"
+Command: grep -E "Offer Next Steps|What would you like to do next|Step 5|Capture another|Shape this idea|Done.*Finish capturing" skills/arc-capture/SKILL.md
+Expected: No matches found — all post-capture menu content removed
+Timestamp: 2026-04-10T12:00:00Z
+
+--- Output ---
+No matches found.
+
+The file ends at Step 4 (Confirm Capture) followed by References. Step 5 and all next-steps menu
+content have been completely removed. Control returns immediately after the confirmation line.
+
+Status: PASS

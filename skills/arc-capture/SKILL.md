@@ -19,7 +19,8 @@ You capture raw product ideas quickly and append them to `docs/BACKLOG.md`. The 
 
 - **NEVER** refine or analyze the idea — capture only
 - **NEVER** modify existing BACKLOG entries — append only
-- **NEVER** skip the AskUserQuestion flow — always gather title, summary, and priority interactively
+- **NEVER** skip the AskUserQuestion flow — always gather confirmation and priority interactively
+- **NEVER** write to `docs/BACKLOG.md` until both confirmation and priority are collected — no default priority
 - **ALWAYS** begin your response with `**ARC-CAPTURE**`
 - **ALWAYS** use ISO 8601 timestamps
 
@@ -27,67 +28,29 @@ You capture raw product ideas quickly and append them to `docs/BACKLOG.md`. The 
 
 ### Step 1: Gather Idea Details
 
-Use AskUserQuestion to collect the three required fields. If the user provided an idea in their invocation message, pre-populate what you can and confirm.
+Use AskUserQuestion to collect confirmation and priority together. The goal is minimal prompts — 1 for inline ideas, 2 for free-text.
 
-**If idea details are provided in the invocation:**
+**Context enrichment:** Before prompting, scan the current conversation for relevant context (e.g., if the user is mid-shaping or discussing a feature area). If context is available, include it as a "Context" line in the idea section written to the backlog.
 
-Parse the user's message for title, summary, and priority. Present what you found and ask for confirmation or correction:
+#### Path A: Inline idea provided
 
-```
-AskUserQuestion({
-  questions: [{
-    question: "I captured these details from your message. Confirm or adjust?",
-    header: "Confirm",
-    options: [
-      { label: "Looks good", description: "Title: {parsed title} | Summary: {parsed summary}" },
-      { label: "Adjust", description: "Let me provide corrected details" }
-    ],
-    multiSelect: false
-  }]
-})
-```
+When the user provides an idea in their invocation (e.g., `/arc-capture add dark mode support`):
 
-If confirmed, ask only for priority (if not provided). If adjusting, fall through to the full flow below.
-
-**Full interactive flow (no pre-populated details):**
+1. Parse the user's message into a **title** (short descriptive name) and a **one-line summary** using your judgment.
+2. Present a single AskUserQuestion with **two questions** — confirmation and priority:
 
 ```
 AskUserQuestion({
   questions: [
     {
-      question: "What is the idea title? (Short, descriptive name)",
-      header: "Title",
+      question: "Here's what I parsed from your idea. Confirm or adjust?",
+      header: "Confirm",
       options: [
-        { label: "Provide title", description: "Type your idea title in the text field" }
+        { label: "Looks good", description: "Title: {parsed title} | Summary: {parsed summary}" },
+        { label: "Adjust", description: "Let me re-describe the idea" }
       ],
       multiSelect: false
-    }
-  ]
-})
-```
-
-Then gather summary:
-
-```
-AskUserQuestion({
-  questions: [
-    {
-      question: "One-line summary of the idea?",
-      header: "Summary",
-      options: [
-        { label: "Provide summary", description: "Type a brief description of what this idea does or solves" }
-      ],
-      multiSelect: false
-    }
-  ]
-})
-```
-
-Then gather priority:
-
-```
-AskUserQuestion({
-  questions: [
+    },
     {
       question: "What priority level?",
       header: "Priority",
@@ -102,6 +65,34 @@ AskUserQuestion({
   ]
 })
 ```
+
+3. **If user selects "Looks good":** Use the parsed title, summary, and selected priority. Proceed to Step 2.
+4. **If user selects "Adjust" or provides free-text via "Other":** Re-parse the corrected text into a new title and summary, then re-present the same two-question prompt (max 1 retry). If the user selects "Adjust" a second time, capture the idea as-is with the latest parsed title and summary and selected priority.
+
+#### Path B: No inline idea provided
+
+When the user invokes `/arc-capture` with no idea text:
+
+1. Present a single free-text AskUserQuestion:
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "Describe your idea in a sentence or two.",
+      header: "Idea",
+      options: [
+        { label: "Describe", description: "Type your idea in the text field" }
+      ],
+      multiSelect: false
+    }
+  ]
+})
+```
+
+2. Parse the response into a **title** and **one-line summary**.
+3. Present the same two-question confirmation + priority prompt as Path A above.
+4. Handle "Adjust" / "Other" the same way as Path A (max 1 retry).
 
 ### Step 2: Ensure BACKLOG Exists
 
@@ -155,28 +146,6 @@ Present a brief inline confirmation:
 ```
 Captured "{Title}" (priority: {Priority}) to docs/BACKLOG.md.
 ```
-
-### Step 5: Offer Next Steps
-
-```
-AskUserQuestion({
-  questions: [{
-    question: "What would you like to do next?",
-    header: "Next",
-    options: [
-      { label: "Capture another", description: "Record another idea to the backlog" },
-      { label: "Shape this idea", description: "Run /arc-shape to refine this idea into a spec-ready brief" },
-      { label: "Done", description: "Finish capturing" }
-    ],
-    multiSelect: false
-  }]
-})
-```
-
-**Handle selection:**
-- **Capture another:** Loop back to Step 1
-- **Shape this idea:** Inform the user to run `/arc-shape` (or invoke it if available as a skill)
-- **Done:** Summarize total ideas captured this session and exit
 
 ## References
 
