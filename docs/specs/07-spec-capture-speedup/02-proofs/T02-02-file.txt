@@ -1,0 +1,38 @@
+Type: file
+Description: Verify skills/arc-capture/SKILL.md contains idea section format with Status, Priority, Captured, and summary fields
+Command: grep for idea section format fields in SKILL.md
+Expected: Idea section with Status, Priority, Captured (ISO 8601), and one-line summary
+Timestamp: 2026-04-10T12:00:00Z
+
+--- Output ---
+File: skills/arc-capture/SKILL.md
+
+Step 3b "Append Idea Section" (lines 128-141):
+
+  ## {Title}
+
+  - **Status:** captured
+  - **Priority:** {Priority}
+  - **Captured:** {ISO 8601 timestamp}
+
+  {One-line summary}
+
+Verification against feature scenarios:
+
+Scenario: Idea section contains all required data fields
+  Status field: Line 135 "- **Status:** captured" MATCH
+  Priority field: Line 136 "- **Priority:** {Priority}" MATCH
+  Captured field: Line 137 "- **Captured:** {ISO 8601 timestamp}" MATCH
+  One-line summary: Line 139 "{One-line summary}" MATCH
+
+Scenario: ISO 8601 timestamp is used for the Captured field
+  Line 25: "ALWAYS use ISO 8601 timestamps" (constraint) MATCH
+  Line 137: "{ISO 8601 timestamp}" (format) MATCH
+
+Scenario: New backlog is created from template when none exists
+  Step 2 (lines 98-114): Check for docs/BACKLOG.md, create from template if absent MATCH
+  - Reads docs/BACKLOG.md
+  - If missing: reads templates/BACKLOG.tmpl.md
+  - Creates docs/BACKLOG.md with heading, overview, priority definitions, empty summary table
+
+Status: PASS

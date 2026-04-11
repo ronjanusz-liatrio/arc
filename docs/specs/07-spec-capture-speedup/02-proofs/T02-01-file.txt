@@ -1,0 +1,22 @@
+Type: file
+Description: Verify skills/arc-capture/SKILL.md contains summary table row format with anchor link
+Command: grep for summary table row pattern in SKILL.md
+Expected: Line matching "| [{Title}](#{anchor}) | captured | {Priority} | -- |"
+Timestamp: 2026-04-10T12:00:00Z
+
+--- Output ---
+File: skills/arc-capture/SKILL.md
+Line 123: | [{Title}](#{anchor}) | captured | {Priority} | -- |
+Line 126: Where `{anchor}` is the title converted to a markdown anchor (lowercase, hyphens for spaces, strip special characters).
+
+Verification against feature scenarios:
+
+Scenario: Summary table row uses correct format with anchor link
+  Expected format: | [{Title}](#{anchor}) | captured | {Priority} | -- |
+  Found at line 123: MATCH
+
+Scenario: Anchor link format strips special characters and uses hyphens
+  Expected: lowercase, hyphens for spaces, stripped special characters
+  Found at line 126: "title converted to a markdown anchor (lowercase, hyphens for spaces, strip special characters)" MATCH
+
+Status: PASS
