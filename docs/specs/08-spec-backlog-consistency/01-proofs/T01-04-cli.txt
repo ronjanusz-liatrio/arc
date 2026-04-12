@@ -1,0 +1,8 @@
+Type: cli
+Command: grep -c 'Wave 0: Bootstrap' docs/BACKLOG.md
+Expected: 14 (7 summary table + 7 section metadata)
+Timestamp: 2026-04-12T20:20:47Z
+
+14
+
+Status: PASS

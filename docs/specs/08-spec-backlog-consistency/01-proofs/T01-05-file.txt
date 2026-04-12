@@ -1,0 +1,10 @@
+Type: file
+Description: Verify summary table has no rows for the 28 merged captured items
+Expected: 0 matches for non-deferred, non-shipped P2-Medium captured items
+Timestamp: 2026-04-12T20:20:56Z
+
+Checking for any of the 28 merged items in the summary table:
+0
+0 matches found
+
+Status: PASS

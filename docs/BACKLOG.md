@@ -12,34 +12,6 @@ A triaged list of product ideas. Each idea progresses through the idea lifecycle
 
 | Title | Status | Priority | Wave |
 |-------|--------|----------|------|
-| [Quick idea capture](#quick-idea-capture) | captured | P2-Medium | -- |
-| [Interactive idea refinement](#interactive-idea-refinement) | captured | P2-Medium | -- |
-| [Organize ideas into delivery waves](#organize-ideas-into-delivery-waves) | captured | P2-Medium | -- |
-| [Product direction as markdown in repo](#product-direction-as-markdown-in-repo) | captured | P2-Medium | -- |
-| [Idea pipeline respects Temper constraints](#idea-pipeline-respects-temper-constraints) | captured | P2-Medium | -- |
-| [Audit backlog health](#audit-backlog-health) | captured | P2-Medium | -- |
-| [Cross-reference integrity between artifacts](#cross-reference-integrity-between-artifacts) | captured | P2-Medium | -- |
-| [Error-path scenario documentation](#error-path-scenario-documentation) | captured | P2-Medium | -- |
-| [Interactive audit fix application](#interactive-audit-fix-application) | captured | P2-Medium | -- |
-| [Consolidate scattered product direction](#consolidate-scattered-product-direction) | captured | P2-Medium | -- |
-| [Migrate TODO items from READMEs](#migrate-todo-items-from-readmes) | captured | P2-Medium | -- |
-| [Idempotent re-run safety](#idempotent-re-run-safety) | captured | P2-Medium | -- |
-| [README features reflect shipped items](#readme-features-reflect-shipped-items) | captured | P2-Medium | -- |
-| [README shows current wave and roadmap](#readme-shows-current-wave-and-roadmap) | captured | P2-Medium | -- |
-| [Warn on stale README sections](#warn-on-stale-readme-sections) | captured | P2-Medium | -- |
-| [Scaffold README from VISION docs](#scaffold-readme-from-vision-docs) | captured | P2-Medium | -- |
-| [Structural trust validation for README](#structural-trust-validation-for-readme) | captured | P2-Medium | -- |
-| [Quick reference for all Arc skills](#quick-reference-for-all-arc-skills) | captured | P2-Medium | -- |
-| [Recall workflow order from terminal](#recall-workflow-order-from-terminal) | captured | P2-Medium | -- |
-| [Install instructions for Arc setup](#install-instructions-for-arc-setup) | captured | P2-Medium | -- |
-| [Extract product direction from existing specs](#extract-product-direction-from-existing-specs) | captured | P2-Medium | -- |
-| [Consolidate code TODOs into BACKLOG](#consolidate-code-todos-into-backlog) | captured | P2-Medium | -- |
-| [Gap analysis before import](#gap-analysis-before-import) | captured | P2-Medium | -- |
-| [Deep exploration via cw-research](#deep-exploration-via-cw-research) | captured | P2-Medium | -- |
-| [Separate Arc reports from product artifacts](#separate-arc-reports-from-product-artifacts) | captured | P2-Medium | -- |
-| [Record idea in one prompt mid-workflow](#record-idea-in-one-prompt-mid-workflow) | captured | P2-Medium | -- |
-| [Confirm and prioritize in single interaction](#confirm-and-prioritize-in-single-interaction) | captured | P2-Medium | -- |
-| [Free-text idea description then confirm](#free-text-idea-description-then-confirm) | captured | P2-Medium | -- |
 | [(deferred) Analytics or dashboards](#deferred-analytics-or-dashboards) | captured | P3-Low | -- |
 | [(deferred) Multi-repo coordination](#deferred-multi-repo-coordination) | captured | P3-Low | -- |
 | [(deferred) Automated triage](#deferred-automated-triage) | captured | P3-Low | -- |
@@ -75,294 +47,14 @@ A triaged list of product ideas. Each idea progresses through the idea lifecycle
 | [(deferred) Batch capture](#deferred-batch-capture) | captured | P3-Low | -- |
 | [(deferred) Changing priority levels](#deferred-changing-priority-levels) | captured | P3-Low | -- |
 | [(deferred) Modifying BACKLOG template](#deferred-modifying-backlog-template) | captured | P3-Low | -- |
-| [/arc-assess skill](#arc-assess-skill) | shipped | P2-Medium | -- |
-| [/arc-capture skill](#arc-capture-skill) | shipped | P2-Medium | -- |
-| [/arc-shape skill](#arc-shape-skill) | shipped | P2-Medium | -- |
-| [/arc-wave skill](#arc-wave-skill) | shipped | P2-Medium | -- |
-| [/arc-sync skill](#arc-sync-skill) | shipped | P2-Medium | -- |
-| [/arc-audit skill](#arc-audit-skill) | shipped | P2-Medium | -- |
-| [/arc-help skill](#arc-help-skill) | shipped | P2-Medium | -- |
+| [/arc-assess skill](#arc-assess-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
+| [/arc-capture skill](#arc-capture-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
+| [/arc-shape skill](#arc-shape-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
+| [/arc-wave skill](#arc-wave-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
+| [/arc-sync skill](#arc-sync-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
+| [/arc-audit skill](#arc-audit-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
+| [/arc-help skill](#arc-help-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
 | [Add rewrite mode to arc-sync injection prompt](#add-rewrite-mode-to-arc-sync-injection-prompt) | captured | P1-High | -- |
-
-## Quick idea capture
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
-<!-- aligned-from-spec: 01-spec-arc-plugin -->
-
-As a product owner, I want to capture ideas quickly so that I don't lose thoughts while context-switching
-
-## Interactive idea refinement
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
-<!-- aligned-from-spec: 01-spec-arc-plugin -->
-
-As a product owner, I want to refine ideas interactively so that briefs entering the SDD pipeline have clear problem framing, success criteria, and scope boundaries
-
-## Organize ideas into delivery waves
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
-<!-- aligned-from-spec: 01-spec-arc-plugin -->
-
-As a tech lead, I want to organize spec-ready ideas into delivery waves so that engineering work is sequenced and scoped appropriately
-
-## Product direction as markdown in repo
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
-<!-- aligned-from-spec: 01-spec-arc-plugin -->
-
-As a developer, I want product direction tracked as markdown in the repo so that I can read vision, customer, and roadmap context without leaving the terminal
-
-## Idea pipeline respects Temper constraints
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
-<!-- aligned-from-spec: 01-spec-arc-plugin -->
-
-As a project stakeholder, I want the idea pipeline to respect Temper phase constraints so that we don't plan work the project can't absorb
-
-## Audit backlog health
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md:16-19 -->
-<!-- aligned-from-spec: 02-spec-arc-plugin-enhancement -->
-
-As a product owner, I want to audit my backlog health so that I can identify stale ideas, priority imbalances, and gaps before planning the next wave
-
-## Cross-reference integrity between artifacts
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md:16-19 -->
-<!-- aligned-from-spec: 02-spec-arc-plugin-enhancement -->
-
-As a tech lead, I want to verify cross-reference integrity between BACKLOG, ROADMAP, VISION, and CUSTOMER so that broken links don't silently degrade product context
-
-## Error-path scenario documentation
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md:16-19 -->
-<!-- aligned-from-spec: 02-spec-arc-plugin-enhancement -->
-
-As a developer, I want error-path scenarios documented so that skill behavior under edge cases is explicit and testable
-
-## Interactive audit fix application
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md:16-19 -->
-<!-- aligned-from-spec: 02-spec-arc-plugin-enhancement -->
-
-As a product owner, I want to fix identified issues interactively during the review so that audit findings become immediate action, not a separate task
-
-## Consolidate scattered product direction
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/03-spec-arc-align/03-spec-arc-align.md:17-19 -->
-<!-- aligned-from-spec: 03-spec-arc-align -->
-
-As a product owner adopting Arc on an existing project, I want to consolidate scattered roadmap and backlog content into Arc's managed artifacts so that /arc-audit audits the full picture.
-
-## Migrate TODO items from READMEs
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/03-spec-arc-align/03-spec-arc-align.md:17-19 -->
-<!-- aligned-from-spec: 03-spec-arc-align -->
-
-As a developer who has been tracking TODOs in README files, I want those items migrated into docs/BACKLOG.md as captured stubs so they enter the idea lifecycle.
-
-## Idempotent re-run safety
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/03-spec-arc-align/03-spec-arc-align.md:17-19 -->
-<!-- aligned-from-spec: 03-spec-arc-align -->
-
-As a team lead, I want confidence that running /arc-assess twice doesn't create duplicate entries so that the migration is safe to re-run after adding new content.
-
-## README features reflect shipped items
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
-<!-- aligned-from-spec: 04-spec-arc-readme -->
-
-As a product owner, I want the README features section to reflect shipped BACKLOG items so that the README stays current without manual editing
-
-## README shows current wave and roadmap
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
-<!-- aligned-from-spec: 04-spec-arc-readme -->
-
-As a developer onboarding to a project, I want the README to show the current wave and roadmap so I understand where the project is headed
-
-## Warn on stale README sections
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
-<!-- aligned-from-spec: 04-spec-arc-readme -->
-
-As a product owner running /arc-audit, I want to be warned when Arc-managed README sections are stale or structurally incomplete so I can run /arc-sync to fix it
-
-## Scaffold README from VISION docs
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
-<!-- aligned-from-spec: 04-spec-arc-readme -->
-
-As a project bootstrapper, I want /arc-sync to scaffold a complete README from my VISION and CUSTOMER docs so I don't start from a blank file
-
-## Structural trust validation for README
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
-<!-- aligned-from-spec: 04-spec-arc-readme -->
-
-As a product owner, I want structural validation that my README communicates trust without requiring subjective prose review
-
-## Quick reference for all Arc skills
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/05-spec-arc-help/05-spec-arc-help.md:17-19 -->
-<!-- aligned-from-spec: 05-spec-arc-help -->
-
-As a new Arc user, I want to run /arc-help so that I can quickly understand what skills are available and how they fit together
-
-## Recall workflow order from terminal
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/05-spec-arc-help/05-spec-arc-help.md:17-19 -->
-<!-- aligned-from-spec: 05-spec-arc-help -->
-
-As an existing Arc user, I want a quick reference so that I can recall the workflow order and artifact purposes without leaving the terminal
-
-## Install instructions for Arc setup
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/05-spec-arc-help/05-spec-arc-help.md:17-19 -->
-<!-- aligned-from-spec: 05-spec-arc-help -->
-
-As a user installing Arc for the first time, I want to see install instructions so that I can set up Arc and its companion plugins correctly
-
-## Extract product direction from existing specs
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
-<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
-
-As a product owner adopting Arc on a mature repo with existing specs, I want arc-assess to extract product-direction content from those specs so I don't manually re-enter goals and user stories into Arc artifacts.
-
-## Consolidate code TODOs into BACKLOG
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
-<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
-
-As a developer with scattered TODO/FIXME comments in source code, I want arc-assess to consolidate those into BACKLOG stubs so they enter the idea lifecycle alongside markdown-based discoveries.
-
-## Gap analysis before import
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
-<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
-
-As a team lead running arc-assess for the first time, I want to see an analysis of what the codebase has vs. what it lacks so I can make informed decisions about what to import and what to create manually.
-
-## Deep exploration via cw-research
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
-<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
-
-As a developer on an unfamiliar codebase, I want arc-assess to leverage cw-research's deep exploration so the analysis is grounded in architecture and conventions, not just keyword matches.
-
-## Separate Arc reports from product artifacts
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
-<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
-
-As a repo maintainer, I want Arc's internal reports and manifests stored separately from my product-direction artifacts so that docs/ isn't cluttered with operational files that only Arc reads.
-
-## Record idea in one prompt mid-workflow
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md:17-19 -->
-<!-- aligned-from-spec: 07-spec-capture-speedup -->
-
-As a user running /arc-capture mid-workflow, I want the idea recorded in one prompt so I can return to what I was doing without losing context.
-
-## Confirm and prioritize in single interaction
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md:17-19 -->
-<!-- aligned-from-spec: 07-spec-capture-speedup -->
-
-As a user providing an idea inline, I want to confirm what was parsed and set priority in a single interaction.
-
-## Free-text idea description then confirm
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-12T18:00:00Z
-<!-- aligned-from: docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md:17-19 -->
-<!-- aligned-from-spec: 07-spec-capture-speedup -->
-
-As a user running /arc-capture without an inline idea, I want to describe my idea once in free text and then confirm + prioritize.
 
 ## (deferred) Analytics or dashboards
 
@@ -718,64 +410,197 @@ Modifying the BACKLOG template
 
 - **Status:** shipped
 - **Priority:** P2-Medium
+- **Wave:** Wave 0: Bootstrap
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
 Codebase discovery and migration. Scans the project for scattered product-direction content and imports them into Arc-managed artifacts.
 
+### User Stories
+
+<!-- aligned-from: docs/specs/03-spec-arc-align/03-spec-arc-align.md:17-19 -->
+<!-- aligned-from-spec: 03-spec-arc-align -->
+- As a product owner adopting Arc on an existing project, I want to consolidate scattered roadmap and backlog content into Arc's managed artifacts so that /arc-audit audits the full picture.
+
+<!-- aligned-from: docs/specs/03-spec-arc-align/03-spec-arc-align.md:17-19 -->
+<!-- aligned-from-spec: 03-spec-arc-align -->
+- As a developer who has been tracking TODOs in README files, I want those items migrated into docs/BACKLOG.md as captured stubs so they enter the idea lifecycle.
+
+<!-- aligned-from: docs/specs/03-spec-arc-align/03-spec-arc-align.md:17-19 -->
+<!-- aligned-from-spec: 03-spec-arc-align -->
+- As a team lead, I want confidence that running /arc-assess twice doesn't create duplicate entries so that the migration is safe to re-run after adding new content.
+
+<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
+<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
+- As a product owner adopting Arc on a mature repo with existing specs, I want arc-assess to extract product-direction content from those specs so I don't manually re-enter goals and user stories into Arc artifacts.
+
+<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
+<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
+- As a developer with scattered TODO/FIXME comments in source code, I want arc-assess to consolidate those into BACKLOG stubs so they enter the idea lifecycle alongside markdown-based discoveries.
+
+<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
+<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
+- As a team lead running arc-assess for the first time, I want to see an analysis of what the codebase has vs. what it lacks so I can make informed decisions about what to import and what to create manually.
+
+<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
+<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
+- As a developer on an unfamiliar codebase, I want arc-assess to leverage cw-research's deep exploration so the analysis is grounded in architecture and conventions, not just keyword matches.
+
+<!-- aligned-from: docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md:17-21 -->
+<!-- aligned-from-spec: 06-spec-arc-align-enhance -->
+- As a repo maintainer, I want Arc's internal reports and manifests stored separately from my product-direction artifacts so that docs/ isn't cluttered with operational files that only Arc reads.
+
 ## /arc-capture skill
 
 - **Status:** shipped
 - **Priority:** P2-Medium
+- **Wave:** Wave 0: Bootstrap
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
 Fast idea entry. Appends a structured stub to BACKLOG with minimal friction.
 
+### User Stories
+
+<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
+<!-- aligned-from-spec: 01-spec-arc-plugin -->
+- As a product owner, I want to capture ideas quickly so that I don't lose thoughts while context-switching
+
+<!-- aligned-from: docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md:17-19 -->
+<!-- aligned-from-spec: 07-spec-capture-speedup -->
+- As a user running /arc-capture mid-workflow, I want the idea recorded in one prompt so I can return to what I was doing without losing context.
+
+<!-- aligned-from: docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md:17-19 -->
+<!-- aligned-from-spec: 07-spec-capture-speedup -->
+- As a user providing an idea inline, I want to confirm what was parsed and set priority in a single interaction.
+
+<!-- aligned-from: docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md:17-19 -->
+<!-- aligned-from-spec: 07-spec-capture-speedup -->
+- As a user running /arc-capture without an inline idea, I want to describe my idea once in free text and then confirm + prioritize.
+
 ## /arc-shape skill
 
 - **Status:** shipped
 - **Priority:** P2-Medium
+- **Wave:** Wave 0: Bootstrap
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
 Interactive refinement. Turns a captured idea into a spec-ready brief using parallel subagent analysis across four dimensions.
 
+### User Stories
+
+<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
+<!-- aligned-from-spec: 01-spec-arc-plugin -->
+- As a product owner, I want to refine ideas interactively so that briefs entering the SDD pipeline have clear problem framing, success criteria, and scope boundaries
+
 ## /arc-wave skill
 
 - **Status:** shipped
 - **Priority:** P2-Medium
+- **Wave:** Wave 0: Bootstrap
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
 Delivery cycle management. Groups spec-ready ideas into a wave, updates ROADMAP, and prepares the handoff for /cw-spec.
 
+### User Stories
+
+<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
+<!-- aligned-from-spec: 01-spec-arc-plugin -->
+- As a tech lead, I want to organize spec-ready ideas into delivery waves so that engineering work is sequenced and scoped appropriately
+
+<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
+<!-- aligned-from-spec: 01-spec-arc-plugin -->
+- As a developer, I want product direction tracked as markdown in the repo so that I can read vision, customer, and roadmap context without leaving the terminal
+
+<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:17-21 -->
+<!-- aligned-from-spec: 01-spec-arc-plugin -->
+- As a project stakeholder, I want the idea pipeline to respect Temper phase constraints so that we don't plan work the project can't absorb
+
 ## /arc-sync skill
 
 - **Status:** shipped
 - **Priority:** P2-Medium
+- **Wave:** Wave 0: Bootstrap
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
 README synchronization. Scaffolds a complete README from Arc artifacts or selectively updates ARC: managed sections.
 
+### User Stories
+
+<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
+<!-- aligned-from-spec: 04-spec-arc-readme -->
+- As a product owner, I want the README features section to reflect shipped BACKLOG items so that the README stays current without manual editing
+
+<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
+<!-- aligned-from-spec: 04-spec-arc-readme -->
+- As a developer onboarding to a project, I want the README to show the current wave and roadmap so I understand where the project is headed
+
+<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
+<!-- aligned-from-spec: 04-spec-arc-readme -->
+- As a project bootstrapper, I want /arc-sync to scaffold a complete README from my VISION and CUSTOMER docs so I don't start from a blank file
+
+<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
+<!-- aligned-from-spec: 04-spec-arc-readme -->
+- As a product owner, I want structural validation that my README communicates trust without requiring subjective prose review
+
 ## /arc-audit skill
 
 - **Status:** shipped
 - **Priority:** P2-Medium
+- **Wave:** Wave 0: Bootstrap
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
 Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts.
 
+### User Stories
+
+<!-- aligned-from: docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md:16-19 -->
+<!-- aligned-from-spec: 02-spec-arc-plugin-enhancement -->
+- As a product owner, I want to audit my backlog health so that I can identify stale ideas, priority imbalances, and gaps before planning the next wave
+
+<!-- aligned-from: docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md:16-19 -->
+<!-- aligned-from-spec: 02-spec-arc-plugin-enhancement -->
+- As a tech lead, I want to verify cross-reference integrity between BACKLOG, ROADMAP, VISION, and CUSTOMER so that broken links don't silently degrade product context
+
+<!-- aligned-from: docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md:16-19 -->
+<!-- aligned-from-spec: 02-spec-arc-plugin-enhancement -->
+- As a developer, I want error-path scenarios documented so that skill behavior under edge cases is explicit and testable
+
+<!-- aligned-from: docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md:16-19 -->
+<!-- aligned-from-spec: 02-spec-arc-plugin-enhancement -->
+- As a product owner, I want to fix identified issues interactively during the review so that audit findings become immediate action, not a separate task
+
+<!-- aligned-from: docs/specs/04-spec-arc-readme/04-spec-arc-readme.md:20-24 -->
+<!-- aligned-from-spec: 04-spec-arc-readme -->
+- As a product owner running /arc-audit, I want to be warned when Arc-managed README sections are stale or structurally incomplete so I can run /arc-sync to fix it
+
 ## /arc-help skill
 
 - **Status:** shipped
 - **Priority:** P2-Medium
+- **Wave:** Wave 0: Bootstrap
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
 Quick reference guide. Displays an overview of all Arc skills, artifacts, workflow order, and installation instructions.
+
+### User Stories
+
+<!-- aligned-from: docs/specs/05-spec-arc-help/05-spec-arc-help.md:17-19 -->
+<!-- aligned-from-spec: 05-spec-arc-help -->
+- As a new Arc user, I want to run /arc-help so that I can quickly understand what skills are available and how they fit together
+
+<!-- aligned-from: docs/specs/05-spec-arc-help/05-spec-arc-help.md:17-19 -->
+<!-- aligned-from-spec: 05-spec-arc-help -->
+- As an existing Arc user, I want a quick reference so that I can recall the workflow order and artifact purposes without leaving the terminal
+
+<!-- aligned-from: docs/specs/05-spec-arc-help/05-spec-arc-help.md:17-19 -->
+<!-- aligned-from-spec: 05-spec-arc-help -->
+- As a user installing Arc for the first time, I want to see install instructions so that I can set up Arc and its companion plugins correctly
 
 ## Add rewrite mode to arc-sync injection prompt
 

@@ -1,0 +1,8 @@
+Type: cli
+Command: grep -c '| captured |' docs/BACKLOG.md
+Expected: 36 (original 64 minus 28 merged)
+Timestamp: 2026-04-12T20:20:45Z
+
+36
+
+Status: PASS
