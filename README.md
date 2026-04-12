@@ -122,7 +122,7 @@ flowchart LR
     AC --> AS --> AW --> AREADME --> TI
     TI --> CS --> CP --> CD --> TP
     TP -->|"advance"| TI
-    AW -->|"shaped brief"| CS
+    AW -->|"spec-ready brief"| CS
     AR -. "audit anytime" .-> AW
 
     classDef arc fill:#E8662F,stroke:#C7502A,color:#FFFFFF
@@ -181,7 +181,7 @@ claude plugin install arc@arc --scope user
 stateDiagram-v2
     direction LR
 
-    state "Captured(63)" as captured
+    state "Captured(36)" as captured
     state "Shaped(0)" as shaped
     state "Spec-Ready(0)" as specready
     state "Shipped(7)" as shipped

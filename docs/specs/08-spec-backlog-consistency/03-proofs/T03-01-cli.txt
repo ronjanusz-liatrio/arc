@@ -1,0 +1,18 @@
+Type: cli
+Command: grep -c 'shaped brief' README.md
+Expected: 0 (no occurrences of "shaped brief" remain)
+Timestamp: 2026-04-12T00:00:00Z
+Status: PASS
+
+Output:
+$ grep -c 'shaped brief' README.md
+0
+
+$ grep -n 'spec-ready brief' README.md
+11:Arc fills this gap ... feeding spec-ready briefs directly into the SDD pipeline.
+82:- **/arc-shape skill** ... Turns a captured idea into a spec-ready brief ...
+109:    AS["/arc-shape\nRefine into\nspec-ready brief"]:::arc
+125:    AW -->|"spec-ready brief"| CS
+
+Verification: The pipeline diagram edge label on the AW-->CS line now reads "spec-ready brief".
+The string "shaped brief" does not appear anywhere in README.md.

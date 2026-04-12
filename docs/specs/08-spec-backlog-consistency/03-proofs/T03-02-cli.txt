@@ -1,0 +1,18 @@
+Type: cli
+Command: grep -c '| captured |' docs/BACKLOG.md && grep -n 'Captured' README.md
+Expected: Captured count in README lifecycle diagram equals actual captured items in BACKLOG.md (36)
+Timestamp: 2026-04-12T00:00:00Z
+Status: PASS
+
+Output:
+$ grep -c '| captured |' docs/BACKLOG.md
+36
+
+$ grep -n 'Captured' README.md
+184:    state "Captured(36)" as captured
+
+$ grep -n 'Shipped' README.md
+188:    state "Shipped(7)" as shipped
+
+Verification: The lifecycle diagram Captured count (36) matches the actual number of captured
+items in BACKLOG.md (36). The Shipped count reads "Shipped(7)" as expected.

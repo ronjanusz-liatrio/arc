@@ -1,0 +1,16 @@
+Type: file
+Command: diff check on README.md changes
+Expected: Exactly two lines changed — pipeline label and lifecycle count
+Timestamp: 2026-04-12T00:00:00Z
+Status: PASS
+
+Output:
+$ git diff README.md
+-    AW -->|"shaped brief"| CS
++    AW -->|"spec-ready brief"| CS
+
+-    state "Captured(63)" as captured
++    state "Captured(36)" as captured
+
+Verification: Only the two targeted lines were modified.
+No other content in README.md was altered.
