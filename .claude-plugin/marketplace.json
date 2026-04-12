@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Lightweight product direction for spec-driven development. Inspired by Linear's fast capture and clean triage, arc helps shape ideas into spec-ready briefs.",
-    "version": "0.9.0"
+    "version": "0.10.0"
   },
   "plugins": [
     {
