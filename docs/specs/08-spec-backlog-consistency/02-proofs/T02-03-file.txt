@@ -1,0 +1,12 @@
+Type: file
+Check: docs/VISION.md retains strategic goals and other non-redundant content with aligned-from provenance
+Command: grep -c 'Strategic Goals' docs/VISION.md && grep -c 'Quality and Audit Goals' docs/VISION.md && grep -c 'Discovery and Migration Goals' docs/VISION.md && grep -c 'README Lifecycle Goals' docs/VISION.md && grep -c 'Quick Reference Goals' docs/VISION.md && grep -c 'Assessment Enhancement Goals' docs/VISION.md && grep -c 'Capture Speedup Goals' docs/VISION.md
+Expected: 1, 1, 1, 1, 1, 1, 1
+Timestamp: 2026-04-12T00:00:00Z
+Result: 1, 1, 1, 1, 1, 1, 1
+Status: PASS
+
+Additional verification:
+- Remaining aligned-from comments: 10 (non-redundant provenance retained)
+- Remaining aligned-from-spec comments: 10 (all spec provenance retained)
+- Redundant blocks removed: README.md:1-5 block, 01-spec-arc-plugin:3-5 block

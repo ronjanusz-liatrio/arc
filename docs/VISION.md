@@ -14,19 +14,6 @@ Projects using the Temper + claude-workflow SDD pipeline lack a structured upstr
 
 Arc is the upstream companion to Temper — it shapes what gets built before Temper governs how it gets built, feeding spec-ready briefs directly into the claude-workflow SDD pipeline. Arc provides fast idea capture, interactive shaping with parallel subagent analysis, and delivery cycle management that respects Temper phase constraints.
 
-## Imported Content
-
-<!-- aligned-from: README.md:1-5 -->
-
-Lightweight product direction for spec-driven development — inspired by Linear's fast capture and clean triage, arc is the upstream companion to [temper](https://github.com/ronjanusz-liatrio/temper).
-
-Arc manages the idea lifecycle from raw thought to spec-ready brief. It keeps product direction as plain markdown files in your repo (`VISION`, `CUSTOMER`, `ROADMAP`, `BACKLOG`) and feeds shaped ideas directly into the claude-workflow SDD pipeline. Where temper governs engineering maturity, arc governs what gets built and why.
-
-<!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:3-5 -->
-<!-- aligned-from-spec: 01-spec-arc-plugin -->
-
-Arc is a Claude Code plugin that manages the idea lifecycle from raw thought to spec-ready brief. It provides three skills (`/arc-capture`, `/arc-shape`, `/arc-wave`) and four product artifact templates (VISION, CUSTOMER, ROADMAP, BACKLOG) as markdown files tracked in the repository. Arc is the upstream companion to Temper — it shapes what gets built before Temper governs how it gets built, feeding spec-ready briefs directly into the claude-workflow SDD pipeline.
-
 <!-- aligned-from: docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md:7-13 -->
 <!-- aligned-from-spec: 01-spec-arc-plugin -->
 

@@ -1,0 +1,7 @@
+Type: file
+Check: docs/VISION.md retains Vision Summary, Problem Statement, and Value Proposition sections
+Command: grep -c 'Vision Summary' docs/VISION.md && grep -c 'Problem Statement' docs/VISION.md && grep -c 'Value Proposition' docs/VISION.md
+Expected: 1, 1, 1
+Timestamp: 2026-04-12T00:00:00Z
+Result: 1, 1, 1
+Status: PASS

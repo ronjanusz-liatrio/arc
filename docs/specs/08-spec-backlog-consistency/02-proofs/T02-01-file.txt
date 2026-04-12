@@ -1,0 +1,7 @@
+Type: file
+Check: docs/VISION.md contains no "## Imported Content" heading
+Command: grep -c '## Imported Content' docs/VISION.md
+Expected: 0
+Timestamp: 2026-04-12T00:00:00Z
+Result: 0
+Status: PASS
