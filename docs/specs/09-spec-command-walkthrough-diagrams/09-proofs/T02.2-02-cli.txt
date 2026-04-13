@@ -1,0 +1,13 @@
+Type: cli
+Command: bash scripts/lint-mermaid.sh
+Expected: Exit 0, all fences valid including new arc-shape flowchart
+Timestamp: 2026-04-13T12:00:00Z
+
+--- Output ---
+12 files, 14 fences, all valid
+
+Baseline was 11 files, 13 fences. After adding the arc-shape walkthrough flowchart:
+12 files, 14 fences -- one additional fence detected and validated.
+Exit code: 0
+
+Status: PASS

@@ -1,0 +1,15 @@
+Type: file
+Command: grep -n "^## " skills/arc-shape/SKILL.md (via Read tool inspection)
+Expected: Walkthrough section appears after Overview and before Critical Constraints
+Timestamp: 2026-04-13T12:00:00Z
+
+--- Output ---
+Line 14: ## Overview
+Line 18: ## Walkthrough
+Line 49: ## Critical Constraints
+Line 58: ## Process
+
+Section ordering is correct: Overview (14) -> Walkthrough (18) -> Critical Constraints (49) -> Process (58)
+The Walkthrough section contains a ```mermaid fenced code block (lines 20-47).
+
+Status: PASS

@@ -1,0 +1,16 @@
+Type: file
+Command: git diff skills/arc-shape/SKILL.md -- verify Process section untouched
+Expected: Diff shows only Walkthrough insertion; no changes to Process section
+Timestamp: 2026-04-13T12:00:00Z
+
+--- Output ---
+The git diff shows a single hunk: 31 lines inserted between the Overview paragraph
+and the Critical Constraints heading. The insertion consists entirely of:
+  - ## Walkthrough heading
+  - ```mermaid fenced code block with init, flowchart, classDef, and class lines
+  - Closing ``` fence
+
+No lines were removed. No lines in the ## Process section (originally line 27, now line 58)
+or any subsequent section were modified.
+
+Status: PASS

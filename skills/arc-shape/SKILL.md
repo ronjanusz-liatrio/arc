@@ -15,6 +15,37 @@ Always begin your response with: **ARC-SHAPE**
 
 You refine a captured idea from `docs/BACKLOG.md` into a spec-ready brief. This involves parallel subagent analysis across four dimensions (problem clarity, customer fit, scope boundaries, feasibility), followed by interactive Q&A to fill gaps. The output is a shaped brief in the format defined by `references/brief-format.md`.
 
+## Walkthrough
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+flowchart LR
+    A([Start]) --> B[Select idea]
+    B --> C[Launch 4 subagents]
+    C --> D1[Problem clarity]
+    C --> D2[Customer fit]
+    C --> D3[Scope boundaries]
+    C --> D4[Feasibility]
+    D1 --> E[Synthesize brief]
+    D2 --> E
+    D3 --> E
+    D4 --> E
+    E --> F[Interactive Q&A]
+    F --> G{Valid?}
+    G -- yes --> H[Update BACKLOG]
+    G -- no --> F
+    H --> I[Write shape report]
+    I --> J([End])
+
+    classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
+    classDef action fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
+    classDef filewrite fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+
+    class B,F user
+    class C,D1,D2,D3,D4,E,G action
+    class H,I filewrite
+```
+
 ## Critical Constraints
 
 - **NEVER** create a new idea — only shape existing captured ideas
