@@ -1,0 +1,12 @@
+Type: cli
+Description: Verify mermaid lint script passes with the new flowchart
+Command: bash scripts/lint-mermaid.sh
+Expected: Exit code 0, summary includes the updated SKILL.md file
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+12 files, 14 fences, all valid
+
+Exit code: 0
+
+Status: PASS

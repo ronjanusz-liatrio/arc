@@ -1,0 +1,16 @@
+Type: file
+Description: Verify flowchart uses exact themeVariables init block from README.md line 40
+Command: diff <(sed -n '/%%{init/p' skills/arc-capture/SKILL.md) <(sed -n '/%%{init/p' README.md)
+Expected: Init blocks are identical
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+README.md init block:
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+
+SKILL.md init block:
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+
+Analysis: Init blocks are byte-identical.
+
+Status: PASS

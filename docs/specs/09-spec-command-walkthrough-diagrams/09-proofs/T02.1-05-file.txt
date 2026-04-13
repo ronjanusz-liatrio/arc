@@ -1,0 +1,14 @@
+Type: file
+Description: Verify existing Process section is unchanged
+Command: git diff skills/arc-capture/SKILL.md (inspect Process section)
+Expected: Only addition is the ## Walkthrough block; ## Process section is identical to original
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+The git diff shows only one hunk: 25 lines inserted between ## Overview and ## Critical Constraints.
+No lines modified or deleted in ## Process (formerly line 27, now line 52) or any other section.
+
+The diff contains only additions (+ lines), no deletions (- lines) or modifications.
+The ## Process section content from "### Step 1: Gather Idea Details" through "## References" is byte-identical.
+
+Status: PASS

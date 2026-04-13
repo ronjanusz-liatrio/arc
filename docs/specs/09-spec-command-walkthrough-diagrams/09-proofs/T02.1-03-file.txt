@@ -1,0 +1,27 @@
+Type: file
+Description: Verify flowchart uses flowchart LR layout, has <= 15 nodes, and uses correct classDef styles
+Command: manual inspection of mermaid source
+Expected: flowchart LR, <= 15 nodes, classDef user=#1B2A3D, action=#11B5A4, filewrite=#E8662F
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+Layout declaration: "flowchart LR" -- PASS
+
+Node count:
+  S (Start), A (Invoke with inline idea), B (Parse title + summary),
+  C (Ask confirmation + priority), D (Re-parse input),
+  E (Ensure BACKLOG exists), F (Update summary table),
+  G (Append idea section), H (Confirm capture), Z (End)
+  Total: 10 nodes -- PASS (limit 15)
+
+classDef definitions:
+  user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF -- navy -- PASS
+  action fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF -- teal -- PASS
+  filewrite fill:#E8662F,stroke:#C7502A,color:#FFFFFF -- orange -- PASS
+
+Node classifications:
+  user (navy): A (user invocation) -- PASS
+  action (teal): B, C, D, H (Claude parsing/prompting/confirming) -- PASS
+  filewrite (orange): E, F, G (BACKLOG file operations) -- PASS
+
+Status: PASS

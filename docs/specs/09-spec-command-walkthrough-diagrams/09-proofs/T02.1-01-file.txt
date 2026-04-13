@@ -1,0 +1,17 @@
+Type: file
+Description: Verify ## Walkthrough section exists after ## Overview and before ## Critical Constraints
+Command: grep -n "^## " skills/arc-capture/SKILL.md
+Expected: Walkthrough heading appears between Overview and Critical Constraints
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+Line 10: ## Context Marker
+Line 14: ## Overview
+Line 18: ## Walkthrough
+Line 43: ## Critical Constraints
+Line 52: ## Process
+Line 176: ## References
+
+Analysis: ## Walkthrough (line 18) appears after ## Overview (line 14) and before ## Critical Constraints (line 43).
+
+Status: PASS

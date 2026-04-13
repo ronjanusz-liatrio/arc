@@ -15,6 +15,31 @@ Always begin your response with: **ARC-CAPTURE**
 
 You capture raw product ideas quickly and append them to `docs/BACKLOG.md`. The goal is speed — get the thought down before it's lost. No shaping, no analysis, no refinement. That comes later with `/arc-shape`.
 
+## Walkthrough
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+flowchart LR
+    S(["Start"]) --> A["Invoke with inline idea"]
+    A --> B["Parse title + summary"]
+    B --> C["Ask confirmation + priority"]
+    C -->|Looks good| E["Ensure BACKLOG exists"]
+    C -->|Adjust| D["Re-parse input"]
+    D --> C
+    E --> F["Update summary table"]
+    F --> G["Append idea section"]
+    G --> H["Confirm capture"]
+    H --> Z(["End"])
+
+    classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
+    classDef action fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
+    classDef filewrite fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+
+    class A user
+    class B,C,D,H action
+    class E,F,G filewrite
+```
+
 ## Critical Constraints
 
 - **NEVER** refine or analyze the idea — capture only
