@@ -1,0 +1,10 @@
+Type: cli
+Command: ls ${TMPDIR}/lint-mermaid-* (after script run)
+Expected: No temporary files remain after script exits
+Timestamp: 2026-04-13T13:45:00Z
+
+Output:
+no matches found: /var/folders/.../lint-mermaid-*
+
+Confirms: trap cleanup removed all temporary files.
+Status: PASS

@@ -1,0 +1,15 @@
+Type: cli
+Command: bash scripts/lint-mermaid.sh (with deliberately broken fence in test-broken.md)
+Expected: Exit 1 naming the broken file and fence index
+Timestamp: 2026-04-13T13:45:00Z
+
+Setup: Created test-broken.md containing an invalid mermaid fence:
+  ```mermaid
+  this is not valid mermaid
+  ```
+
+Output:
+FAIL: test-broken.md fence #1
+
+Exit code: 1
+Status: PASS

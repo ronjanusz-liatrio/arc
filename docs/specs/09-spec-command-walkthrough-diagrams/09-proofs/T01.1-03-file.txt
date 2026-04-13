@@ -1,0 +1,12 @@
+Type: file
+Command: shellcheck scripts/lint-mermaid.sh && git ls-files -s scripts/lint-mermaid.sh
+Expected: shellcheck exits 0; file mode is 100755 (executable) in git index
+Timestamp: 2026-04-13T13:45:00Z
+
+shellcheck output: (clean, no warnings or errors)
+shellcheck exit code: 0
+
+git ls-files -s output:
+100755 b85a29e7c159237abc7f40fd63cecd7308d0099c 0	scripts/lint-mermaid.sh
+
+Status: PASS
