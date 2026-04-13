@@ -1,0 +1,20 @@
+Type: cli
+Command: bash scripts/lint-mermaid.sh (with _scratch-broken.md containing invalid mermaid)
+Expected: Exit 1 naming the broken file and fence index
+Timestamp: 2026-04-13T13:55:00Z
+
+Setup:
+Created _scratch-broken.md with intentionally broken mermaid syntax:
+  graph TD
+      A[Start --> B[End]
+(Missing closing bracket on A node)
+
+Output:
+FAIL: _scratch-broken.md fence #1
+
+Exit code: 1
+
+Teardown:
+Removed _scratch-broken.md via git clean -f
+
+Status: PASS

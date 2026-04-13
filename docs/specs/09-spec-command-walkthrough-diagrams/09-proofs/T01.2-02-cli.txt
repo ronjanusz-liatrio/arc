@@ -1,0 +1,9 @@
+Type: cli
+Command: ls -la scripts/lint-mermaid.sh
+Expected: File is executable (-rwxr-xr-x)
+Timestamp: 2026-04-13T13:55:00Z
+
+Output:
+-rwxr-xr-x@ 1 ron  staff  2157 Apr 13 13:48 scripts/lint-mermaid.sh
+
+Status: PASS

@@ -1,0 +1,10 @@
+Type: cli
+Command: shellcheck scripts/lint-mermaid.sh
+Expected: Zero warnings/errors
+Timestamp: 2026-04-13T13:55:00Z
+
+Output:
+(no output — shellcheck returned 0 warnings)
+
+Exit code: 0
+Status: PASS

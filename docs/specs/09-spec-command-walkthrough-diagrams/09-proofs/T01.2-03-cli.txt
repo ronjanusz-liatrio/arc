@@ -1,0 +1,10 @@
+Type: cli
+Command: bash scripts/lint-mermaid.sh
+Expected: Exit 0 with summary line like "N files, N fences, all valid"
+Timestamp: 2026-04-13T13:55:00Z
+
+Output:
+9 files, 11 fences, all valid
+
+Exit code: 0
+Status: PASS
