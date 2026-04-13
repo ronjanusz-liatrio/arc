@@ -55,6 +55,7 @@ A triaged list of product ideas. Each idea progresses through the idea lifecycle
 | [/arc-audit skill](#arc-audit-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
 | [/arc-help skill](#arc-help-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
 | [Add rewrite mode to arc-sync injection prompt](#add-rewrite-mode-to-arc-sync-injection-prompt) | captured | P1-High | -- |
+| [/arc-ship skill](#arc-ship-skill) | captured | P1-High | -- |
 
 ## (deferred) Analytics or dashboards
 
@@ -609,3 +610,12 @@ Quick reference guide. Displays an overview of all Arc skills, artifacts, workfl
 - **Captured:** 2026-04-12T19:15:00Z
 
 When arc-sync detects injection mode (existing README without ARC: markers), offer a "Rewrite" option that reads the existing README holistically, re-homes content into ARC:/TEMPER: managed sections, previews the diff, and validates trust signals — existing prose is relocated, never deleted.
+
+## /arc-ship skill
+
+- **Status:** captured
+- **Priority:** P1-High
+- **Captured:** 2026-04-13T00:00:00Z
+- **Context:** Raised after spec 09 (walkthrough diagrams) shipped — shipped state is currently updated manually in BACKLOG, creating drift risk.
+
+New skill to mark in-progress ideas as `shipped` in docs/BACKLOG.md after verifying corresponding claude-workflow proof artifacts (cw-validate report, coverage matrix, completed task board entries) — automates the lifecycle transition that closes the loop from `/cw-validate` back to Arc.
