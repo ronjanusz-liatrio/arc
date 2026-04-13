@@ -1,9 +1,9 @@
 # Research Report: Arc Codebase — Product-Direction Discovery
 
-**Topic:** Product-direction discovery for `/arc-assess` import consolidation
-**Date:** 2026-04-12
+**Topic:** Product-direction discovery for `/arc-assess` re-scan (specs 08, 09, 01-align-ignore-dirs)
+**Date:** 2026-04-13
 **Working Directory:** /Users/ron/dev/arc
-**Arc Version:** 0.10.0
+**Arc Version:** 0.12.0
 
 ---
 
@@ -14,7 +14,7 @@
 | Field | Value |
 |-------|-------|
 | Name | arc |
-| Version | 0.10.0 |
+| Version | 0.12.0 |
 | Owner | ronjanusz-liatrio |
 | Type | Pure markdown Claude Code plugin (no executable code) |
 | Strict mode | true |
@@ -26,145 +26,122 @@
 ```
 arc/
   .claude-plugin/
-    plugin.json                             # Plugin identity: name, version, description, companions
-    marketplace.json                        # Marketplace registration: owner, metadata, source
+    plugin.json                             # Plugin identity: name, version, companions
+    marketplace.json                        # Marketplace: owner, metadata, source
   .claude/
     settings.local.json                     # Local dev permissions (gitignored)
   skills/
     README.md                               # Skill directory hub (7 skills listed)
-    arc-assess/
-      SKILL.md                              # Codebase discovery and migration (~1400 lines)
+    arc-assess/SKILL.md                     # Codebase discovery and migration (~1400 lines)
       references/
         align-report-template.md            # Alignment report format
         detection-patterns.md               # 22 keyword + 4 structural + 4 code comment patterns
         import-rules.md                     # Classification, stub generation, cleanup, manifest
-    arc-capture/
-      SKILL.md                              # Fast idea entry (~155 lines)
-    arc-shape/
-      SKILL.md                              # Interactive refinement with parallel subagents (~379 lines)
+    arc-capture/SKILL.md                    # Fast idea entry (~155 lines)
+    arc-shape/SKILL.md                      # Interactive refinement with parallel subagents (~379 lines)
       references/
         shaping-dimensions.md               # Four analysis dimensions
         brief-validation.md                 # 19-criterion readiness checklist
-    arc-wave/
-      SKILL.md                              # Delivery cycle management (~357 lines)
+    arc-wave/SKILL.md                       # Delivery cycle management (~357 lines)
       references/
         wave-report-template.md             # Wave report format
         bootstrap-protocol.md               # ARC: namespace CLAUDE.md injection rules
-    arc-sync/
-      SKILL.md                              # README lifecycle management (~762 lines, largest skill)
+    arc-sync/SKILL.md                       # README lifecycle management (~762 lines)
       references/
-        trust-signals.md                    # 10 structural trust-signal definitions (TS-1 to TS-10)
+        trust-signals.md                    # 10 structural trust-signal definitions
         readme-mapping.md                   # Artifact-to-section extraction rules
-        readme-quality-rules.md             # Quality gates (line count, headings, accessibility)
-    arc-audit/
-      SKILL.md                              # Pipeline health audit (~390 lines)
+        readme-quality-rules.md             # Quality gates
+    arc-audit/SKILL.md                      # Pipeline health audit (~390 lines)
       references/
         audit-dimensions.md                 # 5 backlog health + 10 wave alignment checks
         review-report-template.md           # Report format
-    arc-help/
-      SKILL.md                              # Quick reference guide (~112 lines, static output)
+    arc-help/SKILL.md                       # Quick reference guide (~112 lines)
   templates/
-    VISION.tmpl.md                          # Phase-graduated (Spike-Maturity), role: always-required
-    CUSTOMER.tmpl.md                        # Phase-graduated, role: always-required
-    ROADMAP.tmpl.md                         # Phase-graduated, role: product-leadership
-    BACKLOG.tmpl.md                         # Phase-graduated, role: product-leadership
+    VISION.tmpl.md                          # Phase-graduated (Spike-Maturity)
+    CUSTOMER.tmpl.md                        # Phase-graduated
+    ROADMAP.tmpl.md                         # Phase-graduated
+    BACKLOG.tmpl.md                         # Phase-graduated
   references/
     README.md                               # Reference directory hub
-    idea-lifecycle.md                       # 4-stage model: Capture > Shape > Spec-Ready > Shipped
+    idea-lifecycle.md                       # 4-stage model
     brief-format.md                         # 7-section spec-ready brief specification
     wave-planning.md                        # Wave sizing, precedence, theme grouping
     cross-plugin-contract.md                # What Arc reads from Temper (read-only)
     vocabulary-mapping.md                   # Arc vs Temper terminology disambiguation
   docs/
+    BACKLOG.md                              # 42 items (35 deferred-captured, 7 shipped, 2 new P1 captured)
+    VISION.md                               # Consolidated vision with aligned-from provenance
+    CUSTOMER.md                             # 4 personas extracted from specs
     specs/
       01-spec-arc-plugin/                   # Initial 7-unit plugin spec (v0.2.0)
       02-spec-arc-plugin-enhancement/       # /arc-audit + error-path Gherkin (v0.3.0)
       03-spec-arc-align/                    # /arc-assess codebase discovery (v0.4.0)
       04-spec-arc-readme/                   # /arc-sync README management (v0.5.0)
       05-spec-arc-help/                     # /arc-help quick reference (v0.6.0)
-      06-spec-arc-align-enhance/            # arc-assess enhancements (research, specs, code comments)
-      07-spec-capture-speedup/              # Capture flow consolidation to 1-2 prompts
-      01-spec-align-ignore-dirs/            # Align exclusion list expansion
+      06-spec-arc-align-enhance/            # arc-assess enhancements (v0.7.0)
+      07-spec-capture-speedup/              # Capture flow consolidation (v0.8.0)
+      08-spec-backlog-consistency/          # *** NEW — Backlog dedup + VISION cleanup + README fixes
+      09-spec-command-walkthrough-diagrams/ # *** NEW — Mermaid walkthroughs for 3 core skills + lint script
+      01-spec-align-ignore-dirs/            # *** NEW — Expand arc-assess hardcoded exclusion list
+    skill/arc/
+      align-manifest.md                     # Import history (93 rows from specs 01-07 + README)
+      align-report.md                       # Alignment report from prior run
+      align-analysis.md                     # Gap analysis from prior run
+    research-align/
+      research-align.md                     # This report
+  scripts/
+    lint-mermaid.sh                         # Mermaid fence validator (spec 09 artifact)
   CLAUDE.md                                 # Project instructions
-  README.md                                 # Full project documentation with Mermaid diagrams
-  .gitignore                                # OS, editor, Claude, Node, Python, build exclusions
+  README.md                                 # Full project docs with Mermaid diagrams
+  .gitignore                                # OS, editor, Claude, Node, Python exclusions
 ```
 
 ### Key Architectural Patterns
 
-1. **Skill-based architecture:** Each skill is a self-contained SKILL.md with YAML frontmatter (`name`, `description`, `user-invocable`, `allowed-tools`), context marker, critical constraints, numbered process steps, and references section.
-2. **File-based state machine:** All state lives in `docs/BACKLOG.md` with explicit status transitions (`captured` > `shaped` > `spec-ready` > `shipped`) and two backward transitions (Shape > Capture for "needs context", Spec-Ready > Shape for "scope change").
-3. **Managed section protocol:** HTML comment markers (`<!--# BEGIN ARC:{section} -->` / `<!--# END ARC:{section} -->`) for injecting content into CLAUDE.md and README.md. Coexists with TEMPER: and MM: namespaces.
-4. **Phase-graduated templates:** Each artifact template scales content requirements across 7 Temper maturity phases (Spike > PoC > Vertical Slice > Foundation > MVP > Growth > Maturity).
-5. **Parallel subagent analysis:** `/arc-shape` launches 4 concurrent subagents (problem clarity, customer fit, scope boundaries, feasibility) to analyze ideas.
-6. **Trust-signal framework:** 10 structural signals (TS-1 through TS-10) validate README quality by cross-referencing managed sections against source artifacts.
-7. **Audit dimensions:** 5 backlog health checks (BH-1 to BH-5) + 10 wave alignment checks (WA-1 to WA-10) with severity-based health rating.
-
-### Product-Direction Artifacts (Not Yet Created)
-
-The following files are defined by the plugin but do **not** exist in the repository yet:
-
-| Artifact | Expected Path | Created By |
-|----------|--------------|------------|
-| VISION | `docs/VISION.md` | `/arc-wave` (stub), `/arc-assess` (import), or manual |
-| CUSTOMER | `docs/CUSTOMER.md` | `/arc-wave` (stub), `/arc-assess` (import), or manual |
-| ROADMAP | `docs/ROADMAP.md` | `/arc-wave` |
-| BACKLOG | `docs/BACKLOG.md` | `/arc-capture`, `/arc-assess` |
-| Align report | `docs/skill/arc/align-report.md` | `/arc-assess` |
-| Align manifest | `docs/skill/arc/align-manifest.md` | `/arc-assess` |
-| Align analysis | `docs/skill/arc/align-analysis.md` | `/arc-assess` |
-| Wave report | `docs/skill/arc/wave-report.md` | `/arc-wave` |
-| Review report | `docs/skill/arc/review-report.md` | `/arc-audit` |
-| Shape report | `docs/skill/arc/shape-report.md` | `/arc-shape` |
+1. **Skill-based architecture:** Self-contained SKILL.md files with YAML frontmatter, context marker, critical constraints, numbered process steps, and references.
+2. **File-based state machine:** All state in `docs/BACKLOG.md` with status transitions (`captured` > `shaped` > `spec-ready` > `shipped`) and two backward transitions.
+3. **Managed section protocol:** HTML comment markers (`<!--# BEGIN ARC:{section} -->` / `<!--# END ARC:{section} -->`) for content injection in CLAUDE.md and README.md.
+4. **Phase-graduated templates:** Artifact templates scale across 7 Temper maturity phases.
+5. **Parallel subagent analysis:** `/arc-shape` launches 4 concurrent subagents.
+6. **Trust-signal framework:** 10 structural signals (TS-1 to TS-10) for README validation.
+7. **Audit dimensions:** 5 backlog health checks + 10 wave alignment checks with severity-based ratings.
+8. **Mermaid lint infrastructure:** `scripts/lint-mermaid.sh` validates all mermaid fences outside `docs/specs/` (new since spec 09).
 
 ---
 
 ## Conventions & Naming Patterns
 
-### File Naming
+### Spec Numbering
 
-| Category | Convention | Examples |
-|----------|-----------|---------|
-| Skill definitions | `skills/{skill-name}/SKILL.md` | `skills/arc-capture/SKILL.md` |
-| Skill references | `skills/{skill-name}/references/{topic}.md` | `skills/arc-shape/references/shaping-dimensions.md` |
-| Templates | `templates/{ARTIFACT}.tmpl.md` | `templates/VISION.tmpl.md` |
-| Shared references | `references/{topic}.md` | `references/idea-lifecycle.md` |
-| Spec directories | `docs/specs/{NN}-spec-{feature}/` | `docs/specs/01-spec-arc-plugin/` |
-| Spec files | `{NN}-spec-{feature}.md` | `01-spec-arc-plugin.md` |
-| Research reports | `research-{topic}.md` inside spec dir | `research-arc-plugin.md` |
-| Proof artifacts | `{NN}-proofs/T{NN}-proofs.md` | `01-proofs/T01.1-proofs.md` |
-| Question files | `{NN}-questions-{N}-{feature}.md` | `01-questions-1-arc-plugin.md` |
+| Spec | Feature | Status |
+|------|---------|--------|
+| 01 | Initial plugin (7 units) | shipped |
+| 02 | /arc-audit + error paths | shipped |
+| 03 | /arc-assess discovery | shipped |
+| 04 | /arc-sync README management | shipped |
+| 05 | /arc-help quick reference | shipped |
+| 06 | arc-assess enhancements | shipped |
+| 07 | Capture speedup | shipped |
+| 08 | Backlog consistency cleanup | shipped |
+| 09 | Command walkthrough diagrams | shipped |
+| 01-align-ignore-dirs | Exclusion list expansion | shipped (non-sequential numbering) |
 
-### Markdown Structure Patterns
+### SKILL.md Structure
 
-- **SKILL.md:** YAML frontmatter > Context Marker > Overview > Critical Constraints > Process (numbered steps) > References
-- **Templates:** YAML frontmatter (`role`, `artifact`, `output_path`) > Template description > Phase Requirements (7 phases) > Cross-References
-- **References:** H1 title > Prose overview > Structured sections (tables, code blocks, examples) > Cross-References
-- **Specs:** H1 title > Introduction/Overview > Goals (numbered) > User Stories > Demoable Units > Non-Goals > Design/Technical/Security Considerations > Success Metrics > Open Questions
+YAML frontmatter > Context Marker > Overview > Walkthrough (new in spec 09 for capture/shape/wave) > Critical Constraints > Process (numbered steps) > References.
 
-### Status and Priority Labels
+### File Conventions
 
-**Idea statuses:** `captured`, `shaped`, `spec-ready`, `shipped`
-
-**Priority levels:** `P0-Critical`, `P1-High`, `P2-Medium`, `P3-Low`
-
-**Health ratings:** `Healthy`, `Needs Attention`, `Critical`
-
-**Finding severities:** `info`, `warning`, `critical`
-
-**Trust-signal outcomes:** `PASS`, `FAIL`, `N/A`
-
-### Commit Convention
-
-`type(scope): description` where types are `feat`, `fix`, `docs`, `refactor`, `chore`, `test` and scopes include `arc`, `arc-capture`, `arc-shape`, `arc-wave`, `arc-sync`, `arc-audit`, `arc-assess`, `arc-help`, `skills`, `templates`, `references`, `plugin`.
+- Spec directories: `docs/specs/{NN}-spec-{feature}/`
+- Spec files: `{NN}-spec-{feature}.md`
+- Proof artifacts: `{NN}-proofs/T{NN}-proofs.md`
+- Question files: `{NN}-questions-{N}-{feature}.md`
+- Lint scripts: `scripts/{tool}.sh` (bash, set -euo pipefail, shellcheck-clean)
+- Conventional commits: `type(scope): description`
 
 ### Branding
 
-Liatrio brand colors used in all Mermaid diagrams:
-- Primary (teal): `#11B5A4`
-- Secondary (orange): `#E8662F`
-- Tertiary (dark blue): `#1B2A3D`
-- Font: `Inter, sans-serif`
+Liatrio brand in Mermaid diagrams: teal `#11B5A4`, orange `#E8662F`, navy `#1B2A3D`, font Inter.
 
 ---
 
@@ -185,366 +162,112 @@ Liatrio brand colors used in all Mermaid diagrams:
 
 ### Cross-Plugin Contract
 
-Arc > Temper access is strictly read-only. Arc never creates, modifies, or deletes Temper-managed artifacts. Key reads:
-- Phase and gate status from `docs/skill/temper/management-report.md` (constrains wave sizing)
-- Architecture context from `docs/ARCHITECTURE.md` (informs feasibility analysis in `/arc-shape`)
-- Test strategy from `docs/TESTING.md` (scope boundary analysis)
-- Deployment complexity from `docs/DEPLOYMENT.md` (delivery risk assessment)
-- Tech stack from `docs/TECH_STACK.md` (feasibility assessment)
-
-### Vocabulary Mapping
-
-| Arc Term | Temper Term | Relationship |
-|----------|------------|--------------|
-| Wave (delivery cycle) | Phase (maturity stage) | Waves happen within phases |
-| Trust signals | Gates | Both are quality checks, different domain |
-| captured/shaped/spec-ready/shipped | notes/sketch/draft/stub/full | Different axes: idea lifecycle vs document maturity |
-| assess/sync/audit | assess/sync/audit | Same verbs, same intent, different domain |
+Arc > Temper access is strictly read-only. Arc never creates, modifies, or deletes Temper-managed artifacts. See `references/cross-plugin-contract.md` for the full read matrix.
 
 ---
 
 ## Product-Direction Content Findings
 
-### Overview
+### What the Prior Scan Imported
 
-Arc is a tool-building repo (the plugin itself). It does not have its own `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/ROADMAP.md`, or `docs/BACKLOG.md` yet. All product-direction content is scattered across spec files, the README, CLAUDE.md, skill definitions, and research reports.
+The 2026-04-12 `/arc-assess` run imported content from specs 01-07 and README.md into:
+- `docs/VISION.md` — 12 vision blocks with aligned-from provenance
+- `docs/CUSTOMER.md` — 4 personas (Product Owner, Developer, Tech Lead, Stakeholder)
+- `docs/BACKLOG.md` — 70 stubs (28 user stories, 35 deferred non-goals, 7 shipped skills)
 
-### Finding 1: Vision and Mission Content in README.md
+The align-manifest (`docs/skill/arc/align-manifest.md`) has 93 rows, all from specs 01-07 and README.md.
 
-**File:** `README.md`
-**Lines:** 1-5
-**Content:**
-```
-# Arc
-Lightweight product direction for spec-driven development -- inspired by Linear's fast capture and clean triage, arc is the upstream companion to temper.
-Arc manages the idea lifecycle from raw thought to spec-ready brief.
-```
-**Classification:** VISION
-**Signal strength:** Strong -- product vision statement with clear positioning
+### What the Prior Scan Did Not Cover
 
----
+The following specs and artifacts are **not in the manifest** and will be new discoveries for a re-scan:
 
-### Finding 2: Product Scope Definition in README.md
+#### Spec 08: Backlog Consistency (`docs/specs/08-spec-backlog-consistency/`)
 
-**File:** `README.md`
-**Lines:** 4-5
-**Content:** "It keeps product direction as plain markdown files in your repo (VISION, CUSTOMER, ROADMAP, BACKLOG) and feeds shaped ideas directly into the claude-workflow SDD pipeline. Where temper governs engineering maturity, arc governs what gets built and why."
-**Classification:** VISION
-**Signal strength:** Strong -- value proposition and scope boundaries
+**Files:**
+- `08-spec-backlog-consistency.md`
+- `08-questions-1-backlog-consistency.md`
+- `01-proofs/T01-proofs.md`, `02-proofs/T02-proofs.md`, `03-proofs/T03-proofs.md`
 
----
+**Product-direction content:**
 
-### Finding 3: Idea Lifecycle Description in README.md
+| Location | Lines | Classification | Content |
+|----------|-------|---------------|---------|
+| 08-spec:8-12 | Goals | VISION | 5 goals: eliminate duplicates, enrich shipped entries, Wave 0 retroactive, VISION dedup, README fixes |
+| 08-spec:16-18 | User Stories | BACKLOG + CUSTOMER | 3 stories: product owner, developer, reader (BACKLOG dedup, VISION cleanup, README accuracy) |
+| 08-spec:112-118 | Non-Goals | BACKLOG (deferred) | 5 items: triage priorities, ROADMAP creation, CUSTOMER modification, arc-sync refresh, VISION/README messaging |
 
-**File:** `README.md`
-**Lines:** 7-33
-**Content:** Mermaid state diagram and 4-stage lifecycle table (Capture > Shape > Spec-Ready > Shipped)
-**Classification:** VISION (operational model)
-**Signal strength:** Strong -- core product model definition
+#### Spec 09: Command Walkthrough Diagrams (`docs/specs/09-spec-command-walkthrough-diagrams/`)
 
----
+**Files:**
+- `09-spec-command-walkthrough-diagrams.md`
+- `09-proofs/T01.1-proofs.md`, `T01.2-proofs.md`, `T02.1-proofs.md`, `T02.2-proofs.md`, `T02.3-proofs.md`, `T02.4-proofs.md`
 
-### Finding 4: Two-Plugin Pipeline Description in README.md
+**Product-direction content:**
 
-**File:** `README.md`
-**Lines:** 49-82
-**Content:** Mermaid flowchart showing full arc > temper > claude-workflow pipeline with all 7 arc skills, 3 CW skills, 2 temper skills.
-**Classification:** VISION (architecture/pipeline)
-**Signal strength:** Strong -- strategic positioning and integration model
+| Location | Lines | Classification | Content |
+|----------|-------|---------------|---------|
+| 09-spec:9-15 | Goals | VISION | 5 goals: mermaid flowcharts for 3 core skills, placement after Overview, brand consistency, lint script, 15-node limit |
+| 09-spec:17-21 | User Stories | BACKLOG + CUSTOMER | 3 stories: new Arc user (visual walkthrough), developer (CI-style lint), product owner (brand polish) |
+| 09-spec:75-83 | Non-Goals | BACKLOG (deferred) | 7 items: walkthroughs for sync/audit/assess/help, replacing textual steps, error paths, committed PNGs, CI integration, README diagram changes, Node package.json |
 
----
+#### Spec 01-align-ignore-dirs (`docs/specs/01-spec-align-ignore-dirs/`)
 
-### Finding 5: Skill Descriptions (Roadmap of Capabilities) in README.md
+**Files:**
+- `01-spec-align-ignore-dirs.md`
+- `01-questions-1-align-ignore-dirs.md`
+- `02-proofs/T01-proofs.md`, `T02-proofs.md`
 
-**File:** `README.md`
-**Lines:** 84-103
-**Content:** 7-skill descriptions with one-line summaries covering assess, capture, shape, wave, sync, audit, help.
-**Classification:** BACKLOG (shipped features)
-**Signal strength:** Strong -- these represent shipped capabilities
+**Product-direction content:**
 
----
+| Location | Lines | Classification | Content |
+|----------|-------|---------------|---------|
+| 01-align-ignore-dirs:8-11 | Goals | VISION | 3 goals: expand exclusion list for Python/Rust/Java/JS, consistent 5-location sync, silent behavior |
+| 01-align-ignore-dirs:14-17 | User Stories | BACKLOG + CUSTOMER | 3 stories: Python developer, Rust/Java developer, Next.js developer (auto-exclusion) |
+| 01-align-ignore-dirs:57-62 | Non-Goals | BACKLOG (deferred) | 4 items: IDE dirs, infra-tool dirs, heuristic changes, detection-patterns update |
 
-### Finding 6: Target Audience in CLAUDE.md
+#### New BACKLOG Items (Not From Specs)
 
-**File:** `CLAUDE.md`
-**Lines:** 1-7
-**Content:** "A Claude Code plugin providing /arc-capture, /arc-shape, and /arc-wave skills for product direction and idea lifecycle management. Arc is the upstream companion to temper -- it shapes what gets built before temper governs how it gets built."
-**Classification:** VISION
-**Signal strength:** Moderate -- abbreviated vision statement
+Two new captured items in `docs/BACKLOG.md` that were **not** imported from specs (created manually post-assess):
 
----
+| Item | Priority | Source |
+|------|----------|--------|
+| Add rewrite mode to arc-sync injection prompt | P1-High | Manual capture, 2026-04-12T19:15:00Z |
+| /arc-ship skill | P1-High | Manual capture, 2026-04-13T00:00:00Z |
 
-### Finding 7: Goals in Spec 01
+These already exist in BACKLOG.md and do not need import, but they represent active product direction: the /arc-ship skill closes the lifecycle loop from `/cw-validate` back to Arc.
 
-**File:** `docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md`
-**Lines:** 8-14
-**Content:** 5 numbered goals: fast idea capture, structured shaping, delivery cycle management, Temper integration, pipeline continuity
-**Classification:** VISION
-**Signal strength:** Strong -- strategic goals
+#### New Script Artifact
 
----
+`scripts/lint-mermaid.sh` — introduced by spec 09. Bash script (shellcheck-clean, set -euo pipefail) that validates mermaid fences via `npx @mermaid-js/mermaid-cli`. Not product-direction content, but is a new build infrastructure artifact.
 
-### Finding 8: User Stories in Spec 01
+#### Stale References (Bugs)
 
-**File:** `docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md`
-**Lines:** 16-22
-**Content:** 5 user stories covering product owner, tech lead, developer, stakeholder personas
-**Classification:** BACKLOG (shipped -- all units implemented) + CUSTOMER (persona references)
-**Signal strength:** Strong -- spec-level user stories with persona patterns
+Two files still reference `skills/arc-align/` instead of `skills/arc-assess/` after the rename:
+- `skills/arc-assess/references/detection-patterns.md:752` — references `skills/arc-align/references/import-rules.md`
+- `skills/arc-assess/references/import-rules.md:543` — references `skills/arc-align/SKILL.md`
 
----
+### Candidate Locations for Re-Scan
 
-### Finding 9: Non-Goals in Spec 01
+The following files contain product-direction content not yet in the align-manifest:
 
-**File:** `docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md`
-**Lines:** 172-180
-**Content:** 7 non-goals: analytics/dashboards, multi-repo coordination, automated triage, external tool integration, custom labels, team assignment, executable code
-**Classification:** BACKLOG (deferred scope)
-**Signal strength:** Strong -- explicit future-work candidates
+| File | Content Type | Items |
+|------|-------------|-------|
+| `docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md` | Goals, User Stories, Non-Goals | 5 VISION, 3 BACKLOG+CUSTOMER, 5 deferred BACKLOG |
+| `docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md` | Goals, User Stories, Non-Goals | 5 VISION, 3 BACKLOG+CUSTOMER, 7 deferred BACKLOG |
+| `docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md` | Goals, User Stories, Non-Goals | 3 VISION, 3 BACKLOG+CUSTOMER, 4 deferred BACKLOG |
+| `docs/BACKLOG.md` (lines 606-622) | Manual captures | 2 new P1-High items (already in BACKLOG, no import needed) |
 
----
-
-### Finding 10: Success Metrics in Spec 01
-
-**File:** `docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md`
-**Lines:** 211-219
-**Content:** 7 success metrics including "capture in <=3 interactions", "complete spec-ready brief", "Temper constraints visible in wave scope"
-**Classification:** VISION (success criteria)
-**Signal strength:** Strong -- measurable product goals
-
----
-
-### Finding 11: Goals in Spec 02
-
-**File:** `docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md`
-**Lines:** 8-13
-**Content:** 4 goals: error-path coverage, pipeline audit skill, interactive remediation, plugin continuity
-**Classification:** VISION (shipped -- /arc-audit exists)
-**Signal strength:** Strong
-
----
-
-### Finding 12: User Stories in Spec 02
-
-**File:** `docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md`
-**Lines:** 15-20
-**Content:** 4 user stories for product owner, tech lead, developer (audit and error-path scenarios)
-**Classification:** BACKLOG (shipped) + CUSTOMER
-**Signal strength:** Strong
-
----
-
-### Finding 13: Non-Goals in Spec 02
-
-**File:** `docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md`
-**Lines:** 96-104
-**Content:** 6 non-goals: CI/CD pipeline, automated fix application, VISION/CUSTOMER content editing, new templates, backward-incompatible changes
-**Classification:** BACKLOG (deferred scope)
-**Signal strength:** Strong
-
----
-
-### Finding 14: Goals in Spec 03 (arc-assess)
-
-**File:** `docs/specs/03-spec-arc-align/03-spec-arc-align.md`
-**Lines:** 8-14
-**Content:** 5 goals: discover all product-direction content, automatically import as captured stubs, delete original sources, maintain manifest, produce summary report
-**Classification:** VISION (shipped -- /arc-assess exists)
-**Signal strength:** Strong
-
----
-
-### Finding 15: User Stories in Spec 03
-
-**File:** `docs/specs/03-spec-arc-align/03-spec-arc-align.md`
-**Lines:** 16-20
-**Content:** 3 user stories for product owner, developer, team lead (consolidation, TODO migration, idempotent re-runs)
-**Classification:** BACKLOG (shipped) + CUSTOMER
-**Signal strength:** Strong
-
----
-
-### Finding 16: Goals in Spec 04 (arc-sync)
-
-**File:** `docs/specs/04-spec-arc-readme/04-spec-arc-readme.md`
-**Lines:** 9-17
-**Content:** 6 goals: eliminate README drift, scaffold complete README, update mermaid diagrams, WA-7 audit, namespace separation, trust-signal framework
-**Classification:** VISION (shipped -- /arc-sync exists)
-**Signal strength:** Strong
-
----
-
-### Finding 17: User Stories in Spec 04
-
-**File:** `docs/specs/04-spec-arc-readme/04-spec-arc-readme.md`
-**Lines:** 19-25
-**Content:** 5 user stories for product owner, developer, bootstrapper (README sync, staleness detection, trust validation)
-**Classification:** BACKLOG (shipped) + CUSTOMER
-**Signal strength:** Strong
-
----
-
-### Finding 18: Goals in Spec 05 (arc-help)
-
-**File:** `docs/specs/05-spec-arc-help/05-spec-arc-help.md`
-**Lines:** 8-13
-**Content:** 5 goals: single-command help, cover all skills, describe artifacts, installation instructions, link to README
-**Classification:** VISION (shipped)
-**Signal strength:** Strong
-
----
-
-### Finding 19: User Stories in Spec 05
-
-**File:** `docs/specs/05-spec-arc-help/05-spec-arc-help.md`
-**Lines:** 15-19
-**Content:** 3 user stories for new users, existing users, first-time installers
-**Classification:** BACKLOG (shipped) + CUSTOMER
-**Signal strength:** Strong
-
----
-
-### Finding 20: Non-Goals in Spec 05
-
-**File:** `docs/specs/05-spec-arc-help/05-spec-arc-help.md`
-**Lines:** 57-63
-**Content:** 5 non-goals: dynamic content, argument parsing, interactive menus, versioned output, modifying existing skills
-**Classification:** BACKLOG (deferred scope)
-**Signal strength:** Strong
-
----
-
-### Finding 21: Goals in Spec 06 (arc-assess enhancement)
-
-**File:** `docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md`
-**Lines:** 8-14
-**Content:** 5 goals: cw-research subagent pre-scan, spec-directory scanning, source-code comment scanning, analysis artifact, artifact relocation to docs/skill/arc/
-**Classification:** VISION (shipped -- enhancements implemented)
-**Signal strength:** Strong
-
----
-
-### Finding 22: User Stories in Spec 06
-
-**File:** `docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md`
-**Lines:** 16-22
-**Content:** 5 user stories for product owner, developer, team lead, repo maintainer (spec extraction, TODO consolidation, analysis, cw-research, artifact separation)
-**Classification:** BACKLOG (shipped) + CUSTOMER
-**Signal strength:** Strong
-
----
-
-### Finding 23: Goals in Spec 07 (capture speedup)
-
-**File:** `docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md`
-**Lines:** 8-13
-**Content:** 5 goals: reduce inline capture to 1 prompt, full capture to 2 prompts, combine priority with confirmation, eliminate post-capture menu, preserve data fields
-**Classification:** VISION (shipped -- consolidation implemented)
-**Signal strength:** Strong
-
----
-
-### Finding 24: User Stories in Spec 07
-
-**File:** `docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md`
-**Lines:** 15-19
-**Content:** 3 user stories for mid-workflow user, inline idea user, free-text user
-**Classification:** BACKLOG (shipped) + CUSTOMER
-**Signal strength:** Strong
-
----
-
-### Finding 25: Non-Goals in Spec 07
-
-**File:** `docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md`
-**Lines:** 65-70
-**Content:** 5 non-goals: changing backlog format, modifying other skills, batch capture, changing priority levels, modifying template
-**Classification:** BACKLOG (deferred scope)
-**Signal strength:** Strong
-
----
-
-### Finding 26: Persona References Across All Specs
-
-**Files:** All 7 spec files
-**Content:** Consistent persona patterns across user stories:
-- **Product owner** -- appears in specs 01, 02, 03, 04, 06 (5 specs)
-- **Tech lead / Team lead** -- appears in specs 01, 02, 03 (3 specs)
-- **Developer** -- appears in specs 01, 02, 04, 06 (4 specs)
-- **Project stakeholder** -- appears in spec 01 (1 spec)
-- **New Arc user / existing user** -- appears in spec 05 (1 spec)
-- **Mid-workflow user** -- appears in spec 07 (1 spec)
-- **Repo maintainer** -- appears in spec 06 (1 spec)
-- **Bootstrapper** -- appears in spec 04 (1 spec)
-**Classification:** CUSTOMER
-**Signal strength:** Strong -- 4 primary personas with consistent roles across multiple specs
-
----
-
-### Finding 27: Plugin Description in plugin.json
-
-**File:** `.claude-plugin/plugin.json`
-**Lines:** 4
-**Content:** "Lightweight product direction for spec-driven development. Capture ideas, shape them into spec-ready briefs, and feed them into the claude-workflow SDD pipeline."
-**Classification:** VISION
-**Signal strength:** Moderate -- marketing-level description
-
----
-
-### Finding 28: Plugin Description in marketplace.json
-
-**File:** `.claude-plugin/marketplace.json`
-**Lines:** 7-8
-**Content:** "Lightweight product direction for spec-driven development. Inspired by Linear's fast capture and clean triage, arc helps shape ideas into spec-ready briefs."
-**Classification:** VISION
-**Signal strength:** Moderate -- marketplace description with Linear inspiration
-
----
-
-### Finding 29: Research Report Vision Content
-
-**File:** `docs/specs/01-spec-arc-plugin/research-arc-plugin.md`
-**Lines:** 11-23
-**Content:** Research summary describing Arc's extraction from Temper, the three-plugin pipeline, idea lifecycle model, and pipeline position. Includes: "Arc was extracted from the Focus/Temper plugin during the temper-split."
-**Classification:** VISION (historical context)
-**Signal strength:** Moderate -- historical origin story
-
----
-
-### Finding 30: readme-author Integration Ideas
-
-**File:** `docs/specs/04-spec-arc-readme/research-readme-author-integration.md`
-**Lines:** 17-24
-**Content:** 5 ranked integration ideas: Arc-managed README sections, new /arc-sync skill, README staleness check, Claude plugin README template, cross-plugin pipeline extension
-**Classification:** BACKLOG (3 shipped: managed sections, /arc-sync, WA-7 check; 2 deferred: template contribution, full pipeline extension)
-**Signal strength:** Strong -- concrete feature plans, partially implemented
-
----
-
-### Finding 31: Stale Cross-References (arc-align > arc-assess)
-
-**Files:** `skills/arc-assess/references/detection-patterns.md` (line 752), `skills/arc-assess/references/import-rules.md` (line 543)
-**Content:** References to `skills/arc-align/references/import-rules.md` and `skills/arc-align/SKILL.md` -- stale path after rename from `arc-align` to `arc-assess`
-**Classification:** N/A (bug -- stale references)
-**Signal strength:** N/A
-
----
-
-### Finding 32: EXAMPLE Content in Detection Patterns and Import Rules
-
-**Files:** `skills/arc-assess/references/detection-patterns.md`, `skills/arc-assess/references/import-rules.md`
-**Content:** Extensive example matches showing roadmap entries, todo lists, persona definitions, user stories, feature lists, code comments -- all documentation of what arc-assess detects, not actual product content
-**Classification:** N/A (reference documentation, not product-direction content)
+**Expected new manifest rows:** ~38 total (13 VISION blocks + 9 BACKLOG user stories + 16 deferred BACKLOG non-goals + 3 CUSTOMER persona refs from 3 new specs minus items already in BACKLOG).
 
 ---
 
 ## Summary
 
-### Project Type
+### project_type
 
-Claude Code plugin -- pure markdown, no executable code. Distributed via Git, installed through Claude CLI plugin system.
+Claude Code plugin — pure markdown, no executable code. Distributed via Git, installed through Claude CLI plugin system.
 
-### Architecture Patterns
+### architecture_patterns
 
 - Plugin-based (SKILL.md skill definitions)
 - File-based state machine (BACKLOG.md status transitions)
@@ -552,36 +275,21 @@ Claude Code plugin -- pure markdown, no executable code. Distributed via Git, in
 - Phase-graduated templates (7 Temper maturity phases)
 - Parallel subagent analysis (4 concurrent dimensions)
 - Trust-signal validation (10 structural checks)
+- Mermaid lint infrastructure (scripts/lint-mermaid.sh)
 
-### Key Dependencies
+### key_dependencies
 
-- temper (engineering maturity -- read-only integration)
-- claude-workflow (SDD pipeline -- brief handoff)
-- readme-author (optional -- patterns absorbed into /arc-sync)
+- temper (engineering maturity — read-only integration)
+- claude-workflow (SDD pipeline — brief handoff)
+- readme-author (optional — patterns absorbed into /arc-sync)
+- @mermaid-js/mermaid-cli (dev-only — lint script via npx)
 
-### Product-Direction Content Distribution
+### product_direction_signals
 
-| Category | Count | Sources |
-|----------|-------|---------|
-| VISION content | 12 findings | README.md, CLAUDE.md, plugin.json, marketplace.json, all 7 specs, research reports |
-| BACKLOG content (shipped) | 7 findings | All 7 spec user stories (all units implemented) |
-| BACKLOG content (deferred/non-goals) | 4 findings | Specs 01, 02, 05, 07 non-goals sections |
-| BACKLOG content (future work) | 1 finding | readme-author integration ideas (2 unimplemented) |
-| CUSTOMER content (personas) | 1 finding | Persona patterns across all 7 specs (4 primary personas) |
-| Stale references (bugs) | 1 finding | arc-align > arc-assess rename artifacts |
-
-### Key Gaps
-
-1. **No docs/VISION.md** -- Vision content is scattered across README.md (lines 1-5), CLAUDE.md (lines 1-7), plugin.json, marketplace.json, and 7 spec goals sections. No consolidated vision document exists.
-2. **No docs/CUSTOMER.md** -- Four primary personas (Product Owner, Tech Lead, Developer, Stakeholder) appear consistently across specs but are not defined in a dedicated customer document.
-3. **No docs/ROADMAP.md** -- No delivery roadmap exists. The 7 completed SDD cycles represent shipped waves but are not tracked in Arc's own roadmap format.
-4. **No docs/BACKLOG.md** -- 7 specs worth of user stories (shipped), 22+ non-goals (deferred), and 2 unimplemented integration ideas are not captured in Arc's own backlog.
-5. **Stale path references** -- 2 files still reference `skills/arc-align/` instead of `skills/arc-assess/` after the rename.
-6. **Arc does not eat its own dog food** -- The plugin defines a complete product-direction management system but does not use it for its own development. Running `/arc-assess` on this repo would consolidate all scattered content into Arc-managed artifacts.
-
-### Recommendations
-
-1. Run `/arc-assess` against this repo to consolidate all product-direction content into `docs/VISION.md`, `docs/CUSTOMER.md`, `docs/BACKLOG.md`, and `docs/ROADMAP.md`.
-2. Fix the 2 stale `arc-align` references in detection-patterns.md and import-rules.md.
-3. After import, run `/arc-wave` to organize shipped features into completed waves and plan next work.
-4. After wave planning, run `/arc-sync` to scaffold a product-direction-aware README for Arc itself.
+- Goals in spec 08 (backlog consistency: dedup, Wave 0 assignment, VISION/README cleanup)
+- Goals in spec 09 (walkthrough diagrams: visual flowcharts for 3 core skills, mermaid lint)
+- Goals in 01-align-ignore-dirs (exclusion list expansion for Python/Rust/Java/JS)
+- User stories in specs 08, 09, 01-align-ignore-dirs (9 new stories with 3 new persona references)
+- Non-goals in specs 08, 09, 01-align-ignore-dirs (16 new deferred items)
+- New P1-High captured ideas: /arc-ship skill (lifecycle close), arc-sync rewrite mode
+- Stale references: 2 files reference old arc-align path

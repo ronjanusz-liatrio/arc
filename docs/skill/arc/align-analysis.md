@@ -1,29 +1,29 @@
 # Alignment Analysis
 
-**Generated:** 2026-04-12T18:00:00Z
+**Generated:** 2026-04-13T00:00:00Z
 
 ---
 
 ## Discovery Summary
 
-**Total discoveries:** 27
+**Total discoveries:** 31 (all from spec files not in the prior manifest)
 
 ### By Source Type
 
 | Source Type | Count |
 |-------------|-------|
-| Markdown keywords | 1 |
+| Markdown keywords | 0 |
 | Markdown structural | 0 |
-| Spec extraction | 26 |
+| Spec extraction | 31 |
 | Code comments | 0 |
 
 ### By Target Artifact
 
 | Target | Count |
 |--------|-------|
-| BACKLOG | 13 sections (expanding to ~63 individual stubs: 28 user stories + 35 non-goals) |
-| VISION | 12 sections |
-| CUSTOMER | 1 (4 primary personas extracted from cross-spec user stories) |
+| BACKLOG | 25 (9 user stories + 16 non-goals) |
+| VISION | 3 (Goals blocks from 3 specs) |
+| CUSTOMER | 3 (user-stories blocks from 3 specs) |
 
 ---
 
@@ -31,121 +31,96 @@
 
 | Artifact | Status | Detail |
 |----------|--------|--------|
-| VISION | Present | 12 discoveries across README.md and 7 spec Goals/Introduction sections — strong vision content exists but is scattered |
-| CUSTOMER | Present | 4 primary personas (Product Owner, Tech Lead, Developer, Stakeholder) referenced consistently across 7 specs |
-| ROADMAP | Absent | No phased planning content found. Note: arc-assess does not populate ROADMAP directly; use /arc-wave to create wave plans. |
-| BACKLOG | 63 items | BACKLOG discoveries are distributed across 7 spec files — 28 user stories (shipped features) and 35 non-goals (deferred scope) |
+| VISION | Present | 3 new Goals blocks to append; existing VISION.md is comprehensive. |
+| CUSTOMER | Present | 3 new persona-content blocks to append; adds Python/Rust/Next.js developer sub-personas. |
+| ROADMAP | Absent | Still absent. arc-assess does not populate ROADMAP; use /arc-wave. |
+| BACKLOG | 25 new items | All from specs already marked shipped. **Will recreate the shipped/captured duplication that spec 08 cleaned up.** |
 
 ---
 
 ## Discovery Distribution
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'pie1': '#11B5A4', 'pie2': '#E8662F', 'pie3': '#1B2A3D'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'pie1': '#1B2A3D'}}}%%
 pie title Discoveries by Source Type
-    "Markdown keywords (README)" : 1
-    "Spec extraction" : 26
+    "Spec extraction" : 31
 ```
 
 ---
 
 ## Theme Analysis
 
-### Core Plugin Design
+### Shipped-capability duplication risk
 
-- **Discoveries:** 12 (VISION)
-- **Sources:** README.md, 01-spec-arc-plugin, 02-spec-arc-plugin-enhancement, 03-spec-arc-align, 04-spec-arc-readme, 05-spec-arc-help, 06-spec-arc-align-enhance, 07-spec-capture-speedup
-- **Wave potential:** No — these are foundational vision statements, not actionable items
+- **Discoveries:** 9 BACKLOG user stories
+- **Sources:** specs 08, 09, 01-align-ignore-dirs
+- **Wave potential:** No — these describe capabilities already in production. Importing as `captured` stubs would duplicate shipped work.
 
 | # | Source | Snippet |
 |---|--------|---------|
-| 1 | README.md:1-5 | Lightweight product direction for spec-driven development... |
-| 2 | 01-spec-arc-plugin:3-5 | Arc manages the idea lifecycle from raw thought to spec-ready brief... |
-| 3 | 01-spec-arc-plugin:7-13 | Fast idea capture, structured shaping, delivery cycle management... |
+| 1 | docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md:17 | Each capability represented once in backlog |
+| 2 | docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md:18 | Clean VISION.md without repeated content blocks |
+| 3 | docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md:19 | README lifecycle counts and pipeline labels accurate |
+| 4 | docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md:19 | Visual walkthrough at top of each SKILL.md |
+| 5 | docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md:20 | CI-style local mermaid lint feedback |
+| 6 | docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md:21 | Consistent brand across diagrams |
+| 7 | docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md:15 | Auto-exclude Python build/cache directories |
+| 8 | docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md:16 | Auto-exclude Rust/Java target directories |
+| 9 | docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md:17 | Auto-exclude Next.js build artifacts |
 
-### Shipped Features (User Stories)
+### Deferred scope expansion
 
-- **Discoveries:** 7 sections (28 individual stories)
-- **Sources:** All 7 spec files
-- **Wave potential:** No — all stories represent already-shipped work
+- **Discoveries:** 16 BACKLOG non-goals
+- **Sources:** specs 08 (5), 09 (7), 01-align-ignore-dirs (4)
+- **Wave potential:** No — these are explicit out-of-scope markers, imported for traceability.
 
-| # | Source | Stories |
-|---|--------|---------|
-| 1 | 01-spec-arc-plugin:15-21 | 5 stories (capture, shape, wave, markdown direction, temper constraints) |
-| 2 | 02-spec-arc-plugin-enhancement:14-19 | 4 stories (audit, cross-references, error-paths, interactive fixes) |
-| 3 | 03-spec-arc-align:15-19 | 3 stories (consolidation, TODO migration, idempotent re-runs) |
-| 4 | 04-spec-arc-readme:18-24 | 5 stories (README sync, onboarding, staleness, scaffolding, trust signals) |
-| 5 | 05-spec-arc-help:15-19 | 3 stories (quick reference, workflow recall, install instructions) |
-| 6 | 06-spec-arc-align-enhance:15-21 | 5 stories (spec extraction, TODO consolidation, analysis, research, artifact separation) |
-| 7 | 07-spec-capture-speedup:15-19 | 3 stories (mid-workflow capture, inline confirmation, free-text) |
+### Vision/customer enrichment
 
-### Deferred Scope (Non-Goals)
-
-- **Discoveries:** 6 sections (35 individual items)
-- **Sources:** Specs 01, 02, 04, 05, 06, 07
-- **Wave potential:** Yes — several non-goals represent cohesive future initiatives
-
-| # | Theme | Items | Sources |
-|---|-------|-------|---------|
-| 1 | External integrations | 3 | Linear/Jira sync (spec 01), CI/CD pipeline (spec 02), cross-plugin pipeline extension (implied) |
-| 2 | Advanced automation | 4 | Automated triage (spec 01), automated fix application (spec 02), batch capture (spec 07), auto wave assignment (spec 06) |
-| 3 | Scale & extensibility | 4 | Multi-repo coordination (spec 01), custom labels (spec 01), managing subdirectory READMEs (spec 04), dynamic help content (spec 05) |
-| 4 | Process maturity | 3 | Analytics/dashboards (spec 01), versioned help output (spec 05), interactive research configuration (spec 06) |
-
-### Primary Personas
-
-- **Discoveries:** 1 (cross-spec extraction)
-- **Sources:** All 7 spec files
-- **Wave potential:** No — these are persona definitions for CUSTOMER.md
-
-| Persona | Appearance Count | Specs |
-|---------|-----------------|-------|
-| Product Owner | 5 | 01, 02, 03, 04, 06 |
-| Developer | 4 | 01, 02, 04, 06 |
-| Tech Lead / Team Lead | 3 | 01, 02, 03 |
-| Project Stakeholder | 1 | 01 |
+- **Discoveries:** 3 VISION + 3 CUSTOMER blocks
+- **Wave potential:** N/A — supporting artifacts, not deliverables.
 
 ---
 
 ## Recommendations
 
-1. **Import VISION content** — Consolidate the README.md vision statement and spec 01 goals into `docs/VISION.md` to give Arc its own product-direction foundation.
-2. **Import CUSTOMER personas** — Extract the 4 primary personas (Product Owner, Developer, Tech Lead, Stakeholder) into `docs/CUSTOMER.md` with JTBD statements derived from user stories.
-3. **Import non-goals as deferred BACKLOG items** — The 35 non-goals across 6 specs represent genuine future work candidates. Importing them as captured stubs with `(deferred)` prefix creates a living backlog for Arc itself.
-4. **Consider skipping user story import** — The 28 user stories represent shipped features. Importing them as "captured" stubs may be misleading since they're already done. Instead, import the README skill descriptions as shipped BACKLOG entries (requires manual status update post-import).
-5. **Run `/arc-wave` after import** — Organize the deferred items into delivery waves, especially the "External integrations" and "Advanced automation" themes.
-6. **Run `/arc-sync` after VISION.md is populated** — Scaffold a product-direction-aware README with ARC: managed sections.
+1. **Skip user-story imports** — the 9 new user stories describe already-shipped capabilities. Importing them as `captured` stubs will recreate the duplication that spec 08 fixed. Use "Review individually" and reject them, or merge into existing `### User Stories` subsections under shipped skills manually.
+2. **Import the 16 non-goals and 3 VISION + 3 CUSTOMER blocks** — these add genuine traceability value with no duplication risk.
+3. **Fix stale `arc-align` references** flagged by research in `skills/arc-assess/references/detection-patterns.md:752` and `skills/arc-assess/references/import-rules.md:543` (not part of this alignment run — capture as a separate P2 idea).
+4. **Consider an arc-assess enhancement** — classify KW-19 user stories from specs with `status: shipped` as merge candidates for existing shipped skill entries, not new captured stubs. Avoid re-triggering spec-08's cleanup work.
 
 ---
 
 ## Research Integration
 
-**Project type:** claude-code-plugin
+**Project type:** Claude Code plugin (pure markdown)
 
 ### Architecture Coverage
 
 | Pattern | Discoveries Found | Status |
 |---------|-------------------|--------|
-| Plugin-based (SKILL.md) | 7 spec goals sections | Covered |
-| File-based state machine | Spec 01 goals reference lifecycle model | Covered |
-| Managed section injection | Spec 04 goals reference ARC: sections | Covered |
-| Phase-graduated templates | Spec 01 goals reference template design | Covered |
-| Parallel subagent analysis | Spec 01 user stories reference shape analysis | Covered |
-| Trust-signal validation | Spec 04 goals reference trust signals | Covered |
+| Plugin-based (SKILL.md) | 3 specs reference skill modifications | Covered |
+| File-based state machine | 1 spec (08) targets BACKLOG lifecycle | Covered |
+| Managed section injection | 0 | Blind spot — no new discoveries touch ARC:/TEMPER: markers |
+| Phase-graduated templates | 0 | Blind spot |
+| Parallel subagent analysis | 0 | Blind spot |
+| Trust-signal validation | 0 | Blind spot |
+| Mermaid lint infrastructure | 1 spec (09) introduces lint-mermaid.sh | Covered |
 
 ### Dependency Alignment
 
 | Dependency | Referenced in Discoveries | Status |
 |------------|--------------------------|--------|
-| temper | Spec 01 goals: "Temper integration" | Aligned |
-| claude-workflow | Spec 01 goals: "Pipeline continuity" | Aligned |
-| readme-author | Not directly in discoveries | Under-documented |
+| temper | No | Under-documented — no new specs cross-reference Temper |
+| claude-workflow | No | Under-documented |
+| readme-author | No | Under-documented |
+| @mermaid-js/mermaid-cli | Yes (spec 09) | Aligned |
 
 ### Signal Validation
 
 | Research Signal | Confirmed by Discovery | Notes |
 |----------------|----------------------|-------|
-| Vision in README.md:1-5 | Yes | Core vision statement confirmed |
-| 4 primary personas across specs | Yes | Product Owner, Developer, Tech Lead, Stakeholder found |
-| 22+ deferred non-goals | Yes | 35 individual non-goal items across 6 specs |
-| Stale arc-align references | N/A | Bug — not a product-direction discovery |
+| Goals in specs 08, 09, 01-align-ignore-dirs | Yes | All 3 VISION blocks extracted |
+| User stories in specs 08, 09, 01-align-ignore-dirs | Yes | All 9 stories — but shipped-duplication caveat applies |
+| Non-goals in specs 08, 09, 01-align-ignore-dirs | Yes | All 16 extracted |
+| New P1-High captured ideas (/arc-ship, rewrite mode) | N/A | Already in BACKLOG, no import needed |
+| Stale `arc-align` references in detection-patterns.md and import-rules.md | Not in scope | Classified as bug, not product-direction content |

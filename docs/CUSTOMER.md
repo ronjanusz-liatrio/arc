@@ -57,3 +57,39 @@ Appears in 1 spec (01).
 
 **Goals observed in stories:**
 - Idea pipeline respects Temper phase constraints so work is not planned beyond what the project can absorb
+
+<!-- aligned-from: docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md:15-19 -->
+<!-- aligned-from-spec: 08-spec-backlog-consistency -->
+
+### Reader
+
+Appears in spec 08 as a consumer of the README lifecycle and pipeline diagrams.
+
+**Goals observed in stories:**
+- Each capability represented once in the backlog so captured/shipped counts reflect reality
+- Clean VISION.md without repeated content blocks
+- README lifecycle diagram counts and pipeline labels accurate
+
+<!-- aligned-from: docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md:17-21 -->
+<!-- aligned-from-spec: 09-spec-command-walkthrough-diagrams -->
+
+### New Arc User
+
+Appears in spec 09 as a first-time reader of SKILL.md files.
+
+**Goals observed in stories:**
+- Visual walkthrough at the top of each SKILL.md to understand the command's typical flow before reading the full procedure
+- CI-style local mermaid lint feedback to avoid shipping broken diagrams (developer sub-goal)
+- Consistent Arc brand rendering across every diagram (product owner sub-goal)
+
+<!-- aligned-from: docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md:13-17 -->
+<!-- aligned-from-spec: 01-spec-align-ignore-dirs -->
+
+### Multi-Language Developer Sub-Personas
+
+Appears in spec 01-align-ignore-dirs as three language-specific sub-personas of the Developer.
+
+**Goals observed in stories:**
+- Python developer: `.venv/`, `__pycache__/`, and tool caches excluded automatically
+- Rust or Java developer: `target/` excluded by default so build output doesn't slow the scan
+- Next.js developer: `.next/` excluded automatically so build artifacts aren't scanned

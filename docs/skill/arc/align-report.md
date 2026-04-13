@@ -1,6 +1,6 @@
 # Alignment Report
 
-**Generated:** 2026-04-12T18:00:00Z
+**Generated:** 2026-04-13T00:00:00Z
 
 ---
 
@@ -8,14 +8,14 @@
 
 | Field | Value |
 |-------|-------|
-| Timestamp | 2026-04-12T18:00:00Z |
-| Exclusion patterns | .git/, node_modules/, vendor/, dist/, build/, .venv/, __pycache__/, .mypy_cache/, .pytest_cache/, .ruff_cache/, .tox/, *.egg-info/, target/, .gradle/, .next/, .nuxt/, coverage/, docs/specs/*/proofs/, docs/specs/*/*.feature, docs/specs/*/questions-*.md, docs/BACKLOG.md, docs/ROADMAP.md, docs/VISION.md, docs/CUSTOMER.md, docs/skill/arc/*, .env, credentials.json, *.key |
-| Total files scanned | 42 |
-| Total discoveries | 27 (section-level) |
-| New imports | 86 (12 VISION blocks + 70 BACKLOG stubs + 4 CUSTOMER personas) |
-| Skipped (manifest) | 0 |
-| Remaining unmanaged | 0 |
-| Temper phase | Not available |
+| Timestamp | 2026-04-13T00:00:00Z |
+| Exclusion patterns | Hardcoded defaults only (no custom patterns; arc repo has no large dep dirs) |
+| Total files scanned | 3 spec files targeted via research (08, 09, 01-align-ignore-dirs) |
+| Total discoveries | 31 |
+| New imports | 22 |
+| Skipped (manifest) | 0 (all prior discoveries remain covered; no new overlap) |
+| Remaining unmanaged | 9 (user-story stubs from shipped specs — deliberately skipped per user decision) |
+| Temper phase | Not available (no Temper artifacts in this project) |
 
 ---
 
@@ -25,108 +25,44 @@
 
 | Source Path | Imported Title | Detection Method |
 |-------------|---------------|-----------------|
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | Quick idea capture | keyword (KW-19) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | Interactive idea refinement | keyword (KW-19) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | Organize ideas into delivery waves | keyword (KW-19) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | Product direction as markdown in repo | keyword (KW-19) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | Idea pipeline respects Temper constraints | keyword (KW-19) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (deferred) Analytics or dashboards | keyword (KW-20) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (deferred) Multi-repo coordination | keyword (KW-20) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (deferred) Automated triage | keyword (KW-20) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (deferred) External tool integration | keyword (KW-20) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (deferred) Custom labels or properties | keyword (KW-20) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (deferred) Team or role assignment | keyword (KW-20) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (deferred) Executable code or tests | keyword (KW-20) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | Audit backlog health | keyword (KW-19) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | Cross-reference integrity between artifacts | keyword (KW-19) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | Error-path scenario documentation | keyword (KW-19) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | Interactive audit fix application | keyword (KW-19) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | (deferred) CI/CD pipeline | keyword (KW-20) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | (deferred) Proof execution for spec 01 | keyword (KW-20) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | (deferred) Automated fix application | keyword (KW-20) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | (deferred) VISION or CUSTOMER content editing | keyword (KW-20) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | (deferred) New templates or reference docs | keyword (KW-20) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | (deferred) Backward-incompatible changes | keyword (KW-20) |
-| docs/specs/03-spec-arc-align/03-spec-arc-align.md | Consolidate scattered product direction | keyword (KW-19) |
-| docs/specs/03-spec-arc-align/03-spec-arc-align.md | Migrate TODO items from READMEs | keyword (KW-19) |
-| docs/specs/03-spec-arc-align/03-spec-arc-align.md | Idempotent re-run safety | keyword (KW-19) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | README features reflect shipped items | keyword (KW-19) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | README shows current wave and roadmap | keyword (KW-19) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | Warn on stale README sections | keyword (KW-19) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | Scaffold README from VISION docs | keyword (KW-19) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | Structural trust validation for README | keyword (KW-19) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | (deferred) Temper-managed README sections | keyword (KW-20) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | (deferred) LICENSE, CONTRIBUTING, CHANGELOG files | keyword (KW-20) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | (deferred) External link validation or badges | keyword (KW-20) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | (deferred) Automatic invocation | keyword (KW-20) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | (deferred) Managing subdirectory READMEs | keyword (KW-20) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | (deferred) Full readme-author runtime integration | keyword (KW-20) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | Quick reference for all Arc skills | keyword (KW-19) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | Recall workflow order from terminal | keyword (KW-19) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | Install instructions for Arc setup | keyword (KW-19) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | (deferred) Dynamic help content | keyword (KW-20) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | (deferred) Argument parsing or per-skill views | keyword (KW-20) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | (deferred) Interactive menus or topic selection | keyword (KW-20) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | (deferred) Versioned help output | keyword (KW-20) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | (deferred) Modifying existing skills via help | keyword (KW-20) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | Extract product direction from existing specs | keyword (KW-19) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | Consolidate code TODOs into BACKLOG | keyword (KW-19) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | Gap analysis before import | keyword (KW-19) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | Deep exploration via cw-research | keyword (KW-19) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | Separate Arc reports from product artifacts | keyword (KW-19) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | (deferred) Automatic spec deduplication | keyword (KW-20) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | (deferred) ROADMAP artifact population via assess | keyword (KW-20) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | (deferred) Code refactoring suggestions | keyword (KW-20) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | (deferred) Modifying existing specs | keyword (KW-20) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | (deferred) Automatic wave assignment | keyword (KW-20) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | (deferred) Interactive research configuration | keyword (KW-20) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | Record idea in one prompt mid-workflow | keyword (KW-19) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | Confirm and prioritize in single interaction | keyword (KW-19) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | Free-text idea description then confirm | keyword (KW-19) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | (deferred) Changing backlog data format | keyword (KW-20) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | (deferred) Modifying other skills from capture | keyword (KW-20) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | (deferred) Batch capture | keyword (KW-20) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | (deferred) Changing priority levels | keyword (KW-20) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | (deferred) Modifying BACKLOG template | keyword (KW-20) |
-| README.md | /arc-assess skill | keyword (KW-1) |
-| README.md | /arc-capture skill | keyword (KW-1) |
-| README.md | /arc-shape skill | keyword (KW-1) |
-| README.md | /arc-wave skill | keyword (KW-1) |
-| README.md | /arc-sync skill | keyword (KW-1) |
-| README.md | /arc-audit skill | keyword (KW-1) |
-| README.md | /arc-help skill | keyword (KW-1) |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | (deferred) Triaging remaining captured priorities | keyword (KW-20) |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | (deferred) Creating ROADMAP.md | keyword (KW-20) |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | (deferred) Modifying CUSTOMER.md | keyword (KW-20) |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | (deferred) Running arc-sync to refresh README | keyword (KW-20) |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | (deferred) Resolving VISION README Linear messaging | keyword (KW-20) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (deferred) Walkthroughs for sync audit assess help | keyword (KW-20) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (deferred) Replacing textual Process steps with diagrams | keyword (KW-20) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (deferred) Depicting error paths or retry loops | keyword (KW-20) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (deferred) Committed PNG or SVG diagram files | keyword (KW-20) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (deferred) CI integration for mermaid lint | keyword (KW-20) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (deferred) Modifying README lifecycle or pipeline diagrams | keyword (KW-20) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (deferred) Introducing a Node package.json | keyword (KW-20) |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | (deferred) Adding IDE or editor directories | keyword (KW-20) |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | (deferred) Adding infra-tool directories | keyword (KW-20) |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | (deferred) Changing the 100-file heuristic | keyword (KW-20) |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | (deferred) Updating detection-patterns or import-rules references | keyword (KW-20) |
 
 ### VISION
 
 | Source Path | Imported Title | Detection Method |
 |-------------|---------------|-----------------|
-| README.md | (vision content) | keyword (KW-16) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (vision content) — Introduction | keyword (KW-22) |
-| docs/specs/01-spec-arc-plugin/01-spec-arc-plugin.md | (vision content) — Goals | keyword (KW-18) |
-| docs/specs/02-spec-arc-plugin-enhancement/02-spec-arc-plugin-enhancement.md | (vision content) — Goals | keyword (KW-18) |
-| docs/specs/03-spec-arc-align/03-spec-arc-align.md | (vision content) — Introduction | keyword (KW-22) |
-| docs/specs/03-spec-arc-align/03-spec-arc-align.md | (vision content) — Goals | keyword (KW-18) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | (vision content) — Introduction | keyword (KW-22) |
-| docs/specs/04-spec-arc-readme/04-spec-arc-readme.md | (vision content) — Goals | keyword (KW-18) |
-| docs/specs/05-spec-arc-help/05-spec-arc-help.md | (vision content) — Goals | keyword (KW-18) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | (vision content) — Introduction | keyword (KW-22) |
-| docs/specs/06-spec-arc-align-enhance/06-spec-arc-align-enhance.md | (vision content) — Goals | keyword (KW-18) |
-| docs/specs/07-spec-capture-speedup/07-spec-capture-speedup.md | (vision content) — Goals | keyword (KW-18) |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | (vision content) | keyword (KW-18) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (vision content) | keyword (KW-18) |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | (vision content) | keyword (KW-18) |
 
 ### CUSTOMER
 
 | Source Path | Imported Title | Detection Method |
 |-------------|---------------|-----------------|
-| Cross-spec extraction | Product Owner persona | keyword (KW-19, persona extraction) |
-| Cross-spec extraction | Developer persona | keyword (KW-19, persona extraction) |
-| Cross-spec extraction | Tech Lead persona | keyword (KW-19, persona extraction) |
-| Cross-spec extraction | Project Stakeholder persona | keyword (KW-19, persona extraction) |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | (persona content) | keyword (KW-19) |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | (persona content) | keyword (KW-19) |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | (persona content) | keyword (KW-19) |
 
 ---
 
 ## Skipped Items
 
-No items skipped — this is the first alignment run.
+No items skipped due to manifest — no new discoveries overlapped existing manifest entries.
 
 ---
 
@@ -177,20 +113,35 @@ No additional exclusions were configured for this run.
 
 ## Remaining Unmanaged Content
 
-No remaining unmanaged content detected. All product-direction content has been imported or was previously captured.
+Nine user-story stubs from shipped specs (08, 09, 01-align-ignore-dirs) were deliberately skipped to avoid recreating the duplicate-representation problem that spec 08 cleaned up. These describe already-shipped capabilities.
+
+| Source Path | Lines | Detection Signal | Snippet |
+|-------------|-------|-----------------|---------|
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 17 | keyword (KW-19 user story) | As a product owner reading the backlog, I want each capability represented once |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 18 | keyword (KW-19 user story) | As a developer reviewing VISION.md, I want a clean document without repeated content blocks |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 19 | keyword (KW-19 user story) | As a reader of the README, I want the lifecycle diagram counts and pipeline labels to be accurate |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 19 | keyword (KW-19 user story) | As a new Arc user, I want to see a visual walkthrough at the top of each skill's SKILL.md |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 20 | keyword (KW-19 user story) | As a developer reviewing a SKILL.md change, I want CI-style local feedback that my mermaid fences parse |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 21 | keyword (KW-19 user story) | As a product owner browsing the repo on GitHub, I want every diagram to render consistently |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 15 | keyword (KW-19 user story) | As a Python developer, I want .venv, __pycache__, and tool caches excluded automatically |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 16 | keyword (KW-19 user story) | As a Rust or Java developer, I want target/ excluded by default |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 17 | keyword (KW-19 user story) | As a Next.js developer, I want .next/ excluded automatically |
+
+**Recommendation:** When the `/arc-ship` skill lands, or on a follow-up consolidation pass, merge these user stories into the corresponding shipped skill entries (`### User Stories` subsections) rather than importing them as new captured stubs.
 
 ---
 
 ## Discovery Flow
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D'}}}%%
 flowchart LR
+    A["31 Discovered"] --> B["22 Imported"]
+    A --> C["9 User-rejected (shipped-duplication risk)"]
+
     style A fill:#1B2A3D,color:#fff
     style B fill:#11B5A4,color:#fff
-    style C fill:#11B5A4,color:#fff
-
-    A["27 Discovered"] --> B["86 Imported"]
-    A --> C["0 Skipped"]
+    style C fill:#E8662F,color:#fff
 ```
 
 ---
@@ -198,9 +149,8 @@ flowchart LR
 ## Cross-References
 
 - `docs/skill/arc/align-manifest.md` — Full import history with source→artifact mappings
-- `docs/skill/arc/align-analysis.md` — Structured analysis with gap analysis and recommendations
-- `docs/BACKLOG.md` — Imported captured stubs (BACKLOG targets)
-- `docs/VISION.md` — Imported vision/mission content (VISION targets)
-- `docs/CUSTOMER.md` — Imported persona/audience content (CUSTOMER targets)
-- `skills/arc-assess/references/detection-patterns.md` — Detection pattern definitions
-- `skills/arc-assess/references/import-rules.md` — Classification and import rules
+- `docs/skill/arc/align-analysis.md` — Gap analysis and theme findings for this run
+- `docs/BACKLOG.md` — Imported captured stubs (16 deferred BACKLOG targets)
+- `docs/VISION.md` — 3 new Goals blocks appended
+- `docs/CUSTOMER.md` — 3 new persona blocks appended (Reader, New Arc User, Multi-Language Developer Sub-Personas)
+- `docs/specs/research-align/research-align.md` — Research report backing this run

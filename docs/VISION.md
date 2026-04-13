@@ -107,3 +107,34 @@ Enhance `/arc-assess` with five new capabilities: a cw-research subagent pre-sca
 3. Collect priority as part of the confirmation prompt
 4. Eliminate the post-capture "next steps" menu entirely
 5. Preserve all existing backlog data fields
+
+<!-- aligned-from: docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md:7-13 -->
+<!-- aligned-from-spec: 08-spec-backlog-consistency -->
+
+### Backlog Consistency Goals
+
+1. Eliminate duplicate representation — every shipped capability appears once, not twice
+2. Enrich shipped skill entries with user-story context from the captured stubs they subsume
+3. Retroactively assign all 7 shipped skills to "Wave 0: Bootstrap"
+4. Deduplicate VISION.md by removing redundant aligned-from blocks
+5. Fix README.md lifecycle count and pipeline diagram label
+
+<!-- aligned-from: docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md:9-15 -->
+<!-- aligned-from-spec: 09-spec-command-walkthrough-diagrams -->
+
+### Walkthrough Diagram Goals
+
+1. Add a mermaid flowchart walkthrough of the most common success path to each of the three core SKILL.md files (arc-capture, arc-shape, arc-wave)
+2. Place each diagram immediately after the skill's Overview section so it is visible before constraint/process text
+3. Apply Arc's existing brand theme (the themeVariables init block used in README.md) for visual consistency across all plugin docs
+4. Provide a scripts/lint-mermaid.sh lint artifact that runs mmdc against every mermaid fence in the repo and exits non-zero on parse failure
+5. Keep each flowchart under ~15 nodes so it remains scannable in a GitHub preview without scrolling
+
+<!-- aligned-from: docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md:7-11 -->
+<!-- aligned-from-spec: 01-spec-align-ignore-dirs -->
+
+### Exclusion List Expansion Goals
+
+- Expand the hardcoded exclusion list to cover Python, Rust, Java, and modern JS framework build/cache directories
+- Ensure all 5 locations where the list appears are updated consistently
+- Maintain the existing behavior: hardcoded exclusions are silent and never shown in the user-facing multi-select

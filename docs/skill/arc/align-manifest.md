@@ -91,3 +91,25 @@
 | README.md | 100 | BACKLOG | /arc-sync skill | 2026-04-12T18:00:00Z |
 | README.md | 101 | BACKLOG | /arc-audit skill | 2026-04-12T18:00:00Z |
 | README.md | 102 | BACKLOG | /arc-help skill | 2026-04-12T18:00:00Z |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 7-13 | VISION | (vision content) | 2026-04-13T00:00:00Z |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 15-19 | CUSTOMER | (persona content) | 2026-04-13T00:00:00Z |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 114 | BACKLOG | (deferred) Triaging remaining captured priorities | 2026-04-13T00:00:00Z |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 115 | BACKLOG | (deferred) Creating ROADMAP.md | 2026-04-13T00:00:00Z |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 116 | BACKLOG | (deferred) Modifying CUSTOMER.md | 2026-04-13T00:00:00Z |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 117 | BACKLOG | (deferred) Running arc-sync to refresh README | 2026-04-13T00:00:00Z |
+| docs/specs/08-spec-backlog-consistency/08-spec-backlog-consistency.md | 118 | BACKLOG | (deferred) Resolving VISION README Linear messaging | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 9-15 | VISION | (vision content) | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 17-21 | CUSTOMER | (persona content) | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 77 | BACKLOG | (deferred) Walkthroughs for sync audit assess help | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 78 | BACKLOG | (deferred) Replacing textual Process steps with diagrams | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 79 | BACKLOG | (deferred) Depicting error paths or retry loops | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 80 | BACKLOG | (deferred) Committed PNG or SVG diagram files | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 81 | BACKLOG | (deferred) CI integration for mermaid lint | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 82 | BACKLOG | (deferred) Modifying README lifecycle or pipeline diagrams | 2026-04-13T00:00:00Z |
+| docs/specs/09-spec-command-walkthrough-diagrams/09-spec-command-walkthrough-diagrams.md | 83 | BACKLOG | (deferred) Introducing a Node package.json | 2026-04-13T00:00:00Z |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 7-11 | VISION | (vision content) | 2026-04-13T00:00:00Z |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 13-17 | CUSTOMER | (persona content) | 2026-04-13T00:00:00Z |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 59 | BACKLOG | (deferred) Adding IDE or editor directories | 2026-04-13T00:00:00Z |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 60 | BACKLOG | (deferred) Adding infra-tool directories | 2026-04-13T00:00:00Z |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 61 | BACKLOG | (deferred) Changing the 100-file heuristic | 2026-04-13T00:00:00Z |
+| docs/specs/01-spec-align-ignore-dirs/01-spec-align-ignore-dirs.md | 62 | BACKLOG | (deferred) Updating detection-patterns or import-rules references | 2026-04-13T00:00:00Z |
