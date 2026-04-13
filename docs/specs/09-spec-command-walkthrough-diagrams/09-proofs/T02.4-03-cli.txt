@@ -1,0 +1,11 @@
+Type: cli
+Command: grep -c '^## Walkthrough$' skills/arc-{capture,shape,wave}/SKILL.md
+Expected: 1 for each file
+Timestamp: 2026-04-13T00:00:00Z
+
+Output:
+skills/arc-capture/SKILL.md: 1
+skills/arc-shape/SKILL.md: 1
+skills/arc-wave/SKILL.md: 1
+
+Status: PASS

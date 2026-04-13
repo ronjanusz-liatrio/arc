@@ -1,0 +1,13 @@
+Type: cli
+Command: awk + grep to extract unique node IDs from each flowchart
+Expected: no more than 15 nodes per flowchart
+Timestamp: 2026-04-13T00:00:00Z
+
+Node counts:
+arc-capture/SKILL.md: 10 nodes (S, A, B, C, D, E, F, G, H, Z)
+arc-shape/SKILL.md: 13 nodes (A, B, C, D1, D2, D3, D4, E, F, G, H, I, J)
+arc-wave/SKILL.md: 14 nodes (S, A, B, C, D, E, F, G, H, I, J, K, L, X)
+
+All flowcharts are within the 15-node limit.
+
+Status: PASS

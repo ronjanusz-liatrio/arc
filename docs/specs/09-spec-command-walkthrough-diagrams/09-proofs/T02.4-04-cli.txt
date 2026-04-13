@@ -1,0 +1,12 @@
+Type: cli
+Command: git show {commit_sha} -- '*.md' | grep '^-' (for each of the three T02.x commits)
+Expected: no existing lines removed (Process sections unmodified)
+Timestamp: 2026-04-13T00:00:00Z
+
+Commit 488d90d (arc-capture): (no lines removed)
+Commit 51369e6 (arc-shape): (no lines removed)
+Commit 04ed935 (arc-wave): (no lines removed)
+
+All three commits are pure additions. No existing content was modified or deleted.
+
+Status: PASS

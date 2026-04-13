@@ -1,0 +1,13 @@
+Type: cli
+Command: grep themeVariables comparison across README.md and all three SKILL.md files
+Expected: byte-identical themeVariables line in each SKILL.md flowchart matching README.md
+Timestamp: 2026-04-13T00:00:00Z
+
+README theme line:
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+
+arc-capture/SKILL.md: MATCH
+arc-shape/SKILL.md: MATCH
+arc-wave/SKILL.md: MATCH
+
+Status: PASS

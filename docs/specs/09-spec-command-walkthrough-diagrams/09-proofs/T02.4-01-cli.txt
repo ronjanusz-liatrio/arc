@@ -1,0 +1,11 @@
+Type: cli
+Command: bash scripts/lint-mermaid.sh
+Expected: exit 0 with summary including counts from all three updated SKILL.md files
+Timestamp: 2026-04-13T00:00:00Z
+
+Output:
+12 files, 14 fences, all valid
+
+Exit code: 0
+
+Status: PASS
