@@ -1,0 +1,18 @@
+Type: file
+Description: Verify flowchart contains all required nodes from feature spec (scenario: arc-wave flowchart depicts the common wave flow)
+Command: Manual inspection against walkthrough-flowcharts-in-core-skill-files.feature lines 47-56
+Expected: All seven required nodes present
+Timestamp: 2026-04-13T12:00:00Z
+
+Feature spec requirements and matching nodes:
+  1. "reading context"                              -> A[Read context]           FOUND
+  2. "scope assessment"                             -> C[Assess wave scope]      FOUND
+  3. "selecting shaped ideas"                       -> D{Select shaped ideas}    FOUND
+  4. "gathering theme and target"                   -> E[Gather theme + target]  FOUND
+  5. "updating ROADMAP and BACKLOG"                 -> G[Update ROADMAP] + H[Update BACKLOG]  FOUND
+  6. "injecting product context into CLAUDE.md"     -> J[Inject product context] FOUND
+  7. "writing the wave report"                      -> K[Write wave report]      FOUND
+
+All 7 required nodes present.
+
+Status: PASS

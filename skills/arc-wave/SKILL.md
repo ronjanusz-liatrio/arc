@@ -15,6 +15,34 @@ Always begin your response with: **ARC-WAVE**
 
 You organize spec-ready ideas into themed delivery waves. This involves selecting shaped ideas from the BACKLOG, creating a wave in the ROADMAP, injecting the `ARC:product-context` managed section into the project CLAUDE.md, and generating a wave report with handoff instructions for `/cw-spec`.
 
+## Walkthrough
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+flowchart LR
+    S([Start]) --> A[Read context]
+    A --> B[Assess readiness]
+    B --> C[Assess wave scope]
+    C --> D{Select shaped ideas}
+    D --> E[Gather theme + target]
+    E --> F[Ensure ROADMAP exists]
+    F --> G[Update ROADMAP]
+    G --> H[Update BACKLOG]
+    H --> I[Ensure VISION + CUSTOMER]
+    I --> J[Inject product context]
+    J --> K[Write wave report]
+    K --> L[Offer next steps]
+    L --> X([End])
+
+    classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
+    classDef action fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
+    classDef write fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+
+    class D,E user
+    class A,B,C,F,I,L action
+    class G,H,J,K write
+```
+
 ## Critical Constraints
 
 - **NEVER** shape or refine ideas — only select already-shaped ideas

@@ -1,0 +1,12 @@
+Type: file
+Description: Verify themeVariables init block matches README.md exactly
+Command: diff <(sed -n '40p' README.md) <(sed -n '21p' skills/arc-wave/SKILL.md)
+Expected: No differences (exact match)
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+(no output — files match)
+
+Analysis: The init block in skills/arc-wave/SKILL.md line 21 is identical to README.md line 40.
+
+Status: PASS

@@ -1,0 +1,12 @@
+Type: cli
+Description: Verify mermaid lint passes for modified SKILL.md
+Command: bash scripts/lint-mermaid.sh skills/arc-wave/SKILL.md
+Expected: Exit code 0, all fences valid
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+12 files, 14 fences, all valid
+
+Exit code: 0
+
+Status: PASS

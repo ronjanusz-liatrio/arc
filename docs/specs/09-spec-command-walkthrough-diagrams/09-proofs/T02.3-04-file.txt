@@ -1,0 +1,25 @@
+Type: file
+Description: Verify flowchart node count is within 15-node limit
+Command: Manual count of node definitions in mermaid source
+Expected: No more than 15 nodes
+Timestamp: 2026-04-13T12:00:00Z
+
+Nodes identified:
+  1. S([Start])
+  2. A[Read context]
+  3. B[Assess readiness]
+  4. C[Assess wave scope]
+  5. D{Select shaped ideas}
+  6. E[Gather theme + target]
+  7. F[Ensure ROADMAP exists]
+  8. G[Update ROADMAP]
+  9. H[Update BACKLOG]
+ 10. I[Ensure VISION + CUSTOMER]
+ 11. J[Inject product context]
+ 12. K[Write wave report]
+ 13. L[Offer next steps]
+ 14. X([End])
+
+Total: 14 nodes (limit: 15)
+
+Status: PASS

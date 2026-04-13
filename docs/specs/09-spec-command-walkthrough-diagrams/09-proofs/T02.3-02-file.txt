@@ -1,0 +1,13 @@
+Type: file
+Description: Verify mermaid fence block exists within ## Walkthrough section
+Command: sed -n '18,44p' skills/arc-wave/SKILL.md | grep -c '```mermaid\|```$'
+Expected: Mermaid fenced code block present (open and close fences)
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+Line 20: ```mermaid
+Line 44: ```
+
+Analysis: Mermaid fenced code block exists within the Walkthrough section (lines 20-44).
+
+Status: PASS

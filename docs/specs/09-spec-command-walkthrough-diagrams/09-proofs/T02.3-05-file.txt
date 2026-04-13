@@ -1,0 +1,21 @@
+Type: file
+Description: Verify classDef styles use correct semantic colors
+Command: grep 'classDef\|class ' skills/arc-wave/SKILL.md
+Expected: user=navy(#1B2A3D), action=teal(#11B5A4), write=orange(#E8662F)
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+    classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
+    classDef action fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
+    classDef write fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+
+    class D,E user
+    class A,B,C,F,I,L action
+    class G,H,J,K write
+
+Analysis:
+  - user (navy #1B2A3D): D (Select shaped ideas), E (Gather theme + target) — correct, these are user input nodes
+  - action (teal #11B5A4): A, B, C, F, I, L — correct, these are Claude action nodes
+  - write (orange #E8662F): G, H, J, K — correct, these are file write nodes
+
+Status: PASS

@@ -1,0 +1,14 @@
+Type: file
+Description: Verify ## Walkthrough section exists after ## Overview and before ## Critical Constraints
+Command: grep -n "## Walkthrough\|## Overview\|## Critical Constraints" skills/arc-wave/SKILL.md
+Expected: Walkthrough heading appears between Overview and Critical Constraints
+Timestamp: 2026-04-13T12:00:00Z
+
+Output:
+14:## Overview
+18:## Walkthrough
+46:## Critical Constraints
+
+Analysis: ## Walkthrough (line 18) appears after ## Overview (line 14) and before ## Critical Constraints (line 46).
+
+Status: PASS
