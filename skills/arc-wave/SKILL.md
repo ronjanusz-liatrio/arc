@@ -242,10 +242,12 @@ Update the wave summary table if one exists. If this is the first wave, create t
 For each selected idea in `docs/BACKLOG.md`:
 
 1. **Update summary table row:** Change status to `spec-ready`, set wave column to wave name
-2. **Update idea section:** Add wave assignment line:
+2. **Update idea section:** Add wave assignment and spec lines:
    ```markdown
    - **Wave:** Wave {N} — {Wave Name}
+   - **Spec:** (set during /cw-spec)
    ```
+   > The `/cw-spec` command will update the **Spec:** field with the actual spec directory path (e.g., `docs/specs/04-spec-core-capture`) when creating the spec.
 3. Change status from `shaped` to `spec-ready`
 
 ### Step 8: Ensure VISION and CUSTOMER Exist
