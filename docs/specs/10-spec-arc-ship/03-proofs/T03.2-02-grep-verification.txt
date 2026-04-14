@@ -1,0 +1,24 @@
+Type: cli
+Command: grep -n "Step 6|ROADMAP.*exist|wave.*Status|Planned.*Active.*Completed|Wave.*Completed|Wave.*In Progress" skills/arc-ship/SKILL.md
+Expected: All key rollup terms found with correct line numbers
+Timestamp: 2026-04-14T00:00:00Z
+
+--- Output ---
+
+76:3. `CLAUDE.md` — Optional. Read if present; used for product-context refresh in Step 6.
+193:3. After all ideas are processed, proceed to Step 6.
+257:### Step 6: Update ROADMAP (if applicable)
+259:If `docs/ROADMAP.md` exists:
+264:4. If **all** ideas in the wave now have `shipped` status, update the wave's `**Status:**` field from `Planned` or `Active` to `Completed`.
+301:Wave '{wave-name}': Completed.
+307:Wave '{wave-name}': In Progress.
+
+--- Verification ---
+
+Line 257: "### Step 6: Update ROADMAP (if applicable)" — Step 6 section header present
+Line 259: "If `docs/ROADMAP.md` exists:" — graceful no-op guard present
+Line 264: "update the wave's `**Status:**` field from `Planned` or `Active` to `Completed`" — rollup update logic present
+Line 301: "Wave '{wave-name}': Completed." — wave complete confirmation present
+Line 307: "Wave '{wave-name}': In Progress." — wave incomplete confirmation present
+
+Status: PASS

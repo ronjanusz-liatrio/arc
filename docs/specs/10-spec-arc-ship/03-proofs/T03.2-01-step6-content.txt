@@ -1,0 +1,44 @@
+Type: file
+File: skills/arc-ship/SKILL.md
+Check: Step 6 ROADMAP wave rollup logic present and complete
+Timestamp: 2026-04-14T00:00:00Z
+
+--- Step 6 content from skills/arc-ship/SKILL.md ---
+
+### Step 6: Update ROADMAP (if applicable)
+
+If `docs/ROADMAP.md` exists:
+
+1. Find the wave the selected idea belongs to (read the `- **Wave:**` field from the BACKLOG detail section).
+2. Read the wave's "Selected Ideas" table from `docs/ROADMAP.md`.
+3. Cross-reference each idea title against the BACKLOG summary table.
+4. If **all** ideas in the wave now have `shipped` status, update the wave's `**Status:**` field from `Planned` or `Active` to `Completed`.
+5. If the wave is still in progress, no ROADMAP change is needed.
+
+--- Requirements coverage ---
+
+T03.2 Requirement 1: "check if docs/ROADMAP.md exists (graceful no-op if absent)"
+  Satisfied by: "If `docs/ROADMAP.md` exists:" — skipped entirely if absent
+  Status: PASS
+
+T03.2 Requirement 2: "Read the shipped idea's wave assignment from BACKLOG"
+  Satisfied by: Step 6.1 — read `- **Wave:**` field from BACKLOG detail section
+  Status: PASS
+
+T03.2 Requirement 3: "Find the corresponding wave section in ROADMAP"
+  Satisfied by: Step 6.2 — "Read the wave's 'Selected Ideas' table from docs/ROADMAP.md"
+  Status: PASS
+
+T03.2 Requirement 4: "cross-reference each title against BACKLOG summary table"
+  Satisfied by: Step 6.3 — "Cross-reference each idea title against the BACKLOG summary table"
+  Status: PASS
+
+T03.2 Requirement 5: "If ALL ideas in the wave have shipped status, update wave Status field from Planned/Active to Completed"
+  Satisfied by: Step 6.4 — "update the wave's **Status:** field from `Planned` or `Active` to `Completed`"
+  Status: PASS
+
+T03.2 Requirement 6: "Include wave status in the confirmation/summary message"
+  Satisfied by: Step 8 — wave completion appended: "Wave '{wave-name}': Completed." or "Wave '{wave-name}': In Progress."
+  Status: PASS
+
+Overall: PASS
