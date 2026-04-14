@@ -1,0 +1,23 @@
+Type: file
+Command: grep -n "shipped_count\|failed_ideas\|Batch Loop\|NEVER.*abort.*batch\|batch summary" skills/arc-ship/SKILL.md
+Expected: Batch loop step exists, shipped_count/failed_ideas tracking, partial success logic, batch summary constraint
+Timestamp: 2026-04-13T00:00:00Z
+
+--- OUTPUT ---
+40:    K --> L[Confirm / batch summary]
+61:- **NEVER** abort a batch run on a single idea's failure — record the failure and continue processing remaining ideas
+66:- **ALWAYS** display a batch summary when more than one idea was selected: "{N} ideas shipped, {M} failed verification."
+183:### Step 2b: Batch Loop
+187:1. Set `shipped_count = 0` and `failed_ideas = []`.
+191:   c. If Step 4 fails (no report or not PASS): record the failure message, append the idea title to `failed_ideas`, and **continue to the next idea** — do not abort the batch.
+192:   d. If Step 4 passes: execute Step 5 (Update BACKLOG), increment `shipped_count`.
+
+--- ANALYSIS ---
+- Step 2b: Batch Loop is present (line 183)
+- shipped_count and failed_ideas tracking defined (line 187)
+- Partial success: failures recorded and batch continues (lines 191-192)
+- NEVER constraint prevents aborting on single failure (line 61)
+- ALWAYS constraint mandates batch summary display (line 66)
+- Walkthrough diagram updated with batch flow and "Confirm / batch summary" node (line 40)
+
+Status: PASS

@@ -21,18 +21,23 @@ You mark spec-ready ideas as `shipped` after the SDD pipeline has successfully v
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
 flowchart LR
     S([Start]) --> A[Read BACKLOG]
-    A --> B{Select idea}
-    B --> C[Resolve spec path]
+    A --> B{Select ideas}
+    B -->|batch| B2[For each idea]
+    B -->|single| C[Resolve spec path]
+    B2 --> C
     C --> D{Spec field\npresent?}
     D -->|Yes| E[Find validation report]
     D -->|No| F[Ask user for path]
     F --> E
     E --> G{Overall PASS?}
-    G -->|No| H[Report failure\nand exit]
+    G -->|No| H[Record failure\ncontinue]
     G -->|Yes| I[Update BACKLOG]
-    I --> J[Update ROADMAP\nif wave complete]
+    H --> NX{More ideas?}
+    I --> NX
+    NX -->|Yes| B2
+    NX -->|No| J[Update ROADMAP\nif wave complete]
     J --> K[Refresh CLAUDE.md\nproduct-context]
-    K --> L[Confirm shipped]
+    K --> L[Confirm / batch summary]
     L --> X([End])
 
     classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
@@ -41,7 +46,7 @@ flowchart LR
     classDef fail fill:#E8662F,stroke:#C7502A,color:#FFFFFF
 
     class B,D,G user
-    class A,C,E,F action
+    class A,C,E,F,B2,NX action
     class I,J,K,L write
     class H fail
 ```
@@ -53,10 +58,12 @@ flowchart LR
 - **NEVER** accept a `*-proofs.md` file as a substitute for a validation report — strict cw-validate requirement
 - **NEVER** create `CLAUDE.md` if it does not exist — skip product-context refresh silently
 - **NEVER** ship an idea whose status is not `spec-ready` — validate status before proceeding
+- **NEVER** abort a batch run on a single idea's failure — record the failure and continue processing remaining ideas
 - **ALWAYS** begin your response with `**ARC-SHIP**`
 - **ALWAYS** update both the BACKLOG summary table row and the idea detail section atomically (table row first, then detail section)
 - **ALWAYS** use ISO 8601 timestamps for the `- **Shipped:**` field
 - **ALWAYS** offer the user a path prompt when the `- **Spec:**` field is absent — never block silently
+- **ALWAYS** display a batch summary when more than one idea was selected: "{N} ideas shipped, {M} failed verification."
 
 ## Process
 
@@ -131,25 +138,64 @@ AskUserQuestion({
 3. If multiple matches are found, present them for single selection.
 4. If no match is found, fall through to interactive selection.
 
-**Interactive selection:**
+**Interactive selection — batch mode detection:**
 
-Present all `spec-ready` ideas from `docs/BACKLOG.md`:
+Count the `spec-ready` ideas in `docs/BACKLOG.md`. Determine whether multiple ideas share a wave by reading the `- **Wave:**` field of each spec-ready idea's detail section.
+
+- **If only one spec-ready idea exists:** present it for confirmation and proceed as single-idea flow.
+- **If multiple spec-ready ideas exist in the same wave:** offer batch mode via `multiSelect: true`.
+- **If spec-ready ideas span different waves:** offer batch mode on the set with matching wave, or allow selecting any combination.
+
+**Single-idea prompt** (one spec-ready idea, or inline argument match):
 
 ```
 AskUserQuestion({
   questions: [{
-    question: "Which idea are you shipping?",
-    header: "Ideas",
+    question: "Ship this idea?",
+    header: "{Title}",
     options: [
-      { label: "{Title}", description: "{Priority} — {brief summary}" }
+      { label: "Yes — ship it", description: "{Priority} — {brief summary}" },
+      { label: "No — cancel", description: "Exit without changes" }
     ],
     multiSelect: false
   }]
 })
 ```
 
+**Batch-mode prompt** (multiple spec-ready ideas):
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "Select ideas to ship:",
+    header: "Spec-Ready Ideas",
+    options: [
+      { label: "{Title}", description: "Wave {N} — {Priority}" }
+    ],
+    multiSelect: true
+  }]
+})
+```
+
 If no `spec-ready` ideas exist:
 > No spec-ready ideas found in docs/BACKLOG.md. Run `/arc-wave` to promote shaped ideas.
+
+### Step 2b: Batch Loop
+
+For each selected idea (single or batch), execute Steps 3–5 independently:
+
+1. Set `shipped_count = 0` and `failed_ideas = []`.
+2. For each selected idea:
+   a. Execute Step 3 (Resolve Spec Path).
+   b. Execute Step 4 (Verify Validation Report).
+   c. If Step 4 fails (no report or not PASS): record the failure message, append the idea title to `failed_ideas`, and **continue to the next idea** — do not abort the batch.
+   d. If Step 4 passes: execute Step 5 (Update BACKLOG), increment `shipped_count`.
+3. After all ideas are processed, proceed to Step 6.
+
+**Failure recording during batch:** When an idea fails Step 4, output the per-idea failure message inline (do not exit), e.g.:
+> [FAILED] {Title}: No cw-validate report found in `{spec-dir}/`. Run `/cw-validate` first.
+
+Then continue with the next idea in the batch.
 
 ### Step 3: Resolve Spec Path
 
@@ -184,11 +230,13 @@ AskUserQuestion({
 1. Use `Glob` with pattern `{spec-dir}/*-validation-*.md` to locate the validation report.
 2. If no file is found:
    > No cw-validate report found in `{spec-dir}/`. Run `/cw-validate` first.
-   Exit without modifying any files.
+   In **single-idea flow**: exit without modifying any files.
+   In **batch flow**: record the failure per Step 2b and continue to the next idea.
 3. If a file is found, use `Grep` to check for `**Overall**: PASS` within the report.
 4. If the pattern is not found, read the `**Overall**` value and report:
    > Validation report found but status is `{status}`, not PASS. Resolve validation failures before shipping.
-   Exit without modifying any files.
+   In **single-idea flow**: exit without modifying any files.
+   In **batch flow**: record the failure per Step 2b and continue to the next idea.
 
 ### Step 5: Update BACKLOG
 
@@ -229,10 +277,34 @@ If `CLAUDE.md` does not exist, skip this step silently.
 
 ### Step 8: Confirm
 
-Display a concise confirmation:
+**Single-idea flow:**
 
 ```
 Shipped: {Title} — verified via {validation-report-path}.
+```
+
+**Batch flow** (more than one idea was selected):
+
+```
+{shipped_count} idea(s) shipped, {len(failed_ideas)} failed verification.
+```
+
+If any ideas failed, list each failure inline:
+
+```
+[FAILED] {Title}: {reason}
+```
+
+If the wave is now fully shipped (all ideas in the wave have `shipped` status), append:
+
+```
+Wave '{wave-name}': Completed.
+```
+
+Otherwise:
+
+```
+Wave '{wave-name}': In Progress.
 ```
 
 ## References

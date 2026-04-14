@@ -1,0 +1,13 @@
+Type: cli
+Command: bash scripts/lint-mermaid.sh
+Expected: exits 0, all fences valid
+Timestamp: 2026-04-13T00:00:00Z
+
+--- OUTPUT ---
+13 files, 15 fences, all valid
+
+--- ANALYSIS ---
+Updated walkthrough diagram in skills/arc-ship/SKILL.md (with batch flow nodes B2, NX, H)
+passes mermaid-cli validation. All 15 fences across 13 files are valid.
+
+Status: PASS

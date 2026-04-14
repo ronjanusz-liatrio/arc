@@ -1,0 +1,15 @@
+Type: file
+Command: grep -n "multiSelect: true" skills/arc-ship/SKILL.md
+Expected: Line(s) containing "multiSelect: true" in the AskUserQuestion block for batch mode selection
+Timestamp: 2026-04-13T00:00:00Z
+
+--- OUTPUT ---
+146:- **If multiple spec-ready ideas exist in the same wave:** offer batch mode via `multiSelect: true`.
+175:    multiSelect: true
+
+--- ANALYSIS ---
+Line 175 shows the AskUserQuestion block for "Select ideas to ship:" uses multiSelect: true.
+Line 146 shows the batch mode detection rule that triggers multi-select.
+Both required occurrences are present.
+
+Status: PASS
