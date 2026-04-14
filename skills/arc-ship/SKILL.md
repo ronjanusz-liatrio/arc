@@ -73,7 +73,7 @@ Read the following files:
 
 1. `docs/BACKLOG.md` — **Required.** If absent, inform the user: "No BACKLOG found. Run `/arc-capture` to start capturing ideas."
 2. `docs/ROADMAP.md` — Optional. Read if present; used for wave rollup in Step 5.
-3. `CLAUDE.md` — Optional. Read if present; used for product-context refresh in Step 6.
+3. `CLAUDE.md` — Optional. Read if present; used for product-context refresh in Step 7.
 
 ### Step 1b: Backfill Wave 0 (Offered Once on Detection)
 
@@ -271,7 +271,11 @@ If `CLAUDE.md` exists:
 1. Read `skills/arc-wave/references/bootstrap-protocol.md` for the injection algorithm.
 2. Recount backlog statuses from the BACKLOG summary table (captured, shaped, spec-ready, shipped counts).
 3. Apply the injection algorithm to update the `**Backlog:**` line inside the `ARC:product-context` managed section.
-4. Validate the injection: confirm the ARC section is not nested inside any TEMPER: or MM: block.
+4. If the wave was just completed in Step 6 (all ideas now shipped), also update the `**Current Wave:**` line:
+   - Read `docs/ROADMAP.md` to find the next active or planned wave.
+   - If another wave exists with `Planned` or `Active` status, set `**Current Wave:**` to that wave's name.
+   - If no such wave exists, set `**Current Wave:**` to `No active wave`.
+5. Validate the injection: confirm the ARC section is not nested inside any TEMPER: or MM: block.
 
 If `CLAUDE.md` does not exist, skip this step silently.
 

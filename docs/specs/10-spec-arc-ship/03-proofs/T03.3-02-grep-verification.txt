@@ -1,0 +1,34 @@
+Type: cli
+Command: grep -n "Step 7|bootstrap-protocol|product-context|Current Wave|Backlog:|CLAUDE.md" skills/arc-ship/SKILL.md
+Expected: All T03.3 requirement keywords present in correct positions
+Timestamp: 2026-04-13T00:00:00Z
+
+--- OUTPUT ---
+
+16: "...refresh the ARC:product-context managed section in CLAUDE.md."
+39:     J --> K[Refresh CLAUDE.md\nproduct-context]
+59: - **NEVER** create `CLAUDE.md` if it does not exist — skip product-context refresh silently
+76: 3. `CLAUDE.md` — Optional. Read if present; used for product-context refresh in Step 7.
+267: ### Step 7: Refresh ARC:product-context
+269: If `CLAUDE.md` exists:
+271: 1. Read `skills/arc-wave/references/bootstrap-protocol.md` for the injection algorithm.
+273: 3. Apply the injection algorithm to update the `**Backlog:**` line inside the `ARC:product-context` managed section.
+274: 4. If the wave was just completed in Step 6 (all ideas now shipped), also update the `**Current Wave:**` line:
+276:    - If another wave exists with `Planned` or `Active` status, set `**Current Wave:**` to that wave's name.
+277:    - If no such wave exists, set `**Current Wave:**` to `No active wave`.
+280: If `CLAUDE.md` does not exist, skip this step silently.
+318: - `skills/arc-wave/references/bootstrap-protocol.md` — ARC:product-context injection algorithm
+
+--- ANALYSIS ---
+
+Step 7 is present at line 267: PASS
+bootstrap-protocol.md is referenced at lines 271 and 318: PASS
+ARC:product-context section is referenced at lines 267, 273: PASS
+Current Wave update is present at line 274 (new addition for T03.3): PASS
+Backlog: line update is present at line 273: PASS
+CLAUDE.md graceful no-op is present at line 280: PASS
+Critical constraint for no CLAUDE.md creation at line 59: PASS
+Step 7 comes after Step 6 (ROADMAP rollup at line 257): PASS
+Step context reference updated to Step 7 at line 76: PASS
+
+Overall Status: PASS

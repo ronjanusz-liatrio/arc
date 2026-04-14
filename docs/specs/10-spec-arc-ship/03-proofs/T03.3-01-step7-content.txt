@@ -1,0 +1,57 @@
+Type: file
+File: skills/arc-ship/SKILL.md
+Section: Step 7: Refresh ARC:product-context
+Timestamp: 2026-04-13T00:00:00Z
+
+--- CAPTURED CONTENT ---
+
+### Step 7: Refresh ARC:product-context
+
+If `CLAUDE.md` exists:
+
+1. Read `skills/arc-wave/references/bootstrap-protocol.md` for the injection algorithm.
+2. Recount backlog statuses from the BACKLOG summary table (captured, shaped, spec-ready, shipped counts).
+3. Apply the injection algorithm to update the `**Backlog:**` line inside the `ARC:product-context` managed section.
+4. If the wave was just completed in Step 6 (all ideas now shipped), also update the `**Current Wave:**` line:
+   - Read `docs/ROADMAP.md` to find the next active or planned wave.
+   - If another wave exists with `Planned` or `Active` status, set `**Current Wave:**` to that wave's name.
+   - If no such wave exists, set `**Current Wave:**` to `No active wave`.
+5. Validate the injection: confirm the ARC section is not nested inside any TEMPER: or MM: block.
+
+If `CLAUDE.md` does not exist, skip this step silently.
+
+--- REQUIREMENT VERIFICATION ---
+
+Requirement 1: After every ship operation, recalculate backlog status counts from BACKLOG summary table
+  -> Step 7.2: "Recount backlog statuses from the BACKLOG summary table (captured, shaped, spec-ready, shipped counts)"
+  -> Status: PASS
+
+Requirement 2: Follow bootstrap-protocol.md injection algorithm to update ARC:product-context section
+  -> Step 7.1: "Read skills/arc-wave/references/bootstrap-protocol.md for the injection algorithm"
+  -> Step 7.3: "Apply the injection algorithm to update the **Backlog:** line"
+  -> Status: PASS
+
+Requirement 3: Update the **Backlog:** line with new counts (N captured, N shaped, N spec-ready, N shipped)
+  -> Step 7.3: "update the **Backlog:** line inside the ARC:product-context managed section"
+  -> Status: PASS
+
+Requirement 4: Also update **Current Wave:** if the wave was just completed
+  -> Step 7.4: "If the wave was just completed in Step 6 (all ideas now shipped), also update the **Current Wave:** line"
+  -> Includes logic for finding next active/planned wave, or setting to "No active wave"
+  -> Status: PASS
+
+Requirement 5: Graceful no-op if CLAUDE.md does not exist
+  -> Final line: "If CLAUDE.md does not exist, skip this step silently."
+  -> Critical Constraints line 59: "NEVER create CLAUDE.md if it does not exist — skip product-context refresh silently"
+  -> Status: PASS
+
+Requirement 6: Step added after the ROADMAP rollup step
+  -> Step 6 = Update ROADMAP, Step 7 = Refresh ARC:product-context
+  -> Status: PASS
+
+Requirement 7: References skills/arc-wave/references/bootstrap-protocol.md
+  -> Step 7.1 references bootstrap-protocol.md
+  -> References section at bottom of SKILL.md also references it
+  -> Status: PASS
+
+Overall Status: PASS
