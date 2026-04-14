@@ -20,3 +20,12 @@ See [README.md](README.md) for the full design.
 - `templates/` — Artifact templates for VISION, CUSTOMER, ROADMAP, BACKLOG
 - `references/` — Shared reference docs (idea lifecycle, brief format, wave planning)
 - `.claude-plugin/` — Plugin packaging metadata
+
+<!--# BEGIN ARC:product-context -->
+## Product Context
+
+- **Vision:** Lightweight product direction for spec-driven development — inspired by Linear's fast capture and clean triage, arc is the upstream companion to temper.
+- **Current Wave:** Wave 1: Lifecycle Closure
+- **Primary Personas:** Product Owner, Developer, Tech Lead, Project Stakeholder, Reader, New Arc User
+- **Backlog:** 19 captured, 0 shaped, 1 spec-ready, 7 shipped
+<!--# END ARC:product-context -->
