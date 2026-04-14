@@ -1,0 +1,15 @@
+Type: file
+Command: grep -n "Step 1b\|Backfill Wave 0\|backfill" skills/arc-ship/SKILL.md
+Expected: Step 1b heading and Backfill Wave 0 content present in SKILL.md
+Timestamp: 2026-04-13T00:00:00Z
+
+Output:
+71:### Step 1b: Backfill Wave 0 (Offered Once on Detection)
+80:2. Present the batch backfill offer:
+85:    question: "{N} shipped idea(s) are missing a Spec link. Run a one-time backfill now?",
+86:    header: "Backfill Wave 0",
+88:      { label: "Yes — backfill now", description: "Review each shipped idea and assign its spec directory" },
+89:      { label: "No — skip for now", description: "Continue to ship the selected idea; backfill can be run later" }
+97:4. **If the user selects "Yes — backfill now":** for each unlinked shipped idea in sequence, present an assignment prompt:
+
+Status: PASS

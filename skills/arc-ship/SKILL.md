@@ -68,6 +68,60 @@ Read the following files:
 2. `docs/ROADMAP.md` — Optional. Read if present; used for wave rollup in Step 5.
 3. `CLAUDE.md` — Optional. Read if present; used for product-context refresh in Step 6.
 
+### Step 1b: Backfill Wave 0 (Offered Once on Detection)
+
+After reading `docs/BACKLOG.md`, scan for ideas in `shipped` status whose detail section lacks a `- **Spec:**` field (or contains only the placeholder `(set during /cw-spec)`). This catches legacy shipped items that predate the Spec field.
+
+**If no such items exist:** skip this step entirely.
+
+**If one or more items are found:**
+
+1. For each unlinked shipped idea, suggest a likely spec match by comparing the idea title against spec directory names from `docs/specs/*/` (substring or word overlap).
+2. Present the batch backfill offer:
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "{N} shipped idea(s) are missing a Spec link. Run a one-time backfill now?",
+    header: "Backfill Wave 0",
+    options: [
+      { label: "Yes — backfill now", description: "Review each shipped idea and assign its spec directory" },
+      { label: "No — skip for now", description: "Continue to ship the selected idea; backfill can be run later" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+3. **If the user selects "No — skip for now":** proceed to Step 2 immediately.
+4. **If the user selects "Yes — backfill now":** for each unlinked shipped idea in sequence, present an assignment prompt:
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "Assign a spec directory to: {Title}",
+    header: "Backfill Spec",
+    options: [
+      { label: "{best-match-dir}", description: "docs/specs/{best-match-dir}/ — likely match" },
+      { label: "{other-dir}", description: "docs/specs/{other-dir}/" },
+      ...
+      { label: "Skip this idea", description: "Leave the Spec field unset for now" }
+    ],
+    multiSelect: false
+  }]
+})
+```
+
+   - List the best-match directory first, followed by remaining directories alphabetically.
+   - Always include "Skip this idea" as the last option.
+   - For each idea where the user selects a directory (not Skip), use `Edit` to write `- **Spec:** docs/specs/{selected-dir}/` into the idea's detail section:
+     - If the field is absent, insert it after the `- **Wave:**` line.
+     - If the field contains the placeholder, replace the placeholder with the selected path.
+
+5. After processing all items (or skipping), continue to Step 2.
+
+**Constraint:** This step is offered at most once per `/arc-ship` invocation. Do not loop back to it after Step 2.
+
 ### Step 2: Select Idea
 
 **If invoked with an inline argument** (e.g., `/arc-ship "Idea Title"`):
@@ -104,6 +158,9 @@ If no `spec-ready` ideas exist:
 3. **If the field is present** and its value is not the placeholder `(set during /cw-spec)`: use the path as-is.
 4. **If the field is absent or contains the placeholder:**
 
+   a. Use `Glob` with pattern `docs/specs/*/` to collect available spec directories.
+   b. Present them for selection:
+
 ```
 AskUserQuestion({
   questions: [{
@@ -117,7 +174,10 @@ AskUserQuestion({
 })
 ```
 
-Populate options by globbing `docs/specs/*/`.
+   c. After the user selects a directory, use `Edit` to write `- **Spec:** docs/specs/{selected-dir}/` into the idea's detail section in `docs/BACKLOG.md`:
+      - If the `- **Spec:**` field is absent, insert it after the `- **Wave:**` line.
+      - If the field contains the placeholder `(set during /cw-spec)`, replace the placeholder with the selected path.
+   d. Use the selected path as the resolved spec directory for subsequent steps.
 
 ### Step 4: Verify Validation Report
 

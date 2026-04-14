@@ -1,0 +1,17 @@
+Type: file
+Command: grep -n "Glob\|Edit.*selected-dir\|selected spec path\|placeholder" skills/arc-ship/SKILL.md
+Expected: Step 3 uses Glob to list spec dirs, Edit to write spec path, handles placeholder
+Timestamp: 2026-04-13T00:00:00Z
+
+Output:
+5:allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
+73:After reading `docs/BACKLOG.md`, scan for ideas in `shipped` status whose detail section lacks a `- **Spec:**` field (or contains only the placeholder `(set during /cw-spec)`). This catches legacy shipped items that predate the Spec field.
+117:   - For each idea where the user selects a directory (not Skip), use `Edit` to write `- **Spec:** docs/specs/{selected-dir}/` into the idea's detail section:
+119:     - If the field contains the placeholder, replace the placeholder with the selected path.
+158:3. **If the field is present** and its value is not the placeholder `(set during /cw-spec)`: use the path as-is.
+159:4. **If the field is absent or contains the placeholder:**
+161:   a. Use `Glob` with pattern `docs/specs/*/` to collect available spec directories.
+177:   c. After the user selects a directory, use `Edit` to write `- **Spec:** docs/specs/{selected-dir}/` into the idea's detail section in `docs/BACKLOG.md`:
+179:      - If the field contains the placeholder `(set during /cw-spec)`, replace the placeholder with the selected path.
+
+Status: PASS
