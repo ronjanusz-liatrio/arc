@@ -5,7 +5,8 @@ Arc's delivery roadmap organizes spec-ready ideas from the BACKLOG into themed w
 | Wave | Goal | Status | Target | Ideas |
 |------|------|--------|--------|-------|
 | Wave 0: Bootstrap | Ship the core Arc skill suite | Completed | -- | 7 |
-| Wave 1: Lifecycle Closure | Close the automation loop from cw-validate back to Arc | Planned | 1-2 weeks | 1 |
+| Wave 1: Lifecycle Closure | Close the automation loop from cw-validate back to Arc | Completed | 1-2 weeks | 1 |
+| Wave 2: Shaping Intelligence | Make arc-shape smarter with external skill awareness | Planned | 1-2 weeks | 1 |
 
 ## Wave 0: Bootstrap
 
@@ -35,13 +36,30 @@ Arc's delivery roadmap organizes spec-ready ideas from the BACKLOG into themed w
 **Theme:** Complete the Arc idea lifecycle by automating the shipped transition
 **Goal:** Close the automation loop from `/cw-validate` back to Arc by shipping `/arc-ship` — the only unautomated lifecycle transition
 **Target:** 1-2 weeks
-**Status:** Planned
+**Status:** Completed
 
 ### Selected Ideas
 
 | Title | Priority | Summary |
 |-------|----------|---------|
 | [/arc-ship skill](docs/BACKLOG.md#arc-ship-skill) | P1-High | Automates the final lifecycle transition — verifies proof artifacts and marks ideas as shipped |
+
+### Dependencies
+
+- None identified
+
+## Wave 2: Shaping Intelligence
+
+**Theme:** Make arc-shape smarter with external skill awareness
+**Goal:** Enrich `/arc-shape`'s feasibility analysis with `/skillz` skill discovery so shaped briefs account for available tooling before entering `/cw-spec`
+**Target:** 1-2 weeks
+**Status:** Planned
+
+### Selected Ideas
+
+| Title | Priority | Summary |
+|-------|----------|---------|
+| [Skill discovery via /skillz during shaping](docs/BACKLOG.md#skill-discovery-via-skillz-during-shaping) | P1-High | Enrich feasibility dimension with /skillz marketplace discovery |
 
 ### Dependencies
 

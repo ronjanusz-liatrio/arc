@@ -28,7 +28,7 @@ A triaged list of product ideas. Each idea progresses through the idea lifecycle
 | [/arc-audit skill](#arc-audit-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
 | [/arc-help skill](#arc-help-skill) | shipped | P2-Medium | Wave 0: Bootstrap |
 | [Add rewrite mode to arc-sync injection prompt](#add-rewrite-mode-to-arc-sync-injection-prompt) | captured | P1-High | -- |
-| [/arc-ship skill](#arc-ship-skill) | spec-ready | P1-High | Wave 1: Lifecycle Closure |
+| [/arc-ship skill](#arc-ship-skill) | shipped | P1-High | Wave 1: Lifecycle Closure |
 | [Fix stale arc-align path references](#fix-stale-arc-align-path-references) | captured | P2-Medium | -- |
 | [Classify shipped-spec user stories as merge candidates in arc-assess](#classify-shipped-spec-user-stories-as-merge-candidates-in-arc-assess) | captured | P2-Medium | -- |
 | [(deferred) Triaging remaining captured priorities](#deferred-triaging-remaining-captured-priorities) | captured | P3-Low | -- |
@@ -39,6 +39,8 @@ A triaged list of product ideas. Each idea progresses through the idea lifecycle
 | [(deferred) Replacing textual Process steps with diagrams](#deferred-replacing-textual-process-steps-with-diagrams) | captured | P3-Low | -- |
 | [(deferred) Modifying README lifecycle or pipeline diagrams](#deferred-modifying-readme-lifecycle-or-pipeline-diagrams) | captured | P3-Low | -- |
 | [(deferred) Updating detection-patterns or import-rules references](#deferred-updating-detection-patterns-or-import-rules-references) | captured | P3-Low | -- |
+| [Remove time estimates from arc-wave](#remove-time-estimates-from-arc-wave) | captured | P1-High | -- |
+| [Skill discovery via /skillz during shaping](#skill-discovery-via-skillz-during-shaping) | spec-ready | P1-High | Wave 2: Shaping Intelligence |
 
 ## (deferred) Multi-repo coordination
 
@@ -125,6 +127,7 @@ Adding batch capture (multiple ideas at once)
 - **Status:** shipped
 - **Priority:** P2-Medium
 - **Wave:** Wave 0: Bootstrap
+- **Spec:** docs/specs/06-spec-arc-align-enhance/
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
@@ -169,6 +172,7 @@ Codebase discovery and migration. Scans the project for scattered product-direct
 - **Status:** shipped
 - **Priority:** P2-Medium
 - **Wave:** Wave 0: Bootstrap
+- **Spec:** docs/specs/07-spec-capture-speedup/
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
@@ -197,6 +201,7 @@ Fast idea entry. Appends a structured stub to BACKLOG with minimal friction.
 - **Status:** shipped
 - **Priority:** P2-Medium
 - **Wave:** Wave 0: Bootstrap
+- **Spec:** docs/specs/01-spec-arc-plugin/
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
@@ -213,6 +218,7 @@ Interactive refinement. Turns a captured idea into a spec-ready brief using para
 - **Status:** shipped
 - **Priority:** P2-Medium
 - **Wave:** Wave 0: Bootstrap
+- **Spec:** docs/specs/01-spec-arc-plugin/
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
@@ -237,6 +243,7 @@ Delivery cycle management. Groups spec-ready ideas into a wave, updates ROADMAP,
 - **Status:** shipped
 - **Priority:** P2-Medium
 - **Wave:** Wave 0: Bootstrap
+- **Spec:** docs/specs/04-spec-arc-readme/
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
@@ -265,6 +272,7 @@ README synchronization. Scaffolds a complete README from Arc artifacts or select
 - **Status:** shipped
 - **Priority:** P2-Medium
 - **Wave:** Wave 0: Bootstrap
+- **Spec:** docs/specs/02-spec-arc-plugin-enhancement/
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
@@ -297,6 +305,7 @@ Pipeline health audit. Checks backlog health, wave alignment, and cross-referenc
 - **Status:** shipped
 - **Priority:** P2-Medium
 - **Wave:** Wave 0: Bootstrap
+- **Spec:** docs/specs/05-spec-arc-help/
 - **Captured:** 2026-04-12T18:00:00Z
 <!-- aligned-from: README.md:96-102 -->
 
@@ -326,11 +335,13 @@ When arc-sync detects injection mode (existing README without ARC: markers), off
 
 ## /arc-ship skill
 
-- **Status:** spec-ready
+- **Status:** shipped
 - **Priority:** P1-High
 - **Captured:** 2026-04-13T00:00:00Z
 - **Shaped:** 2026-04-14T00:00:00Z
 - **Wave:** Wave 1: Lifecycle Closure
+- **Spec:** docs/specs/10-spec-arc-ship/
+- **Shipped:** 2026-04-14T00:00:00Z
 
 Automates the final lifecycle transition from SDD pipeline completion back to Arc — verifies proof artifacts and marks ideas as shipped.
 
@@ -470,3 +481,56 @@ Modifying the README.md lifecycle or pipeline diagrams.
 <!-- aligned-from-spec: 01-spec-align-ignore-dirs -->
 
 Updating the detection-patterns.md or import-rules.md references (they don't enumerate the full hardcoded list).
+
+## Remove time estimates from arc-wave
+
+- **Status:** captured
+- **Priority:** P1-High
+- **Captured:** 2026-04-14T00:00:00Z
+
+Strip time/effort estimates from the arc-wave workflow to simplify wave planning.
+
+## Skill discovery via /skillz during shaping
+
+- **Status:** spec-ready
+- **Priority:** P1-High
+- **Captured:** 2026-04-14T00:00:00Z
+- **Shaped:** 2026-04-14T00:00:00Z
+- **Wave:** Wave 2: Shaping Intelligence
+- **Spec:** docs/specs/11-spec-shape-skill-discovery/
+
+Before entering /cw-spec, query /skillz for available skills relevant to the problem being shaped, so the design can account for existing tooling.
+
+### Problem
+
+During `/arc-shape`'s feasibility analysis, there is no awareness of what skills are available in the `/skillz` marketplace. Shaped briefs may miss opportunities to leverage existing tooling or propose solutions that duplicate available capabilities. The result is that `/cw-spec` produces specs that don't account for the tooling landscape, leading to redundant work or missed integration opportunities.
+
+### Proposed Solution
+
+Enrich the feasibility dimension of `/arc-shape`'s parallel subagent analysis with a skill discovery step that queries `/skillz` for skills relevant to the problem being shaped, folding available tooling context into the feasibility assessment.
+
+### Success Criteria
+
+- The feasibility subagent queries `/skillz` for skills related to the idea's problem domain
+- Discovered skills are surfaced in the feasibility assessment with their relevance to the idea
+- The shaped brief's feasibility dimension reflects available tooling when `/skillz` is installed
+- When `/skillz` is not installed, the user is warned and shaping proceeds normally
+
+### Constraints
+
+- Must not create a hard dependency on `/skillz` — `/arc-shape` must remain functional without it
+- Discovery results enrich the existing feasibility dimension, not a separate brief section
+
+### Assumptions
+
+- `/skillz` exposes a search or query mechanism that can be invoked programmatically or via subagent
+- Skill discovery results are meaningful at shaping time (before any code exists)
+
+### Wave Assignment
+
+Unassigned
+
+### Open Questions
+
+- How does the feasibility subagent invoke `/skillz` discovery? (Agent subagent with Skill tool, or direct invocation?)
+- What query parameters map an idea's problem domain to relevant skills?

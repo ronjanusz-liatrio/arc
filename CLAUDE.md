@@ -25,7 +25,7 @@ See [README.md](README.md) for the full design.
 ## Product Context
 
 - **Vision:** Lightweight product direction for spec-driven development — inspired by Linear's fast capture and clean triage, arc is the upstream companion to temper.
-- **Current Wave:** Wave 1: Lifecycle Closure
+- **Current Wave:** Wave 2: Shaping Intelligence
 - **Primary Personas:** Product Owner, Developer, Tech Lead, Project Stakeholder, Reader, New Arc User
-- **Backlog:** 19 captured, 0 shaped, 1 spec-ready, 7 shipped
+- **Backlog:** 20 captured, 0 shaped, 1 spec-ready, 8 shipped
 <!--# END ARC:product-context -->
