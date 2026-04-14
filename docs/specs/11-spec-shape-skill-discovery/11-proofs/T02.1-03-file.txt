@@ -1,0 +1,17 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Network failures are treated identically to "skillz not installed" -- same skip notice, same graceful continuation
+Timestamp: 2026-04-14T13:00:00Z
+Command: grep -n "network failure" skills/arc-shape/SKILL.md
+
+Output:
+225:3. **Handle failures gracefully:** Detect any of these failure conditions from the sub-Agent call: skill not found, tool not available, Agent error, network failure, or timeout. On any failure, skip parsing (step 4) and use the skillz-not-installed notice in the output below instead of the `#### Relevant Skills` subsection. Continue with the standard feasibility analysis (Temper phase, technical risk, pattern fit) without delay — do not retry or wait for a skill discovery timeout.
+258:If skill discovery failed (skillz not installed, sub-Agent error, network failure, or timeout), omit the table and state instead:
+
+Verification:
+- [PASS] Step 3 treats network failure as a failure condition alongside all others
+- [PASS] "On any failure" uses a single code path for all conditions (no special-casing)
+- [PASS] Output format line 258 explicitly lists "network failure" alongside "skillz not installed"
+- [PASS] Both step 3 and output format produce the same skip notice for all failure types
+
+Status: PASS

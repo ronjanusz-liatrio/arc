@@ -1,0 +1,16 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Skip notice with exact text "Skill discovery skipped -- `/skillz` plugin not installed. Install with: `claude plugin install skillz@skillz`" present in feasibility output format
+Timestamp: 2026-04-14T13:00:00Z
+Command: grep -n "Skill discovery skipped" skills/arc-shape/SKILL.md
+
+Output:
+259:> Skill discovery skipped -- `/skillz` plugin not installed. Install with: `claude plugin install skillz@skillz`"
+
+Verification:
+- [PASS] Skip notice contains exact required text
+- [PASS] Notice is a markdown blockquote (prefixed with >)
+- [PASS] Notice includes install command: `claude plugin install skillz@skillz`
+- [PASS] Notice replaces the #### Relevant Skills table (line 258 says "omit the table and state instead")
+
+Status: PASS

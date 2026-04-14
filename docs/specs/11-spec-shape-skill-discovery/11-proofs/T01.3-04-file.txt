@@ -1,0 +1,12 @@
+Type: file
+File: skills/arc-shape/references/shaping-dimensions.md
+Check: "How it feeds into the brief" paragraph includes synthesis table note
+Expected: The paragraph mentions that discovered skills are surfaced in the synthesis table
+Timestamp: 2026-04-14T13:45:00Z
+
+Result:
+Line 164: **How it feeds into the brief:** Risk factors inform **Constraints** and **Assumptions**. Unknowns populate **Open Questions**. Feasibility rating may affect whether the idea proceeds to shaping or returns to Capture. Discovered skills are surfaced in the Step 3 synthesis table so the user is aware of available tooling before the brief enters `/cw-spec`.
+
+The new sentence is appended to the existing paragraph, maintaining the same style and flow.
+
+Status: PASS

@@ -1,0 +1,19 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Failure detection logic in step 3 lists all required conditions (skill not found, tool not available, Agent error, network failure, timeout)
+Timestamp: 2026-04-14T13:00:00Z
+Command: grep -n "Handle failures gracefully" skills/arc-shape/SKILL.md
+
+Output:
+225:3. **Handle failures gracefully:** Detect any of these failure conditions from the sub-Agent call: skill not found, tool not available, Agent error, network failure, or timeout. On any failure, skip parsing (step 4) and use the skillz-not-installed notice in the output below instead of the `#### Relevant Skills` subsection. Continue with the standard feasibility analysis (Temper phase, technical risk, pattern fit) without delay — do not retry or wait for a skill discovery timeout.
+
+Verification:
+- [PASS] Lists "skill not found" as a detection condition
+- [PASS] Lists "tool not available" as a detection condition
+- [PASS] Lists "Agent error" as a detection condition
+- [PASS] Lists "network failure" as a detection condition
+- [PASS] Lists "timeout" as a detection condition
+- [PASS] Instructs subagent to skip parsing (step 4) on failure
+- [PASS] Directs to skillz-not-installed notice in output format
+
+Status: PASS

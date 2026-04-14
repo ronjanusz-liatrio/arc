@@ -1,0 +1,15 @@
+Type: file
+File: skills/arc-shape/references/shaping-dimensions.md
+Check: Output Format code block contains #### Relevant Skills subsection with table
+Expected: After the **Recommendation:** line, a #### Relevant Skills heading followed by a table with columns: Skill Name, Installs/wk, Security, Recommendation, Relevance
+Timestamp: 2026-04-14T13:45:00Z
+
+Result:
+Line 155: #### Relevant Skills
+Line 156: | Skill Name | Installs/wk | Security | Recommendation | Relevance |
+Line 157: |------------|-------------|----------|----------------|-----------|
+Line 158: | {name} | {count} | {status} | install / investigate / avoid | {1-2 sentence summary} |
+
+The table columns match exactly what was added to SKILL.md in T01.2. The subsection appears inside the Output Format markdown code block, after the **Recommendation:** line.
+
+Status: PASS

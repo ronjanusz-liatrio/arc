@@ -1,0 +1,15 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: allowed-tools frontmatter is unchanged -- no new tools added for skill discovery
+Timestamp: 2026-04-14T13:00:00Z
+Command: grep -n "allowed-tools" skills/arc-shape/SKILL.md
+
+Output:
+5:allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion, Agent
+
+Verification:
+- [PASS] allowed-tools contains exactly: Glob, Grep, Read, Write, Edit, AskUserQuestion, Agent
+- [PASS] No new tools added (no WebFetch, no Bash)
+- [PASS] Skill discovery runs entirely within the sub-Agent, which has its own tool permissions
+
+Status: PASS

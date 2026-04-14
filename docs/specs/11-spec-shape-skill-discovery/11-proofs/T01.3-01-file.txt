@@ -1,0 +1,12 @@
+Type: file
+File: skills/arc-shape/references/shaping-dimensions.md
+Check: Dimension 4 Inputs list includes skill discovery input
+Expected: Line containing "Skill discovery results from `/skillz-find` (when skillz plugin is installed)" in the Inputs list
+Timestamp: 2026-04-14T13:45:00Z
+
+Result:
+Line 134: - Skill discovery results from `/skillz-find` (when skillz plugin is installed)
+
+The new input appears as the last item in the Dimension 4 Inputs list, after the existing four inputs (BACKLOG.md, management-report.md, CLAUDE.md, ROADMAP.md).
+
+Status: PASS

@@ -1,0 +1,13 @@
+Type: file
+File: skills/arc-shape/references/shaping-dimensions.md
+Check: Zero-results / not-installed message present in Output Format
+Expected: A note explaining what to display when /skillz-find returns zero results or skillz is not installed
+Timestamp: 2026-04-14T13:45:00Z
+
+Result:
+Line 160: _If `/skillz-find` returned zero results or skillz is not installed:_
+Line 161: > No relevant skills found on skills.sh for this problem domain.
+
+The zero-results message matches the format specified in the task description and the T01.2 SKILL.md addition.
+
+Status: PASS

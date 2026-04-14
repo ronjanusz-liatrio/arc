@@ -131,6 +131,7 @@
 - `docs/management-report.md` (if present) — Temper phase, gate results, coverage matrix
 - Project CLAUDE.md (if present) — TEMPER: sections for project context
 - `docs/ROADMAP.md` (if present) — current wave load
+- Skill discovery results from `/skillz-find` (when skillz plugin is installed)
 
 **Output Format:**
 
@@ -150,9 +151,17 @@
 **Feasibility rating:** Ready | Ready with caveats | Needs spike | Not feasible now
 
 **Recommendation:** {Proceed / Spike first / Defer to later phase}
+
+#### Relevant Skills
+| Skill Name | Installs/wk | Security | Recommendation | Relevance |
+|------------|-------------|----------|----------------|-----------|
+| {name} | {count} | {status} | install / investigate / avoid | {1-2 sentence summary} |
+
+_If `/skillz-find` returned zero results or skillz is not installed:_
+> No relevant skills found on skills.sh for this problem domain.
 ```
 
-**How it feeds into the brief:** Risk factors inform **Constraints** and **Assumptions**. Unknowns populate **Open Questions**. Feasibility rating may affect whether the idea proceeds to shaping or returns to Capture.
+**How it feeds into the brief:** Risk factors inform **Constraints** and **Assumptions**. Unknowns populate **Open Questions**. Feasibility rating may affect whether the idea proceeds to shaping or returns to Capture. Discovered skills are surfaced in the Step 3 synthesis table so the user is aware of available tooling before the brief enters `/cw-spec`.
 
 ---
 

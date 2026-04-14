@@ -222,7 +222,7 @@ Search the skills.sh marketplace for skills relevant to this idea.
    ```
    Consume the Agent's text output directly — do not read or parse the scan-report.md file, to avoid file-system side effects during shaping.
 
-3. **Handle failures gracefully:** If the sub-Agent call fails (skill not found, tool not available, network error, or timeout), treat it the same as skillz not being installed — note the failure reason and continue with the standard feasibility analysis. Do not let skill discovery failures block or delay the feasibility assessment.
+3. **Handle failures gracefully:** Detect any of these failure conditions from the sub-Agent call: skill not found, tool not available, Agent error, network failure, or timeout. On any failure, skip parsing (step 4) and use the skillz-not-installed notice in the output below instead of the `#### Relevant Skills` subsection. Continue with the standard feasibility analysis (Temper phase, technical risk, pattern fit) without delay — do not retry or wait for a skill discovery timeout.
 
 4. **Parse /skillz-find output:** From the sub-Agent's text output, extract the following fields for each discovered skill:
    - **Skill name** — the skill identifier (e.g., `graphql-codegen`)
@@ -253,7 +253,10 @@ If /skillz-find returned results, include this table:
 | {name} | {count} | {status} | install / investigate / avoid | {1-2 sentence summary of how the skill relates to the idea} |
 
 If /skillz-find returned zero results, state instead:
-> No relevant skills found on skills.sh for this problem domain"
+> No relevant skills found on skills.sh for this problem domain
+
+If skill discovery failed (skillz not installed, sub-Agent error, network failure, or timeout), omit the table and state instead:
+> Skill discovery skipped — `/skillz` plugin not installed. Install with: `claude plugin install skillz@skillz`"
 })
 ```
 
@@ -283,6 +286,21 @@ After all four subagents return:
 | Customer Fit | {rating} | {one-line finding} |
 | Scope | {size} | {one-line finding} |
 | Feasibility | {rating} | {one-line finding} |
+| Skill Discovery | {Skills found / No skills / Skipped} | {top 1-2 skill names and recommendation, or skip reason} |
+
+### Relevant Skills
+
+If the feasibility subagent discovered skills from /skillz-find, list each skill:
+
+| Skill | Author | Installs/wk | Recommendation | Relevance |
+|-------|--------|-------------|----------------|-----------|
+| {name} | {author} | {count} | install / investigate / avoid | {1-2 sentence relevance to the idea} |
+
+If /skillz-find returned zero results:
+> No relevant skills found on skills.sh for this problem domain.
+
+If skill discovery was skipped (skillz not installed):
+> Skill discovery was skipped — `/skillz` plugin not installed.
 
 ### Draft Brief
 {Pre-populated brief in the format from references/brief-format.md}
@@ -407,6 +425,7 @@ Save a shaping report to `docs/skill/arc/shape-report.md`:
 | Customer Fit | {rating} | {finding} |
 | Scope | {size} | {finding} |
 | Feasibility | {rating} | {finding} |
+| Skill Discovery | {Skills found / No skills / Skipped} | {finding} |
 
 ## After (Shaped Brief)
 {Full brief content}
