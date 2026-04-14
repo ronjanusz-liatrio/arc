@@ -1,0 +1,15 @@
+Type: file
+Description: Zero-results case produces informational message
+File: skills/arc-shape/SKILL.md
+Expected: When /skillz-find returns zero results, subsection states "No relevant skills found on skills.sh for this problem domain"
+Timestamp: 2026-04-14T12:30:00Z
+
+Verification:
+  grep -n "No relevant skills found" skills/arc-shape/SKILL.md
+  Line 256: > No relevant skills found on skills.sh for this problem domain"
+
+  The zero-results handling is mentioned in two places:
+  1. Parsing step 4 (line 234): "If /skillz-find returned zero results, skip this parsing step and use the zero-results message in the output below."
+  2. Output format (lines 255-256): "If /skillz-find returned zero results, state instead: > No relevant skills found on skills.sh for this problem domain"
+
+Status: PASS

@@ -1,0 +1,17 @@
+Type: file
+Description: Relevant Skills table has correct columns
+File: skills/arc-shape/SKILL.md
+Expected: Markdown table with columns: Skill Name, Installs/wk, Security, Recommendation, Relevance
+Timestamp: 2026-04-14T12:30:00Z
+
+Verification:
+  grep -n "Skill Name.*Installs.*Security.*Recommendation.*Relevance" skills/arc-shape/SKILL.md
+  Line 251: | Skill Name | Installs/wk | Security | Recommendation | Relevance |
+
+  Table row template includes:
+  - {name} for skill identifier
+  - {count} for weekly install count
+  - install / investigate / avoid for recommendation
+  - {1-2 sentence summary} for relevance
+
+Status: PASS

@@ -1,0 +1,15 @@
+Type: file
+Description: Relevant Skills subsection appended to feasibility output format
+File: skills/arc-shape/SKILL.md
+Expected: "#### Relevant Skills" subsection exists after "Recommendation" line, inside the feasibility subagent prompt
+Timestamp: 2026-04-14T12:30:00Z
+
+Verification:
+  grep -n "#### Relevant Skills" skills/arc-shape/SKILL.md
+  Line 247: #### Relevant Skills
+
+  The subsection appears after "**Recommendation:** Proceed | Spike first | Defer" (line 245)
+  and before the closing ")" of the Agent prompt (line 257).
+  It is inside the feasibility subagent prompt, not a separate top-level section.
+
+Status: PASS

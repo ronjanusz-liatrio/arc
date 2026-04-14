@@ -1,0 +1,18 @@
+Type: file
+Description: Parsing instructions added as step 4 in Skill Discovery section
+File: skills/arc-shape/SKILL.md
+Expected: Step 4 "Parse /skillz-find output" exists with extraction fields: skill name, installs/wk, security, recommendation, relevance
+Timestamp: 2026-04-14T12:30:00Z
+
+Verification:
+  grep -n "Parse /skillz-find output" skills/arc-shape/SKILL.md
+  Line 227: 4. **Parse /skillz-find output:** From the sub-Agent's text output, extract the following fields for each discovered skill:
+
+Extracted fields present:
+  - Skill name (line 228)
+  - Installs/wk (line 229)
+  - Security (line 230)
+  - Recommendation (line 231)
+  - Relevance (line 232)
+
+Status: PASS

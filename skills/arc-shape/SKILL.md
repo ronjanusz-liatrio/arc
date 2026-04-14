@@ -224,6 +224,15 @@ Search the skills.sh marketplace for skills relevant to this idea.
 
 3. **Handle failures gracefully:** If the sub-Agent call fails (skill not found, tool not available, network error, or timeout), treat it the same as skillz not being installed — note the failure reason and continue with the standard feasibility analysis. Do not let skill discovery failures block or delay the feasibility assessment.
 
+4. **Parse /skillz-find output:** From the sub-Agent's text output, extract the following fields for each discovered skill:
+   - **Skill name** — the skill identifier (e.g., `graphql-codegen`)
+   - **Installs/wk** — weekly install count from skills.sh
+   - **Security** — security status from Gen Agent Trust Hub, Socket, and/or Snyk (e.g., `pass`, `warn`, `fail`)
+   - **Recommendation** — per-skill recommendation: `install`, `investigate`, or `avoid`
+   - **Relevance** — write a 1-2 sentence summary of how the skill relates to the idea being shaped
+
+   If /skillz-find returned zero results, skip this parsing step and use the zero-results message in the output below.
+
 Return your findings in this format:
 ### Feasibility Assessment
 **Temper phase:** {phase or 'Not available'}
@@ -233,7 +242,18 @@ Return your findings in this format:
 **Unknowns requiring spikes:** {list}
 **Pattern fit:** Existing patterns | New patterns required | Infrastructure needed
 **Feasibility rating:** Ready | Ready with caveats | Needs spike | Not feasible now
-**Recommendation:** Proceed | Spike first | Defer"
+**Recommendation:** Proceed | Spike first | Defer
+
+#### Relevant Skills
+
+If /skillz-find returned results, include this table:
+
+| Skill Name | Installs/wk | Security | Recommendation | Relevance |
+|------------|-------------|----------|----------------|-----------|
+| {name} | {count} | {status} | install / investigate / avoid | {1-2 sentence summary of how the skill relates to the idea} |
+
+If /skillz-find returned zero results, state instead:
+> No relevant skills found on skills.sh for this problem domain"
 })
 ```
 
