@@ -1,0 +1,37 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Feature file scenarios are satisfied — all six scenarios from synthesis-table-integration.feature are covered
+Timestamp: 2026-04-14T14:00:00Z
+Command: structural verification against feature file scenarios
+
+Feature Scenario Verification:
+
+1. Scenario: Skill Discovery row appears when skills are found
+   - Row present with "Skills found" as rating option: line 289
+   - Key Finding column summarizes top skills by name and recommendation: line 289
+   - [PASS]
+
+2. Scenario: Skill Discovery row shows "No skills" when zero results
+   - "No skills" is a valid rating value in the row: line 289
+   - [PASS]
+
+3. Scenario: Skill Discovery row shows "Skipped" when skillz not installed
+   - "Skipped" is a valid rating value in the row: line 289
+   - [PASS]
+
+4. Scenario: Relevant Skills section lists discovered skills with full metadata
+   - Section present at line 291 with table columns: Skill, Author, Installs/wk, Recommendation, Relevance
+   - Template row includes {name}, {author}, {count}, recommendation, and relevance fields: line 297
+   - [PASS]
+
+5. Scenario: Relevant Skills section displays skip message when discovery was skipped
+   - Skip message present: "Skill discovery was skipped -- `/skillz` plugin not installed." at line 303
+   - No empty table rendered — blockquote message shown instead
+   - [PASS]
+
+6. Scenario: Relevant Skills section displays message when no results found
+   - No results message present: "No relevant skills found on skills.sh for this problem domain." at line 300
+   - No empty table rendered — blockquote message shown instead
+   - [PASS]
+
+Status: PASS

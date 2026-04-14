@@ -1,0 +1,20 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: A "### Relevant Skills" section appears below the dimension ratings table in Step 3 with skill metadata table and fallback messages
+Timestamp: 2026-04-14T14:00:00Z
+Command: grep -n "### Relevant Skills\|Skill.*Author.*Installs\|No relevant skills\|Skill discovery was skipped" skills/arc-shape/SKILL.md
+
+Output:
+291:### Relevant Skills
+295:| Skill | Author | Installs/wk | Recommendation | Relevance |
+300:> No relevant skills found on skills.sh for this problem domain.
+303:> Skill discovery was skipped — `/skillz` plugin not installed.
+
+Verification:
+- [PASS] "### Relevant Skills" section present at line 291, below dimension ratings table (ends at line 289)
+- [PASS] Skills table includes columns: Skill, Author, Installs/wk, Recommendation, Relevance
+- [PASS] Zero results fallback message: "No relevant skills found on skills.sh for this problem domain."
+- [PASS] Skipped fallback message: "Skill discovery was skipped -- `/skillz` plugin not installed."
+- [PASS] Section appears before "### Draft Brief" (line 305), maintaining correct ordering
+
+Status: PASS

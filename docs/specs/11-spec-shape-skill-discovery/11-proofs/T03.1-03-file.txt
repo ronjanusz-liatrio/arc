@@ -1,0 +1,24 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Step 7 shape report template includes Skill Discovery row in the Subagent Analysis Summary table
+Timestamp: 2026-04-14T14:00:00Z
+Command: grep -n -A5 "Subagent Analysis Summary" skills/arc-shape/SKILL.md
+
+Output:
+420:## Subagent Analysis Summary
+421:
+422:| Dimension | Rating | Key Finding |
+423:|-----------|--------|-------------|
+424:| Problem Clarity | {rating} | {finding} |
+425:| Customer Fit | {rating} | {finding} |
+426:| Scope | {size} | {finding} |
+427:| Feasibility | {rating} | {finding} |
+428:| Skill Discovery | {Skills found / No skills / Skipped} | {finding} |
+
+Verification:
+- [PASS] Skill Discovery row present in Step 7 shape report template at line 428
+- [PASS] Row appears after Feasibility row (line 427)
+- [PASS] Rating column uses same three valid states as Step 3: "Skills found / No skills / Skipped"
+- [PASS] Step 7 template is consistent with Step 3 synthesis format
+
+Status: PASS

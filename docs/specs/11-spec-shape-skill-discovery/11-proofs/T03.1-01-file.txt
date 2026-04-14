@@ -1,0 +1,17 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Step 3 dimension ratings table contains a Skill Discovery row with Rating and Key Finding columns
+Timestamp: 2026-04-14T14:00:00Z
+Command: grep -n "Skill Discovery" skills/arc-shape/SKILL.md
+
+Output:
+289:| Skill Discovery | {Skills found / No skills / Skipped} | {top 1-2 skill names and recommendation, or skip reason} |
+428:| Skill Discovery | {Skills found / No skills / Skipped} | {finding} |
+
+Verification:
+- [PASS] Skill Discovery row present in Step 3 synthesis table at line 289
+- [PASS] Rating column contains the three valid states: "Skills found / No skills / Skipped"
+- [PASS] Key Finding column summarizes top 1-2 skill names and recommendation, or skip reason
+- [PASS] Row appears after the Feasibility row (line 288) and before the Relevant Skills section
+
+Status: PASS
