@@ -1,0 +1,80 @@
+Type: cli
+Command: grep -n "Step [1-8]\|AskUserQuestion\|spec-ready\|shipped\|validation\|Spec:\|BACKLOG\|References" skills/arc-ship/SKILL.md
+Expected: All required process keywords found at expected line numbers
+Timestamp: 2026-04-13T17:00:00Z
+
+=== COMMAND OUTPUT ===
+
+$ grep -n "### Step" skills/arc-ship/SKILL.md
+64:### Step 1: Read Context
+73:### Step 2: Select Idea
+100:### Step 3: Resolve Spec Path
+123:### Step 4: Verify Validation Report
+136:### Step 5: Update BACKLOG
+149:### Step 6: Update ROADMAP (if applicable)
+158:### Step 7: Refresh ARC:product-context
+170:### Step 8: Confirm
+
+$ grep -n "AskUserQuestion" skills/arc-ship/SKILL.md
+5:allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
+76:2. If exactly one match is found, present it for confirmation via `AskUserQuestion`.
+85:AskUserQuestion({
+108:AskUserQuestion({
+
+$ grep -n "spec-ready" skills/arc-ship/SKILL.md
+82:Present all `spec-ready` ideas from `docs/BACKLOG.md`:
+98:> No spec-ready ideas found in docs/BACKLOG.md. Run `/arc-wave` to promote shaped ideas.
+102:3. **If the field is present** and its value is not the placeholder `(set during /cw-spec)`: use the path as-is.
+139:Find the row for the selected idea and change its status cell from `spec-ready` to `shipped`. Preserve all other columns.
+145:1. Change `- **Status:** spec-ready` to `- **Status:** shipped`
+
+$ grep -n "shipped" skills/arc-ship/SKILL.md
+3:description: "Mark a validated idea as shipped..."
+16:...transition BACKLOG status to shipped"
+35:    K --> L[Confirm shipped]
+139:...change its status cell from `spec-ready` to `shipped`...
+145:1. Change `- **Status:** spec-ready` to `- **Status:** shipped`
+147:3. Add `- **Shipped:** {ISO 8601 timestamp}`
+156:4. If **all** ideas in the wave now have `shipped` status...
+164:2. Recount backlog statuses from the BACKLOG summary table...shipped counts)
+175:Shipped: {Title} — verified via {validation-report-path}.
+
+$ grep -n "\*-validation-\*\|Overall.*PASS" skills/arc-ship/SKILL.md
+124:1. Use `Glob` with pattern `{spec-dir}/*-validation-*.md` to locate the validation report.
+128:3. If a file is found, use `Grep` to check for `**Overall**: PASS` within the report.
+
+$ grep -n "ship-criteria\|idea-lifecycle\|bootstrap-protocol" skills/arc-ship/SKILL.md
+163:1. Read `skills/arc-wave/references/bootstrap-protocol.md` for the injection algorithm.
+180:- `skills/arc-ship/references/ship-criteria.md` — Proof verification rules...
+181:- `references/idea-lifecycle.md` — Shipped stage definition...
+182:- `skills/arc-wave/references/bootstrap-protocol.md` — ARC:product-context injection algorithm
+
+=== FEATURE SCENARIO COVERAGE ===
+
+Scenario: Inline argument invocation with partial match
+  - Line 73: "If invoked with an inline argument"
+  - Line 75: "case-insensitive partial match"
+  Result: COVERED
+
+Scenario: No spec-ready ideas error
+  - Line 98: Error message matches feature spec exactly
+  Result: COVERED
+
+Scenario: Missing Spec field — AskUserQuestion prompt
+  - Lines 104-120: Path prompt with docs/specs/ glob
+  Result: COVERED
+
+Scenario: No validation report found error
+  - Lines 125-127: Error message matches feature spec
+  Result: COVERED
+
+Scenario: Validation report not PASS error
+  - Lines 129-132: Error message with {actual-status} interpolation matches feature spec
+  Result: COVERED
+
+Scenario: Successful ship with confirmation
+  - Line 175: Confirmation format matches feature spec exactly
+  Result: COVERED
+
+=== OVERALL STATUS: PASS ===
+All feature scenarios covered. Process section fully implements T01.3 requirements.

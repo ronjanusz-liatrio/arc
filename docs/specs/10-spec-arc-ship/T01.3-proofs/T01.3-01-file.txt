@@ -1,0 +1,88 @@
+Type: file
+Command: content verification of skills/arc-ship/SKILL.md Process section
+Expected: All required process steps present with correct behavior specifications
+Timestamp: 2026-04-13T17:00:00Z
+
+=== REQUIREMENT: Step 1: Read Context ===
+Check: "### Step 1: Read Context" present
+Result: FOUND (line 64)
+Check: docs/BACKLOG.md listed as Required
+Result: FOUND (line 67)
+Check: docs/ROADMAP.md listed as Optional
+Result: FOUND (line 68)
+Check: CLAUDE.md listed as Optional
+Result: FOUND (line 69)
+Status: PASS
+
+=== REQUIREMENT: Step 2: Select Idea ===
+Check: "### Step 2: Select Idea" present
+Result: FOUND (line 73)
+Check: Argument-based invocation path (e.g. `/arc-ship "Idea Title"`)
+Result: FOUND (line 73 — "If invoked with an inline argument")
+Check: Case-insensitive partial title match
+Result: FOUND (line 75 — "case-insensitive partial match")
+Check: AskUserQuestion single-select (multiSelect: false)
+Result: FOUND (lines 85-95)
+Check: Error message when no spec-ready ideas exist
+Result: FOUND (line 98 — "No spec-ready ideas found in docs/BACKLOG.md. Run `/arc-wave` to promote shaped ideas.")
+Status: PASS
+
+=== REQUIREMENT: Step 3: Resolve Spec Path ===
+Check: "### Step 3: Resolve Spec Path" present
+Result: FOUND (line 100)
+Check: Read "- **Spec:**" field from idea detail section
+Result: FOUND (line 102 — "Look for the `- **Spec:**` field")
+Check: AskUserQuestion with options from docs/specs/ directories
+Result: FOUND (lines 108-118)
+Check: Glob docs/specs/*/ to populate options
+Result: FOUND (line 120 — "globbing `docs/specs/*/`")
+Status: PASS
+
+=== REQUIREMENT: Step 4: Verify Validation Report ===
+Check: "### Step 4: Verify Validation Report" present
+Result: FOUND (line 123)
+Check: Glob pattern {spec-dir}/*-validation-*.md
+Result: FOUND (line 124 — "Glob` with pattern `{spec-dir}/*-validation-*.md`")
+Check: Grep for **Overall**: PASS
+Result: FOUND (line 128 — "Grep` to check for `**Overall**: PASS`")
+Check: Refuse if no file found
+Result: FOUND (lines 125-127 — "Exit without modifying any files")
+Check: Refuse if not PASS, report actual status
+Result: FOUND (lines 129-132)
+Status: PASS
+
+=== REQUIREMENT: Step 5: Update BACKLOG ===
+Check: "### Step 5: Update BACKLOG" present
+Result: FOUND (line 136)
+Check: 5a — Update summary table row status to shipped
+Result: FOUND (lines 138-139 — "change its status cell from `spec-ready` to `shipped`")
+Check: 5b — Update detail section Status→shipped
+Result: FOUND (line 145 — "Change `- **Status:** spec-ready` to `- **Status:** shipped`")
+Check: Add Spec path if not present
+Result: FOUND (line 146 — "Add `- **Spec:** {spec-dir-path}` if not already present")
+Check: Add Shipped ISO 8601 timestamp
+Result: FOUND (line 147 — "Add `- **Shipped:** {ISO 8601 timestamp}`")
+Status: PASS
+
+=== REQUIREMENT: Step 6 (Step 8): Confirm ===
+Check: "### Step 8: Confirm" present
+Result: FOUND (line 170)
+Check: Confirmation message format "Shipped: {Title} — verified via {path}"
+Result: FOUND (line 175 — "Shipped: {Title} — verified via {validation-report-path}.")
+Status: PASS
+
+=== REQUIREMENT: References Section ===
+Check: "## References" present
+Result: FOUND (line 179)
+Check: ship-criteria.md linked
+Result: FOUND (line 180 — "skills/arc-ship/references/ship-criteria.md")
+Check: idea-lifecycle.md linked
+Result: FOUND (line 181 — "references/idea-lifecycle.md")
+Check: bootstrap-protocol.md linked
+Result: FOUND (line 182 — "skills/arc-wave/references/bootstrap-protocol.md")
+Status: PASS
+
+=== OVERALL STATUS: PASS ===
+All 6 required process steps and References section are present and correctly implemented.
+File: skills/arc-ship/SKILL.md (183 lines)
+Implementation: Complete — all requirements satisfied by worker-1 skeleton commit (0f12ad3)
