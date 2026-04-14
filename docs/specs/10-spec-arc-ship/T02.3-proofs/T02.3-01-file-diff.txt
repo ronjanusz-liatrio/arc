@@ -1,0 +1,48 @@
+Type: file
+Command: git diff references/cross-plugin-contract.md
+Expected: New Claude-Workflow section added with validation and proof artifacts, graceful degradation updated, directionality statement updated
+Timestamp: 2026-04-14T00:00:00Z
+
+=== DIFF OUTPUT ===
+
+diff --git a/references/cross-plugin-contract.md b/references/cross-plugin-contract.md
+index 1024757..1c06b85 100644
+--- a/references/cross-plugin-contract.md
++++ b/references/cross-plugin-contract.md
+@@ -13,16 +13,22 @@ What Arc reads from Temper and when. Arc never writes to Temper artifacts — al
+ | `docs/skill/temper/management-report.md` | `/arc-wave` (phase-based sizing), `/arc-audit` (combined health) | Current phase and gate status |
+ | `TEMPER:project-context` in CLAUDE.md | `/arc-wave` (phase, ecosystem) | Phase, ecosystem context |
+ 
++## Claude-Workflow Artifacts Read by Arc
++
++| CW Artifact | Read By | Purpose |
++|-------------|---------|---------|
++| `docs/specs/NN-spec-name/NN-validation-*.md` | `/arc-ship` (proof verification) | Validation report with Overall: PASS/FAIL |
++| `docs/specs/NN-spec-name/NN-proofs/` | `/arc-ship` (reference only) | Proof artifact directory |
++
+ ## Graceful Degradation
+ 
+-All Temper reads are conditional:
+-- If the file exists, read it for context
+-- If the file does not exist, proceed without it — Temper may not be installed
+-- Never error or warn on missing Temper artifacts unless explicitly checking for engineering readiness
++All reads from external plugins are conditional:
++- **Temper artifacts**: If the file exists, read it for context. If not, proceed without it — Temper may not be installed. Never error or warn on missing Temper artifacts unless explicitly checking for engineering readiness.
++- **Claude-Workflow artifacts**: If validation or proof artifacts exist, read them for decision support. If not, proceed without them — the workflow may not have executed yet or in earlier plugin versions.
+ 
+ ## Directionality
+ 
+-Arc → Temper access is strictly **read-only**. Arc never creates, modifies, or deletes Temper-managed artifacts. This ensures both plugins can operate independently and compose without conflict.
++Arc → Temper and Arc → Claude-Workflow access are strictly **read-only**. Arc never creates, modifies, or deletes artifacts managed by other plugins. This ensures all plugins can operate independently and compose without conflict.
+ 
+ ## Related Specifications
+ 
+
+=== VERIFICATION ===
+
+Status: PASS
+- Claude-Workflow section added with two artifact entries
+- Validation report artifact documented for /arc-ship proof verification
+- Proof artifact directory documented for reference only
+- Graceful degradation section updated to cover both Temper and Claude-Workflow
+- Directionality section updated to reflect read-only access for both plugin types

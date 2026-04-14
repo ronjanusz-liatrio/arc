@@ -12,7 +12,7 @@ stateDiagram-v2
     [*] --> Capture : raw idea
     Capture --> Shape : triage
     Shape --> SpecReady : brief approved
-    SpecReady --> Shipped : SDD pipeline
+    SpecReady --> Shipped : SDD pipeline + /arc-ship
 
     Shape --> Capture : needs more context
     SpecReady --> Shape : scope change
@@ -103,10 +103,11 @@ stateDiagram-v2
 **Entry Criteria:**
 - SDD pipeline completed: `/cw-spec` → `/cw-plan` → `/cw-dispatch` → `/cw-validate`
 - Implementation passes validation gates
+- User invokes `/arc-ship` which verifies cw-validate report and transitions status
 
 **Data Fields (added at shipped):**
-- Spec reference (path to the spec that implemented this idea)
-- Completion timestamp
+- **Spec:** added by `/arc-ship` (path to the spec that implemented this idea)
+- **Shipped:** added by `/arc-ship` (ISO 8601 timestamp at transition time)
 
 **Exit Criteria:**
 - None — terminal state

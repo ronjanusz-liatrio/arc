@@ -1,0 +1,33 @@
+Type: file
+Description: Changes made to references/idea-lifecycle.md
+Expected: All four required updates applied:
+  1. Entry Criteria for Shipped stage mentions /arc-ship
+  2. Shipped Data Fields section documents Spec and Shipped fields added by /arc-ship
+  3. Mermaid diagram transition label updated to "SDD pipeline + /arc-ship"
+  4. All other content preserved intact
+Timestamp: 2026-04-14T10:00:00Z
+
+VERIFICATION:
+=============
+
+1. Entry Criteria update (line 106):
+   - **Status:** PASS
+   - Found: "User invokes `/arc-ship` which verifies cw-validate report and transitions status"
+
+2. Shipped Data Fields update (lines 109-110):
+   - **Status:** PASS
+   - Found: "- **Spec:** added by `/arc-ship` (path to the spec that implemented this idea)"
+   - Found: "- **Shipped:** added by `/arc-ship` (ISO 8601 timestamp at transition time)"
+
+3. Mermaid diagram update (line 15):
+   - **Status:** PASS
+   - Found: "SpecReady --> Shipped : SDD pipeline + /arc-ship"
+
+4. Content preservation check:
+   - **Status:** PASS
+   - All lifecycle stages intact
+   - All backward transitions intact
+   - Cross-references section intact
+   - Backward transitions table intact
+
+OVERALL: PASS

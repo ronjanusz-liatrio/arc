@@ -1,3 +1,10 @@
+Type: file
+Command: cat references/cross-plugin-contract.md
+Expected: Cross-plugin contract with Temper and Claude-Workflow sections, both with graceful degradation and read-only directionality
+Timestamp: 2026-04-14T00:00:00Z
+
+=== FILE CONTENT ===
+
 # Cross-Plugin Contract
 
 What Arc reads from Temper and when. Arc never writes to Temper artifacts — all access is read-only with graceful degradation.
@@ -35,3 +42,12 @@ Arc → Temper and Arc → Claude-Workflow access are strictly **read-only**. Ar
 For marker format and artifact registry details, see:
 - `temper/references/marker-specification.md` — HTML comment marker format
 - `temper/references/artifact-registry.md` — artifact ownership and maturity definitions
+
+=== VERIFICATION ===
+
+Status: PASS
+- File contains both Temper and Claude-Workflow artifact sections
+- Claude-Workflow section properly documents validation reports and proof artifacts
+- Graceful degradation section covers both plugin types with appropriate conditional logic
+- Directionality clearly states read-only access for both Arc → Temper and Arc → Claude-Workflow
+- All markdown formatting is correct and tables are properly aligned
