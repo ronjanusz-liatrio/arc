@@ -1,0 +1,17 @@
+Type: file
+Description: Step 3 failure handling includes no-retry and no-delay instructions
+File: skills/arc-shape/SKILL.md
+Expected: Step 3 explicitly states do not retry and do not wait for a skill discovery timeout on failure
+Timestamp: 2026-04-14T13:10:00Z
+
+Check: Line 227 of skills/arc-shape/SKILL.md contains failure handling with no-retry/no-delay
+
+Result:
+  227: "Handle failures gracefully: Detect any of these failure conditions from the sub-Agent call: skill not found, tool not available, Agent error, network failure, or timeout. On any failure, skip parsing (step 4) and use the skillz-not-installed notice in the output below instead of the #### Relevant Skills subsection. Continue with the standard feasibility analysis (Temper phase, technical risk, pattern fit) without delay -- do not retry or wait for a skill discovery timeout."
+
+Key phrases present:
+  - "without delay" -- FOUND
+  - "do not retry" -- FOUND
+  - "do not...wait for a skill discovery timeout" -- FOUND
+
+Status: PASS

@@ -204,7 +204,9 @@ Answer these questions:
 - Are there unknowns that need spikes?
 - Does this fit existing patterns or require new ones?
 
-#### Skill Discovery
+#### Skill Discovery (Non-Blocking Enrichment)
+
+Skill discovery is optional enrichment — it must not delay the feasibility assessment. Proceed with your standard analysis (answer the four questions above, determine Temper phase, technical risk, pattern fit, and feasibility rating) immediately. Run the skill discovery steps below in parallel with or after your standard analysis, and append the results to your output. If skill discovery is slow, fails, or times out, emit the skip notice and return your completed feasibility assessment without waiting.
 
 Search the skills.sh marketplace for skills relevant to this idea.
 

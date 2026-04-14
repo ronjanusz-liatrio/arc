@@ -1,0 +1,12 @@
+Type: file
+Description: Section header renamed to include "(Non-Blocking Enrichment)" label
+File: skills/arc-shape/SKILL.md
+Expected: The Skill Discovery section in the feasibility subagent prompt is labeled as non-blocking enrichment
+Timestamp: 2026-04-14T13:10:00Z
+
+Check: Line 207 of skills/arc-shape/SKILL.md contains "#### Skill Discovery (Non-Blocking Enrichment)"
+
+Result:
+  207:#### Skill Discovery (Non-Blocking Enrichment)
+
+Status: PASS

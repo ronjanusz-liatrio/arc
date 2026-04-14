@@ -1,0 +1,26 @@
+Type: file
+Description: Output format is identical with or without skill discovery except for #### Relevant Skills
+File: skills/arc-shape/SKILL.md
+Expected: The feasibility output format above #### Relevant Skills is identical regardless of skill discovery outcome; only the #### Relevant Skills subsection varies
+Timestamp: 2026-04-14T13:10:00Z
+
+Check: Lines 238-247 contain the standard feasibility fields (always present), and lines 249-261 contain the three conditional cases for #### Relevant Skills
+
+Standard fields (always present, lines 238-247):
+  - Temper phase
+  - Hard gate failures
+  - Technical risk
+  - Risk factors
+  - Unknowns requiring spikes
+  - Pattern fit
+  - Feasibility rating
+  - Recommendation
+
+#### Relevant Skills subsection (lines 249-261) has three conditional cases:
+  1. /skillz-find returned results -> table with columns: Skill Name, Installs/wk, Security, Recommendation, Relevance
+  2. /skillz-find returned zero results -> "No relevant skills found on skills.sh for this problem domain"
+  3. Skill discovery failed -> "Skill discovery skipped -- `/skillz` plugin not installed..."
+
+The output format above #### Relevant Skills is identical in all three cases. Only the #### Relevant Skills subsection varies.
+
+Status: PASS

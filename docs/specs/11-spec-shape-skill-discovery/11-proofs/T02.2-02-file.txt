@@ -1,0 +1,18 @@
+Type: file
+Description: Framing paragraph instructs subagent to proceed with standard analysis immediately
+File: skills/arc-shape/SKILL.md
+Expected: Paragraph explicitly states skill discovery must not delay the feasibility assessment, standard analysis proceeds immediately, and skill discovery runs in parallel or after
+Timestamp: 2026-04-14T13:10:00Z
+
+Check: Line 209 of skills/arc-shape/SKILL.md contains the non-blocking instruction paragraph
+
+Result:
+  209: "Skill discovery is optional enrichment -- it must not delay the feasibility assessment. Proceed with your standard analysis (answer the four questions above, determine Temper phase, technical risk, pattern fit, and feasibility rating) immediately. Run the skill discovery steps below in parallel with or after your standard analysis, and append the results to your output. If skill discovery is slow, fails, or times out, emit the skip notice and return your completed feasibility assessment without waiting."
+
+Key phrases present:
+  - "must not delay the feasibility assessment" -- FOUND
+  - "Proceed with your standard analysis...immediately" -- FOUND
+  - "in parallel with or after your standard analysis" -- FOUND
+  - "return your completed feasibility assessment without waiting" -- FOUND
+
+Status: PASS
