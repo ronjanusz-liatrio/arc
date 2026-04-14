@@ -172,7 +172,9 @@ After all four subagents return, `/arc-shape` aggregates results:
 1. **Merge gaps** from all dimensions into a deduplicated list
 2. **Identify critical gaps** — any dimension rated Low/Weak/Not feasible flags the idea for additional Q&A
 3. **Pre-populate brief fields** using suggested content from each dimension
-4. **Present synthesis** to the user: dimension ratings, key findings, and recommended follow-up questions
+4. **Present synthesis** to the user: dimension ratings (five rows), key findings, relevant skills, and recommended follow-up questions
 5. **Run interactive Q&A** to fill remaining gaps using AskUserQuestion
+
+The synthesis table includes five rows: **Problem Clarity**, **Customer Fit**, **Scope**, **Feasibility**, and **Skill Discovery**. Skill Discovery is not a fifth parallel subagent — it runs inside the Feasibility subagent and is surfaced as its own row in the synthesis for visibility. When the `/skillz` plugin is not installed, the Skill Discovery row displays "Skipped" with the skip reason.
 
 The goal is to minimize Q&A rounds by front-loading analysis — the subagents do the research, the user makes the decisions.

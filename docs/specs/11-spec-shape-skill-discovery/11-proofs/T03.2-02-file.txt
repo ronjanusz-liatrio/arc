@@ -1,0 +1,13 @@
+Type: file
+File: skills/arc-shape/references/shaping-dimensions.md
+Check: New paragraph clarifies five rows, Skill Discovery origin (inside Feasibility), and skip behavior
+Timestamp: 2026-04-14T13:55:00-07:00
+
+Command: grep -n "Skill Discovery is not" skills/arc-shape/references/shaping-dimensions.md
+
+Output:
+178:The synthesis table includes five rows: **Problem Clarity**, **Customer Fit**, **Scope**, **Feasibility**, and **Skill Discovery**. Skill Discovery is not a fifth parallel subagent — it runs inside the Feasibility subagent and is surfaced as its own row in the synthesis for visibility. When the `/skillz` plugin is not installed, the Skill Discovery row displays "Skipped" with the skip reason.
+
+Expected: Paragraph lists all five row names, states Skill Discovery is not a 5th subagent, explains it runs inside Feasibility, mentions skip behavior
+Actual: All four criteria present on line 178
+Status: PASS

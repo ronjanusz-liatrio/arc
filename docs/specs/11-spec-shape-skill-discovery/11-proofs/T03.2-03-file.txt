@@ -1,0 +1,19 @@
+Type: file
+File: skills/arc-shape/SKILL.md + skills/arc-shape/references/shaping-dimensions.md
+Check: Consistency between SKILL.md synthesis table and shaping-dimensions.md Aggregation section
+Timestamp: 2026-04-14T13:55:00-07:00
+
+Command: grep -n "Skill Discovery" skills/arc-shape/SKILL.md
+
+Output:
+207:#### Skill Discovery (Non-Blocking Enrichment)
+291:| Skill Discovery | {Skills found / No skills / Skipped} | {top 1-2 skill names and recommendation, or skip reason} |
+430:| Skill Discovery | {Skills found / No skills / Skipped} | {finding} |
+
+Command: grep -c "Skill Discovery" skills/arc-shape/references/shaping-dimensions.md
+
+Output: 5 matches (Dimension 4 Relevant Skills section + Aggregation section)
+
+Expected: shaping-dimensions.md Aggregation references the same five-row table structure as SKILL.md Step 3 synthesis
+Actual: SKILL.md has Skill Discovery rows at lines 291 and 430; shaping-dimensions.md Aggregation lists all five row names including Skill Discovery and explains its origin in Feasibility subagent
+Status: PASS
