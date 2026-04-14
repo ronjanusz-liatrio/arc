@@ -1,0 +1,17 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Skill discovery instructions are placed after feasibility questions but before the output format section
+Timestamp: 2026-04-14T12:00:00Z
+Command: grep -n "Does this fit existing\|Skill Discovery\|Return your findings" skills/arc-shape/SKILL.md
+
+Output:
+205:- Does this fit existing patterns or require new ones?
+207:#### Skill Discovery
+227:Return your findings in this format:
+
+Verification:
+- [PASS] Last feasibility question at line 205, skill discovery section starts at line 207 (after questions)
+- [PASS] "Return your findings in this format:" at line 227 (skill discovery ends before output format)
+- [PASS] Ordering: questions (201-205) -> skill discovery (207-225) -> output format (227+)
+
+Status: PASS

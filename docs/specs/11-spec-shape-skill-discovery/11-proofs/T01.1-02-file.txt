@@ -1,0 +1,23 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Feasibility subagent spawns a sub-Agent that invokes /skillz-find with the derived query
+Timestamp: 2026-04-14T12:00:00Z
+Command: grep -A5 "Invoke /skillz-find" skills/arc-shape/SKILL.md
+
+Output:
+216:2. **Invoke /skillz-find** by spawning a sub-Agent:
+217:   ```
+218:   Agent({
+219:     description: 'Skill discovery for idea: {title}',
+220:     prompt: '/skillz-find {derived query}'
+221:   })
+222:   ```
+223:   Consume the Agent's text output directly — do not read or parse the scan-report.md file, to avoid file-system side effects during shaping.
+
+Verification:
+- [PASS] Sub-Agent call uses Agent() with description and prompt fields
+- [PASS] Prompt invokes /skillz-find with the derived query placeholder
+- [PASS] Explicit instruction to consume Agent text output directly (not scan-report.md)
+- [PASS] Rationale for avoiding file-system side effects during shaping is stated
+
+Status: PASS

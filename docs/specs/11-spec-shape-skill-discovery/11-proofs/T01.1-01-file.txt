@@ -1,0 +1,23 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Feasibility subagent prompt contains skill discovery query derivation instructions
+Timestamp: 2026-04-14T12:00:00Z
+Command: grep -n "Skill Discovery\|Derive a search query\|skillz-find" skills/arc-shape/SKILL.md
+
+Output:
+207:#### Skill Discovery
+211:1. **Derive a search query** by extracting 2-4 keyword phrases from the idea title and one-line summary. Combine these with project context signals:
+212:   - Detect the tech stack by checking which manifest file exists: package.json (Node.js), pyproject.toml (Python), Cargo.toml (Rust), go.mod (Go), or similar
+213:   - Include relevant technology names from CLAUDE.md if present
+214:   - Example: For idea 'Add OpenTelemetry tracing' with summary 'Instrument API endpoints with distributed tracing' in a Node.js project, the query would be: 'opentelemetry tracing nodejs instrumentation'
+216:2. **Invoke /skillz-find** by spawning a sub-Agent:
+220:     prompt: '/skillz-find {derived query}'
+
+Verification:
+- [PASS] "#### Skill Discovery" section header present at line 207
+- [PASS] Query derivation instructions extract 2-4 keyword phrases from title and summary
+- [PASS] Project context signals include tech stack detection (package.json, pyproject.toml, Cargo.toml, go.mod)
+- [PASS] CLAUDE.md references included as context signal
+- [PASS] Concrete example provided for query derivation
+
+Status: PASS

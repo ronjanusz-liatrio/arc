@@ -204,6 +204,26 @@ Answer these questions:
 - Are there unknowns that need spikes?
 - Does this fit existing patterns or require new ones?
 
+#### Skill Discovery
+
+Search the skills.sh marketplace for skills relevant to this idea.
+
+1. **Derive a search query** by extracting 2-4 keyword phrases from the idea title and one-line summary. Combine these with project context signals:
+   - Detect the tech stack by checking which manifest file exists: package.json (Node.js), pyproject.toml (Python), Cargo.toml (Rust), go.mod (Go), or similar
+   - Include relevant technology names from CLAUDE.md if present
+   - Example: For idea 'Add OpenTelemetry tracing' with summary 'Instrument API endpoints with distributed tracing' in a Node.js project, the query would be: 'opentelemetry tracing nodejs instrumentation'
+
+2. **Invoke /skillz-find** by spawning a sub-Agent:
+   ```
+   Agent({
+     description: 'Skill discovery for idea: {title}',
+     prompt: '/skillz-find {derived query}'
+   })
+   ```
+   Consume the Agent's text output directly — do not read or parse the scan-report.md file, to avoid file-system side effects during shaping.
+
+3. **Handle failures gracefully:** If the sub-Agent call fails (skill not found, tool not available, network error, or timeout), treat it the same as skillz not being installed — note the failure reason and continue with the standard feasibility analysis. Do not let skill discovery failures block or delay the feasibility assessment.
+
 Return your findings in this format:
 ### Feasibility Assessment
 **Temper phase:** {phase or 'Not available'}

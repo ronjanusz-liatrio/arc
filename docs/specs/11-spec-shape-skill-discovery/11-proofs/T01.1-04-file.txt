@@ -1,0 +1,15 @@
+Type: file
+File: skills/arc-shape/SKILL.md
+Expected: Graceful failure handling for skill discovery prevents blocking the feasibility assessment
+Timestamp: 2026-04-14T12:00:00Z
+Command: grep -n "Handle failures gracefully" skills/arc-shape/SKILL.md
+
+Output:
+225:3. **Handle failures gracefully:** If the sub-Agent call fails (skill not found, tool not available, network error, or timeout), treat it the same as skillz not being installed — note the failure reason and continue with the standard feasibility analysis. Do not let skill discovery failures block or delay the feasibility assessment.
+
+Verification:
+- [PASS] Failure handling covers: skill not found, tool not available, network error, timeout
+- [PASS] Failure fallback matches "skillz not installed" behavior
+- [PASS] Explicit instruction to not block or delay feasibility assessment
+
+Status: PASS
