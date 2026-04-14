@@ -69,6 +69,7 @@ stateDiagram-v2
 | `/arc-capture` | Record a raw idea quickly — title, one-liner, rough priority |
 | `/arc-shape` | Refine an idea into a structured brief with problem, solution, and success criteria |
 | `/arc-wave` | Group shaped ideas into a delivery cycle and hand off to temper + claude-workflow |
+| `/arc-ship` | Mark a validated idea as shipped — verify proof artifacts and update BACKLOG status |
 | `/arc-sync` | Keep project README and diagrams in sync with product direction artifacts |
 | `/arc-audit` | Audit backlog health and wave alignment across all product artifacts |
 | `/arc-help` | Quick reference guide — overview of all skills, artifacts, workflow, and installation |
@@ -81,6 +82,7 @@ stateDiagram-v2
 - **/arc-capture skill** — Fast idea entry. Appends a structured stub to BACKLOG with minimal friction.
 - **/arc-shape skill** — Interactive refinement. Turns a captured idea into a spec-ready brief using parallel subagent analysis across four dimensions.
 - **/arc-wave skill** — Delivery cycle management. Groups spec-ready ideas into a wave, updates ROADMAP, and prepares the handoff for /cw-spec.
+- **/arc-ship skill** — Validation handoff. Verifies spec-ready ideas have passed cw-validate checks and transitions them to shipped status.
 - **/arc-sync skill** — README synchronization. Scaffolds a complete README from Arc artifacts or selectively updates ARC: managed sections.
 - **/arc-audit skill** — Pipeline health audit. Checks backlog health, wave alignment, and cross-reference integrity across all product artifacts.
 - **/arc-help skill** — Quick reference guide. Displays an overview of all Arc skills, artifacts, workflow order, and installation instructions.
@@ -108,6 +110,7 @@ flowchart LR
     AC["/arc-capture\nQuick idea entry"]:::arc
     AS["/arc-shape\nRefine into\nspec-ready brief"]:::arc
     AW["/arc-wave\nOrganize into\ndelivery cycle"]:::arc
+    ASHIP["/arc-ship\nValidate and\nmark shipped"]:::arc
     AREADME["/arc-sync\nSync README with\nproduct direction"]:::arc
     AR["/arc-audit\nAudit pipeline\nhealth"]:::arc
 
@@ -123,6 +126,7 @@ flowchart LR
     TI --> CS --> CP --> CD --> TP
     TP -->|"advance"| TI
     AW -->|"spec-ready brief"| CS
+    CD -->|"validated"| ASHIP
     AR -. "audit anytime" .-> AW
 
     classDef arc fill:#E8662F,stroke:#C7502A,color:#FFFFFF

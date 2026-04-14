@@ -1,0 +1,20 @@
+Type: file
+Artifact: skills/README.md
+Expected: /arc-ship added in skills table and workflow description
+Timestamp: 2026-04-13T14:30:00Z
+
+Location 1 - Skills Table:
+| [arc-ship](arc-ship/SKILL.md) | Validation handoff — verify spec-ready ideas have passed validation and transition them to shipped status | `/arc-ship` or `/arc-ship "Idea Title"` |
+Status: PASS
+
+Location 2 - Workflow Diagram:
+/arc-assess → /arc-capture → /arc-shape → /arc-wave → /arc-sync → /cw-spec → /cw-plan → /cw-dispatch → /arc-ship
+Status: PASS
+
+Location 3 - Workflow Description:
+7. **Ship** validates completed ideas and transitions them to shipped status
+8. **Help** displays a quick reference guide covering all skills, artifacts, and installation — available at any time
+Status: PASS
+
+Summary: /arc-ship added to skills/README.md in table, workflow diagram, and workflow description
+Status: PASS

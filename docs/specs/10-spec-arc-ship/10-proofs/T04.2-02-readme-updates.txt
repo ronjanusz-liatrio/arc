@@ -1,0 +1,20 @@
+Type: file
+Artifact: README.md
+Expected: /arc-ship added in Skills table and Features section
+Timestamp: 2026-04-13T14:30:00Z
+
+Location 1 - Skills Table:
+| `/arc-ship` | Mark a validated idea as shipped — verify proof artifacts and update BACKLOG status |
+Status: PASS
+
+Location 2 - Features Section:
+- **/arc-ship skill** — Validation handoff. Verifies spec-ready ideas have passed cw-validate checks and transitions them to shipped status.
+Status: PASS
+
+Location 3 - Two-Plugin Pipeline (bonus, exceeds requirement):
+ASHIP["/arc-ship\nValidate and\nmark shipped"]:::arc
+CD -->|"validated"| ASHIP
+Status: PASS
+
+Summary: /arc-ship referenced in 3 locations in README.md (exceeds ≥2 requirement)
+Status: PASS
