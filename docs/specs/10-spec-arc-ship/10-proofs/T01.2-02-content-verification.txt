@@ -1,0 +1,16 @@
+Type: grep
+Description: Verify ship-criteria.md contains required content sections
+Expected: All key sections (Eligible Statuses, Proof Verification Rules, BACKLOG Fields, Verification Outcome) present
+Timestamp: 2026-04-14T14:00:00Z
+
+COMMAND: grep -E "^## (Eligible Statuses|Proof Verification Rules|BACKLOG Fields Added During Shipping|Verification Outcome)" /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md
+
+OUTPUT:
+## Eligible Statuses
+## Proof Verification Rules
+## BACKLOG Fields Added During Shipping
+## Verification Outcome
+
+VERIFICATION: All 4 required sections found in document
+
+Status: PASS

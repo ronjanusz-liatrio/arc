@@ -1,0 +1,12 @@
+Type: file
+Description: Verify ship-criteria.md reference document exists
+Expected: File exists at skills/arc-ship/references/ship-criteria.md with content
+Timestamp: 2026-04-14T14:00:00Z
+
+COMMAND: ls -lah /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md
+OUTPUT:
+-rw-r--r--  1 ron  staff  7849 Apr 14 14:00 /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md
+
+VERIFICATION: File exists with 7849 bytes of content
+
+Status: PASS

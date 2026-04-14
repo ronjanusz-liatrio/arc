@@ -1,0 +1,36 @@
+Type: grep
+Description: Verify ship-criteria.md covers all task requirements
+Expected: References to validation report requirements, status eligibility, error scenarios
+Timestamp: 2026-04-14T14:00:00Z
+
+REQUIREMENT 1: Eligible statuses for shipping (spec-ready only)
+COMMAND: grep -c "spec-ready" /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md
+OUTPUT: 8 matches found
+STATUS: PASS - Spec-ready status documented with eligibility rules
+
+REQUIREMENT 2: Proof verification rules with *-validation-*.md and **Overall**: PASS
+COMMAND: grep -E "\*-validation-|Overall" /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md
+OUTPUT: Found 6 matches for validation report pattern and Overall status checks
+STATUS: PASS - Validation report discovery and Overall status verification documented
+
+REQUIREMENT 3: What happens when no report found (refuse transition)
+COMMAND: grep -A2 "No Validation Report Found" /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md | head -5
+OUTPUT: Section "No Validation Report Found" with scenario and response
+STATUS: PASS - Error scenario documented with refusal behavior
+
+REQUIREMENT 4: What happens when Overall is not PASS (refuse with message)
+COMMAND: grep -A2 "Validation Report Found But Overall" /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md | head -5
+OUTPUT: Section "Validation Report Found But Overall ≠ PASS" with response message
+STATUS: PASS - Failure scenario with specific message format documented
+
+REQUIREMENT 5: BACKLOG fields added during shipping
+COMMAND: grep -c "Spec Field\|Shipped Timestamp\|Status Field" /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md
+OUTPUT: 3 matches found
+STATUS: PASS - All three BACKLOG fields documented with format and examples
+
+REQUIREMENT 6: Summary table update rules
+COMMAND: grep -B2 -A2 "Summary Table Update" /Users/ron/dev/arc/skills/arc-ship/references/ship-criteria.md | head -8
+OUTPUT: Section documenting status column change from spec-ready to shipped with example
+STATUS: PASS - Table update rules with before/after examples documented
+
+Overall Coverage: PASS - All 6 task requirements addressed in ship-criteria.md
