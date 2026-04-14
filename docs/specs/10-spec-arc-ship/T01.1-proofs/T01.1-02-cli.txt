@@ -1,0 +1,16 @@
+Type: cli
+Command: bash scripts/lint-mermaid.sh
+Expected: exits 0; output includes skills/arc-ship/SKILL.md fence as valid
+Timestamp: 2026-04-13T00:00:00Z
+
+=== Command output ===
+$ bash scripts/lint-mermaid.sh
+13 files, 15 fences, all valid
+
+=== Exit code ===
+0
+
+Note: 15 fences includes the new flowchart in skills/arc-ship/SKILL.md.
+Previous baseline (before this task) was 13 files, 14 fences.
+
+Status: PASS
