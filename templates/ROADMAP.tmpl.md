@@ -45,7 +45,7 @@ The `/arc-wave` skill reads this template when creating a new wave. It appends w
 **Required sections:**
 
 - **Roadmap Overview:** 1-2 sentences describing the product's delivery approach and how waves are organized
-- **Current Wave:** The active delivery cycle with: wave name, goal (1 sentence), 3-5 selected ideas (linked to BACKLOG sections), target timeframe, and status (planned | active | completed)
+- **Current Wave:** The active delivery cycle with: wave name, goal (1 sentence), 3-5 selected ideas (linked to BACKLOG sections), target timeframe, and status (planned | active)
 - **Next Wave Preview:** Brief description of the next planned wave — theme, tentative ideas, and open questions
 
 **Content guidance:**
@@ -77,7 +77,7 @@ The `/arc-wave` skill reads this template when creating a new wave. It appends w
 - **Selected Ideas:** List of spec-ready ideas from BACKLOG.md with title, priority, and link
 - **Target Timeframe:** Specific timeframe (month or quarter)
 - **Dependencies:** Prerequisites from other waves, external systems, or team availability
-- **Status:** One of: planned | active | completed
+- **Status:** One of: planned | active (completed waves are archived to `docs/skill/arc/waves/` and removed from ROADMAP)
 
 Additionally:
 
@@ -107,13 +107,13 @@ Additionally:
 All Foundation sections, maintained and current. Additionally:
 
 - **PO and Architect Rationale:** For each wave, a brief note from the product owner and/or architect explaining why these ideas were grouped and prioritized in this order
-- **Completed Wave Retrospectives:** For each completed wave, a brief retrospective: what was delivered, what was deferred, what was learned
+- **Completed Wave Retrospectives:** Completed waves are archived to `docs/skill/arc/waves/NN-wave-name.md` and removed from ROADMAP. Retrospectives for completed waves should be recorded in or referenced from the wave archive file. See `references/wave-archive.md` for the archive schema.
 - **Risk and Contingency:** Identified risks to the roadmap (team availability, technical unknowns, dependency delays) with contingency plans
 
 **Content guidance:**
 
 - PO rationale helps future contributors understand the reasoning behind wave composition
-- Retrospectives should be honest — "we deferred X because Y" is more valuable than "everything went as planned"
+- Retrospectives live in the wave archive (`docs/skill/arc/waves/`) — "we deferred X because Y" is more valuable than "everything went as planned"
 - Risk and contingency plans should be specific and actionable
 - Update the wave dependency graph and milestone timeline to reflect actual progress
 
@@ -134,7 +134,7 @@ All MVP sections, maintained and current. Additionally:
 
 - Scaling considerations help teams anticipate roadmap process changes as complexity increases
 - Long-term alignment prevents wave planning from drifting away from the product vision
-- Review completed wave retrospectives for patterns — are estimates consistently off? Are dependencies causing delays?
+- Review completed wave retrospectives in the wave archive for patterns — are estimates consistently off? Are dependencies causing delays?
 - The decision log in DECISIONS.md should capture significant roadmap changes
 
 **Mermaid diagrams:** Same as Foundation, updated to reflect current state.
@@ -169,4 +169,5 @@ All Growth sections, maintained and current. Additionally:
 - **PROJECT_CHARTER.md:** Project milestones and timeline (temper: always-required)
 - **DECISIONS.md:** Records roadmap changes and wave planning decisions (temper: always-required)
 - **Wave planning:** `references/wave-planning.md` defines wave organization principles and Temper phase compatibility
+- **Wave archive:** `references/wave-archive.md` defines the archive schema for completed waves stored at `docs/skill/arc/waves/`
 - **Management report:** `docs/management-report.md` (when present) provides Temper phase and gate results that constrain wave scope

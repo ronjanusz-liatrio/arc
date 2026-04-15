@@ -1,0 +1,15 @@
+Type: file
+Command: grep -n 'wave-archive' templates/BACKLOG.tmpl.md templates/ROADMAP.tmpl.md
+Expected: Both templates reference references/wave-archive.md
+Timestamp: 2026-04-15T13:15:00Z
+
+--- Output ---
+templates/BACKLOG.tmpl.md:255:- **Wave archive:** `references/wave-archive.md` defines the archive schema for shipped ideas stored at `docs/skill/arc/waves/`
+templates/ROADMAP.tmpl.md:172:- **Wave archive:** `references/wave-archive.md` defines the archive schema for completed waves stored at `docs/skill/arc/waves/`
+
+--- Verification ---
+BACKLOG.tmpl.md Cross-References section includes wave archive reference at line 255.
+ROADMAP.tmpl.md Cross-References section includes wave archive reference at line 172.
+Both reference the same target: references/wave-archive.md.
+
+Status: PASS

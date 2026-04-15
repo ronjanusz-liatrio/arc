@@ -1,0 +1,16 @@
+Type: file
+Command: grep -n 'Status.*planned.*active' templates/ROADMAP.tmpl.md
+Expected: Wave Status values list only planned and active (no completed)
+Timestamp: 2026-04-15T13:15:00Z
+
+--- Output ---
+48:- **Current Wave:** ... status (planned | active)
+80:- **Status:** One of: planned | active (completed waves are archived to `docs/skill/arc/waves/` and removed from ROADMAP)
+
+--- Verification ---
+Line 48 (Vertical Slice): status values are "planned | active" only.
+Line 80 (Foundation): status values are "planned | active" with parenthetical note about completed waves being archived.
+No instance of "completed" appears as a valid status value in any status field definition.
+The "Completed Wave Retrospectives" section (line 110) now directs to the wave archive instead of being an in-ROADMAP section.
+
+Status: PASS

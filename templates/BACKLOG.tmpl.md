@@ -6,7 +6,7 @@ output_path: docs/BACKLOG.md
 
 # BACKLOG Template
 
-This template defines the BACKLOG artifact across all 7 maturity phases. The backlog is a triaged list of product ideas organized as inline markdown sections with a summary table header. Each idea progresses through the idea lifecycle (Capture, Shape, Spec-Ready, Shipped) and is stored as a `## {Title}` section within the BACKLOG file.
+This template defines the BACKLOG artifact across all 7 maturity phases. The backlog is a triaged list of product ideas organized as inline markdown sections with a summary table header. Each idea progresses through the idea lifecycle (Capture, Shape, Spec-Ready) and is stored as a `## {Title}` section within the BACKLOG file. When an idea ships, it is removed from the BACKLOG and archived in the wave archive at `docs/skill/arc/waves/`.
 
 The `/arc-capture` skill appends new idea stubs to the backlog. The `/arc-shape` skill expands captured stubs into full briefs. The `/arc-wave` skill promotes shaped ideas to spec-ready status with wave assignments.
 
@@ -31,7 +31,7 @@ The BACKLOG begins with a summary table providing a scannable overview of all id
 | Column | Values | Description |
 |--------|--------|-------------|
 | Title | Linked text | Idea title as markdown anchor link to the `## {Title}` section below |
-| Status | `captured`, `shaped`, `spec-ready`, `shipped` | Current stage in the idea lifecycle |
+| Status | `captured`, `shaped`, `spec-ready` | Current stage in the idea lifecycle (shipped ideas are archived to `docs/skill/arc/waves/`) |
 | Priority | `P0-Critical`, `P1-High`, `P2-Medium`, `P3-Low` | Rough priority assigned at capture time |
 | Wave | Wave name or `--` | ROADMAP wave assignment (set by `/arc-wave`) |
 
@@ -218,7 +218,7 @@ All MVP sections, maintained and current. Additionally:
 - Backlog health metrics help product owners identify bottlenecks in the idea pipeline
 - Feature streams emerge naturally as the backlog grows — do not force streams on a small backlog
 - Technical debt competes with features for wave capacity — tracking it explicitly prevents silent accumulation
-- Reference ROADMAP.md wave retrospectives to validate that backlog health is improving over time
+- Reference wave archive retrospectives (`docs/skill/arc/waves/`) to validate that backlog health is improving over time
 
 **Mermaid diagrams:** None required.
 
@@ -252,3 +252,4 @@ All Growth sections, maintained and current. Additionally:
 - **DECISIONS.md:** Records significant backlog decisions — cuts, re-prioritizations, scope changes (temper: always-required)
 - **Idea lifecycle:** `references/idea-lifecycle.md` defines the Capture, Shape, Spec-Ready, Shipped progression
 - **Brief format:** `references/brief-format.md` defines the spec-ready brief structure used in shaped idea sections
+- **Wave archive:** `references/wave-archive.md` defines the archive schema for shipped ideas stored at `docs/skill/arc/waves/`

@@ -1,0 +1,14 @@
+Type: file
+Command: grep -n 'Status.*captured.*shaped.*spec-ready' templates/BACKLOG.tmpl.md
+Expected: Status column lists only captured, shaped, spec-ready (no shipped)
+Timestamp: 2026-04-15T13:15:00Z
+
+--- Output ---
+34:| Status | `captured`, `shaped`, `spec-ready` | Current stage in the idea lifecycle (shipped ideas are archived to `docs/skill/arc/waves/`) |
+
+--- Verification ---
+The Status column definition at line 34 lists exactly three values: captured, shaped, spec-ready.
+The word "shipped" appears only in the parenthetical note explaining where shipped ideas go.
+No example row in the summary table (lines 22-27) shows a shipped status value.
+
+Status: PASS
