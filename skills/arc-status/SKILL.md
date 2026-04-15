@@ -36,6 +36,7 @@ Read the following files. Only `docs/BACKLOG.md` is required — all others are 
    > No backlog found — run `/arc-capture` to start capturing ideas.
    Exit gracefully. Do not proceed to subsequent steps.
 2. `docs/ROADMAP.md` — Optional. Used by Step 2 (Current Wave). If absent, Step 2 emits its fallback notice.
+3. `docs/skill/arc/waves/*.md` — Optional. Used by Step 3 (Backlog Snapshot) to derive the Shipped count from the wave archive. If the directory is absent or contains no files, Step 3 reports Shipped as `0`.
 
 ### Step 2: Current Wave
 
@@ -67,13 +68,14 @@ See `skills/arc-status/references/status-dimensions.md` (SD-1) for the full dete
 
 ### Step 3: Backlog Snapshot
 
-Count ideas at each lifecycle status from the backlog summary table.
+Count ideas at each lifecycle status. Active statuses come from the backlog summary table; the Shipped count comes from the wave archive.
 
 1. Locate the summary table in `docs/BACKLOG.md` — the first markdown table containing columns: Title, Status, Priority, Wave.
 2. Parse each data row (skip the header and separator rows).
-3. Extract the Status column value from each row and count ideas per status: `captured`, `shaped`, `spec-ready`, `shipped`.
-4. Sum all counts for the total.
-5. Emit the snapshot:
+3. Extract the Status column value from each row and count ideas per active status: `captured`, `shaped`, `spec-ready`.
+4. Count shipped items from the wave archive: count `### {Title}` subsections (H3 headings) across all `docs/skill/arc/waves/*.md` files. If the `docs/skill/arc/waves/` directory is absent or contains no files, the Shipped count is `0`.
+5. Sum all four counts (Captured + Shaped + Spec-Ready + Shipped) for the total.
+6. Emit the snapshot:
    ```
    **Backlog Snapshot**
 

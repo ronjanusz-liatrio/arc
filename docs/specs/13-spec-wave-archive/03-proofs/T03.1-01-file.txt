@@ -1,0 +1,24 @@
+Type: file
+Description: SKILL.md Step 3 documents shipped count from wave archive
+Command: grep for wave archive references in skills/arc-status/SKILL.md
+Expected: Step 3 derives Shipped from docs/skill/arc/waves/*.md, not BACKLOG
+Timestamp: 2026-04-15T00:00:00Z
+
+=== Verification Output ===
+
+Step 1 (Read Context) now includes wave archive as optional source:
+  Line 39: 3. `docs/skill/arc/waves/*.md` — Optional. Used by Step 3 (Backlog Snapshot) to derive the Shipped count from the wave archive. If the directory is absent or contains no files, Step 3 reports Shipped as `0`.
+
+Step 3 (Backlog Snapshot) updated intro:
+  Line 71: Count ideas at each lifecycle status. Active statuses come from the backlog summary table; the Shipped count comes from the wave archive.
+
+Step 3 now counts active statuses from BACKLOG, shipped from archive:
+  Line 75: 3. Extract the Status column value from each row and count ideas per active status: `captured`, `shaped`, `spec-ready`.
+  Line 76: 4. Count shipped items from the wave archive: count `### {Title}` subsections (H3 headings) across all `docs/skill/arc/waves/*.md` files. If the `docs/skill/arc/waves/` directory is absent or contains no files, the Shipped count is `0`.
+
+SD-2 reference document also updated:
+  Line 52: Purpose updated to describe dual-source counting
+  Lines 61-65: Detection logic step 6 describes wave archive H3 counting
+  Line 71: Inputs section now includes wave archive files
+
+Status: PASS

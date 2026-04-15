@@ -49,7 +49,7 @@ All waves completed — run /arc-wave to plan the next wave.
 
 ## SD-2: Backlog Snapshot
 
-**Purpose:** Count ideas at each lifecycle status in the backlog summary table and report the distribution, giving the user a quick pipeline health view.
+**Purpose:** Count ideas at each lifecycle status and report the distribution, giving the user a quick pipeline health view. Active statuses (captured, shaped, spec-ready) come from the backlog summary table; shipped count comes from the wave archive.
 
 **Detection Logic:**
 
@@ -57,12 +57,18 @@ All waves completed — run /arc-wave to plan the next wave.
 2. Locate the summary table — the first markdown table that contains columns: Title, Status, Priority, Wave
 3. Parse each data row (skip header and separator rows)
 4. Extract the Status column value from each row
-5. Count ideas per status: `captured`, `shaped`, `spec-ready`, `shipped`
-6. Sum all counts for the total
+5. Count ideas per active status: `captured`, `shaped`, `spec-ready`
+6. Count shipped items from the wave archive:
+   a. Glob `docs/skill/arc/waves/*.md` files
+   b. In each file, count lines matching `### ` (H3 headings) — each H3 subsection represents one shipped idea
+   c. Sum the H3 counts across all archive files
+   d. If the `docs/skill/arc/waves/` directory is absent or contains no `.md` files, Shipped = `0`
+7. Sum all four counts (Captured + Shaped + Spec-Ready + Shipped) for the total
 
 **Inputs:**
 
-- `docs/BACKLOG.md` — summary table rows
+- `docs/BACKLOG.md` — summary table rows (for captured, shaped, spec-ready counts)
+- `docs/skill/arc/waves/*.md` — wave archive files (for shipped count)
 
 **Output Format:**
 

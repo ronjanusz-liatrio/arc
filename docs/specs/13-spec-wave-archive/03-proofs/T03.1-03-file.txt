@@ -1,0 +1,30 @@
+Type: file
+Description: Output still shows four buckets including Shipped
+Command: grep for four-bucket output format in SKILL.md and status-dimensions.md
+Expected: Output table contains Captured, Shaped, Spec-Ready, Shipped, and Total rows
+Timestamp: 2026-04-15T00:00:00Z
+
+=== Verification Output ===
+
+SKILL.md Step 3 output format (lines 79-89):
+  | Status | Count |
+  |--------|-------|
+  | Captured | {N} |
+  | Shaped | {N} |
+  | Spec-Ready | {N} |
+  | Shipped | {N} |
+  | **Total** | **{N}** |
+
+status-dimensions.md SD-2 output format (lines 75-85):
+  | Status | Count |
+  |--------|-------|
+  | Captured | {N} |
+  | Shaped | {N} |
+  | Spec-Ready | {N} |
+  | Shipped | {N} |
+  | **Total** | **{N}** |
+
+Both files preserve the four-bucket output format with all four statuses plus total.
+The total is now computed as: Captured + Shaped + Spec-Ready + Shipped (line 77 in SKILL.md, line 66 in status-dimensions.md).
+
+Status: PASS

@@ -1,0 +1,20 @@
+Type: file
+Description: Fallback behavior when archive directory is absent
+Command: grep for fallback/absent logic in SKILL.md and status-dimensions.md
+Expected: Shipped count = 0 when docs/skill/arc/waves/ directory is absent
+Timestamp: 2026-04-15T00:00:00Z
+
+=== Verification Output ===
+
+SKILL.md Step 1 fallback:
+  Line 39: "If the directory is absent or contains no files, Step 3 reports Shipped as `0`."
+
+SKILL.md Step 3 fallback:
+  Line 76: "If the `docs/skill/arc/waves/` directory is absent or contains no files, the Shipped count is `0`."
+
+status-dimensions.md SD-2 fallback:
+  Line 65: "d. If the `docs/skill/arc/waves/` directory is absent or contains no `.md` files, Shipped = `0`"
+
+All three locations explicitly document the fallback to 0 when the archive directory is absent.
+
+Status: PASS
