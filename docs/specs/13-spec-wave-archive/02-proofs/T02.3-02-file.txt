@@ -1,0 +1,16 @@
+Type: file
+Description: Verify bootstrap-protocol.md notes shipped count derives from wave archive
+Command: grep -n "wave archive\|docs/skill/arc/waves" skills/arc-wave/references/bootstrap-protocol.md
+Expected: Template note and Update Behavior table reference wave archive for shipped count
+Timestamp: 2026-04-15T12:00:00Z
+
+Output:
+Line 34: > **Note:** The captured, shaped, and spec-ready counts are derived from `docs/BACKLOG.md`. The shipped count is derived from counting `### {Title}` subsections across all `docs/skill/arc/waves/*.md` archive files (see `references/wave-archive.md`).
+
+Line 98: | Backlog | Captured, shaped, spec-ready counts from `docs/BACKLOG.md` summary table; shipped count from `### {Title}` subsections across `docs/skill/arc/waves/*.md` | "0 captured, 0 shaped, 0 spec-ready, 0 shipped" |
+
+Both locations updated:
+1. Note block after ARC:product-context template clarifies shipped count source
+2. Update Behavior table Backlog row specifies separate sources for active vs shipped counts
+
+Status: PASS

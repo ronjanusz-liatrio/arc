@@ -1,0 +1,15 @@
+Type: file
+Description: Verify SKILL.md Step 7 documents archive as shipped count source
+Command: grep -n "wave archive\|docs/skill/arc/waves" skills/arc-ship/SKILL.md
+Expected: Step 7 references wave archive for shipped count derivation
+Timestamp: 2026-04-15T12:00:00Z
+
+Output:
+Line 334: "3. Derive the shipped count from the wave archive: count `### {Title}` subsections across all `docs/skill/arc/waves/*.md` files. If the directory is absent or empty, the shipped count is `0`."
+
+Step 7 (Refresh ARC:product-context) correctly:
+- Counts captured, shaped, spec-ready from BACKLOG summary table (line 333)
+- Derives shipped count from wave archive H3 subsections (line 334)
+- Handles absent/empty archive directory gracefully (line 334)
+
+Status: PASS

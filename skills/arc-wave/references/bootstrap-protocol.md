@@ -31,6 +31,8 @@ Rules for injecting and maintaining `ARC:` managed sections in the project CLAUD
 <!--# END ARC:product-context -->
 ```
 
+> **Note:** The captured, shaped, and spec-ready counts are derived from `docs/BACKLOG.md`. The shipped count is derived from counting `### {Title}` subsections across all `docs/skill/arc/waves/*.md` archive files (see `references/wave-archive.md`).
+
 ## Insertion Algorithm
 
 When injecting `ARC:product-context` into a project's CLAUDE.md:
@@ -93,7 +95,7 @@ Each `/arc-wave` invocation updates the `ARC:product-context` section with curre
 | Phase | Temper phase from `docs/skill/temper/management-report.md` | Omit line if unavailable |
 | Current Wave | Most recent active wave from `docs/ROADMAP.md` | "No active wave" |
 | Primary Personas | Primary persona names from `docs/CUSTOMER.md` | "Not yet defined" |
-| Backlog | Status counts from `docs/BACKLOG.md` summary table | "0 captured, 0 shaped, 0 spec-ready, 0 shipped" |
+| Backlog | Captured, shaped, spec-ready counts from `docs/BACKLOG.md` summary table; shipped count from `### {Title}` subsections across `docs/skill/arc/waves/*.md` | "0 captured, 0 shaped, 0 spec-ready, 0 shipped" |
 
 The section is idempotent — running `/arc-wave` multiple times produces the same result for the same underlying state.
 
