@@ -40,7 +40,7 @@ A triaged list of product ideas. Each idea progresses through the idea lifecycle
 | [(deferred) Modifying README lifecycle or pipeline diagrams](#deferred-modifying-readme-lifecycle-or-pipeline-diagrams) | captured | P3-Low | -- |
 | [(deferred) Updating detection-patterns or import-rules references](#deferred-updating-detection-patterns-or-import-rules-references) | captured | P3-Low | -- |
 | [Remove time estimates from arc-wave](#remove-time-estimates-from-arc-wave) | captured | P1-High | -- |
-| [Skill discovery via /skillz during shaping](#skill-discovery-via-skillz-during-shaping) | spec-ready | P1-High | Wave 2: Shaping Intelligence |
+| [Skill discovery via /skillz during shaping](#skill-discovery-via-skillz-during-shaping) | shipped | P1-High | Wave 2: Shaping Intelligence |
 | [/arc-status skill](#arc-status-skill) | shipped | P1-High | -- |
 
 ## (deferred) Multi-repo coordination
@@ -493,12 +493,13 @@ Strip time/effort estimates from the arc-wave workflow to simplify wave planning
 
 ## Skill discovery via /skillz during shaping
 
-- **Status:** spec-ready
+- **Status:** shipped
 - **Priority:** P1-High
 - **Captured:** 2026-04-14T00:00:00Z
 - **Shaped:** 2026-04-14T00:00:00Z
 - **Wave:** Wave 2: Shaping Intelligence
 - **Spec:** docs/specs/11-spec-shape-skill-discovery/
+- **Shipped:** 2026-04-15T00:00:00Z
 
 Before entering /cw-spec, query /skillz for available skills relevant to the problem being shaped, so the design can account for existing tooling.
 

@@ -6,7 +6,7 @@ Arc's delivery roadmap organizes spec-ready ideas from the BACKLOG into themed w
 |------|------|--------|--------|-------|
 | Wave 0: Bootstrap | Ship the core Arc skill suite | Completed | -- | 7 |
 | Wave 1: Lifecycle Closure | Close the automation loop from cw-validate back to Arc | Completed | 1-2 weeks | 1 |
-| Wave 2: Shaping Intelligence | Make arc-shape smarter with external skill awareness | Planned | 1-2 weeks | 1 |
+| Wave 2: Shaping Intelligence | Make arc-shape smarter with external skill awareness | Completed | 1-2 weeks | 1 |
 
 ## Wave 0: Bootstrap
 
@@ -53,7 +53,7 @@ Arc's delivery roadmap organizes spec-ready ideas from the BACKLOG into themed w
 **Theme:** Make arc-shape smarter with external skill awareness
 **Goal:** Enrich `/arc-shape`'s feasibility analysis with `/skillz` skill discovery so shaped briefs account for available tooling before entering `/cw-spec`
 **Target:** 1-2 weeks
-**Status:** Planned
+**Status:** Completed
 
 ### Selected Ideas
 
