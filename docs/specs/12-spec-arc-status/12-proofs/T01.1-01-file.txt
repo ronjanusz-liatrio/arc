@@ -1,0 +1,21 @@
+Type: file
+File: skills/arc-status/references/status-dimensions.md
+Expected: File exists with detection logic for all four summary sections (Current Wave, Backlog Snapshot, In-Flight Specs, Recent Activity)
+Timestamp: 2026-04-15T10:00:00Z
+Command: grep -n "^## SD-" skills/arc-status/references/status-dimensions.md
+
+Output:
+7:## SD-1: Current Wave
+50:## SD-2: Backlog Snapshot
+91:## SD-3: In-Flight Specs
+141:## SD-4: Recent Activity
+
+Verification:
+- [PASS] File exists at skills/arc-status/references/status-dimensions.md
+- [PASS] SD-1: Current Wave section present at line 7
+- [PASS] SD-2: Backlog Snapshot section present at line 50
+- [PASS] SD-3: In-Flight Specs section present at line 91
+- [PASS] SD-4: Recent Activity section present at line 141
+- [PASS] All four summary sections are defined
+
+Status: PASS

@@ -1,0 +1,32 @@
+Type: file
+File: skills/arc-status/references/status-dimensions.md
+Expected: Each section follows the audit-dimensions.md structural pattern (Purpose, Detection Logic, Inputs, Output Format)
+Timestamp: 2026-04-15T10:00:00Z
+Command: grep -n "^\\*\\*Purpose:\\*\\*\|^\\*\\*Detection Logic:\\*\\*\|^\\*\\*Inputs:\\*\\*\|^\\*\\*Output Format:\\*\\*" skills/arc-status/references/status-dimensions.md
+
+Output:
+9:**Purpose:** Identify the active (first non-completed) wave from the roadmap...
+11:**Detection Logic:**
+19:**Inputs:**
+23:**Output Format:**
+52:**Purpose:** Count ideas at each lifecycle status...
+54:**Detection Logic:**
+63:**Inputs:**
+67:**Output Format:**
+93:**Purpose:** List all spec directories under docs/specs/...
+95:**Detection Logic:**
+115:**Inputs:**
+121:**Output Format:**
+143:**Purpose:** Show the last 10 git commits...
+145:**Detection Logic:**
+151:**Inputs:**
+155:**Output Format:**
+
+Verification:
+- [PASS] SD-1 has Purpose, Detection Logic, Inputs, Output Format
+- [PASS] SD-2 has Purpose, Detection Logic, Inputs, Output Format
+- [PASS] SD-3 has Purpose, Detection Logic, Inputs, Output Format
+- [PASS] SD-4 has Purpose, Detection Logic, Inputs, Output Format
+- [PASS] All sections match the audit-dimensions.md structural pattern
+
+Status: PASS

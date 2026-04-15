@@ -1,0 +1,22 @@
+Type: file
+File: skills/arc-status/references/status-dimensions.md
+Expected: Each section defines a graceful fallback message for missing artifacts
+Timestamp: 2026-04-15T10:00:00Z
+Command: grep -n "^\\*\\*Fallback" skills/arc-status/references/status-dimensions.md
+
+Output:
+32:**Fallback (ROADMAP.md missing):**
+40:**Fallback (all waves completed):**
+81:**Fallback (BACKLOG.md missing):**
+131:**Fallback (no specs directory or no spec subdirectories):**
+165:**Fallback (no commits or not a git repo):**
+
+Verification:
+- [PASS] SD-1 Current Wave has fallback for missing ROADMAP.md (line 32)
+- [PASS] SD-1 Current Wave has fallback for all waves completed (line 40)
+- [PASS] SD-2 Backlog Snapshot has fallback for missing BACKLOG.md (line 81)
+- [PASS] SD-3 In-Flight Specs has fallback for missing specs directory (line 131)
+- [PASS] SD-4 Recent Activity has fallback for no git history (line 165)
+- [PASS] All sections define graceful fallback messages
+
+Status: PASS

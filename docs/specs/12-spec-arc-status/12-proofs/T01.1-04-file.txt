@@ -1,0 +1,26 @@
+Type: file
+File: skills/arc-status/references/status-dimensions.md
+Expected: Detection logic matches spec requirements — ROADMAP wave parsing, BACKLOG status counting, spec directory globbing with plan/validation detection, git log
+Timestamp: 2026-04-15T10:00:00Z
+Command: grep -n "ROADMAP.md\|BACKLOG.md\|docs/specs/\|git log\|plan-\*\|validation" skills/arc-status/references/status-dimensions.md
+
+Output:
+13:1. Read `docs/ROADMAP.md`
+20:- `docs/ROADMAP.md` — wave summary table
+57:1. Read `docs/BACKLOG.md`
+65:- `docs/BACKLOG.md` — summary table rows
+97:1. Glob `docs/specs/NN-spec-*/` directories (where NN is a two-digit number)
+105:   - Check for plan files: glob `{dir}/plan-*` for any plan artifact
+109:   - Glob for `{dir}/NN-validation-*.md`
+117:- `docs/specs/` directory — subdirectories matching `NN-spec-*`
+147:1. Run `git log --oneline -10`
+
+Verification:
+- [PASS] SD-1 reads docs/ROADMAP.md and parses wave summary table
+- [PASS] SD-2 reads docs/BACKLOG.md and counts ideas per status
+- [PASS] SD-3 globs docs/specs/NN-spec-*/ directories
+- [PASS] SD-3 detects plan evidence via plan-* files and git log commit fallback
+- [PASS] SD-3 detects validation reports via NN-validation-*.md glob
+- [PASS] SD-4 runs git log --oneline -10
+
+Status: PASS
