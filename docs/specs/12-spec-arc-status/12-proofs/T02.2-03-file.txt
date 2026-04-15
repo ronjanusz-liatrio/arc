@@ -1,0 +1,10 @@
+Type: file
+Command: grep "skipped check with a warning" skills/arc-status/SKILL.md
+Expected: Error handling treats detection failures as skipped checks, not hard errors
+Timestamp: 2026-04-15T11:00:00Z
+Status: PASS
+
+Verification: Two instances of graceful error handling found:
+  1. Critical Constraints section (line 25): "ALWAYS treat lifecycle gap detection failures as skipped checks with warnings -- never abort on a detection error"
+  2. Step 6 preamble (line 145): "If a detection check fails (unreadable file, malformed metadata, missing directory), treat it as a skipped check with a warning -- do not abort. Continue to the next gap check."
+  3. Emit section includes skipped check output format: "| {Gap Name} | (skipped -- {reason}) | -- |"

@@ -1,0 +1,14 @@
+Type: file
+Command: grep -c "#### LG-[1-5]:" skills/arc-status/SKILL.md
+Expected: All five gap types (LG-1 through LG-5) have detection instructions
+Timestamp: 2026-04-15T11:00:00Z
+Status: PASS
+
+Verification: All five lifecycle gap subsections present:
+  - LG-1: Captured -> Shaped (line 147)
+  - LG-2: Shaped -> Spec (line 154)
+  - LG-3: Spec -> Plan (line 163)
+  - LG-4: Plan -> Validation (line 172)
+  - LG-5: Validation -> Shipped (line 180)
+
+Each subsection contains numbered detection steps matching the predicates defined in status-dimensions.md.

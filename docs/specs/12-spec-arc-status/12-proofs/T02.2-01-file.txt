@@ -1,0 +1,7 @@
+Type: file
+Command: grep -c "### Step 6: Lifecycle Gaps" skills/arc-status/SKILL.md
+Expected: Step 6 Lifecycle Gaps section exists in SKILL.md
+Timestamp: 2026-04-15T11:00:00Z
+Status: PASS
+
+Verification: SKILL.md contains "### Step 6: Lifecycle Gaps" at line 141. The new step is placed after Step 5 (Recent Activity) and before the References section.

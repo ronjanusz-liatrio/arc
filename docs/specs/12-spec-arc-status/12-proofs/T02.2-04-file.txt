@@ -1,0 +1,13 @@
+Type: file
+Command: grep "status-dimensions.md" skills/arc-status/SKILL.md
+Expected: Step 6 references status-dimensions.md for detection predicates
+Timestamp: 2026-04-15T11:00:00Z
+Status: PASS
+
+Verification: Step 6 contains two references to status-dimensions.md:
+  1. Opening line (line 143): "Read skills/arc-status/references/status-dimensions.md (Lifecycle Gap Detection section) for the full detection predicates, output formats, and error handling rules for all five gap types."
+  2. Closing line (line 218): "See skills/arc-status/references/status-dimensions.md (Lifecycle Gap Detection) for the full detection predicates and error handling rules."
+
+The References section at the bottom also updated to mention lifecycle gap detection (line 222).
+
+Additionally, Overview updated from "four dimensions" to "five dimensions" (line 16), and Critical Constraints updated from "four summary sections" to "five summary sections" (line 23).
