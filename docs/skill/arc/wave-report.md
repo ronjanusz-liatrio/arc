@@ -1,30 +1,30 @@
-# Wave Report: Shaping Intelligence
+# Wave Report: Wave Lifecycle Closure
 
-**Created:** 2026-04-14T00:00:00Z
-**Theme:** Make arc-shape smarter with external skill awareness
+**Created:** 2026-04-15T00:10:00Z
+**Theme:** Wave Lifecycle Closure
 **Target:** 1-2 weeks
 
 ## Wave Goal
 
-Arc's shaping pipeline currently analyzes ideas across four dimensions but has no awareness of the broader skill ecosystem. This wave adds skill discovery via `/skillz` to the feasibility analysis, so shaped briefs entering `/cw-spec` account for available tooling — reducing redundant work and surfacing integration opportunities that would otherwise be missed.
+Remove finished items from BACKLOG and ROADMAP, preserving them in per-wave archive files at `docs/skill/arc/waves/NN-wave-name.md`. This wave exercises the shipped wave-archive flow (spec 13) on its own implementation — a meta-validation that the `/arc-ship` lifecycle works end-to-end on its own concept.
 
 ## Selected Ideas
 
 | # | Title | Priority | Summary |
 |---|-------|----------|---------|
-| 1 | [Skill discovery via /skillz during shaping](docs/BACKLOG.md#skill-discovery-via-skillz-during-shaping) | P1-High | Enrich feasibility dimension with /skillz marketplace discovery |
+| 1 | [Wave archive](docs/BACKLOG.md#wave-archive) | P1-High | Per-wave archive replaces shipped/Completed clutter in BACKLOG and ROADMAP |
 
 ## Dependencies and Blockers
 
-- None identified
+- None identified. Spec 13 is already shipped and validated PASS.
 
 ## Engineering Readiness
 
 - **Temper Phase:** Not available — Temper not configured
 - **Gate Status:** Not available
 - **Failing Gates:** Not available
-- **Delivery Risk:** Medium — new inter-plugin integration pattern with no existing precedent in the codebase
-- **Recommendation:** Spike the /skillz query mechanism early to validate the assumption that skill discovery is programmatically accessible
+- **Delivery Risk:** Low — implementation is complete and verified by validation report `docs/specs/13-spec-wave-archive/13-validation-wave-archive.md`
+- **Recommendation:** Proceed directly to `/arc-ship` to close the loop and demonstrate the new flow
 
 ## Temper Context
 
@@ -36,21 +36,13 @@ Arc's shaping pipeline currently analyzes ideas across four dimensions but has n
 
 ## Handoff Instructions
 
-For each spec-ready idea in this wave, proceed with the SDD pipeline:
-
-1. Run `/cw-spec` with the idea's brief as input:
-   - Copy the brief sections from `docs/BACKLOG.md#skill-discovery-via-skillz-during-shaping`
-   - Use the brief's Problem, Proposed Solution, and Success Criteria as the spec starter prompt
-
-2. After spec generation, continue with `/cw-plan` → `/cw-dispatch`
-
-3. After implementation, run `/cw-validate` to verify gates
+The selected idea already has a shipped spec at `docs/specs/13-spec-wave-archive/`. No `/cw-spec` invocation needed — proceed directly to `/arc-ship`.
 
 ### Per-Idea Handoff
 
 | Idea | Status | Next Action |
 |------|--------|-------------|
-| Skill discovery via /skillz during shaping | spec-ready | `/cw-spec` — Enrich arc-shape feasibility with /skillz skill discovery |
+| Wave archive | spec-ready | `/arc-ship` — Archive shipped spec 13 into Wave 3 archive file |
 
 ## Backlog Status
 
@@ -59,5 +51,5 @@ For each spec-ready idea in this wave, proceed with the SDD pipeline:
 | Captured | 20 |
 | Shaped | 0 |
 | Spec-Ready | 1 |
-| Shipped | 8 |
-| **Total** | **29** |
+| Shipped | 10 |
+| **Total** | **31** |
