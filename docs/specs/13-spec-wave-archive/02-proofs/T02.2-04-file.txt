@@ -1,0 +1,14 @@
+Type: file
+File: skills/arc-ship/SKILL.md
+Check: Step 8 confirmation outputs use correct wave completion/in-progress messages
+Timestamp: 2026-04-15T13:30:00-07:00
+
+Expected:
+  Wave complete: "Wave '{wave-name}': Archived to docs/skill/arc/waves/NN-{slug}.md."
+  Wave in progress: "Wave '{wave-name}': In Progress."
+
+Actual:
+  Line 367: "Wave '{wave-name}': Archived to docs/skill/arc/waves/NN-{slug}.md."
+  Line 373: "Wave '{wave-name}': In Progress."
+
+Status: PASS

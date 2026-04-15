@@ -1,0 +1,10 @@
+Type: file
+File: skills/arc-ship/SKILL.md
+Check: Batch mode evaluates wave completion only AFTER processing all selected ideas
+Timestamp: 2026-04-15T13:30:00-07:00
+
+Expected: Batch ordering note states Step 6 runs after all ideas processed
+Actual:
+  Line 197: "Step 6 (ROADMAP pruning) runs only after all ideas are processed, so a single batch can complete a wave in one pass without redundant ROADMAP checks per idea."
+
+Status: PASS

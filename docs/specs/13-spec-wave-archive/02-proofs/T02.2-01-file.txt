@@ -1,0 +1,12 @@
+Type: file
+File: skills/arc-ship/SKILL.md
+Check: Step 6 documents wave REMOVAL from ROADMAP (not status change to Completed)
+Timestamp: 2026-04-15T13:30:00-07:00
+
+Expected: Step 6.4 instructs removing wave row from ROADMAP summary table and deleting wave section
+Actual:
+  Line 324: "Remove the wave's row from the ROADMAP summary table."
+  Line 325: "Delete the `## Wave NN: {Name}` section from `docs/ROADMAP.md`."
+  No mention of changing status to "Completed" in ROADMAP — wave is removed entirely.
+
+Status: PASS

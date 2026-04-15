@@ -364,7 +364,7 @@ If any ideas failed, list each failure inline:
 If the wave is now fully shipped (all ideas in the wave are archived), append:
 
 ```
-Wave '{wave-name}': Completed.
+Wave '{wave-name}': Archived to docs/skill/arc/waves/NN-{slug}.md.
 ```
 
 Otherwise:
