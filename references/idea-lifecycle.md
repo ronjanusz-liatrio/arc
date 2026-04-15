@@ -23,6 +23,8 @@ stateDiagram-v2
     classDef shipped fill:#0D8F82,stroke:#0A6B63,color:#FFFFFF
 ```
 
+> **Note:** Shipped ideas are archived to `docs/skill/arc/waves/` and removed from BACKLOG.md. The wave archive is the durable record of shipped ideas.
+
 ## Stages
 
 ### Capture
@@ -98,14 +100,14 @@ stateDiagram-v2
 
 ### Shipped
 
-**Description:** The idea has been implemented and delivered through the SDD pipeline. This is a terminal state.
+**Description:** The idea has been implemented and delivered through the SDD pipeline. This is a terminal state. Upon shipping, the idea is removed from `docs/BACKLOG.md` and its full detail is archived to `docs/skill/arc/waves/NN-wave-name.md` (see [wave-archive.md](wave-archive.md)).
 
 **Entry Criteria:**
 - SDD pipeline completed: `/cw-spec` → `/cw-plan` → `/cw-dispatch` → `/cw-validate`
 - Implementation passes validation gates
 - User invokes `/arc-ship` which verifies cw-validate report and transitions status
 
-**Data Fields (added at shipped):**
+**Data Fields (recorded in wave archive, not BACKLOG):**
 - **Spec:** added by `/arc-ship` (path to the spec that implemented this idea)
 - **Shipped:** added by `/arc-ship` (ISO 8601 timestamp at transition time)
 
@@ -126,3 +128,4 @@ stateDiagram-v2
 
 - [brief-format.md](brief-format.md) — Structure of the spec-ready brief produced during Shape
 - [wave-planning.md](wave-planning.md) — How spec-ready ideas are grouped into delivery waves
+- [wave-archive.md](wave-archive.md) — Schema and lifecycle of the wave archive where shipped ideas are stored

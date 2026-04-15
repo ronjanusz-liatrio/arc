@@ -82,21 +82,21 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 
 **Trust statement:** "This project ships real things."
 
-**Source artifact:** `docs/BACKLOG.md`
+**Source artifact:** `docs/skill/arc/waves/*.md`
 
 **Managed section:** `<!--# BEGIN ARC:features -->`
 
-**Detectable proxy:** The `ARC:features` section contains a bullet list where 1+ item titles match a `Status: shipped` idea in BACKLOG.md.
+**Detectable proxy:** The `ARC:features` section contains a bullet list where 1+ item titles match a `### {Title}` heading under `## Shipped Ideas` in a wave archive file.
 
 **Detection steps:**
 
-1. Read `docs/BACKLOG.md` and find all idea entries with `Status: shipped`
-2. Extract each shipped idea's title from its `## {Title}` heading
+1. Read all files in `docs/skill/arc/waves/` and find all `### {Title}` headings under `## Shipped Ideas` sections
+2. Extract each shipped idea's title
 3. Read `README.md` and extract content between `<!--# BEGIN ARC:features -->` and `<!--# END ARC:features -->`
 4. For each shipped idea title, search for it in the ARC:features content
-5. Matching is case-insensitive substring search (the README bullet text must contain the BACKLOG title as a substring)
+5. Matching is case-insensitive substring search (the README bullet text must contain the archive title as a substring)
 
-**Pass criteria:** At least one shipped idea title from BACKLOG.md appears in ARC:features content.
+**Pass criteria:** At least one shipped idea title from the wave archive appears in ARC:features content.
 
 **Fail criteria:** Zero shipped idea titles found in ARC:features.
 
@@ -154,22 +154,22 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 
 **Trust statement:** "This data reflects the current state."
 
-**Source artifact:** `docs/BACKLOG.md`
+**Source artifact:** `docs/skill/arc/waves/*.md`
 
 **Managed section:** `<!--# BEGIN ARC:features -->`
 
-**Detectable proxy:** The shipped idea count in ARC:features matches the shipped count in BACKLOG.md (no drift).
+**Detectable proxy:** The shipped idea count in ARC:features matches the total shipped count across all wave archive files (no drift).
 
 **Detection steps:**
 
-1. Read `docs/BACKLOG.md` and count all idea entries with `Status: shipped` — this is `backlog_shipped_count`
+1. Read all files in `docs/skill/arc/waves/` and count all `### {Title}` headings under `## Shipped Ideas` sections — this is `archive_shipped_count`
 2. Read `README.md` and extract content between `<!--# BEGIN ARC:features -->` and `<!--# END ARC:features -->`
 3. Count bullet list items (`- ` prefixed lines with non-empty content after the prefix) in the ARC:features section — this is `readme_features_count`
 4. Compare the two counts
 
-**Pass criteria:** `readme_features_count == backlog_shipped_count`
+**Pass criteria:** `readme_features_count == archive_shipped_count`
 
-**Fail criteria:** Counts differ. Report: `"{readme_features_count} in README vs {backlog_shipped_count} in BACKLOG"`
+**Fail criteria:** Counts differ. Report: `"{readme_features_count} in README vs {archive_shipped_count} in archive"`
 
 ---
 
@@ -201,7 +201,7 @@ A signal is **evaluable** only when its source artifact exists and the correspon
 
 **Trust statement:** "This isn't scaffolding they forgot to fill in."
 
-**Source artifact:** Per-section (VISION.md for overview, CUSTOMER.md for audience, BACKLOG.md for features, ROADMAP.md for roadmap)
+**Source artifact:** Per-section (VISION.md for overview, CUSTOMER.md for audience, wave archive for features, ROADMAP.md for roadmap)
 
 **Managed section:** All `ARC:` managed sections
 
@@ -216,7 +216,7 @@ A signal is **evaluable** only when its source artifact exists and the correspon
    |-------------|----------------|
    | `ARC:overview` | `docs/VISION.md` |
    | `ARC:audience` | `docs/CUSTOMER.md` |
-   | `ARC:features` | `docs/BACKLOG.md` |
+   | `ARC:features` | `docs/skill/arc/waves/*.md` |
    | `ARC:roadmap` | `docs/ROADMAP.md` |
    | `ARC:lifecycle-diagram` | `docs/BACKLOG.md` |
 
@@ -297,7 +297,7 @@ This mapping defines which source artifact each ARC: managed section derives fro
 |-------------|----------------|---------|
 | `ARC:overview` | `docs/VISION.md` | TS-1, TS-8 |
 | `ARC:audience` | `docs/CUSTOMER.md` | TS-2, TS-8 |
-| `ARC:features` | `docs/BACKLOG.md` | TS-3, TS-6, TS-8 |
+| `ARC:features` | `docs/skill/arc/waves/*.md` | TS-3, TS-6, TS-8 |
 | `ARC:roadmap` | `docs/ROADMAP.md` | TS-4, TS-8 |
 | `ARC:lifecycle-diagram` | `docs/BACKLOG.md` | TS-5, TS-8 |
 | *(any ARC: section)* | *(any docs/ file)* | TS-7 |
@@ -344,4 +344,5 @@ Both consumers produce a scorecard using this format:
 - `skills/arc-audit/references/review-report-template.md` — Report format includes the trust-signal scorecard
 - `skills/arc-audit/SKILL.md` — Step 3 (Wave Alignment Audit) includes WA-7
 - `references/idea-lifecycle.md` — Status values referenced by TS-3, TS-5, TS-6
+- `references/wave-archive.md` — Wave archive schema; TS-3 and TS-6 read shipped ideas from archive files
 - `references/brief-format.md` — Brief fields referenced by source artifact structure

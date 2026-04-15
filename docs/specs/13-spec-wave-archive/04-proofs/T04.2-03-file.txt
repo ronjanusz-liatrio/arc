@@ -1,0 +1,22 @@
+Type: file
+Files: references/idea-lifecycle.md, skills/arc-sync/references/trust-signals.md
+Expected: No stale BACKLOG.md references for shipped-idea lookups remain in modified sections
+Timestamp: 2026-04-15T12:00:00Z
+
+Verification — Stale Reference Scan:
+
+idea-lifecycle.md BACKLOG references (all correct):
+- Line 26: Note clarifying removal from BACKLOG (intentional, describes the transition)
+- Line 45: Capture exit criteria — ideas recorded in BACKLOG (correct, not shipped-related)
+- Line 57: Shape entry criteria — idea exists in BACKLOG (correct, not shipped-related)
+- Line 103: Shipped description — removed from BACKLOG (intentional, describes the transition)
+- Line 110: Data fields note — "not BACKLOG" (intentional, clarifying archive is the storage)
+
+trust-signals.md remaining BACKLOG references (all correct):
+- Line 133: TS-5 source artifact — `docs/BACKLOG.md` (correct, lifecycle diagram counts active statuses)
+- Line 221: TS-8 mapping — `ARC:lifecycle-diagram` -> `docs/BACKLOG.md` (correct, unrelated to TS-3/TS-6)
+- Line 302: Section mapping — `ARC:lifecycle-diagram` -> `docs/BACKLOG.md` (correct, unrelated to TS-3/TS-6)
+
+No stale references found. All remaining BACKLOG references are for non-shipped contexts.
+
+Status: PASS

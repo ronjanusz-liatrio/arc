@@ -1,0 +1,48 @@
+Type: file
+File: skills/arc-sync/references/trust-signals.md
+Expected: TS-3 and TS-6 reference wave archive, not BACKLOG.md for shipped-idea detection
+Timestamp: 2026-04-15T12:00:00Z
+
+Verification:
+
+1. TS-3 source artifact updated:
+   Line 85: "Source artifact: `docs/skill/arc/waves/*.md`"
+   (was: `docs/BACKLOG.md`)
+   PASS
+
+2. TS-3 detection steps reference archive:
+   Line 93: "Read all files in `docs/skill/arc/waves/` and find all `### {Title}` headings under `## Shipped Ideas` sections"
+   No mention of BACKLOG.md in TS-3 detection steps.
+   PASS
+
+3. TS-6 source artifact updated:
+   Line 157: "Source artifact: `docs/skill/arc/waves/*.md`"
+   (was: `docs/BACKLOG.md`)
+   PASS
+
+4. TS-6 detection steps reference archive:
+   Line 165: "Read all files in `docs/skill/arc/waves/` and count all `### {Title}` headings under `## Shipped Ideas` sections"
+   Line 170: "readme_features_count == archive_shipped_count"
+   No mention of BACKLOG.md in TS-6 detection steps.
+   PASS
+
+5. Section-to-Artifact Mapping table updated:
+   Line 300: "| `ARC:features` | `docs/skill/arc/waves/*.md` | TS-3, TS-6, TS-8 |"
+   (was: `docs/BACKLOG.md`)
+   PASS
+
+6. TS-8 internal mapping table updated:
+   Line 219: "| `ARC:features` | `docs/skill/arc/waves/*.md` |"
+   (was: `docs/BACKLOG.md`)
+   PASS
+
+7. TS-8 source artifact description updated:
+   Line 204: "wave archive for features"
+   (was: "BACKLOG.md for features")
+   PASS
+
+8. Cross-reference to wave-archive.md added:
+   Line 347: "- `references/wave-archive.md` — Wave archive schema; TS-3 and TS-6 read shipped ideas from archive files"
+   PASS
+
+Status: PASS

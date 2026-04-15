@@ -1,0 +1,29 @@
+Type: file
+File: references/idea-lifecycle.md
+Expected: Shipped stage mentions wave archive location, data fields note archive, cross-reference to wave-archive.md
+Timestamp: 2026-04-15T12:00:00Z
+
+Verification:
+
+1. Shipped stage description mentions wave archive:
+   Line 103: "Upon shipping, the idea is removed from `docs/BACKLOG.md` and its full detail is archived to `docs/skill/arc/waves/NN-wave-name.md`"
+   PASS
+
+2. Data fields note clarifies archive location:
+   Line 110: "Data Fields (recorded in wave archive, not BACKLOG):"
+   PASS
+
+3. Note below mermaid diagram:
+   Line 26: "> **Note:** Shipped ideas are archived to `docs/skill/arc/waves/` and removed from BACKLOG.md."
+   PASS
+
+4. Cross-reference to wave-archive.md:
+   Line 131: "- [wave-archive.md](wave-archive.md) — Schema and lifecycle of the wave archive where shipped ideas are stored"
+   PASS
+
+5. Mermaid diagram still shows Shipped as terminal state (unchanged):
+   Line 15: "SpecReady --> Shipped : SDD pipeline + /arc-ship"
+   No outgoing transitions from Shipped.
+   PASS
+
+Status: PASS
