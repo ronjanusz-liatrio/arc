@@ -1,0 +1,13 @@
+Type: file
+File: skills/arc-help/SKILL.md
+Expected: Workflow section includes /arc-status as a "Check status" step before "Audit health"
+Timestamp: 2026-04-15T12:00:00Z
+
+Check: Verified workflow section contains new "Check status" block:
+
+Check status:
+  /arc-status     -> Project pulse check (wave, backlog, specs, activity)
+
+This appears immediately before the "Audit health:" block in the workflow code fence.
+
+Status: PASS

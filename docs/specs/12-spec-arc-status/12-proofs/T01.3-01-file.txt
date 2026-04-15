@@ -1,0 +1,12 @@
+Type: file
+File: .claude-plugin/marketplace.json
+Expected: Plugin description includes /arc-status reference
+Timestamp: 2026-04-15T12:00:00Z
+
+Check: grep -c "arc-status" .claude-plugin/marketplace.json
+Output: 1
+
+Description field now reads:
+"Product direction and idea pipeline. Provides /arc-capture for quick idea entry, /arc-shape for refining ideas into spec-ready briefs, /arc-wave for organizing work into delivery cycles, /arc-sync for README lifecycle management, /arc-audit for pipeline health auditing, /arc-assess for discovering and consolidating scattered product-direction content into Arc-managed artifacts, and /arc-status for project pulse checks."
+
+Status: PASS

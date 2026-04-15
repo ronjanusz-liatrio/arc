@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "arc",
-      "description": "Product direction and idea pipeline. Provides /arc-capture for quick idea entry, /arc-shape for refining ideas into spec-ready briefs, /arc-wave for organizing work into delivery cycles, /arc-sync for README lifecycle management, /arc-audit for pipeline health auditing, and /arc-assess for discovering and consolidating scattered product-direction content into Arc-managed artifacts.",
+      "description": "Product direction and idea pipeline. Provides /arc-capture for quick idea entry, /arc-shape for refining ideas into spec-ready briefs, /arc-wave for organizing work into delivery cycles, /arc-sync for README lifecycle management, /arc-audit for pipeline health auditing, /arc-assess for discovering and consolidating scattered product-direction content into Arc-managed artifacts, and /arc-status for project pulse checks.",
       "source": "./",
       "strict": true
     }

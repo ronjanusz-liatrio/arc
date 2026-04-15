@@ -19,13 +19,14 @@ Arc is the upstream companion to [temper](https://github.com/ronjanusz-liatrio/t
 
 ## Skills
 
-Arc provides seven skills for managing the product idea lifecycle:
+Arc provides eight skills for managing the product idea lifecycle:
 
 | Skill | Description | Invocation |
 |-------|-------------|------------|
 | `/arc-assess` | Codebase discovery and migration -- scan for scattered product-direction content and import into Arc artifacts | `/arc-assess` |
 | `/arc-capture` | Fast idea entry -- record a raw idea to the backlog in under 30 seconds | `/arc-capture` |
 | `/arc-shape` | Interactive refinement -- transform a captured idea into a spec-ready brief using parallel analysis | `/arc-shape` or `/arc-shape "Idea Title"` |
+| `/arc-status` | Project pulse check -- summarize current wave, backlog, in-flight specs, and recent activity | `/arc-status` |
 | `/arc-wave` | Delivery cycle management -- group shaped ideas into a wave and hand off to the SDD pipeline | `/arc-wave` |
 | `/arc-sync` | README synchronization -- scaffold or update README.md with sections synced to product direction | `/arc-sync` |
 | `/arc-audit` | Pipeline health audit -- check backlog health, wave alignment, and cross-reference integrity | `/arc-audit` |
@@ -51,6 +52,9 @@ Sync documentation:
 
 Implement:
   /cw-spec → /cw-plan → /cw-dispatch → /cw-validate
+
+Check status:
+  /arc-status     → Project pulse check (wave, backlog, specs, activity)
 
 Audit health:
   /arc-audit      → Product pipeline + engineering maturity summary

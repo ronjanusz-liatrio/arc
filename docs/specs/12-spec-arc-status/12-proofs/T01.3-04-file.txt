@@ -1,0 +1,11 @@
+Type: file
+File: skills/arc-help/SKILL.md
+Expected: Skill count updated from "seven" to "eight"
+Timestamp: 2026-04-15T12:00:00Z
+
+Check: grep "eight skills" skills/arc-help/SKILL.md
+Output: Arc provides eight skills for managing the product idea lifecycle:
+
+Previously read "seven skills" -- now correctly reflects the addition of /arc-status.
+
+Status: PASS

@@ -1,0 +1,13 @@
+Type: file
+File: skills/arc-help/SKILL.md
+Expected: Skills table contains /arc-status row in alphabetical order (after /arc-shape, before /arc-wave)
+Timestamp: 2026-04-15T12:00:00Z
+
+Check: grep "arc-status" skills/arc-help/SKILL.md
+Output:
+| `/arc-status` | Project pulse check -- summarize current wave, backlog, in-flight specs, and recent activity | `/arc-status` |
+  /arc-status     -> Project pulse check (wave, backlog, specs, activity)
+
+Row is positioned after /arc-shape and before /arc-wave in the table, which is alphabetical order.
+
+Status: PASS
