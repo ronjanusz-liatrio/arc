@@ -65,7 +65,7 @@ Recommended Action: Mark as reviewed (`<!-- stale: reviewed {date} -->`) or resh
 **Severity:** `warning`
 
 **Inputs:**
-- All idea entries in `docs/BACKLOG.md` with `Status` not equal to `shipped`
+- All idea entries in `docs/BACKLOG.md` (all BACKLOG ideas are non-shipped; shipped ideas reside in the wave archive)
 - `Priority:` field per idea entry (expected values: P0-Critical, P1-High, P2-Medium, P3-Low)
 
 **Output Format:**
@@ -95,7 +95,8 @@ Warning: No ideas at P{X} — consider whether lower-priority work is being trac
 **Purpose:** Provide a pipeline health snapshot by counting ideas at each lifecycle stage and detecting bottlenecks.
 
 **Detection Logic:**
-- Count all ideas at each status: `captured`, `shaped`, `spec-ready`, `shipped`
+- Count `captured`, `shaped`, and `spec-ready` ideas from `docs/BACKLOG.md`
+- Count `shipped` ideas from the wave archive (`docs/skill/arc/waves/*.md`) by counting `### {Title}` subsections under each archive file's `## Shipped Ideas` heading. If the `docs/skill/arc/waves/` directory is absent or empty, treat shipped count as 0.
 - Detect bottleneck conditions:
   - Many shaped ideas (≥3) with zero spec-ready → stalled at brief stage
   - Many captured ideas (≥5) with zero shaped → stalled at capture stage
@@ -108,21 +109,21 @@ Warning: No ideas at P{X} — consider whether lower-priority work is being trac
 **Severity:** `info` (distribution report), `warning` (if bottleneck detected)
 
 **Inputs:**
-- All idea entries in `docs/BACKLOG.md`
-- `Status:` field per idea entry
+- `docs/BACKLOG.md` — idea entries with `Status:` field (for captured, shaped, spec-ready counts)
+- `docs/skill/arc/waves/*.md` — wave archive files (for shipped count)
 
 **Output Format:**
 
 ```markdown
 **BH-3 Status Distribution**
 
-| Status | Count |
-|--------|-------|
-| Captured (in discovery) | {N} |
-| Shaped (brief complete) | {N} |
-| Spec-Ready (ready for SDD) | {N} |
-| Shipped (implemented) | {N} |
-| **Total** | {N} |
+| Status | Count | Source |
+|--------|-------|--------|
+| Captured (in discovery) | {N} | BACKLOG.md |
+| Shaped (brief complete) | {N} | BACKLOG.md |
+| Spec-Ready (ready for SDD) | {N} | BACKLOG.md |
+| Shipped (implemented) | {N} | Wave archive |
+| **Total** | {N} | |
 
 {If bottleneck detected:}
 Warning: {description of bottleneck, e.g., "5 captured ideas with 0 shaped — pipeline stalled at capture stage."}
@@ -174,14 +175,14 @@ Recommended Action: Add `<!-- TODO: fill {section} -->` placeholders to each mis
 
 ### BH-5: Invalid Status Values
 
-**Purpose:** Catch data integrity errors where idea status fields contain values outside the allowed set, which would cause other checks to silently misclassify ideas.
+**Purpose:** Catch data integrity errors where idea status fields contain values outside the allowed set, which would cause other checks to silently misclassify ideas. Since shipped ideas now reside in the wave archive (`docs/skill/arc/waves/*.md`), `shipped` is no longer a valid BACKLOG status — any `shipped` rows in BACKLOG indicate incomplete migration.
 
 **Detection Logic:**
 - Read all `Status:` fields in BACKLOG.md idea entries
-- Allowed values: `captured`, `shaped`, `spec-ready`, `shipped`
-- Flag any idea where the status value is not in this set
+- Allowed values: `captured`, `shaped`, `spec-ready`
+- Flag any idea where the status value is not in this set (including `shipped` — shipped ideas should have been migrated to the wave archive by `/arc-sync`)
 
-**Allowed Status Values:** `captured`, `shaped`, `spec-ready`, `shipped`
+**Allowed Status Values:** `captured`, `shaped`, `spec-ready`
 
 **Severity:** `critical`
 
@@ -198,12 +199,15 @@ Ideas with invalid status: {count}
 
 | Idea | Found Status | Expected One Of |
 |------|-------------|-----------------|
-| {Title} | {invalid-value} | captured, shaped, spec-ready, shipped |
+| {Title} | {invalid-value} | captured, shaped, spec-ready |
+
+{If any ideas have Status: shipped:}
+Note: Ideas with `shipped` status should be migrated to the wave archive. Run `/arc-sync` to migrate them.
 
 Recommended Action: Correct status values immediately — other health checks cannot produce reliable results until status values are valid.
 ```
 
-**Interactive Fix:** No automated fix; correction requires author judgment. Prompt user to update each affected idea manually.
+**Interactive Fix:** No automated fix; correction requires author judgment. For `shipped` entries, recommend running `/arc-sync` to migrate. For other invalid values, prompt user to update each affected idea manually.
 
 ---
 
@@ -388,6 +392,8 @@ Recommended Action: Define missing personas in CUSTOMER.md or update idea refere
 
 **Purpose:** Ensure the BACKLOG summary table (at the top of BACKLOG.md) matches the `## {Title}` idea sections below it. Orphaned summary rows (rows with no matching section) or orphaned sections (sections with no matching row) indicate stale metadata.
 
+**Scope:** This check applies only to ideas currently in BACKLOG.md (statuses `captured`, `shaped`, `spec-ready`). Shipped ideas reside in the wave archive (`docs/skill/arc/waves/*.md`) and are not expected to appear in the BACKLOG summary table or section headings. No errors should be raised for ideas that exist in the archive but not in BACKLOG.
+
 **Detection Logic:**
 - Parse all rows in the BACKLOG summary table: extract the title link text from each row
 - Parse all `## {Title}` section headings in the body of BACKLOG.md
@@ -418,6 +424,8 @@ Orphaned sections (no matching summary row): {count}
 | Title | Issue |
 |-------|-------|
 | {Title} | Section exists, row missing |
+
+Note: Shipped ideas are tracked in the wave archive (docs/skill/arc/waves/*.md) and excluded from this check.
 
 Recommended Action: Reconcile summary table and idea sections — add missing entries or remove stale ones.
 ```

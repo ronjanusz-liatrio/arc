@@ -1,0 +1,18 @@
+Type: file
+Check: audit-dimensions.md BH-3 output format includes Source column showing wave archive
+File: skills/arc-audit/references/audit-dimensions.md
+Timestamp: 2026-04-15T12:00:00Z
+
+Expected: BH-3 output format distinguishes BACKLOG source from wave archive source
+Actual:
+  Line 120-126:
+    | Status | Count | Source |
+    |--------|-------|--------|
+    | Captured (in discovery) | {N} | BACKLOG.md |
+    | Shaped (brief complete) | {N} | BACKLOG.md |
+    | Spec-Ready (ready for SDD) | {N} | BACKLOG.md |
+    | Shipped (implemented) | {N} | Wave archive |
+
+Verification: Output format now includes a Source column that explicitly marks shipped count as coming from "Wave archive" vs BACKLOG.md for the other statuses.
+
+Status: PASS

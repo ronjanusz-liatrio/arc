@@ -1,0 +1,14 @@
+Type: file
+Check: WA-6 cross-reference integrity excludes shipped ideas
+File: skills/arc-audit/SKILL.md, skills/arc-audit/references/audit-dimensions.md
+Timestamp: 2026-04-15T12:00:00Z
+
+Expected: WA-6 applies only to captured/shaped/spec-ready ideas; shipped ideas in archive are excluded
+Actual:
+  SKILL.md Line 170: "**Scope:** This check applies only to ideas currently in BACKLOG.md (statuses `captured`, `shaped`, `spec-ready`). Shipped ideas reside in the wave archive and are not expected to appear in the BACKLOG summary table or section headings."
+  audit-dimensions.md Line 395: "**Scope:** This check applies only to ideas currently in BACKLOG.md (statuses `captured`, `shaped`, `spec-ready`). Shipped ideas reside in the wave archive (`docs/skill/arc/waves/*.md`) and are not expected to appear in the BACKLOG summary table or section headings. No errors should be raised for ideas that exist in the archive but not in BACKLOG."
+  audit-dimensions.md Line 428: "Note: Shipped ideas are tracked in the wave archive (docs/skill/arc/waves/*.md) and excluded from this check."
+
+Verification: WA-6 explicitly scopes to BACKLOG-only ideas. No cross-reference errors raised for archived shipped ideas.
+
+Status: PASS

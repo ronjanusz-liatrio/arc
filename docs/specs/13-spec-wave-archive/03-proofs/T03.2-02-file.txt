@@ -1,0 +1,15 @@
+Type: file
+Check: BH-5 allowed values are captured/shaped/spec-ready only (shipped removed)
+File: skills/arc-audit/SKILL.md
+Timestamp: 2026-04-15T12:00:00Z
+
+Expected: BH-5 allowed status values do not include "shipped"
+Actual:
+  SKILL.md Line 111: "Allowed values: `captured`, `shaped`, `spec-ready`"
+  SKILL.md Line 112: "Flag any idea with a value outside this set (including `shipped` -- shipped ideas should have been migrated to the wave archive by `/arc-sync`)"
+  audit-dimensions.md Line 182: "Allowed values: `captured`, `shaped`, `spec-ready`"
+  audit-dimensions.md Line 185: "**Allowed Status Values:** `captured`, `shaped`, `spec-ready`"
+
+Verification: "shipped" is no longer in the allowed set. Any BACKLOG row with Status: shipped will be flagged as invalid, directing the user to run /arc-sync to migrate.
+
+Status: PASS

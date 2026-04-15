@@ -36,6 +36,7 @@ Read the following files (graceful no-op if absent, except BACKLOG.md):
 3. `docs/VISION.md` — Product direction
 4. `docs/CUSTOMER.md` — Personas and JTBD
 5. `docs/skill/temper/management-report.md` — Temper feedback loop
+6. `docs/skill/arc/waves/*.md` — Wave archive files (optional; used for shipped idea counts in BH-3)
 
 Ask the user if they want to adjust the staleness threshold:
 
@@ -81,7 +82,8 @@ Report in the format defined in audit-dimensions.md (BH-2 section).
 
 #### BH-3: Status Distribution
 
-- Count all ideas by status: `captured`, `shaped`, `spec-ready`, `shipped`
+- Count `captured`, `shaped`, and `spec-ready` ideas from BACKLOG.md
+- Count `shipped` ideas from the wave archive (`docs/skill/arc/waves/*.md`) by counting `### {Title}` subsections under each archive file's `## Shipped Ideas` heading. If the waves directory is absent or empty, treat shipped count as 0.
 - Detect bottleneck conditions:
   - Capture stall: 5+ captured with 0 shaped
   - Shape stall: 3+ shaped with 0 spec-ready
@@ -106,8 +108,8 @@ Report in the format defined in audit-dimensions.md (BH-4 section).
 #### BH-5: Invalid Status Values
 
 - Read all `Status:` fields in BACKLOG.md idea entries
-- Allowed values: `captured`, `shaped`, `spec-ready`, `shipped`
-- Flag any idea with a value outside this set
+- Allowed values: `captured`, `shaped`, `spec-ready`
+- Flag any idea with a value outside this set (including `shipped` — shipped ideas should have been migrated to the wave archive by `/arc-sync`)
 
 Report in the format defined in audit-dimensions.md (BH-5 section).
 
@@ -165,6 +167,7 @@ Report in the format defined in audit-dimensions.md (WA-5 section).
 
 - Parse all rows in the BACKLOG summary table: extract the title link text from each row
 - Parse all `## {Title}` section headings in BACKLOG.md
+- **Scope:** This check applies only to ideas currently in BACKLOG.md (statuses `captured`, `shaped`, `spec-ready`). Shipped ideas reside in the wave archive and are not expected to appear in the BACKLOG summary table or section headings.
 - Compare the two sets:
   - Orphaned rows: titles in the summary table with no matching `## {Title}` section
   - Orphaned sections: `## {Title}` sections with no matching summary table row

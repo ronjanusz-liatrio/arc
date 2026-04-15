@@ -1,0 +1,14 @@
+Type: file
+Check: BH-3 counts shipped from wave archive, not BACKLOG
+File: skills/arc-audit/SKILL.md
+Timestamp: 2026-04-15T12:00:00Z
+
+Expected: BH-3 detection logic references docs/skill/arc/waves/*.md for shipped count
+Actual:
+  Line 85: "Count `captured`, `shaped`, and `spec-ready` ideas from BACKLOG.md"
+  Line 86: "Count `shipped` ideas from the wave archive (`docs/skill/arc/waves/*.md`) by counting `### {Title}` subsections..."
+  Line 39: "docs/skill/arc/waves/*.md -- Wave archive files (optional; used for shipped idea counts in BH-3)"
+
+Verification: BH-3 no longer reads shipped from BACKLOG. Shipped count is derived from wave archive subsection counts.
+
+Status: PASS
