@@ -1,0 +1,13 @@
+Type: file
+Command: test -d docs/skill/arc/waves && test -f docs/skill/arc/waves/.gitkeep && echo EXISTS
+Expected: Directory docs/skill/arc/waves/ exists with .gitkeep
+Timestamp: 2026-04-15T12:50:00Z
+
+--- Output ---
+EXISTS
+
+--- Directory Listing ---
+docs/skill/arc/waves/
+  .gitkeep (0 bytes)
+
+Status: PASS

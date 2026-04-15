@@ -1,0 +1,28 @@
+Type: file
+Command: test -f references/wave-archive.md && echo EXISTS
+Expected: File references/wave-archive.md exists and documents the archive schema
+Timestamp: 2026-04-15T12:50:00Z
+
+--- Output ---
+EXISTS
+
+--- Content Verification ---
+File contains the following required sections:
+- "# Wave Archive" (document heading)
+- "## Location" (file location conventions)
+- "## File Naming" (naming rules with slug derivation)
+- "## Archive File Schema" (full markdown schema template)
+- "### Field Reference" (field source/required table)
+- "## Fallback File" (00-uncategorized.md documentation)
+- "## Lifecycle" (writers and readers tables)
+- "## Idempotency Rules" (four idempotency guarantees)
+- "## Cross-References" (links to related references)
+
+All required schema elements are documented:
+- Wave heading format: # Wave NN: {Name}
+- Metadata block: Theme, Goal, Target, Completed
+- Shipped Ideas section with ### {Title} subsections
+- Full brief fields: Problem, Proposed Solution, Success Criteria, Constraints, Assumptions, Open Questions
+- Ship metadata: Status, Priority, Captured, Shaped, Shipped, Spec, Wave
+
+Status: PASS

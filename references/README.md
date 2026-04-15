@@ -9,6 +9,7 @@ This directory contains the authoritative definitions and models used by `/arc-c
 | [`idea-lifecycle.md`](idea-lifecycle.md) | Four-stage idea progression (Capture → Shape → Spec-Ready → Shipped) with forward and backward transition rules. |
 | [`brief-format.md`](brief-format.md) | Spec-ready brief structure — the exact template, field descriptions, validation checklist, and examples for the artifact consumed by `/cw-spec`. |
 | [`wave-planning.md`](wave-planning.md) | Wave organization principles: capacity constraints by Temper phase, precedence rules for idea ordering, theme grouping guidance, and Temper phase compatibility. |
+| [`wave-archive.md`](wave-archive.md) | Wave archive schema, file naming conventions, lifecycle (writers and readers), fallback handling, and idempotency rules for `docs/skill/arc/waves/`. |
 
 ## How They Are Used
 

@@ -1,0 +1,23 @@
+Type: file
+Command: grep -c "Lifecycle" references/wave-archive.md && grep -c "Idempotency" references/wave-archive.md
+Expected: Reference document covers lifecycle (writers/readers) and idempotency rules
+Timestamp: 2026-04-15T12:50:00Z
+
+--- Lifecycle Coverage ---
+Writers documented:
+  - /arc-sync: Migration (scans BACKLOG for shipped, ROADMAP for completed)
+  - /arc-ship: Incremental (appends shipped ideas, archives completed waves)
+
+Readers documented:
+  - /arc-status: Counts ### {Title} subsections for Shipped count
+  - /arc-audit: Status distribution checks (BH-3), cross-reference integrity (WA-6)
+  - /arc-sync: ARC:features list, lifecycle diagram, trust-signal evaluability (TS-3, TS-6)
+
+--- Idempotency Coverage ---
+Four rules documented:
+  1. Migration is idempotent (no writes when no candidates)
+  2. Append is idempotent (duplicate check by ### {Title})
+  3. Wave completion is idempotent (no overwrite of Completed timestamp)
+  4. Reader tolerance (empty/missing directory = Shipped count 0)
+
+Status: PASS
