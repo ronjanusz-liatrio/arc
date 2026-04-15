@@ -13,13 +13,13 @@ Always begin your response with: **ARC-HELP**
 
 ## Overview
 
-Arc is a Claude Code plugin for lightweight product direction. It manages the idea lifecycle from raw thought to spec-ready brief, keeping product direction as plain markdown files in your repo (`VISION`, `CUSTOMER`, `ROADMAP`, `BACKLOG`).
+Arc is a Claude Code plugin for lightweight product direction. It manages the idea lifecycle from raw thought to shipped feature, keeping product direction as plain markdown files in your repo (`VISION`, `CUSTOMER`, `ROADMAP`, `BACKLOG`) with shipped ideas archived to the wave archive (`docs/skill/arc/waves/`).
 
 Arc is the upstream companion to [temper](https://github.com/ronjanusz-liatrio/temper) (engineering maturity) and [claude-workflow](https://github.com/ronjanusz-liatrio/claude-workflow) (spec-driven development). Arc shapes **what** gets built before temper governs **how** it gets built. Shaped ideas flow from Arc into the claude-workflow SDD pipeline (`/cw-spec` -> `/cw-plan` -> `/cw-dispatch`).
 
 ## Skills
 
-Arc provides eight skills for managing the product idea lifecycle:
+Arc provides nine skills for managing the product idea lifecycle:
 
 | Skill | Description | Invocation |
 |-------|-------------|------------|
@@ -29,6 +29,7 @@ Arc provides eight skills for managing the product idea lifecycle:
 | `/arc-status` | Project pulse check -- summarize current wave, backlog, in-flight specs, and recent activity | `/arc-status` |
 | `/arc-wave` | Delivery cycle management -- group shaped ideas into a wave and hand off to the SDD pipeline | `/arc-wave` |
 | `/arc-sync` | README synchronization -- scaffold or update README.md with sections synced to product direction | `/arc-sync` |
+| `/arc-ship` | Ship a validated idea -- verify proof artifacts, archive to wave file, remove from BACKLOG | `/arc-ship` or `/arc-ship "Idea Title"` |
 | `/arc-audit` | Pipeline health audit -- check backlog health, wave alignment, and cross-reference integrity | `/arc-audit` |
 | `/arc-help` | Quick reference guide -- this help output | `/arc-help` |
 
@@ -53,6 +54,9 @@ Sync documentation:
 Implement:
   /cw-spec → /cw-plan → /cw-dispatch → /cw-validate
 
+Ship:
+  /arc-ship       → Archive shipped ideas to wave files (docs/skill/arc/waves/)
+
 Check status:
   /arc-status     → Project pulse check (wave, backlog, specs, activity)
 
@@ -67,7 +71,7 @@ Shared verbs: assess, sync, audit — same intent, different domain.
 
 ## Artifacts
 
-Arc manages four product direction files in your repository:
+Arc manages five product direction artifacts in your repository:
 
 | Artifact | File Path | Purpose |
 |----------|-----------|---------|
@@ -75,6 +79,7 @@ Arc manages four product direction files in your repository:
 | **CUSTOMER** | `docs/CUSTOMER.md` | Personas, jobs-to-be-done, and success metrics |
 | **ROADMAP** | `docs/ROADMAP.md` | Phased delivery plan with themes and milestones |
 | **BACKLOG** | `docs/BACKLOG.md` | Triaged idea list with status, priority, and brief summaries |
+| **Wave Archive** | `docs/skill/arc/waves/` | Completed wave records and shipped idea details (one file per wave) |
 
 These files live in your project repo alongside engineering docs -- no separate product tool to sync.
 

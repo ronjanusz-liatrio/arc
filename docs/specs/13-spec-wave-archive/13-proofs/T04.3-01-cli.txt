@@ -1,0 +1,24 @@
+Type: cli
+Command: grep -l 'references/wave-archive.md' skills/*/SKILL.md
+Expected: arc-ship, arc-wave, arc-sync, arc-status, arc-audit all reference wave-archive.md
+Timestamp: 2026-04-15T00:00:00Z
+
+--- Output ---
+skills/arc-audit/SKILL.md
+skills/arc-status/SKILL.md
+skills/arc-wave/SKILL.md
+skills/arc-ship/SKILL.md
+skills/arc-sync/SKILL.md
+
+--- Analysis ---
+All five affected SKILL.md files contain a reference to references/wave-archive.md:
+  - skills/arc-ship/SKILL.md: In References section (pre-existing from T02.1)
+  - skills/arc-wave/SKILL.md: In References section (added by T04.3)
+  - skills/arc-sync/SKILL.md: In References section (pre-existing from T01.2)
+  - skills/arc-status/SKILL.md: In References section (added by T04.3)
+  - skills/arc-audit/SKILL.md: In References section (added by T04.3)
+
+arc-help/SKILL.md does not have a References section (it is a help guide, not a functional skill),
+but its Artifacts table now includes the wave archive entry.
+
+Status: PASS

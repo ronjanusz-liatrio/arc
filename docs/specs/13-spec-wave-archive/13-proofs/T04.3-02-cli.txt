@@ -1,0 +1,18 @@
+Type: cli
+Command: grep -n 'Status: shipped' skills/*/SKILL.md
+Expected: Only legitimate migration-sweep references in arc-sync/SKILL.md (not stale shipped-in-BACKLOG logic)
+Timestamp: 2026-04-15T00:00:00Z
+
+--- Output ---
+skills/arc-sync/SKILL.md:43:1. Read `docs/BACKLOG.md` and collect all rows where `Status: shipped`
+skills/arc-sync/SKILL.md:121:**Idempotency guarantee:** Detection is based on the presence of `Status: shipped` rows in BACKLOG
+
+--- Analysis ---
+The only "Status: shipped" occurrences are in arc-sync/SKILL.md within the Migration Sweep logic
+(Step 0), which is the correct behavior -- these describe the detection pattern for items that
+need to be migrated FROM BACKLOG TO the wave archive. No SKILL.md file treats BACKLOG as the
+permanent home of shipped ideas.
+
+No other SKILL.md files contain "Status: shipped" references.
+
+Status: PASS

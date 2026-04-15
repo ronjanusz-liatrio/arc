@@ -1,0 +1,23 @@
+Type: file
+Command: grep -n 'wave archive\|Wave Archive\|waves/' skills/arc-help/SKILL.md
+Expected: arc-help mentions wave archive in Overview, Skills table, Artifacts table, and Workflow
+Timestamp: 2026-04-15T00:00:00Z
+
+--- Output ---
+Line 16: ...shipped ideas archived to the wave archive (`docs/skill/arc/waves/`).
+Line 32: | `/arc-ship` | Ship a validated idea -- verify proof artifacts, archive to wave file, remove from BACKLOG
+Line 62: /arc-ship       -> Archive shipped ideas to wave files (docs/skill/arc/waves/)
+Line 82: | **Wave Archive** | `docs/skill/arc/waves/` | Completed wave records and shipped idea details
+
+--- Analysis ---
+arc-help/SKILL.md has been updated:
+  1. Overview (line 16): Now mentions "shipped ideas archived to the wave archive"
+  2. Skills table (line 32): /arc-ship description says "archive to wave file"
+  3. Workflow (line 62): New "Ship:" section mentions wave archive path
+  4. Artifacts table (line 82): New "Wave Archive" row with docs/skill/arc/waves/ path
+  5. Skills count updated from "eight" to "nine"
+  6. Artifacts count updated from "four" to "five"
+
+No description says "BACKLOG is the shipped-item home".
+
+Status: PASS

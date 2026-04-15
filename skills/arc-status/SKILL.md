@@ -13,7 +13,7 @@ Always begin your response with: **ARC-STATUS**
 
 ## Overview
 
-You perform a fast, read-only pulse check across Arc artifacts and git history, then emit a single inline summary showing where the project stands. The output covers five dimensions: the current delivery wave, backlog status distribution, in-flight spec pipeline progress, recent git momentum, and lifecycle gap detection. After the summary, you recommend a next-step skill based on the findings. No files are written — the summary is inline only.
+You perform a fast, read-only pulse check across Arc artifacts and git history, then emit a single inline summary showing where the project stands. The output covers five dimensions: the current delivery wave, backlog status distribution (with shipped count derived from the wave archive at `docs/skill/arc/waves/`), in-flight spec pipeline progress, recent git momentum, and lifecycle gap detection. After the summary, you recommend a next-step skill based on the findings. No files are written — the summary is inline only.
 
 ## Critical Constraints
 
@@ -281,3 +281,4 @@ AskUserQuestion({
 ## References
 
 - `skills/arc-status/references/status-dimensions.md` — Detection logic, parsing rules, output formats, and fallback behavior for all summary sections including lifecycle gap detection and next-step suggestion precedence
+- `references/wave-archive.md` — Wave archive schema and shipped-count derivation rules

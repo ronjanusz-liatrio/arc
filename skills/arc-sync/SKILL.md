@@ -13,7 +13,7 @@ Always begin your response with: **ARC-README**
 
 ## Overview
 
-You keep `README.md` in sync with Arc product-direction artifacts (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md). The skill operates in two modes:
+You keep `README.md` in sync with Arc product-direction artifacts (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) and the wave archive (`docs/skill/arc/waves/`). The skill also runs a migration sweep on each invocation to move shipped ideas and completed waves from BACKLOG/ROADMAP into the wave archive. The skill operates in two modes:
 
 - **Scaffold mode** — generates a full README from scratch for projects that don't have one, establishing `ARC:` managed section markers for future updates
 - **Update mode** — selectively refreshes `ARC:` managed sections in an existing README, syncing features, roadmap, audience, and diagrams with current artifact state

@@ -1,0 +1,21 @@
+Type: file
+Command: grep -A2 '## Overview' skills/{arc-ship,arc-wave,arc-sync,arc-status,arc-audit}/SKILL.md | grep -i 'wave archive\|waves/'
+Expected: All five functional SKILL.md Overviews mention the wave archive
+Timestamp: 2026-04-15T00:00:00Z
+
+--- Output ---
+arc-ship/SKILL.md Overview: "...append the idea to the wave archive at `docs/skill/arc/waves/NN-{slug}.md`"
+arc-wave/SKILL.md Overview: "...the wave is archived to `docs/skill/arc/waves/` and removed from ROADMAP"
+arc-sync/SKILL.md Overview: "...and the wave archive (`docs/skill/arc/waves/`). The skill also runs a migration sweep..."
+arc-status/SKILL.md Overview: "...shipped count derived from the wave archive at `docs/skill/arc/waves/`..."
+arc-audit/SKILL.md Overview: "...shipped counts derived from the wave archive at `docs/skill/arc/waves/`..."
+
+--- Analysis ---
+All five functional SKILL.md files now mention the wave archive in their Overview sections:
+  - arc-ship: Mentions archive as destination (pre-existing from T02.1)
+  - arc-wave: Mentions completed waves archived (added by T04.3)
+  - arc-sync: Mentions archive as data source and migration target (added by T04.3)
+  - arc-status: Mentions shipped count from archive (added by T04.3)
+  - arc-audit: Mentions shipped counts from archive (added by T04.3)
+
+Status: PASS

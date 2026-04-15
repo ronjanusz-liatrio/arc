@@ -13,7 +13,7 @@ Always begin your response with: **ARC-REVIEW**
 
 ## Overview
 
-You audit the health of product artifacts across two dimensions: **backlog health** (quality and completeness of ideas in BACKLOG.md) and **wave alignment** (consistency between BACKLOG, ROADMAP, VISION, and CUSTOMER). After analysis, you generate a diagnostic report and offer interactive fixes for identified issues.
+You audit the health of product artifacts across two dimensions: **backlog health** (quality and completeness of ideas in BACKLOG.md, with shipped counts derived from the wave archive at `docs/skill/arc/waves/`) and **wave alignment** (consistency between BACKLOG, ROADMAP, VISION, CUSTOMER, and the wave archive). After analysis, you generate a diagnostic report and offer interactive fixes for identified issues.
 
 ## Critical Constraints
 
@@ -388,5 +388,6 @@ AskUserQuestion({
 - `skills/arc-audit/references/audit-dimensions.md` — Health check definitions, detection logic, thresholds, severity levels, and configurable parameters
 - `skills/arc-audit/references/review-report-template.md` — Report format and section layout for `docs/skill/arc/review-report.md`
 - `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions used by WA-7 (TS-1 through TS-10)
+- `references/wave-archive.md` — Wave archive schema, shipped-count derivation, and reader/writer contract
 - `references/idea-lifecycle.md` — Idea status transitions, timestamp fields, and lifecycle phases
 - `references/brief-format.md` — The seven required brief sections used by BH-4

@@ -13,7 +13,7 @@ Always begin your response with: **ARC-WAVE**
 
 ## Overview
 
-You organize spec-ready ideas into themed delivery waves. This involves selecting shaped ideas from the BACKLOG, creating a wave in the ROADMAP, injecting the `ARC:product-context` managed section into the project CLAUDE.md, and generating a wave report with handoff instructions for `/cw-spec`.
+You organize spec-ready ideas into themed delivery waves. This involves selecting shaped ideas from the BACKLOG, creating a wave in the ROADMAP, injecting the `ARC:product-context` managed section into the project CLAUDE.md, and generating a wave report with handoff instructions for `/cw-spec`. When all ideas in a wave are shipped via `/arc-ship`, the wave is archived to `docs/skill/arc/waves/` and removed from ROADMAP.
 
 ## Walkthrough
 
@@ -379,6 +379,7 @@ AskUserQuestion({
 - `skills/arc-wave/references/wave-report-template.md` — Wave report format
 - `skills/arc-wave/references/bootstrap-protocol.md` — ARC: namespace injection rules
 - `references/wave-planning.md` — Wave sizing, precedence, theme grouping
+- `references/wave-archive.md` — Wave archive schema, file naming, and completion lifecycle
 - `references/idea-lifecycle.md` — Spec-Ready stage definition
 - `references/brief-format.md` — Brief format for handoff instructions
 - `templates/ROADMAP.tmpl.md` — ROADMAP template for creating initial roadmap
