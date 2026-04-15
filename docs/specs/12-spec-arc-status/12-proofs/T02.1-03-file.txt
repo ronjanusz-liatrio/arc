@@ -1,0 +1,12 @@
+Type: file
+Command: grep "Remediation Hint" skills/arc-status/references/status-dimensions.md
+Expected: Five remediation hints mapping to correct skills
+Timestamp: 2026-04-15T12:00:00Z
+Status: PASS
+
+Verification: All five remediation hints are present and correct:
+  Line 204: **Remediation Hint:** `/arc-shape`     (LG-1: Captured -> Shaped)
+  Line 234: **Remediation Hint:** `/cw-spec`        (LG-2: Shaped -> Spec)
+  Line 266: **Remediation Hint:** `/cw-plan`        (LG-3: Spec -> Plan)
+  Line 296: **Remediation Hint:** `/cw-validate`    (LG-4: Plan -> Validation)
+  Line 331: **Remediation Hint:** `/arc-ship`       (LG-5: Validation -> Shipped)

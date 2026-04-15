@@ -1,0 +1,11 @@
+Type: file
+Command: grep frontmatter fields in skills/arc-status/SKILL.md
+Expected: Frontmatter contains name, description, user-invocable, allowed-tools
+Timestamp: 2026-04-15T10:16:00Z
+Status: PASS
+
+Verified fields:
+  - name: arc-status (line 2)
+  - description: "Project pulse check -- summarize current wave, backlog, in-flight specs, and recent activity in one inline view" (line 3)
+  - user-invocable: true (line 4)
+  - allowed-tools: Glob, Grep, Read, Bash, AskUserQuestion, Skill (line 5)

@@ -1,0 +1,12 @@
+Type: file
+Command: grep context marker and summary sections in skills/arc-status/SKILL.md
+Expected: Context marker **ARC-STATUS** and four summary sections (Current Wave, Backlog Snapshot, In-Flight Specs, Recent Activity) present
+Timestamp: 2026-04-15T10:16:00Z
+Status: PASS
+
+Verified sections:
+  - Context Marker: "Always begin your response with: **ARC-STATUS**" (line 12)
+  - Step 2: Current Wave (line 37)
+  - Step 3: Backlog Snapshot (line 65)
+  - Step 4: In-Flight Specs (line 88)
+  - Step 5: Recent Activity (line 118)

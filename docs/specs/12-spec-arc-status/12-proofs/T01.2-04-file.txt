@@ -1,0 +1,10 @@
+Type: file
+Command: grep references section in skills/arc-status/SKILL.md
+Expected: References section links to status-dimensions.md
+Timestamp: 2026-04-15T10:16:00Z
+Status: PASS
+
+Verified:
+  - References section exists (line 141)
+  - Links to: skills/arc-status/references/status-dimensions.md (line 142)
+  - SKILL.md references status-dimensions.md for detailed detection logic in Steps 2-5 (SD-1 through SD-4)

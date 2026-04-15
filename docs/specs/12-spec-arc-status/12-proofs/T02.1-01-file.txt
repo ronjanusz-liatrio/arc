@@ -1,0 +1,8 @@
+Type: file
+Command: test -f skills/arc-status/references/status-dimensions.md
+Expected: File exists with Lifecycle Gap Detection section
+Timestamp: 2026-04-15T12:00:00Z
+Status: PASS
+
+Verification: skills/arc-status/references/status-dimensions.md exists and contains
+the "## Lifecycle Gap Detection" section header at line 175.

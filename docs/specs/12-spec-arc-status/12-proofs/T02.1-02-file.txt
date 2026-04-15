@@ -1,0 +1,14 @@
+Type: file
+Command: grep -c "^### LG-" skills/arc-status/references/status-dimensions.md
+Expected: Five LG sections (LG-1 through LG-5)
+Timestamp: 2026-04-15T12:00:00Z
+Status: PASS
+
+Verification: All five gap types are documented:
+  Line 181: ### LG-1: Captured -> Shaped
+  Line 208: ### LG-2: Shaped -> Spec
+  Line 238: ### LG-3: Spec -> Plan
+  Line 270: ### LG-4: Plan -> Validation
+  Line 300: ### LG-5: Validation -> Shipped
+
+Each section contains: Purpose, Detection Logic, Inputs, Output Format, Remediation Hint.

@@ -1,0 +1,10 @@
+Type: file
+Command: grep "No lifecycle gaps detected" skills/arc-status/references/status-dimensions.md
+Expected: "No gaps" output format documented
+Timestamp: 2026-04-15T12:00:00Z
+Status: PASS
+
+Verification:
+  Line 342: "No lifecycle gaps detected." present in the "No Gaps Detected" subsection.
+  Line 349: Error handling section documents skipped checks with warnings, not hard errors.
+  The skill continues executing remaining gap checks regardless of individual failures.
