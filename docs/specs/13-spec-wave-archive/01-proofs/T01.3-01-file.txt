@@ -1,0 +1,10 @@
+Type: file
+Description: Wave 0 archive exists with 7 shipped ideas
+Command: grep -c '^### ' docs/skill/arc/waves/00-bootstrap.md
+Expected: 7
+Timestamp: 2026-04-15T00:00:00Z
+
+--- Output ---
+7
+
+Status: PASS

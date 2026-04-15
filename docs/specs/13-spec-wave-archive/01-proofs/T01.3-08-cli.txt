@@ -1,0 +1,10 @@
+Type: cli
+Description: Total shipped ideas across all archive files equals 10
+Command: grep -c '^### ' docs/skill/arc/waves/*.md | awk -F: '{sum+=$2} END {print sum}'
+Expected: 10
+Timestamp: 2026-04-15T00:00:00Z
+
+--- Output ---
+10
+
+Status: PASS

@@ -1,0 +1,10 @@
+Type: file
+Description: Wave 1 archive exists with 1 shipped idea
+Command: grep -c '^### ' docs/skill/arc/waves/01-lifecycle-closure.md
+Expected: 1
+Timestamp: 2026-04-15T00:00:00Z
+
+--- Output ---
+1
+
+Status: PASS

@@ -1,0 +1,10 @@
+Type: file
+Description: Uncategorized archive exists with 1 orphaned shipped idea (/arc-status)
+Command: grep -c '^### ' docs/skill/arc/waves/00-uncategorized.md
+Expected: 1
+Timestamp: 2026-04-15T00:00:00Z
+
+--- Output ---
+1
+
+Status: PASS
