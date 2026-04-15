@@ -1,0 +1,16 @@
+Type: file
+Command: grep -n "wave-archive.md" skills/arc-sync/SKILL.md
+Expected: References section includes wave-archive.md
+Timestamp: 2026-04-15T12:00:00Z
+
+Result:
+52:2. Derive the archive filename using the slug rules from `references/wave-archive.md`:
+80:   c. Append a `### {Title}` subsection under `## Shipped Ideas` in the archive file with the full detail per the schema in `references/wave-archive.md`.
+852:- [`references/wave-archive.md`](../../references/wave-archive.md) — Wave archive schema, file naming, field reference, and lifecycle (writers: `/arc-sync`, `/arc-ship`; readers: `/arc-status`, `/arc-audit`, `/arc-sync`)
+
+The wave-archive.md reference appears in three locations:
+1. Step 0b slug derivation references it (line 52)
+2. Step 0c archive schema references it (line 80)
+3. References section at bottom of SKILL.md (line 852)
+
+Status: PASS

@@ -1,0 +1,19 @@
+Type: file
+Command: grep -n "Step 0: Migration Sweep" skills/arc-sync/SKILL.md
+Expected: SKILL.md contains the new migration step heading
+Timestamp: 2026-04-15T12:00:00Z
+
+Result:
+37:### Step 0: Migration Sweep
+
+The migration sweep step is present at line 37, inserted before the existing Step 1 (Read Context).
+The step contains sub-steps 0a through 0g covering:
+  0a. Scan for migration candidates (BACKLOG shipped rows + ROADMAP completed waves)
+  0b. Build the migration plan (wave number extraction, slug derivation, metadata extraction)
+  0c. Create or update archive files (with idempotency checks)
+  0d. Handle orphaned shipped items (route to 00-uncategorized.md)
+  0e. Remove migrated items from BACKLOG
+  0f. Remove migrated waves from ROADMAP
+  0g. Report migration outcome
+
+Status: PASS

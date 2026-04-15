@@ -1,0 +1,20 @@
+Type: file
+Command: grep -n "idempoten" skills/arc-sync/SKILL.md
+Expected: Migration step documents idempotency requirement
+Timestamp: 2026-04-15T12:00:00Z
+
+Result:
+39:Before reading context, detect and migrate legacy shipped data into the wave archive. This step runs on every `/arc-sync` invocation and is idempotent — when no migration candidates exist, it produces no writes and reports `0 migrations`.
+76:2. If the file already exists and already contains the wave heading, skip the header creation (idempotency).
+78:   a. Check whether `### {Title}` already exists in the archive file. If yes, skip (idempotency).
+98:3. Append each orphaned idea as a `### {Title}` subsection (same idempotency check as 0c.3a).
+121:**Idempotency guarantee:** Detection is based on the presence of `Status: shipped` rows in BACKLOG and `Status: Completed` waves in ROADMAP. After a successful migration, those rows and sections are removed, so a second run finds no candidates and performs no writes.
+
+Idempotency is documented in 5 locations:
+1. Step overview (line 39)
+2. Wave header creation check (line 76)
+3. Per-idea duplicate check (line 78)
+4. Orphan duplicate check (line 98)
+5. Dedicated idempotency guarantee paragraph (line 121)
+
+Status: PASS

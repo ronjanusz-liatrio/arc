@@ -1,0 +1,17 @@
+Type: file
+Command: grep -n "After Step 0\|Planned.*T03" skills/arc-sync/SKILL.md
+Expected: Step 1 notes and T03 forward-references are present
+Timestamp: 2026-04-15T12:00:00Z
+
+Result:
+129:3. `docs/BACKLOG.md` — ... **Note:** After Step 0 (Migration Sweep), BACKLOG may contain fewer items — shipped ideas are migrated to the wave archive and removed from BACKLOG.
+130:4. `docs/ROADMAP.md` — ... **Note:** After Step 0, completed waves are migrated to the wave archive and removed from ROADMAP.
+348:> **Planned:** This section will be updated (T03) to source shipped ideas from `docs/skill/arc/waves/*.md` instead of BACKLOG.md.
+627:> **Planned:** This section will be updated (T03) to source shipped ideas from `docs/skill/arc/waves/*.md` instead of BACKLOG.md.
+
+Verified:
+- Step 1 items 3 and 4 note that data may have changed after migration (lines 129-130)
+- Step 3d ARC:features has T03 forward-reference (line 348)
+- Step 8c ARC:features has T03 forward-reference (line 627)
+
+Status: PASS

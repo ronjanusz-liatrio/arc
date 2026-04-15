@@ -34,14 +34,100 @@ Managed sections use the marker format `<!--# BEGIN ARC:{section-name} -->` / `<
 
 ## Process
 
+### Step 0: Migration Sweep
+
+Before reading context, detect and migrate legacy shipped data into the wave archive. This step runs on every `/arc-sync` invocation and is idempotent — when no migration candidates exist, it produces no writes and reports `0 migrations`.
+
+**0a. Scan for migration candidates:**
+
+1. Read `docs/BACKLOG.md` and collect all rows where `Status: shipped` (pattern: `**Status:** shipped` or `Status: shipped`, case-insensitive).
+2. Read `docs/ROADMAP.md` and collect all wave sections where `Status: Completed` (pattern: `**Status:** Completed`, case-insensitive).
+3. If neither scan finds candidates, report `0 migrations` and proceed to Step 1.
+
+**0b. Build the migration plan:**
+
+For each completed wave found in ROADMAP:
+
+1. Extract the wave number `NN` and name from the `## Wave NN: {Name}` heading.
+2. Derive the archive filename using the slug rules from `references/wave-archive.md`:
+   - Lowercase the wave name.
+   - Replace spaces with `-`.
+   - Strip non-alphanumeric-hyphen characters.
+   - Collapse consecutive hyphens into a single hyphen.
+   - Result: `docs/skill/arc/waves/NN-{slug}.md`
+3. Extract wave metadata: Theme, Goal, Target from the wave section in ROADMAP.
+4. Identify shipped ideas belonging to this wave by matching the `Wave` column in the BACKLOG summary table to the wave name.
+
+**0c. Create or update archive files:**
+
+For each completed wave in the migration plan:
+
+1. If `docs/skill/arc/waves/NN-{slug}.md` does not exist, create it with:
+   ```markdown
+   # Wave NN: {Name}
+
+   - **Theme:** {theme}
+   - **Goal:** {goal}
+   - **Target:** {target}
+   - **Completed:** {current ISO 8601 timestamp}
+
+   ## Shipped Ideas
+   ```
+2. If the file already exists and already contains the wave heading, skip the header creation (idempotency).
+3. For each shipped idea belonging to this wave:
+   a. Check whether `### {Title}` already exists in the archive file. If yes, skip (idempotency).
+   b. Read the idea's `## {Title}` detail section from BACKLOG.md, extracting all brief fields: Status, Priority, Captured, Shaped, Shipped, Spec, Wave, Problem, Proposed Solution, Success Criteria, Constraints, Assumptions, Open Questions.
+   c. Append a `### {Title}` subsection under `## Shipped Ideas` in the archive file with the full detail per the schema in `references/wave-archive.md`.
+
+**0d. Handle orphaned shipped items:**
+
+After processing all completed waves, check for remaining shipped ideas in BACKLOG whose `Wave` field does not match any completed wave in ROADMAP (missing wave, no wave assignment, or wave already removed):
+
+1. Route each orphaned shipped idea to `docs/skill/arc/waves/00-uncategorized.md`.
+2. If `00-uncategorized.md` does not exist, create it with:
+   ```markdown
+   # Wave 00: Uncategorized
+
+   - **Theme:** Orphaned shipped items
+   - **Goal:** N/A
+   - **Target:** N/A
+   - **Completed:** N/A
+
+   ## Shipped Ideas
+   ```
+3. Append each orphaned idea as a `### {Title}` subsection (same idempotency check as 0c.3a).
+4. Report orphaned items separately: `Warning: {N} shipped idea(s) had no matching wave and were archived to 00-uncategorized.md.`
+
+**0e. Remove migrated items from BACKLOG:**
+
+For each shipped idea that was successfully archived (in 0c or 0d):
+
+1. Remove the idea's row from the BACKLOG summary table.
+2. Delete the idea's `## {Title}` detail section (from the `## {Title}` heading to the next `## ` heading or end of file) from BACKLOG.md.
+
+**0f. Remove migrated waves from ROADMAP:**
+
+For each completed wave that was successfully archived (in 0c):
+
+1. Remove the wave's row from the ROADMAP summary table.
+2. Delete the `## Wave NN: {Name}` section (from the heading to the next `## ` heading or end of file) from ROADMAP.md.
+
+**0g. Report migration outcome:**
+
+- If migration occurred: `Migrated {N} shipped ideas and {M} completed waves to docs/skill/arc/waves/.`
+- If orphaned items were found, include the orphan warning from 0d.4.
+- If no candidates: `0 migrations` (already reported in 0a.3).
+
+**Idempotency guarantee:** Detection is based on the presence of `Status: shipped` rows in BACKLOG and `Status: Completed` waves in ROADMAP. After a successful migration, those rows and sections are removed, so a second run finds no candidates and performs no writes.
+
 ### Step 1: Read Context
 
 Read the following files (graceful no-op if absent, except VISION.md):
 
 1. `docs/VISION.md` — **Required.** Extract Vision Summary, Problem Statement, and value proposition.
 2. `docs/CUSTOMER.md` — Persona names and roles for the audience section.
-3. `docs/BACKLOG.md` — Shipped items for features, status counts for the lifecycle diagram.
-4. `docs/ROADMAP.md` — Wave names, themes, and status for the roadmap section.
+3. `docs/BACKLOG.md` — Shipped items for features, status counts for the lifecycle diagram. **Note:** After Step 0 (Migration Sweep), BACKLOG may contain fewer items — shipped ideas are migrated to the wave archive and removed from BACKLOG.
+4. `docs/ROADMAP.md` — Wave names, themes, and status for the roadmap section. **Note:** After Step 0, completed waves are migrated to the wave archive and removed from ROADMAP.
 
 Read `skills/arc-sync/references/trust-signals.md` for the trust-signal framework definitions.
 Read `skills/arc-sync/references/readme-mapping.md` for the artifact-to-section mapping rules.
@@ -258,6 +344,8 @@ No features shipped yet.
 ```
 
 **Constraint:** When shipped items exist, each bullet must contain the shipped idea title as a substring (case-insensitive) to satisfy TS-3 and TS-6.
+
+> **Planned:** This section will be updated (T03) to source shipped ideas from `docs/skill/arc/waves/*.md` instead of BACKLOG.md.
 
 #### 3e. ARC:roadmap Section
 
@@ -536,6 +624,8 @@ Rebuild from `docs/BACKLOG.md`:
 
 **Constraint:** Each bullet must contain the shipped idea title as bold text (satisfies TS-3 and TS-6). The bullet count must match the shipped idea count in BACKLOG.md.
 
+> **Planned:** This section will be updated (T03) to source shipped ideas from `docs/skill/arc/waves/*.md` instead of BACKLOG.md.
+
 #### 8d. ARC:roadmap
 
 Rebuild from `docs/ROADMAP.md`:
@@ -759,3 +849,4 @@ Run /arc-sync again after shipping features or planning waves to keep managed se
 - [`skills/arc-sync/references/readme-quality-rules.md`](references/readme-quality-rules.md) — Quality gates for line count, heading hierarchy, accessibility, and conciseness
 - [`skills/arc-wave/references/bootstrap-protocol.md`](../arc-wave/references/bootstrap-protocol.md) — Marker format and coexistence rules for ARC: namespace in project files
 - [`references/idea-lifecycle.md`](../../references/idea-lifecycle.md) — Idea lifecycle stages and status values referenced by ARC:features and ARC:lifecycle-diagram
+- [`references/wave-archive.md`](../../references/wave-archive.md) — Wave archive schema, file naming, field reference, and lifecycle (writers: `/arc-sync`, `/arc-ship`; readers: `/arc-status`, `/arc-audit`, `/arc-sync`)

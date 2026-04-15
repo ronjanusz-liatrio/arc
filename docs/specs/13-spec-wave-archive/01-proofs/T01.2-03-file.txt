@@ -1,0 +1,18 @@
+Type: file
+Command: grep -n "00-uncategorized" skills/arc-sync/SKILL.md
+Expected: Orphan fallback to 00-uncategorized.md is documented
+Timestamp: 2026-04-15T12:00:00Z
+
+Result:
+86:1. Route each orphaned shipped idea to `docs/skill/arc/waves/00-uncategorized.md`.
+87:2. If `00-uncategorized.md` does not exist, create it with:
+99:4. Report orphaned items separately: `Warning: {N} shipped idea(s) had no matching wave and were archived to 00-uncategorized.md.`
+
+Step 0d documents the complete orphan handling flow:
+- Detection: shipped ideas whose Wave field does not match any completed ROADMAP wave
+- Routing: to docs/skill/arc/waves/00-uncategorized.md
+- Creation: synthetic wave header with "Orphaned shipped items" theme
+- Reporting: separate warning message with count
+- Idempotency: same duplicate check as regular wave archival
+
+Status: PASS
