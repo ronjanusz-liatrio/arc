@@ -1,6 +1,6 @@
 ---
 name: arc-ship
-description: "Mark a validated idea as shipped — verify proof artifacts exist, then transition BACKLOG status to shipped"
+description: "Mark a validated idea as shipped — verify proof artifacts exist, archive to wave file, then remove from BACKLOG"
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 ---
@@ -13,7 +13,7 @@ Always begin your response with: **ARC-SHIP**
 
 ## Overview
 
-You mark spec-ready ideas as `shipped` after the SDD pipeline has successfully validated them. Before transitioning any idea, you verify that a `cw-validate` report with `**Overall**: PASS` exists in the idea's spec directory. On success, you update `docs/BACKLOG.md`, optionally update `docs/ROADMAP.md` if the wave is fully shipped, and refresh the `ARC:product-context` managed section in `CLAUDE.md`.
+You mark spec-ready ideas as `shipped` after the SDD pipeline has successfully validated them. Before transitioning any idea, you verify that a `cw-validate` report with `**Overall**: PASS` exists in the idea's spec directory. On success, you append the idea to the wave archive at `docs/skill/arc/waves/NN-{slug}.md`, remove it from `docs/BACKLOG.md`, optionally update `docs/ROADMAP.md` if the wave is fully shipped, and refresh the `ARC:product-context` managed section in `CLAUDE.md`.
 
 ## Walkthrough
 
@@ -31,9 +31,10 @@ flowchart LR
     F --> E
     E --> G{Overall PASS?}
     G -->|No| H[Record failure\ncontinue]
-    G -->|Yes| I[Update BACKLOG]
+    G -->|Yes| I[Write to\nwave archive]
+    I --> I2[Remove from\nBACKLOG]
     H --> NX{More ideas?}
-    I --> NX
+    I2 --> NX
     NX -->|Yes| B2
     NX -->|No| J[Update ROADMAP\nif wave complete]
     J --> K[Refresh CLAUDE.md\nproduct-context]
@@ -47,7 +48,7 @@ flowchart LR
 
     class B,D,G user
     class A,C,E,F,B2,NX action
-    class I,J,K,L write
+    class I,I2,J,K,L write
     class H fail
 ```
 
@@ -60,7 +61,8 @@ flowchart LR
 - **NEVER** ship an idea whose status is not `spec-ready` — validate status before proceeding
 - **NEVER** abort a batch run on a single idea's failure — record the failure and continue processing remaining ideas
 - **ALWAYS** begin your response with `**ARC-SHIP**`
-- **ALWAYS** update both the BACKLOG summary table row and the idea detail section atomically (table row first, then detail section)
+- **ALWAYS** write to the wave archive BEFORE removing from BACKLOG — the archive must be ahead of or equal to BACKLOG state at all times
+- **ALWAYS** check for duplicate `### {Title}` in the archive file before appending — skip with a warning if the idea already exists
 - **ALWAYS** use ISO 8601 timestamps for the `- **Shipped:**` field
 - **ALWAYS** offer the user a path prompt when the `- **Spec:**` field is absent — never block silently
 - **ALWAYS** display a batch summary when more than one idea was selected: "{N} ideas shipped, {M} failed verification."
@@ -72,7 +74,7 @@ flowchart LR
 Read the following files:
 
 1. `docs/BACKLOG.md` — **Required.** If absent, inform the user: "No BACKLOG found. Run `/arc-capture` to start capturing ideas."
-2. `docs/ROADMAP.md` — Optional. Read if present; used for wave rollup in Step 5.
+2. `docs/ROADMAP.md` — Optional. Read if present; used for archive path computation in Step 5 and wave rollup in Step 6.
 3. `CLAUDE.md` — Optional. Read if present; used for product-context refresh in Step 7.
 
 ### Step 1b: Backfill Wave 0 (Offered Once on Detection)
@@ -189,8 +191,10 @@ For each selected idea (single or batch), execute Steps 3–5 independently:
    a. Execute Step 3 (Resolve Spec Path).
    b. Execute Step 4 (Verify Validation Report).
    c. If Step 4 fails (no report or not PASS): record the failure message, append the idea title to `failed_ideas`, and **continue to the next idea** — do not abort the batch.
-   d. If Step 4 passes: execute Step 5 (Update BACKLOG), increment `shipped_count`.
+   d. If Step 4 passes: execute Step 5 (Archive and Remove from BACKLOG), increment `shipped_count`.
 3. After all ideas are processed, proceed to Step 6.
+
+**Batch ordering:** Within each idea, Step 5 writes to the archive before modifying BACKLOG (archive-first consistency). Step 6 (ROADMAP pruning) runs only after all ideas are processed, so a single batch can complete a wave in one pass without redundant ROADMAP checks per idea.
 
 **Failure recording during batch:** When an idea fails Step 4, output the per-idea failure message inline (do not exit), e.g.:
 > [FAILED] {Title}: No cw-validate report found in `{spec-dir}/`. Run `/cw-validate` first.
@@ -238,30 +242,87 @@ AskUserQuestion({
    In **single-idea flow**: exit without modifying any files.
    In **batch flow**: record the failure per Step 2b and continue to the next idea.
 
-### Step 5: Update BACKLOG
+### Step 5: Archive and Remove from BACKLOG
 
-Perform two sequential `Edit` calls — table row first, then detail section:
+Three sequential operations — archive append first, then BACKLOG table row removal, then BACKLOG section deletion. The archive is always written before BACKLOG is modified so the idea is never absent from both.
 
-**5a. Update summary table row**
+**5a. Compute archive path**
 
-Find the row for the selected idea and change its status cell from `spec-ready` to `shipped`. Preserve all other columns.
+1. Read the idea's `- **Wave:**` field from its detail section in `docs/BACKLOG.md`.
+2. Parse the wave number and name. Expected format: `Wave NN: {Name}` (e.g., `Wave 3: Polish`).
+3. Derive the archive filename using the slug algorithm from `references/wave-archive.md`:
+   - Zero-pad the wave number to two digits.
+   - Lowercase the wave name, replace spaces with `-`, strip non-alphanumeric-hyphen characters, collapse consecutive hyphens.
+   - Result: `docs/skill/arc/waves/NN-{slug}.md` (e.g., `docs/skill/arc/waves/03-polish.md`).
+4. **Fallback:** If the `- **Wave:**` field is `--`, absent, or references a wave whose section does not exist in `docs/ROADMAP.md`, route to `docs/skill/arc/waves/00-uncategorized.md` and emit a warning:
+   > Wave section for "{Wave}" not found in ROADMAP. Archiving to 00-uncategorized.md.
 
-**5b. Update idea detail section**
+**5b. Write to wave archive**
 
-In the idea's detail section:
+1. If the archive file does not exist, create it with the wave heading and metadata block copied from the ROADMAP wave section:
 
-1. Change `- **Status:** spec-ready` to `- **Status:** shipped`
-2. Add `- **Spec:** {spec-dir-path}` if not already present (or replace the placeholder value)
-3. Add `- **Shipped:** {ISO 8601 timestamp}`
+   ```markdown
+   # Wave NN: {Name}
+
+   - **Theme:** {theme}
+   - **Goal:** {goal}
+   - **Target:** {target}
+   - **Completed:** --
+   ```
+
+   If using the uncategorized fallback and the file does not exist, create it with the synthetic header from `references/wave-archive.md`:
+
+   ```markdown
+   # Wave 00: Uncategorized
+
+   - **Theme:** Orphaned shipped items
+   - **Goal:** N/A
+   - **Target:** N/A
+   - **Completed:** N/A
+
+   ## Shipped Ideas
+   ```
+
+2. **Idempotency check:** Use `Grep` to search for `### {Title}` in the archive file. If found, skip the append and emit a warning:
+   > "{Title}" already exists in {archive-path}. Skipping archive append.
+
+3. If the archive file exists but has no `## Shipped Ideas` heading, append it before the idea subsection.
+
+4. Append the idea as a `### {Title}` subsection under `## Shipped Ideas`. Include all brief fields from the BACKLOG detail section plus the ship metadata:
+
+   ```markdown
+   ### {Title}
+
+   - **Status:** shipped
+   - **Priority:** {priority}
+   - **Captured:** {captured}
+   - **Shaped:** {shaped}
+   - **Shipped:** {ISO 8601 timestamp}
+   - **Wave:** {wave reference}
+   - **Spec:** {spec-dir-path}
+
+   {Problem, Proposed Solution, Success Criteria, Constraints, Assumptions, Open Questions — preserve all subsections from the BACKLOG detail section}
+   ```
+
+**5c. Remove from BACKLOG summary table**
+
+Find the row for the shipped idea in the BACKLOG summary table and delete the entire row. Do not change the status — remove the row entirely.
+
+**5d. Delete idea detail section from BACKLOG**
+
+Delete the idea's `## {Title}` section from `docs/BACKLOG.md` — from the `## {Title}` heading through to the line before the next `## ` heading (or end of file). This removes the idea from BACKLOG completely; its durable record is now in the wave archive.
 
 ### Step 6: Update ROADMAP (if applicable)
 
 If `docs/ROADMAP.md` exists:
 
-1. Find the wave the selected idea belongs to (read the `- **Wave:**` field from the BACKLOG detail section).
+1. Find the wave the shipped idea belongs to (from the `- **Wave:**` field captured before BACKLOG removal).
 2. Read the wave's "Selected Ideas" table from `docs/ROADMAP.md`.
-3. Cross-reference each idea title against the BACKLOG summary table.
-4. If **all** ideas in the wave now have `shipped` status, update the wave's `**Status:**` field from `Planned` or `Active` to `Completed`.
+3. Cross-reference each idea title against the wave archive file (`docs/skill/arc/waves/NN-{slug}.md`). An idea is "shipped" if it appears as a `### {Title}` subsection in the archive.
+4. If **all** ideas in the wave are now archived, the wave is complete:
+   - Set `- **Completed:** {ISO 8601 timestamp}` in the archive file's metadata block (if not already set).
+   - Remove the wave's row from the ROADMAP summary table.
+   - Delete the `## Wave NN: {Name}` section from `docs/ROADMAP.md`.
 5. If the wave is still in progress, no ROADMAP change is needed.
 
 ### Step 7: Refresh ARC:product-context
@@ -269,13 +330,14 @@ If `docs/ROADMAP.md` exists:
 If `CLAUDE.md` exists:
 
 1. Read `skills/arc-wave/references/bootstrap-protocol.md` for the injection algorithm.
-2. Recount backlog statuses from the BACKLOG summary table (captured, shaped, spec-ready, shipped counts).
-3. Apply the injection algorithm to update the `**Backlog:**` line inside the `ARC:product-context` managed section.
-4. If the wave was just completed in Step 6 (all ideas now shipped), also update the `**Current Wave:**` line:
+2. Recount backlog statuses from the BACKLOG summary table (captured, shaped, spec-ready counts).
+3. Derive the shipped count from the wave archive: count `### {Title}` subsections across all `docs/skill/arc/waves/*.md` files. If the directory is absent or empty, the shipped count is `0`.
+4. Apply the injection algorithm to update the `**Backlog:**` line inside the `ARC:product-context` managed section using the combined counts.
+5. If the wave was just completed in Step 6 (all ideas now archived), also update the `**Current Wave:**` line:
    - Read `docs/ROADMAP.md` to find the next active or planned wave.
    - If another wave exists with `Planned` or `Active` status, set `**Current Wave:**` to that wave's name.
    - If no such wave exists, set `**Current Wave:**` to `No active wave`.
-5. Validate the injection: confirm the ARC section is not nested inside any TEMPER: or MM: block.
+6. Validate the injection: confirm the ARC section is not nested inside any TEMPER: or MM: block.
 
 If `CLAUDE.md` does not exist, skip this step silently.
 
@@ -299,7 +361,7 @@ If any ideas failed, list each failure inline:
 [FAILED] {Title}: {reason}
 ```
 
-If the wave is now fully shipped (all ideas in the wave have `shipped` status), append:
+If the wave is now fully shipped (all ideas in the wave are archived), append:
 
 ```
 Wave '{wave-name}': Completed.
@@ -314,6 +376,7 @@ Wave '{wave-name}': In Progress.
 ## References
 
 - `skills/arc-ship/references/ship-criteria.md` — Proof verification rules, eligible statuses, BACKLOG fields added during shipping
+- `references/wave-archive.md` — Wave archive schema, file naming, slug derivation, idempotency rules
 - `references/idea-lifecycle.md` — Shipped stage definition, entry/exit criteria
 - `skills/arc-wave/references/bootstrap-protocol.md` — ARC:product-context injection algorithm
 - `references/cross-plugin-contract.md` — cw-validate artifact locations and read-only access rules

@@ -1,0 +1,13 @@
+Type: cli
+Command: grep -n 'uncategorized\|00-uncategorized\|fallback' skills/arc-ship/SKILL.md
+Expected: Fallback to 00-uncategorized.md is documented for missing/absent wave fields
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+257:4. **Fallback:** If the `- **Wave:**` field is `--`, absent, or references a wave whose section does not exist in `docs/ROADMAP.md`, route to `docs/skill/arc/waves/00-uncategorized.md` and emit a warning:
+258:   > Wave section for "{Wave}" not found in ROADMAP. Archiving to 00-uncategorized.md.
+273:   If using the uncategorized fallback and the file does not exist, create it with the synthetic header from `references/wave-archive.md`:
+
+Analysis: Fallback to 00-uncategorized.md is documented in Step 5a (line 257) with three trigger conditions (field is "--", field is absent, wave section missing from ROADMAP). The synthetic header for the uncategorized file is also documented (line 273).
+
+Status: PASS

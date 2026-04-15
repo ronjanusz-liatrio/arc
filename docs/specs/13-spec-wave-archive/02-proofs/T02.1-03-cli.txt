@@ -1,0 +1,12 @@
+Type: cli
+Command: grep -n 'Batch ordering\|archive-first\|archive.*ahead' skills/arc-ship/SKILL.md
+Expected: Batch ordering is specified (archive first, then BACKLOG, then ROADMAP)
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+64:- **ALWAYS** write to the wave archive BEFORE removing from BACKLOG — the archive must be ahead of or equal to BACKLOG state at all times
+197:**Batch ordering:** Within each idea, Step 5 writes to the archive before modifying BACKLOG (archive-first consistency). Step 6 (ROADMAP pruning) runs only after all ideas are processed, so a single batch can complete a wave in one pass without redundant ROADMAP checks per idea.
+
+Analysis: Batch ordering is documented in two places: (1) Critical Constraints (line 64) enforces archive-before-BACKLOG invariant, (2) Step 2b (line 197) specifies per-idea archive-first ordering and deferred ROADMAP pruning.
+
+Status: PASS

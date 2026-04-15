@@ -1,0 +1,16 @@
+Type: file
+Command: grep -n 'Archive and Remove|5a\. Compute|5b\. Write to wave|5c\. Remove from BACKLOG|5d\. Delete idea' skills/arc-ship/SKILL.md
+Expected: Step 5 documents archive write (5b) before BACKLOG removal (5c, 5d)
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+194:   d. If Step 4 passes: execute Step 5 (Archive and Remove from BACKLOG), increment `shipped_count`.
+245:### Step 5: Archive and Remove from BACKLOG
+249:**5a. Compute archive path**
+260:**5b. Write to wave archive**
+307:**5c. Remove from BACKLOG summary table**
+311:**5d. Delete idea detail section from BACKLOG**
+
+Analysis: Steps 5a-5d are ordered correctly — archive path computation (5a), archive write (5b), then BACKLOG table removal (5c), then BACKLOG section deletion (5d). Archive is always written before BACKLOG is modified.
+
+Status: PASS

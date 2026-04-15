@@ -1,0 +1,11 @@
+Type: file
+Command: grep -c 'wave-archive.md' skills/arc-ship/SKILL.md
+Expected: wave-archive.md is referenced (new reference added)
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+3
+
+Analysis: The wave archive reference document is mentioned 3 times in the SKILL.md: once in Step 5a (slug algorithm reference), once in Step 5b (uncategorized file header), and once in the References section. This confirms the new reference is properly integrated.
+
+Status: PASS
