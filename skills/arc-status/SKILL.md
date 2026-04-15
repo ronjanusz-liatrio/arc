@@ -13,7 +13,7 @@ Always begin your response with: **ARC-STATUS**
 
 ## Overview
 
-You perform a fast, read-only pulse check across Arc artifacts and git history, then emit a single inline summary showing where the project stands. The output covers five dimensions: the current delivery wave, backlog status distribution, in-flight spec pipeline progress, recent git momentum, and lifecycle gap detection. No files are written — the summary is inline only.
+You perform a fast, read-only pulse check across Arc artifacts and git history, then emit a single inline summary showing where the project stands. The output covers five dimensions: the current delivery wave, backlog status distribution, in-flight spec pipeline progress, recent git momentum, and lifecycle gap detection. After the summary, you recommend a next-step skill based on the findings. No files are written — the summary is inline only.
 
 ## Critical Constraints
 
@@ -21,8 +21,10 @@ You perform a fast, read-only pulse check across Arc artifacts and git history, 
 - **NEVER** abort on a missing optional artifact — emit the section's fallback notice and continue to the next section
 - **ALWAYS** begin your response with `**ARC-STATUS**`
 - **ALWAYS** emit all five summary sections in order, even when individual sections fall back to a notice
+- **ALWAYS** present a next-step suggestion via AskUserQuestion after the summary sections
 - **ALWAYS** handle parse errors gracefully — report what could not be parsed and continue
 - **ALWAYS** treat lifecycle gap detection failures as skipped checks with warnings — never abort on a detection error
+- **NEVER** invoke a skill without user confirmation via AskUserQuestion
 
 ## Process
 
@@ -217,6 +219,63 @@ After running all five gap checks, emit the results:
 
 See `skills/arc-status/references/status-dimensions.md` (Lifecycle Gap Detection) for the full detection predicates and error handling rules.
 
+### Step 7: Next-Step Suggestion
+
+After emitting all summary sections, recommend the single most relevant next skill based on the pulse findings. The recommendation uses a **first-match-wins precedence list** — evaluate from top to bottom and stop at the first matching condition.
+
+#### Precedence List
+
+| Priority | Condition | Recommended Skill | Reason Template |
+|----------|-----------|-------------------|-----------------|
+| 1 | A Validation → Shipped gap exists | `/arc-ship` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
+| 2 | A Plan → Validation gap exists (and no P1 match) | `/cw-validate` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
+| 3 | A Spec → Plan gap exists (and no P1–P2 match) | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
+| 4 | A Shaped → Spec gap exists (and no P1–P3 match) | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
+| 5 | A Captured → Shaped gap exists on a P0 or P1 idea (and no P1–P4 match) | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
+| 6 | No gaps detected AND current wave is in progress | `/arc-wave` or `/arc-audit` | "No gaps detected and {Wave Name} is in progress — check wave health?" |
+| 7 | No gaps detected AND no current wave (all completed or no roadmap) | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+
+See `skills/arc-status/references/status-dimensions.md` (Next-Step Suggestion Precedence) for the full precedence logic.
+
+#### Present Recommendation
+
+Use `AskUserQuestion` to present the recommendation. The prompt must include at least 3 options: the recommended skill (labeled "(Recommended)"), one alternative skill, and "Done for now".
+
+Select the **alternative skill** as follows:
+- If the recommended skill is a gap remediation (P1–P5), offer the next-lower-precedence gap skill that also has a match. If no other gap exists, offer `/arc-audit` as a general health check.
+- If the recommended skill is `/arc-wave` or `/arc-audit` (P6–P7), offer the other one as the alternative.
+
+**Prompt format:**
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "{reason from precedence table}",
+    header: "Next Step",
+    options: [
+      { label: "Run {recommended skill} (Recommended)", description: "{one-line description of what the skill does}" },
+      { label: "Run {alternative skill}", description: "{one-line description of the alternative}" },
+      { label: "Done for now", description: "Exit without running any skill" }
+    ]
+  }]
+})
+```
+
+#### Handle User Selection
+
+- **If the user selects the recommended or alternative skill:** invoke it via the `Skill` tool. Do not invoke any skill without the user explicitly selecting it.
+  ```
+  Skill({ name: "{selected-skill-name}" })
+  ```
+- **If the user selects "Done for now":** exit silently. Do not invoke any skill. Do not emit further output.
+
+#### Critical Constraints for Step 7
+
+- **NEVER** invoke a skill automatically — always present `AskUserQuestion` first and wait for user selection
+- **NEVER** skip the AskUserQuestion prompt — even when only one gap type is detected
+- **ALWAYS** include "Done for now" as the last option
+- **ALWAYS** include the reason for the recommendation in the question text
+
 ## References
 
-- `skills/arc-status/references/status-dimensions.md` — Detection logic, parsing rules, output formats, and fallback behavior for all five summary sections including lifecycle gap detection
+- `skills/arc-status/references/status-dimensions.md` — Detection logic, parsing rules, output formats, and fallback behavior for all summary sections including lifecycle gap detection and next-step suggestion precedence

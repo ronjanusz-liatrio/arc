@@ -1,0 +1,48 @@
+Type: file
+Command: grep -c "Step 7" skills/arc-status/SKILL.md && grep -c "precedence" skills/arc-status/SKILL.md && grep -c "AskUserQuestion" skills/arc-status/SKILL.md
+Expected: SKILL.md contains Step 7: Next-Step Suggestion with precedence list and AskUserQuestion pattern
+Timestamp: 2026-04-15T12:00:00Z
+
+CHECK: skills/arc-status/SKILL.md contains Step 7: Next-Step Suggestion
+  PASS — Line 222: "### Step 7: Next-Step Suggestion"
+
+CHECK: Step 7 defines the 7-level precedence list
+  PASS — Lines 228-236: Precedence table with 7 rows (Priority 1-7)
+  - P1: Validation -> Shipped gap -> /arc-ship
+  - P2: Plan -> Validation gap -> /cw-validate
+  - P3: Spec -> Plan gap -> /cw-plan
+  - P4: Shaped -> Spec gap -> /cw-spec
+  - P5: Captured -> Shaped gap (P0/P1) -> /arc-shape
+  - P6: No gaps + wave in progress -> /arc-wave or /arc-audit
+  - P7: No gaps + no wave -> /arc-wave
+
+CHECK: Step 7 includes AskUserQuestion pattern with at least 3 options
+  PASS — Lines 251-261: AskUserQuestion block with:
+  - Option 1: "Run {recommended skill} (Recommended)"
+  - Option 2: "Run {alternative skill}"
+  - Option 3: "Done for now"
+
+CHECK: Step 7 includes Skill tool invocation pattern
+  PASS — Line 268: Skill({ name: "{selected-skill-name}" })
+
+CHECK: Step 7 includes "Done for now" exit handling
+  PASS — Line 270: "exit silently. Do not invoke any skill. Do not emit further output."
+
+CHECK: Step 7 includes critical constraints
+  PASS — Lines 272-277: Four constraints:
+  - NEVER invoke a skill automatically
+  - NEVER skip the AskUserQuestion prompt
+  - ALWAYS include "Done for now"
+  - ALWAYS include the reason for the recommendation
+
+CHECK: SKILL.md Critical Constraints updated for next-step suggestion
+  PASS — Line 24: "ALWAYS present a next-step suggestion via AskUserQuestion"
+  PASS — Line 27: "NEVER invoke a skill without user confirmation via AskUserQuestion"
+
+CHECK: SKILL.md Overview updated to mention next-step suggestion
+  PASS — Line 16: "After the summary, you recommend a next-step skill based on the findings."
+
+CHECK: SKILL.md References updated
+  PASS — Line 281: References section mentions "next-step suggestion precedence"
+
+Status: PASS

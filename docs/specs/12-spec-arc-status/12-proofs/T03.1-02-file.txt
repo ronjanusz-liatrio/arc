@@ -1,0 +1,36 @@
+Type: file
+Command: grep -c "Next-Step Suggestion Precedence" skills/arc-status/references/status-dimensions.md && grep -c "Precedence Table" skills/arc-status/references/status-dimensions.md
+Expected: status-dimensions.md contains Next-Step Suggestion Precedence section with full precedence logic
+Timestamp: 2026-04-15T12:00:00Z
+
+CHECK: status-dimensions.md contains Next-Step Suggestion Precedence section
+  PASS — Line 365: "## Next-Step Suggestion Precedence"
+
+CHECK: Precedence Table with all 7 priorities
+  PASS — Lines 373-381: Full precedence table with Priority 1-7, including:
+  - Condition, Recommended Skill, Alternative Skill, Reason Template for each row
+  - LG-1 through LG-5 cross-references in conditions
+
+CHECK: Evaluation Logic documented
+  PASS — Lines 385-395: 5-step evaluation process:
+  - Collect gaps -> Walk table -> First match -> Alternative selection -> No-gap fallback
+
+CHECK: Priority 5 filter (P0/P1 only) documented
+  PASS — Line 393: "Only Captured -> Shaped gaps on P0 or P1 ideas qualify"
+
+CHECK: Priority 6 detection (wave in progress) documented
+  PASS — Line 395: "A 'current wave in progress' means Step 2 found a non-completed wave row"
+
+CHECK: AskUserQuestion format documented
+  PASS — Lines 399-421: Full format with 3 required options
+
+CHECK: User Selection Handling documented
+  PASS — Lines 425-433: Table with Recommended/Alternative/Done handling and Skill invocation pattern
+
+CHECK: Constraint on no automatic invocation documented
+  PASS — Line 433: "No skill is ever invoked without the user explicitly selecting it"
+
+CHECK: status-dimensions.md intro updated to mention Lifecycle Gaps and Next-Step Suggestion
+  PASS — Line 3: "five summary sections" + "Next-Step Suggestion"
+
+Status: PASS

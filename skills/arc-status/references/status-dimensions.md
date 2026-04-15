@@ -1,6 +1,6 @@
 # Status Dimensions
 
-`/arc-status` performs a read-only pulse check across four summary sections: **Current Wave**, **Backlog Snapshot**, **In-Flight Specs**, and **Recent Activity**. Each section defines what is read, how to parse it, how to render the output, and a graceful fallback when the source artifact is missing.
+`/arc-status` performs a read-only pulse check across five summary sections: **Current Wave**, **Backlog Snapshot**, **In-Flight Specs**, **Recent Activity**, and **Lifecycle Gaps**. After the summary, it recommends a **Next-Step Suggestion** based on the findings. Each section defines what is read, how to parse it, how to render the output, and a graceful fallback when the source artifact is missing.
 
 ---
 
@@ -359,6 +359,78 @@ Detection failures for any individual gap check (e.g., unreadable file, malforme
 Example reasons: "BACKLOG.md unreadable", "spec directory inaccessible", "git log unavailable".
 
 The skill does not terminate on detection failures. All gap checks that can execute will execute regardless of individual failures.
+
+---
+
+## Next-Step Suggestion Precedence
+
+After emitting all summary sections, `/arc-status` recommends the single most relevant next skill. The recommendation uses a **first-match-wins precedence list** — evaluate conditions from Priority 1 downward and stop at the first match.
+
+---
+
+### Precedence Table
+
+| Priority | Condition | Recommended Skill | Alternative Skill | Reason Template |
+|----------|-----------|-------------------|-------------------|-----------------|
+| 1 | A Validation → Shipped gap exists (LG-5) | `/arc-ship` | Next matching gap skill, or `/arc-audit` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
+| 2 | A Plan → Validation gap exists (LG-4) | `/cw-validate` | Next matching gap skill, or `/arc-audit` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
+| 3 | A Spec → Plan gap exists (LG-3) | `/cw-plan` | Next matching gap skill, or `/arc-audit` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
+| 4 | A Shaped → Spec gap exists (LG-2) | `/cw-spec` | Next matching gap skill, or `/arc-audit` | "{Idea Title} is shaped but has no spec — write a spec?" |
+| 5 | A Captured → Shaped gap exists on a P0 or P1 idea (LG-1) | `/arc-shape` | `/arc-audit` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
+| 6 | No gaps detected AND current wave is in progress | `/arc-wave` or `/arc-audit` | The other of `/arc-wave` or `/arc-audit` | "No gaps detected and {Wave Name} is in progress — check wave health?" |
+| 7 | No gaps detected AND no current wave | `/arc-wave` | `/arc-audit` | "No gaps and no active wave — plan the next delivery wave?" |
+
+---
+
+### Evaluation Logic
+
+1. Collect all lifecycle gaps detected in Step 6 (LG-1 through LG-5).
+2. Walk the precedence table from Priority 1 to Priority 7.
+3. At the first matching condition, select that row's recommended skill and reason template.
+4. For the alternative skill: pick the next-lower-priority gap skill that also has a detected gap. If no other gap exists, use `/arc-audit` as the default alternative.
+5. If no gaps were detected at all, use Priority 6 (wave in progress) or Priority 7 (no wave).
+
+**Priority 5 filter:** Only Captured → Shaped gaps on P0 or P1 ideas qualify. To determine priority, read the `Priority:` field from the idea's metadata block in `docs/BACKLOG.md`. If the captured idea's priority is P2, P3, or unset, it does not trigger Priority 5.
+
+**Priority 6 detection:** A "current wave in progress" means Step 2 found a non-completed wave row in the roadmap. If Step 2 fell back to "No roadmap found" or "All waves completed", the wave is not in progress — use Priority 7 instead.
+
+---
+
+### AskUserQuestion Format
+
+The prompt must always include at least 3 options:
+
+1. **Recommended skill** — labeled with "(Recommended)" suffix
+2. **Alternative skill** — a secondary action the user can take instead
+3. **"Done for now"** — exit without invoking any skill
+
+The `question` field must include the reason from the precedence table so the user understands why this skill is being recommended.
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "{reason template with concrete values filled in}",
+    header: "Next Step",
+    options: [
+      { label: "Run {recommended skill} (Recommended)", description: "{what the skill does}" },
+      { label: "Run {alternative skill}", description: "{what the alternative does}" },
+      { label: "Done for now", description: "Exit without running any skill" }
+    ]
+  }]
+})
+```
+
+---
+
+### User Selection Handling
+
+| Selection | Action |
+|-----------|--------|
+| Recommended skill | Invoke via `Skill({ name: "{skill-name}" })` |
+| Alternative skill | Invoke via `Skill({ name: "{skill-name}" })` |
+| Done for now | Exit silently — no skill invocation, no further output |
+
+**Constraint:** No skill is ever invoked without the user explicitly selecting it from the AskUserQuestion prompt.
 
 ---
 
