@@ -41,6 +41,7 @@ A triaged list of product ideas. Each idea progresses through the idea lifecycle
 | [(deferred) Updating detection-patterns or import-rules references](#deferred-updating-detection-patterns-or-import-rules-references) | captured | P3-Low | -- |
 | [Remove time estimates from arc-wave](#remove-time-estimates-from-arc-wave) | captured | P1-High | -- |
 | [Skill discovery via /skillz during shaping](#skill-discovery-via-skillz-during-shaping) | spec-ready | P1-High | Wave 2: Shaping Intelligence |
+| [/arc-status skill](#arc-status-skill) | shipped | P1-High | -- |
 
 ## (deferred) Multi-repo coordination
 
@@ -534,3 +535,14 @@ Unassigned
 
 - How does the feasibility subagent invoke `/skillz` discovery? (Agent subagent with Skill tool, or direct invocation?)
 - What query parameters map an idea's problem domain to relevant skills?
+
+## /arc-status skill
+
+- **Status:** shipped
+- **Priority:** P1-High
+- **Captured:** 2026-04-15T00:00:00Z
+- **Wave:** Unassigned
+- **Spec:** docs/specs/12-spec-arc-status/
+- **Shipped:** 2026-04-15T00:00:00Z
+
+Quick pulse check across backlog/wave and claude-workflow (spec, plan, review, etc.) that summarizes where the project is, what's complete, and what's next.
