@@ -126,8 +126,9 @@ Read the following files (graceful no-op if absent, except VISION.md):
 
 1. `docs/VISION.md` — **Required.** Extract Vision Summary, Problem Statement, and value proposition.
 2. `docs/CUSTOMER.md` — Persona names and roles for the audience section.
-3. `docs/BACKLOG.md` — Shipped items for features, status counts for the lifecycle diagram. **Note:** After Step 0 (Migration Sweep), BACKLOG may contain fewer items — shipped ideas are migrated to the wave archive and removed from BACKLOG.
+3. `docs/BACKLOG.md` — Status counts for the lifecycle diagram (captured, shaped, spec-ready). **Note:** After Step 0 (Migration Sweep), BACKLOG may contain fewer items — shipped ideas are migrated to the wave archive and removed from BACKLOG.
 4. `docs/ROADMAP.md` — Wave names, themes, and status for the roadmap section. **Note:** After Step 0, completed waves are migrated to the wave archive and removed from ROADMAP.
+5. `docs/skill/arc/waves/*.md` — Shipped ideas for the features list and shipped count for the lifecycle diagram. Each file contains a `## Shipped Ideas` section with `### {Title}` subsections. If the directory is absent or empty, shipped count is 0.
 
 Read `skills/arc-sync/references/trust-signals.md` for the trust-signal framework definitions.
 Read `skills/arc-sync/references/readme-mapping.md` for the artifact-to-section mapping rules.
@@ -313,12 +314,13 @@ Not yet defined — create [CUSTOMER.md](docs/CUSTOMER.md) to define target pers
 
 #### 3d. ARC:features Section
 
-Extract from `docs/BACKLOG.md` (if present):
-- Find all idea entries with `Status: shipped`
-- Extract each shipped idea's `## {Title}` heading
-- List as bullet points (title only — no priority metadata)
+Extract from the wave archive (`docs/skill/arc/waves/*.md`):
+- Read all files in `docs/skill/arc/waves/`
+- Extract each `### {Title}` subsection under `## Shipped Ideas`
+- Order by wave number ascending (from the NN prefix in the filename)
+- Format as bullet list: `- **{Title}** — {one-line summary}` (the one-line summary is the first non-metadata paragraph after the `### {Title}` heading)
 
-If `docs/BACKLOG.md` is absent or has no shipped items:
+If the archive directory is absent, empty, or no `### {Title}` subsections exist:
 - Use: "No features shipped yet."
 
 Output format (with shipped items):
@@ -327,7 +329,7 @@ Output format (with shipped items):
 
 <!--# BEGIN ARC:features -->
 
-{Bullet list of shipped idea titles from BACKLOG.md}
+{Bullet list of shipped idea titles from wave archive}
 
 <!--# END ARC:features -->
 ```
@@ -344,8 +346,6 @@ No features shipped yet.
 ```
 
 **Constraint:** When shipped items exist, each bullet must contain the shipped idea title as a substring (case-insensitive) to satisfy TS-3 and TS-6.
-
-> **Planned:** This section will be updated (T03) to source shipped ideas from `docs/skill/arc/waves/*.md` instead of BACKLOG.md.
 
 #### 3e. ARC:roadmap Section
 
@@ -387,15 +387,17 @@ Not yet defined — create [ROADMAP.md](docs/ROADMAP.md) to plan delivery waves.
 
 #### 3f. ARC:lifecycle-diagram Section
 
-Generate a mermaid state diagram showing the idea lifecycle with live status counts from `docs/BACKLOG.md`.
+Generate a mermaid state diagram showing the idea lifecycle with live status counts derived from BACKLOG.md and the wave archive.
 
 **Status counting:**
 1. Read `docs/BACKLOG.md` and count ideas by status:
    - `captured` — ideas with `Status: captured`
    - `shaped` — ideas with `Status: shaped`
    - `spec-ready` — ideas with `Status: spec-ready`
-   - `shipped` — ideas with `Status: shipped`
-2. If `docs/BACKLOG.md` is absent, use 0 for all counts.
+2. Count shipped from the wave archive (`docs/skill/arc/waves/*.md`):
+   - `shipped` — count of all `### {Title}` subsections under `## Shipped Ideas` across all archive files
+3. If `docs/BACKLOG.md` is absent, use 0 for captured, shaped, spec-ready.
+4. If the wave archive directory is absent or empty, use 0 for shipped.
 
 **Mermaid diagram format:**
 
@@ -435,9 +437,9 @@ stateDiagram-v2
 <!--# END ARC:lifecycle-diagram -->
 ```
 
-Replace `{captured_count}`, `{shaped_count}`, `{spec_ready_count}`, and `{shipped_count}` with actual counts from BACKLOG.md.
+Replace `{captured_count}`, `{shaped_count}`, `{spec_ready_count}` with counts from BACKLOG.md and `{shipped_count}` with the count from the wave archive.
 
-**Constraint:** At least one status count must be non-zero to satisfy TS-5. If BACKLOG.md is absent (all counts zero), the diagram is still generated but TS-5 will be marked N/A.
+**Constraint:** At least one status count must be non-zero to satisfy TS-5. If both BACKLOG.md and the wave archive are absent (all counts zero), the diagram is still generated but TS-5 will be marked N/A.
 
 #### 3g. TEMPER Placeholder Sections
 
@@ -491,10 +493,10 @@ For each trust signal, determine evaluability first:
 |--------|---------------|
 | TS-1: Overview | `docs/VISION.md` exists AND `ARC:overview` section exists |
 | TS-2: Audience | `docs/CUSTOMER.md` exists AND `ARC:audience` section exists |
-| TS-3: Features | `docs/BACKLOG.md` exists with shipped items AND `ARC:features` section exists |
+| TS-3: Features | At least one `docs/skill/arc/waves/*.md` file exists with at least one `### {Title}` subsection AND `ARC:features` section exists |
 | TS-4: Roadmap | `docs/ROADMAP.md` exists AND `ARC:roadmap` section exists |
 | TS-5: Lifecycle Diagram | `docs/BACKLOG.md` exists AND `ARC:lifecycle-diagram` section exists |
-| TS-6: Currency | `docs/BACKLOG.md` exists with shipped items AND `ARC:features` section exists |
+| TS-6: Currency | At least one `docs/skill/arc/waves/*.md` file exists with at least one `### {Title}` subsection AND `ARC:features` section exists |
 | TS-7: Traceability | Any `docs/` file exists AND any `ARC:` section exists |
 | TS-8: No Placeholders | Any `ARC:` section exists (per-section check against source artifact) |
 | TS-9: Reader Journey | Any `TEMPER:` section exists AND Temper is installed |
@@ -614,17 +616,16 @@ Re-extract from `docs/CUSTOMER.md`:
 
 #### 8c. ARC:features
 
-Rebuild from `docs/BACKLOG.md`:
+Rebuild from the wave archive (`docs/skill/arc/waves/*.md`):
 
-1. Find all idea entries with `Status: shipped` (pattern: `**Status:** shipped` or `Status: shipped`, case-insensitive)
-2. Extract each shipped idea's `## {Title}` heading and one-line summary
-3. Format as bullet list: `- **{Title}** — {one-line summary}`
-4. Include traceability link: `See [BACKLOG.md](docs/BACKLOG.md) for the full product backlog.`
-5. If no shipped items exist: `No features shipped yet.`
+1. Read all files in `docs/skill/arc/waves/`
+2. Extract each `### {Title}` subsection under `## Shipped Ideas`
+3. For each shipped idea, extract the one-line summary (the first non-metadata paragraph after the `### {Title}` heading)
+4. Order by wave number ascending (from the NN prefix in the filename)
+5. Format as bullet list: `- **{Title}** — {one-line summary}`
+6. If the archive directory is absent, empty, or no `### {Title}` subsections exist: `No features shipped yet.`
 
-**Constraint:** Each bullet must contain the shipped idea title as bold text (satisfies TS-3 and TS-6). The bullet count must match the shipped idea count in BACKLOG.md.
-
-> **Planned:** This section will be updated (T03) to source shipped ideas from `docs/skill/arc/waves/*.md` instead of BACKLOG.md.
+**Constraint:** Each bullet must contain the shipped idea title as bold text (satisfies TS-3 and TS-6). The bullet count must match the total `### {Title}` count across all archive files.
 
 #### 8d. ARC:roadmap
 
@@ -642,12 +643,13 @@ Rebuild from `docs/ROADMAP.md`:
 
 #### 8e. ARC:lifecycle-diagram
 
-Regenerate the mermaid state diagram from `docs/BACKLOG.md`:
+Regenerate the mermaid state diagram from BACKLOG.md and the wave archive:
 
-1. Count ideas by status: `captured`, `shaped`, `spec-ready`, `shipped`
-2. If BACKLOG.md is absent, use 0 for all counts
-3. Regenerate the mermaid diagram using the same format as Step 3f (Liatrio brand colors, `stateDiagram-v2`, `direction LR`, count-labeled nodes)
-4. Include traceability link: `See [BACKLOG.md](docs/BACKLOG.md) for individual idea details.`
+1. Count ideas by status from `docs/BACKLOG.md`: `captured`, `shaped`, `spec-ready`
+2. Count shipped from the wave archive (`docs/skill/arc/waves/*.md`): count all `### {Title}` subsections under `## Shipped Ideas` across all archive files
+3. If BACKLOG.md is absent, use 0 for captured, shaped, spec-ready
+4. If the wave archive directory is absent or empty, use 0 for shipped
+5. Regenerate the mermaid diagram using the same format as Step 3f (Liatrio brand colors, `stateDiagram-v2`, `direction LR`, count-labeled nodes)
 
 **Constraint:** At least one status count must be non-zero to satisfy TS-5.
 

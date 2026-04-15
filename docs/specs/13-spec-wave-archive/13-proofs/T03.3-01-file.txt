@@ -1,0 +1,17 @@
+Type: file
+Description: Verify Step 3d (ARC:features scaffold) reads from wave archive instead of BACKLOG
+Command: grep -n "3d\.\|wave archive.*waves/\*\.md\|Extract from the wave archive" skills/arc-sync/SKILL.md
+Expected: Step 3d references docs/skill/arc/waves/*.md, not BACKLOG.md
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+315:#### 3d. ARC:features Section
+317:Extract from the wave archive (`docs/skill/arc/waves/*.md`):
+397:2. Count shipped from the wave archive (`docs/skill/arc/waves/*.md`):
+619:Rebuild from the wave archive (`docs/skill/arc/waves/*.md`):
+649:2. Count shipped from the wave archive (`docs/skill/arc/waves/*.md`): count all `### {Title}` subsections under `## Shipped Ideas` across all archive files
+
+Verification: Step 3d now extracts features from `docs/skill/arc/waves/*.md` instead of BACKLOG.md.
+No remaining BACKLOG.md references for features extraction (grep "BACKLOG.*features" returned 0 matches).
+
+Status: PASS

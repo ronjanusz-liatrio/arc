@@ -1,0 +1,15 @@
+Type: file
+Description: Verify Step 4 evaluability table uses wave archive for TS-3 and TS-6
+Command: grep -n "TS-3\|TS-6" skills/arc-sync/SKILL.md
+Expected: TS-3 and TS-6 evaluability references docs/skill/arc/waves/*.md, not BACKLOG.md
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+348:**Constraint:** When shipped items exist, each bullet must contain the shipped idea title as a substring (case-insensitive) to satisfy TS-3 and TS-6.
+496:| TS-3: Features | At least one `docs/skill/arc/waves/*.md` file exists with at least one `### {Title}` subsection AND `ARC:features` section exists |
+499:| TS-6: Currency | At least one `docs/skill/arc/waves/*.md` file exists with at least one `### {Title}` subsection AND `ARC:features` section exists |
+628:**Constraint:** Each bullet must contain the shipped idea title as bold text (satisfies TS-3 and TS-6). The bullet count must match the total `### {Title}` count across all archive files.
+
+Verification: Lines 496 and 499 confirm TS-3 and TS-6 evaluability in Step 4 now references wave archive.
+
+Status: PASS

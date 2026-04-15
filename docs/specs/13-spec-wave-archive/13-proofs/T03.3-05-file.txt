@@ -1,0 +1,20 @@
+Type: file
+Description: Verify trust-signals.md TS-3 and TS-6 already reference wave archive (updated by T04.2)
+Command: grep -n "TS-3\|TS-6\|waves/\*\.md" skills/arc-sync/references/trust-signals.md
+Expected: TS-3 and TS-6 source artifacts point to docs/skill/arc/waves/*.md
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+81:### TS-3: Features
+85:**Source artifact:** `docs/skill/arc/waves/*.md`
+153:### TS-6: Currency
+157:**Source artifact:** `docs/skill/arc/waves/*.md`
+219:   | `ARC:features` | `docs/skill/arc/waves/*.md` |
+300:| `ARC:features` | `docs/skill/arc/waves/*.md` | TS-3, TS-6, TS-8 |
+347:- `references/wave-archive.md` -- Wave archive schema; TS-3 and TS-6 read shipped ideas from archive files
+
+Verification: TS-3 (line 85) and TS-6 (line 157) source artifacts already point to wave archive.
+Section-to-Artifact mapping (lines 219, 300) already maps ARC:features to wave archive.
+These changes were made by T04.2 and are consistent with SKILL.md updates made in this task.
+
+Status: PASS

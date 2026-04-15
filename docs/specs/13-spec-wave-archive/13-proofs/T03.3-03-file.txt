@@ -1,0 +1,16 @@
+Type: file
+Description: Verify Step 1 includes wave archive as context source
+Command: grep -n "docs/skill/arc/waves" skills/arc-sync/SKILL.md | head -5
+Expected: Step 1 lists docs/skill/arc/waves/*.md as item 5 in the context files list
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+131:5. `docs/skill/arc/waves/*.md` -- Shipped ideas for the features list and shipped count for the lifecycle diagram. Each file contains a `## Shipped Ideas` section with `### {Title}` subsections. If the directory is absent or empty, shipped count is 0.
+317:Extract from the wave archive (`docs/skill/arc/waves/*.md`):
+397:2. Count shipped from the wave archive (`docs/skill/arc/waves/*.md`):
+619:Rebuild from the wave archive (`docs/skill/arc/waves/*.md`):
+649:2. Count shipped from the wave archive (`docs/skill/arc/waves/*.md`): count all `### {Title}` subsections under `## Shipped Ideas` across all archive files
+
+Verification: Line 131 confirms docs/skill/arc/waves/*.md is added as item 5 in Step 1 context list.
+
+Status: PASS

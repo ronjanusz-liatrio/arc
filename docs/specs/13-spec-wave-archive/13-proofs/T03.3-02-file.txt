@@ -1,0 +1,25 @@
+Type: file
+Description: Verify Step 3f and Step 8e (ARC:lifecycle-diagram) derive shipped count from wave archive
+Command: grep -n "shipped.*wave archive\|wave archive.*shipped\|Count shipped from" skills/arc-sync/SKILL.md
+Expected: Shipped count sourced from wave archive files, captured/shaped/spec-ready from BACKLOG
+Timestamp: 2026-04-15T00:00:00Z
+
+Output:
+397:2. Count shipped from the wave archive (`docs/skill/arc/waves/*.md`):
+649:2. Count shipped from the wave archive (`docs/skill/arc/waves/*.md`): count all `### {Title}` subsections under `## Shipped Ideas` across all archive files
+
+Step 3f status counting now reads:
+  1. Read docs/BACKLOG.md for captured, shaped, spec-ready
+  2. Count shipped from wave archive (docs/skill/arc/waves/*.md)
+  3. If BACKLOG.md absent, use 0 for captured, shaped, spec-ready
+  4. If wave archive absent or empty, use 0 for shipped
+
+Step 8e status counting now reads:
+  1. Count from BACKLOG.md: captured, shaped, spec-ready
+  2. Count shipped from wave archive: count all ### {Title} subsections
+  3. If BACKLOG.md absent, use 0 for captured, shaped, spec-ready
+  4. If wave archive absent or empty, use 0 for shipped
+
+Verification: Both scaffold (3f) and update (8e) modes derive shipped count from wave archive.
+
+Status: PASS
