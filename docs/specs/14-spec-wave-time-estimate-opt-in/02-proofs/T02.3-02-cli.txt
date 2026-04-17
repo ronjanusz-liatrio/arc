@@ -1,0 +1,12 @@
+Type: cli
+Command: grep -n "Target:\*\* {timeframe or milestone}" skills/arc-wave/references/wave-report-template.md
+Expected: At least one match showing the populated "**Target:** {timeframe or milestone}" form is present in the template.
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+12:**Target:** {timeframe or milestone}
+76:  **Target:** {timeframe or milestone}
+
+Result: The populated form "**Target:** {timeframe or milestone}" is present in the Template fenced block at line 12 and also shown as an example in the ### Target Field Description at line 76. Both forms (populated and TBD placeholder) are therefore documented in the template file, satisfying the Gherkin scenario "Wave report template documents both populated and placeholder forms".
+
+Status: PASS

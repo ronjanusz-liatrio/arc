@@ -1,0 +1,12 @@
+Type: cli
+Command: grep -n "TBD (use /arc-wave to add)" skills/arc-wave/references/wave-report-template.md
+Expected: At least one match showing the literal placeholder string "TBD (use /arc-wave to add)" is present in the wave-report-template.md file.
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+14:     **Target:** TBD (use /arc-wave to add)
+81:  **Target:** TBD (use /arc-wave to add)
+
+Result: The placeholder string "TBD (use /arc-wave to add)" is present at line 14 (inline HTML comment in the template block, immediately after the **Target:** line) and at line 81 (inside the ### Target field description, showing the placeholder form verbatim in a fenced code block). Both forms use the exact literal string from the spec.
+
+Status: PASS
