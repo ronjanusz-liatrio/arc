@@ -1,0 +1,83 @@
+Type: file
+File: docs/specs/14-spec-wave-time-estimate-opt-in/remove-the-target-prompt-from-arc-wave-step-4.feature
+Expected: All four scenarios align with the edited skills/arc-wave/SKILL.md Step 4 flow
+Timestamp: 2026-04-17T22:41:39Z
+
+--- Feature file content (verbatim) ---
+# Source: docs/specs/14-spec-wave-time-estimate-opt-in/14-spec-wave-time-estimate-opt-in.md
+# Pattern: CLI/Process
+# Recommended test type: Integration
+
+Feature: Remove the Target prompt from arc-wave Step 4
+
+  Scenario: Wave creation does not prompt for timeframe
+    Given a project with Arc installed and no active wave
+    When the user invokes "/arc-wave" and reaches Step 4
+    Then the assistant presents a single AskUserQuestion asking only for the wave name/theme
+    And no "Target timeframe for this wave?" question is presented to the user
+    And the user can complete Step 4 by supplying only a theme value
+
+  Scenario: Only the theme question remains in Step 4
+    Given the user is at Step 4 of the "/arc-wave" flow
+    When the assistant renders the Step 4 AskUserQuestion payload
+    Then the payload contains exactly one question
+    And the question header is related to the wave name or theme
+    And the payload contains no question referencing "Target timeframe" or a timeframe selection list
+
+  Scenario: The target variable is treated as unset when Step 4 completes
+    Given a user has just completed Step 4 by providing only a theme
+    When the flow advances to Step 5
+    Then the internal "target" value carried forward to Steps 6, 10, and 11 is logically null (unset)
+    And no default or implicit timeframe is substituted for the missing target
+
+  Scenario: No upfront opt-in offer is reintroduced before Step 4
+    Given a user invokes "/arc-wave" from a clean slate
+    When the flow progresses from Step 1 through Step 4
+    Then at no point before or during Step 4 is the user asked whether they want to provide a time estimate
+    And no flag, branch, or pre-prompt reintroduces the removed Target question
+
+--- Alignment verification ---
+
+Scenario 1: "Wave creation does not prompt for timeframe"
+  [PASS] "single AskUserQuestion asking only for the wave name/theme"
+         SKILL.md lines 183-196: single-question AskUserQuestion block with
+         `question: "What is the wave name/theme?"` and `header: "Theme"`.
+  [PASS] 'no "Target timeframe for this wave?" question'
+         grep -n "Target timeframe" skills/arc-wave/SKILL.md returns no matches.
+  [PASS] "user can complete Step 4 by supplying only a theme value"
+         Only one question remains; theme is the sole required input.
+
+Scenario 2: "Only the theme question remains in Step 4"
+  [PASS] "payload contains exactly one question"
+         SKILL.md Step 4 AskUserQuestion `questions:` array holds one entry.
+  [PASS] "question header is related to the wave name or theme"
+         SKILL.md line 188: `header: "Theme"`.
+  [PASS] 'no question referencing "Target timeframe" or a timeframe selection list'
+         Confirmed by CLI grep (see T01.2-01-cli.txt).
+
+Scenario 3: "The target variable is treated as unset when Step 4 completes"
+  [PASS] 'internal "target" value carried forward to Steps 6, 10, and 11 is
+          logically null (unset)'
+         SKILL.md line 181: "treat `target` as unset (empty string or missing
+         key) for downstream Steps 6, 10, and 11."
+  [PASS] "no default or implicit timeframe is substituted for the missing target"
+         SKILL.md Step 4 does not assign a default; the unset convention is
+         explicit.
+
+Scenario 4: "No upfront opt-in offer is reintroduced before Step 4"
+  [PASS] "at no point before or during Step 4 is the user asked whether they
+          want to provide a time estimate"
+         Steps 1, 1.5, 2, 3 contain no timeframe prompt (verified via
+         case-insensitive grep for `timeframe|time estimate|Target` — the only
+         matches are in Steps 4 (unset convention), 6 (downstream template),
+         and 10 (downstream template)).
+  [PASS] "no flag, branch, or pre-prompt reintroduces the removed Target question"
+         SKILL.md line 181 explicitly forbids this: "Do not reintroduce the
+         Target question earlier in the flow or behind any flag/branch."
+
+--- Result ---
+Status: PASS
+All four scenarios map 1:1 to the edited Step 4 (and its forward-looking
+constraints on Steps 1-3 and downstream Steps 6, 10, 11). No changes to the
+feature file are required — the Gherkin matches the spec's acceptance criteria
+verbatim and the implementation in SKILL.md.

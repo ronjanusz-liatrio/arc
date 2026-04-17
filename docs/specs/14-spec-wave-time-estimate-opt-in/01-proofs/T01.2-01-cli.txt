@@ -1,0 +1,16 @@
+Type: cli
+Command: grep -n "Target timeframe" skills/arc-wave/SKILL.md
+Expected: No matches (exit code 1) — the Target-timeframe prompt has been cleanly removed from Step 4
+Timestamp: 2026-04-17T22:41:39Z
+
+--- Output ---
+(no output)
+
+--- Result ---
+Exit code: 1 (no matches)
+Status: PASS
+
+The string "Target timeframe" does not appear anywhere in skills/arc-wave/SKILL.md.
+This confirms that Step 4 no longer contains the removed prompt, matching the
+Gherkin scenario clause: `no "Target timeframe for this wave?" question is
+presented to the user`.
