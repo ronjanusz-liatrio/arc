@@ -1,0 +1,17 @@
+Type: cli (file-content check)
+Command: grep -n "TBD (use /arc-wave to add)" templates/ROADMAP.tmpl.md
+Expected: At least one match demonstrating the documented placeholder form appears
+  in the ROADMAP template under Vertical Slice or later phase guidance.
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+55:- Target Timeframe is optional at Vertical Slice and later phases. When provided, it can be approximate ("Q2 2026" or "next 2-3 weeks"). When no estimate is captured, render the field as `TBD (use /arc-wave to add)` in the detailed wave entry and `TBD` in the Wave Summary Table.
+78:- **Target Timeframe (optional):** Specific timeframe (month or quarter). When no estimate is captured, render the field as `TBD (use /arc-wave to add)` in the detailed wave entry and `TBD` in the Wave Summary Table.
+91:- Target Timeframe remains optional - waves may be planned without a committed estimate and backfilled later; use the documented `TBD (use /arc-wave to add)` placeholder when unset
+
+Result: Three matches found.
+  - Line 55: Vertical Slice phase content guidance.
+  - Line 78: Foundation phase per-wave section ("Target Timeframe (optional)").
+  - Line 91: Foundation phase content guidance reiterating optional status.
+
+Status: PASS

@@ -1,0 +1,15 @@
+Type: file (Spike/PoC preservation check)
+Command: grep -n "Not Required" templates/ROADMAP.tmpl.md
+Expected: Spike and Proof of Concept phases remain "Not Required" after the edit.
+  Per the task description, "Preserve existing phase-requirement structure
+  (Spike, PoC stay unchanged - they do not require a roadmap)".
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+17:### Spike -- Not Required
+30:### Proof of Concept -- Not Required
+
+Result: Both Spike and Proof of Concept phase headers remain labeled "Not Required".
+  No structural changes were made to either phase section.
+
+Status: PASS

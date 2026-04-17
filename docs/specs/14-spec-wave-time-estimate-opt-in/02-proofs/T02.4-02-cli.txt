@@ -1,0 +1,25 @@
+Type: cli (file-content check)
+Command: grep -in "optional" templates/ROADMAP.tmpl.md
+Expected: Target Timeframe is explicitly marked optional in Vertical Slice and
+  Foundation phase sections (Foundation sections are inherited by MVP, Growth,
+  and Maturity phases via the "All [prior phase] sections, maintained and
+  current" inheritance pattern already present in the template).
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+48:- **Current Wave:** The active delivery cycle with: wave name, goal (1 sentence), 3-5 selected ideas (linked to BACKLOG sections), target timeframe (optional), and status (planned | active)
+55:- Target Timeframe is optional at Vertical Slice and later phases. When provided, it can be approximate ("Q2 2026" or "next 2-3 weeks"). When no estimate is captured, render the field as `TBD (use /arc-wave to add)` in the detailed wave entry and `TBD` in the Wave Summary Table.
+78:- **Target Timeframe (optional):** Specific timeframe (month or quarter). When no estimate is captured, render the field as `TBD (use /arc-wave to add)` in the detailed wave entry and `TBD` in the Wave Summary Table.
+91:- Target Timeframe remains optional - waves may be planned without a committed estimate and backfilled later; use the documented `TBD (use /arc-wave to add)` placeholder when unset
+
+Result:
+  - Line 48: Vertical Slice "Current Wave" required-section bullet flags target timeframe as optional.
+  - Line 55: Vertical Slice content guidance states the Target Timeframe is optional across Vertical Slice and later phases.
+  - Line 78: Foundation per-wave bullet renamed to "Target Timeframe (optional)".
+  - Line 91: Foundation content guidance reiterates the optional semantics.
+  - MVP / Growth / Maturity inherit Foundation sections verbatim via the existing
+    "All Foundation sections, maintained and current" / "All MVP sections ..." /
+    "All Growth sections ..." language (lines 108, 129, 149) - already present,
+    not changed.
+
+Status: PASS
