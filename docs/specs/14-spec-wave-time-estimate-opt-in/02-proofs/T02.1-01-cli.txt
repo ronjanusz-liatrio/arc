@@ -1,0 +1,18 @@
+Type: cli (file-content check)
+Command: grep -n "TBD (use /arc-wave to add)" skills/arc-wave/SKILL.md
+Expected: At least one match inside Step 6 of skills/arc-wave/SKILL.md
+  demonstrating the ROADMAP wave-entry renderer documents the literal
+  `**Target:** TBD (use /arc-wave to add)` placeholder form for the unset case.
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+233:- **When `target` is unset** (empty string or missing — the default after Step 4): render the exact literal line `**Target:** TBD (use /arc-wave to add)`. Do not omit the line, leave it blank, or substitute a different hint string.
+240:- **When `target` is unset:** render the cell as the short literal `TBD`. Do not include the parenthetical `(use /arc-wave to add)` hint in the table cell — table cells must stay concise. The full `TBD (use /arc-wave to add)` placeholder form appears only in the detailed wave entry (above) and in the Step 10 wave report header.
+
+Result: Two matches found, both inside Step 6 rendering guidance (line range 207-242).
+  - Line 233: Detailed wave-entry renderer states the literal
+    `**Target:** TBD (use /arc-wave to add)` line for the unset case.
+  - Line 240: Summary-table renderer references the full placeholder form
+    only to explicitly note it is NOT used in the table cell (which stays `TBD`).
+
+Status: PASS

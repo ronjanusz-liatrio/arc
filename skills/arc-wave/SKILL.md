@@ -227,7 +227,19 @@ Append the new wave to `docs/ROADMAP.md`:
 - {Dependencies between selected ideas, or "None identified"}
 ```
 
+**Rendering the `**Target:**` line in the detailed wave entry:**
+
+- **When `target` is set:** render the line verbatim as `**Target:** {timeframe}` using the captured value (e.g., `**Target:** 2 weeks`).
+- **When `target` is unset** (empty string or missing — the default after Step 4): render the exact literal line `**Target:** TBD (use /arc-wave to add)`. Do not omit the line, leave it blank, or substitute a different hint string.
+
 Update the wave summary table if one exists. If this is the first wave, create the summary table.
+
+**Rendering the summary table `Target` column cell for the new wave row:**
+
+- **When `target` is set:** render the cell as the captured `{timeframe}` value.
+- **When `target` is unset:** render the cell as the short literal `TBD`. Do not include the parenthetical `(use /arc-wave to add)` hint in the table cell — table cells must stay concise. The full `TBD (use /arc-wave to add)` placeholder form appears only in the detailed wave entry (above) and in the Step 10 wave report header.
+
+Do not rewrite or reformat `Target:` values in any prior wave entries already present in `docs/ROADMAP.md` — the placeholder applies only to the newly appended wave.
 
 ### Step 7: Update BACKLOG
 

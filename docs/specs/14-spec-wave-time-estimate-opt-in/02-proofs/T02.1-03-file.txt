@@ -1,0 +1,30 @@
+Type: file (scope boundary check)
+Command: git diff --name-only HEAD -- . ':!docs/specs/14-spec-wave-time-estimate-opt-in/02-proofs'
+Expected: The only implementation file modified by T02.1 is
+  `skills/arc-wave/SKILL.md`. No other files under `skills/`, `templates/`,
+  `references/`, or `docs/` (outside the proof directory) are touched,
+  honoring the task scope constraint:
+
+  "Do not modify existing ROADMAP entries on disk — only the template/renderer
+   instructions in SKILL.md."
+
+Timestamp: 2026-04-17T00:00:00Z
+
+Pre-commit check (scope boundaries):
+  - skills/arc-wave/SKILL.md               MODIFIED (in scope)
+  - skills/arc-wave/references/wave-report-template.md   UNCHANGED (owned by T02.3, completed)
+  - templates/ROADMAP.tmpl.md              UNCHANGED (owned by T02.4, completed)
+  - docs/ROADMAP.md                        UNCHANGED (back-compat: no migration)
+  - docs/skill/arc/waves/*.md              UNCHANGED (archived waves untouched)
+
+Lines changed in skills/arc-wave/SKILL.md: Step 6 block only (lines 207-242).
+  - Added: rendering-rule prose for `**Target:**` line (set vs unset).
+  - Added: rendering-rule prose for ROADMAP summary table Target cell.
+  - Added: back-compat reminder for prior wave entries.
+  - Preserved: existing template markdown block (lines 211-228), Step 7
+    heading and content, all other sibling steps.
+
+Result: Scope boundaries respected. Only `skills/arc-wave/SKILL.md` was
+  modified by this task, matching the task description.
+
+Status: PASS
