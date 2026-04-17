@@ -354,6 +354,13 @@ For each spec-ready idea, run `/cw-spec` with the idea's brief as input:
 | **Total** | **{N}** |
 ```
 
+**Rendering the `**Target:**` header line in the wave report:**
+
+- **When `target` is set:** render the header line verbatim as `**Target:** {timeframe}` using the captured value (e.g., `**Target:** 2 weeks`).
+- **When `target` is unset** (empty string or missing — the default after Step 4): render the exact literal line `**Target:** TBD (use /arc-wave to add)`. Do not omit the line, leave it blank, or substitute a different hint string. The placeholder form matches the one used in the Step 6 ROADMAP wave entry so the reader sees the same reminder hint in both places. See `skills/arc-wave/references/wave-report-template.md` (Field Descriptions → Target) for the documented populated and placeholder forms.
+
+Do not rewrite or normalize the `**Target:**` value in any pre-existing wave report file — the placeholder rule applies only to the wave report being generated for the newly created wave.
+
 ### Step 11: Offer Next Steps
 
 **Post-creation reminder note (informational only):**

@@ -1,0 +1,20 @@
+Type: cli (file-content check)
+Command: grep -n "TBD (use /arc-wave to add)" skills/arc-wave/SKILL.md
+Expected: At least one match inside Step 10 of skills/arc-wave/SKILL.md
+  demonstrating the wave-report header renderer documents the literal
+  `**Target:** TBD (use /arc-wave to add)` placeholder form for the unset case.
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+233:- **When `target` is unset** (empty string or missing — the default after Step 4): render the exact literal line `**Target:** TBD (use /arc-wave to add)`. Do not omit the line, leave it blank, or substitute a different hint string.
+240:- **When `target` is unset:** render the cell as the short literal `TBD`. Do not include the parenthetical `(use /arc-wave to add)` hint in the table cell — table cells must stay concise. The full `TBD (use /arc-wave to add)` placeholder form appears only in the detailed wave entry (above) and in the Step 10 wave report header.
+360:- **When `target` is unset** (empty string or missing — the default after Step 4): render the exact literal line `**Target:** TBD (use /arc-wave to add)`. Do not omit the line, leave it blank, or substitute a different hint string. The placeholder form matches the one used in the Step 6 ROADMAP wave entry so the reader sees the same reminder hint in both places. See `skills/arc-wave/references/wave-report-template.md` (Field Descriptions → Target) for the documented populated and placeholder forms.
+375:2. **Emit only when `target` is unset.** Use the same unset signal (empty string or missing key) relied on by Steps 6 and 10 to decide whether to render the `TBD (use /arc-wave to add)` placeholder. If the wave has no captured estimate, emit the note.
+
+Result: Four matches found. The match at line 360 is the new Step 10
+  wave-report header renderer guidance introduced by T02.2, mandating the
+  literal `**Target:** TBD (use /arc-wave to add)` line for the unset case.
+  The Step 6 matches (lines 233, 240) are owned by T02.1. The Step 11 match
+  (line 375) is owned by T03.1.
+
+Status: PASS

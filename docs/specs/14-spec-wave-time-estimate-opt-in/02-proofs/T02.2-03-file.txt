@@ -1,0 +1,38 @@
+Type: file (scope boundary check)
+Command: git diff --name-only HEAD -- . ':!docs/specs/14-spec-wave-time-estimate-opt-in/02-proofs'
+Expected: The only implementation file modified by T02.2 is
+  `skills/arc-wave/SKILL.md`. No other files under `skills/`, `templates/`,
+  `references/`, or `docs/` (outside the proof directory) are touched,
+  honoring the task scope constraint:
+
+  "Update the Step 10 template block and any inline instructional prose so
+   the rendering rule is unambiguous. The wave report file path
+   (docs/skill/arc/wave-report.md) and surrounding structure remain unchanged."
+
+Timestamp: 2026-04-17T00:00:00Z
+
+Pre-commit check (scope boundaries):
+  - skills/arc-wave/SKILL.md                             MODIFIED (in scope)
+  - skills/arc-wave/references/wave-report-template.md   UNCHANGED (owned by T02.3, completed)
+  - templates/ROADMAP.tmpl.md                            UNCHANGED (owned by T02.4, completed)
+  - docs/ROADMAP.md                                      UNCHANGED (back-compat)
+  - docs/skill/arc/waves/*.md                            UNCHANGED (archived waves untouched)
+  - docs/skill/arc/wave-report.md                        UNCHANGED (generated output, out of scope)
+
+Lines changed in skills/arc-wave/SKILL.md: Step 10 block only
+  (seven lines appended after the existing template code-fence at line 355).
+  - Added: rendering-rule prose for `**Target:**` wave-report header line
+    (set vs unset branches).
+  - Added: cross-reference to Step 6 placeholder consistency.
+  - Added: cross-reference to references/wave-report-template.md Field
+    Descriptions → Target.
+  - Added: back-compat note for pre-existing wave report files.
+  - Preserved: existing wave-report template markdown block (lines 311-355),
+    Step 11 heading and content, all other sibling steps.
+  - No changes to Step 4 (T01.1), Step 6 (T02.1), or Step 11 (T03.1) blocks.
+
+Result: Scope boundaries respected. Only `skills/arc-wave/SKILL.md` was
+  modified by this task, matching the task description. Sibling tasks'
+  files remain untouched.
+
+Status: PASS
