@@ -1,0 +1,28 @@
+Type: cli
+Command: grep -n "Tip: no time estimate was captured" docs/specs/14-spec-wave-time-estimate-opt-in/post-creation-reminder-note-in-wave-summary.feature skills/arc-wave/SKILL.md
+Expected: The exact reminder-note string appears in both the feature file (scenarios 1 and 5) and SKILL.md (Step 11 blockquote), verbatim.
+Timestamp: 2026-04-17T22:48:00Z
+
+--- Output ---
+docs/specs/14-spec-wave-time-estimate-opt-in/post-creation-reminder-note-in-wave-summary.feature:10:    Then the response contains the exact line "Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave."
+docs/specs/14-spec-wave-time-estimate-opt-in/post-creation-reminder-note-in-wave-summary.feature:17:    Then the response does not contain the string "Tip: no time estimate was captured"
+docs/specs/14-spec-wave-time-estimate-opt-in/post-creation-reminder-note-in-wave-summary.feature:36:    Then Step 11 documents the exact reminder-note text "Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave."
+skills/arc-wave/SKILL.md:370:> Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave.
+
+--- Verification ---
+The full reminder-note string
+  "Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave."
+appears verbatim in:
+  - feature line 10 (Scenario 1 "Summary shows reminder when estimate is skipped")
+  - feature line 36 (Scenario 5 "Reminder wording is documented in SKILL.md")
+  - SKILL.md line 370 (Step 11 blockquote, the single source of truth)
+
+The partial match on feature line 17 (Scenario 2 "Summary omits reminder when estimate is present")
+is a deliberate substring ("Tip: no time estimate was captured") used in a
+"does not contain" assertion — it is the expected form for a suppression check
+and does not require the full sentence.
+
+--- Result ---
+Status: PASS
+The Gherkin feature file and SKILL.md Step 11 agree on the exact reminder text.
+No drift between the spec acceptance criteria and the feature file.

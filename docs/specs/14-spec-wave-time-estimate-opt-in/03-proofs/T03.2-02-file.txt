@@ -1,0 +1,146 @@
+Type: file
+File: docs/specs/14-spec-wave-time-estimate-opt-in/post-creation-reminder-note-in-wave-summary.feature
+Expected: The two task-scoped scenarios ("Summary shows reminder when estimate is skipped"
+          and "Summary omits reminder when estimate is present") align with the Step 11
+          reminder-note behavior documented in skills/arc-wave/SKILL.md — exact text,
+          plain-text placement, and gating rule. The three additional scenarios in the
+          same feature file (not task-scoped but co-located) are also verified for
+          alignment as a sanity check.
+Timestamp: 2026-04-17T22:48:00Z
+
+--- Feature file content (verbatim) ---
+# Source: docs/specs/14-spec-wave-time-estimate-opt-in/14-spec-wave-time-estimate-opt-in.md
+# Pattern: CLI/Process (assistant output)
+# Recommended test type: Integration
+
+Feature: Post-creation reminder note in the wave summary
+
+  Scenario: Summary shows reminder when estimate is skipped
+    Given the user has just completed "/arc-wave" without providing a time estimate
+    When the assistant prints the Step 11 post-wave summary
+    Then the response contains the exact line "Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave."
+    And the line appears as plain assistant text alongside the Step 11 AskUserQuestion call
+    And the line is not written to any file on disk
+
+  Scenario: Summary omits reminder when estimate is present
+    Given the user has just completed "/arc-wave" and the wave's target has a value
+    When the assistant prints the Step 11 post-wave summary
+    Then the response does not contain the string "Tip: no time estimate was captured"
+    And no variation of the reminder note is printed
+    And the Step 11 AskUserQuestion is still presented to the user
+
+  Scenario: Reminder is not rendered as an AskUserQuestion option
+    Given a wave was just created without a time estimate
+    When the assistant issues the Step 11 AskUserQuestion call
+    Then the AskUserQuestion options list does not include the reminder string
+    And the reminder appears only in the surrounding plain-text response
+
+  Scenario: Reminder does not prompt for input
+    Given the post-creation summary emits the reminder note
+    When the user reads the assistant's Step 11 response
+    Then the assistant does not ask, prompt, or otherwise collect a time-estimate value at Step 11
+    And the Step 11 flow proceeds using only the standard "next steps" question
+
+  Scenario: Reminder wording is documented in SKILL.md
+    Given the repository contains "skills/arc-wave/SKILL.md"
+    When a reader opens the Step 11 section of the skill
+    Then Step 11 documents the exact reminder-note text "Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave."
+    And Step 11 documents the rule that the note is emitted only when "target" is unset
+
+--- Alignment verification (task-scoped scenarios) ---
+
+Scenario 1: "Summary shows reminder when estimate is skipped" [TASK-SCOPED]
+  Given: user completed "/arc-wave" without providing a time estimate
+    [PASS] SKILL.md line 181 confirms Step 4 no longer collects a Target —
+           target is unset by default for downstream Steps 6, 10, 11.
+  When: assistant prints the Step 11 post-wave summary
+    [PASS] SKILL.md Step 11 (line 364) is titled "Offer Next Steps" and
+           hosts the post-wave summary (the reminder block + AskUserQuestion).
+  Then: response contains exact line
+    "Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave."
+    [PASS] SKILL.md line 370 renders this exact string as a markdown
+           blockquote, verbatim. No paraphrase, translation, or punctuation
+           drift. See T03.2-01-cli.txt for the grep evidence.
+  And: line appears as plain assistant text alongside the Step 11 AskUserQuestion call
+    [PASS] Emission rule 1 (SKILL.md line 374): "Print the note in the
+           response body that surrounds the Step 11 AskUserQuestion call
+           (either directly above or directly below it)."
+  And: line is not written to any file on disk
+    [PASS] SKILL.md line 368 describes the note as "one-line plain-text
+           note in the assistant's response"; line 366 heading reads
+           "(informational only)". No Write/Edit tool is invoked for the
+           note in Step 11.
+
+Scenario 2: "Summary omits reminder when estimate is present" [TASK-SCOPED]
+  Given: user completed "/arc-wave" and the wave's target has a value
+    [PASS] SKILL.md line 375 (emission rule 2) distinguishes unset vs set
+           target — the "target has a value" branch is explicitly handled.
+  When: assistant prints the Step 11 post-wave summary
+    [PASS] Same Step 11 "Offer Next Steps" section.
+  Then: response does not contain the string "Tip: no time estimate was captured"
+    [PASS] Emission rule 3 (SKILL.md line 376): "If the wave already has
+           a captured {timeframe}, suppress the note entirely."
+  And: no variation of the reminder note is printed
+    [PASS] Emission rule 3 (SKILL.md line 376, same line): "no variation,
+           no abbreviation, no alternative wording."
+  And: Step 11 AskUserQuestion is still presented to the user
+    [PASS] Emission rule 3 (SKILL.md line 376, same line): "The standard
+           Step 11 AskUserQuestion is still presented to the user."
+
+--- Alignment verification (co-located scenarios, non-scoped sanity check) ---
+
+Scenario 3: "Reminder is not rendered as an AskUserQuestion option"
+    [PASS] Emission rule 1 (SKILL.md line 374): "Never embed the note as
+           an option, label, description, or question inside the
+           AskUserQuestion call itself."
+
+Scenario 4: "Reminder does not prompt for input"
+    [PASS] Emission rule 4 (SKILL.md line 377): "Never prompt for or
+           collect an estimate during the post-creation summary. The
+           reminder is informational only. Do not add a follow-up
+           question, AskUserQuestion option, or text prompt asking the
+           user to supply a time estimate at Step 11."
+
+Scenario 5: "Reminder wording is documented in SKILL.md"
+    [PASS] SKILL.md line 370 contains the verbatim reminder text, and
+           emission rule 2 (SKILL.md line 375) documents the "only when
+           target is unset" gating rule. Both assertions in the scenario
+           are satisfied by sibling task T03.1 (completed).
+
+--- Cross-reference to spec acceptance criteria (Unit 3) ---
+
+Unit 3 functional requirements in 14-spec-wave-time-estimate-opt-in.md
+lines 65-71:
+
+  1. "emit a one-line plain-text note in the post-wave summary when target
+     is unset, in the form: 'Tip: no time estimate was captured. ...'"
+       -> Covered by Scenario 1 ("Summary shows reminder when estimate is
+          skipped"). Aligned.
+
+  2. "emit the note in the text response printed alongside Step 11's
+     AskUserQuestion — not as an extra option inside the question."
+       -> Covered by Scenario 1 ("plain assistant text alongside the Step
+          11 AskUserQuestion call") AND Scenario 3 ("AskUserQuestion
+          options list does not include the reminder string"). Aligned.
+
+  3. "not emit the note when target has a value"
+       -> Covered by Scenario 2 ("Summary omits reminder when estimate is
+          present"). Aligned.
+
+  4. "not prompt, ask, or collect the estimate during the post-creation
+     summary — the reminder is informational only."
+       -> Covered by Scenario 4 ("Reminder does not prompt for input").
+          Aligned.
+
+  5. "document the note's exact text in SKILL.md Step 11 so behavior is
+     reproducible."
+       -> Covered by Scenario 5 ("Reminder wording is documented in
+          SKILL.md"). Aligned.
+
+All five Unit 3 functional requirements are traced into Gherkin scenarios.
+All five scenarios align with SKILL.md Step 11.
+
+--- Result ---
+Status: PASS
+The two task-scoped scenarios align verbatim with SKILL.md Step 11. The three
+co-located scenarios also align. No edits to the feature file are required.
