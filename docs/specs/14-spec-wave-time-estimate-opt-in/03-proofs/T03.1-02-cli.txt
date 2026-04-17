@@ -1,0 +1,22 @@
+Type: cli
+Command: grep -n -E "Emit only when|Do not emit when|Emit as plain assistant text|Never prompt for or collect an estimate" skills/arc-wave/SKILL.md
+Expected: Four matches documenting the four emission rules for the Step 11 reminder note verbatim from the task description:
+  (1) emit as plain assistant text alongside the AskUserQuestion call — never as an option inside it,
+  (2) emit only when `target` is unset,
+  (3) do not emit when `target` has a value,
+  (4) never prompt for or collect an estimate during the post-creation summary.
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+367:1. **Emit as plain assistant text.** Print the note in the response body that surrounds the Step 11 `AskUserQuestion` call (either directly above or directly below it). Never embed the note as an option, label, description, or question inside the `AskUserQuestion` call itself.
+368:2. **Emit only when `target` is unset.** Use the same unset signal (empty string or missing key) relied on by Steps 6 and 10 to decide whether to render the `TBD (use /arc-wave to add)` placeholder. If the wave has no captured estimate, emit the note.
+369:3. **Do not emit when `target` has a value.** If the wave already has a captured `{timeframe}`, suppress the note entirely — no variation, no abbreviation, no alternative wording. The standard Step 11 `AskUserQuestion` is still presented to the user.
+370:4. **Never prompt for or collect an estimate during the post-creation summary.** The reminder is informational only. Do not add a follow-up question, `AskUserQuestion` option, or text prompt asking the user to supply a time estimate at Step 11. The only supported paths to add an estimate later are those named in the note text: editing `docs/ROADMAP.md` directly or rerunning `/arc-wave`.
+
+Result: All four emission rules are present at lines 367-370 as a numbered list directly below the reminder-note text (line 363) and directly above the existing Step 11 AskUserQuestion code block (lines 374-388). Each rule matches the task description verbatim:
+  - Rule 1 enforces the "plain text alongside the AskUserQuestion call — never as an option inside" constraint.
+  - Rule 2 enforces the "only when target is unset" constraint.
+  - Rule 3 enforces the "do not emit when target has a value" constraint.
+  - Rule 4 enforces the "never prompt for or collect an estimate" constraint.
+
+Status: PASS

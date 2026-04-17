@@ -1,0 +1,59 @@
+Type: file
+Command: Read skills/arc-wave/SKILL.md lines 357-395 to verify structural placement of the reminder-note guidance.
+Expected:
+  - Step 11 heading appears at line 357.
+  - New reminder-note block appears ABOVE the existing Step 11 AskUserQuestion code block.
+  - The existing Step 11 AskUserQuestion code block is preserved intact, including the four options (Hand off to /cw-spec, Update README, Plan another wave, Done) and multiSelect: false.
+  - The existing "Handle selection:" list remains unchanged immediately below the code block.
+  - The reminder-note block is clearly distinct from the wave report content (uses its own labelled header, blockquote for the note text, and numbered emission rules).
+Timestamp: 2026-04-17T00:00:00Z
+
+Output (relevant section of skills/arc-wave/SKILL.md):
+
+357: ### Step 11: Offer Next Steps
+358:
+359: **Post-creation reminder note (informational only):**
+360:
+361: When `target` is unset (the default after Step 4 — no time estimate was captured), emit the following one-line plain-text note in the assistant's response alongside the Step 11 `AskUserQuestion` call below:
+362:
+363: > Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave.
+364:
+365: **Emission rules (verbatim):**
+366:
+367: 1. **Emit as plain assistant text.** ...
+368: 2. **Emit only when `target` is unset.** ...
+369: 3. **Do not emit when `target` has a value.** ...
+370: 4. **Never prompt for or collect an estimate during the post-creation summary.** ...
+371:
+372: The note text above is the single source of truth for the wording. Reproduce it verbatim — do not paraphrase, translate, reorder, or adjust punctuation.
+373:
+374: ```
+375: AskUserQuestion({
+376:   questions: [{
+377:     question: "Wave '{Wave Name}' is ready. What would you like to do next?",
+378:     header: "Next",
+379:     options: [
+380:       { label: "Hand off to /cw-spec", description: "Start the SDD pipeline for the first spec-ready idea" },
+381:       { label: "Update README", description: "Run /arc-sync to sync the README with the new wave" },
+382:       { label: "Plan another wave", description: "Create another wave for remaining shaped ideas" },
+383:       { label: "Done", description: "Finish wave planning" }
+384:     ],
+385:     multiSelect: false
+386:   }]
+387: })
+388: ```
+389:
+390: **Handle selection:**
+391: - **Hand off to /cw-spec:** Present the handoff brief for the first spec-ready idea and suggest the user invoke `/cw-spec` with it
+392: - **Update README:** Inform the user to run `/arc-sync` to update the project README with the new wave context, roadmap changes, and backlog status
+393: - **Plan another wave:** Loop back to Step 1
+394: - **Done:** Summarize what was created and exit
+
+Result:
+  - Step 11 heading is unchanged at line 357.
+  - The new reminder-note block (lines 359-372) sits directly above the existing AskUserQuestion code block. It is clearly labelled "Post-creation reminder note (informational only)", uses a blockquote for the note text, and a numbered list for the emission rules — all clearly distinct from the downstream wave report content (which lives in Step 10, not Step 11).
+  - The existing AskUserQuestion code block (lines 374-388) is byte-for-byte the same as the pre-change version: the question string, header, all four options with their descriptions, and multiSelect: false are preserved intact. No reminder wording or option was inserted inside the code block.
+  - The "Handle selection:" list (lines 390-394) is unchanged.
+  - The reminder note is not represented as any of the four AskUserQuestion options — it only appears as plain prose above the code block.
+
+Status: PASS

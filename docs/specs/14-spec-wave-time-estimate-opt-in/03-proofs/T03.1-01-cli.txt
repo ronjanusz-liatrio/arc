@@ -1,0 +1,11 @@
+Type: cli
+Command: grep -n "Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave." skills/arc-wave/SKILL.md
+Expected: Exactly one match showing the verbatim reminder-note text is documented inside Step 11 of skills/arc-wave/SKILL.md.
+Timestamp: 2026-04-17T00:00:00Z
+
+Output:
+363:> Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave.
+
+Result: The literal reminder-note string appears exactly once in SKILL.md at line 363, rendered as a markdown blockquote directly inside Step 11 (which begins at line 357). The wording matches the spec text verbatim — same punctuation, same paths (`docs/ROADMAP.md` and `/arc-wave`), no paraphrase.
+
+Status: PASS

@@ -356,6 +356,21 @@ For each spec-ready idea, run `/cw-spec` with the idea's brief as input:
 
 ### Step 11: Offer Next Steps
 
+**Post-creation reminder note (informational only):**
+
+When `target` is unset (the default after Step 4 — no time estimate was captured), emit the following one-line plain-text note in the assistant's response alongside the Step 11 `AskUserQuestion` call below:
+
+> Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave.
+
+**Emission rules (verbatim):**
+
+1. **Emit as plain assistant text.** Print the note in the response body that surrounds the Step 11 `AskUserQuestion` call (either directly above or directly below it). Never embed the note as an option, label, description, or question inside the `AskUserQuestion` call itself.
+2. **Emit only when `target` is unset.** Use the same unset signal (empty string or missing key) relied on by Steps 6 and 10 to decide whether to render the `TBD (use /arc-wave to add)` placeholder. If the wave has no captured estimate, emit the note.
+3. **Do not emit when `target` has a value.** If the wave already has a captured `{timeframe}`, suppress the note entirely — no variation, no abbreviation, no alternative wording. The standard Step 11 `AskUserQuestion` is still presented to the user.
+4. **Never prompt for or collect an estimate during the post-creation summary.** The reminder is informational only. Do not add a follow-up question, `AskUserQuestion` option, or text prompt asking the user to supply a time estimate at Step 11. The only supported paths to add an estimate later are those named in the note text: editing `docs/ROADMAP.md` directly or rerunning `/arc-wave`.
+
+The note text above is the single source of truth for the wording. Reproduce it verbatim — do not paraphrase, translate, reorder, or adjust punctuation.
+
 ```
 AskUserQuestion({
   questions: [{
