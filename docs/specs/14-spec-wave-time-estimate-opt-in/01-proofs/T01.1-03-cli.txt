@@ -1,0 +1,15 @@
+Type: cli
+Command: grep -nE "1-2 weeks|3-4 weeks|1-2 months" skills/arc-wave/SKILL.md
+Expected: no matches — confirming none of the removed timeframe option strings
+         linger anywhere in SKILL.md
+Timestamp: 2026-04-17T00:00:00Z
+
+--- OUTPUT ---
+(no stdout, no matches)
+
+--- INTERPRETATION ---
+The three option labels previously attached to the "Target timeframe" question
+("1-2 weeks", "3-4 weeks", "1-2 months") have been fully removed from
+skills/arc-wave/SKILL.md. No residual references remain.
+
+Status: PASS

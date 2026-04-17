@@ -1,0 +1,16 @@
+Type: cli
+Command: grep -n "Target timeframe" skills/arc-wave/SKILL.md
+Expected: no matches (exit code 1), confirming the "Target timeframe" prompt was removed from SKILL.md
+Timestamp: 2026-04-17T00:00:00Z
+
+--- OUTPUT ---
+(no stdout)
+EXITCODE: 1
+
+--- INTERPRETATION ---
+grep exits 1 when no matches are found. Zero occurrences of "Target timeframe"
+remain anywhere in skills/arc-wave/SKILL.md, which confirms the Step 4 prompt
+has been removed and was not reintroduced elsewhere (e.g., earlier in the flow
+or behind a flag/branch).
+
+Status: PASS

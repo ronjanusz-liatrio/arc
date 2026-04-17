@@ -1,0 +1,37 @@
+Type: file
+Target: skills/arc-wave/SKILL.md
+Section: Step 4 — Gather Wave Details
+Expected: Step 4 contains a single-question AskUserQuestion asking only for the wave name/theme.
+         No "Target timeframe" question. No "1-2 weeks" / "3-4 weeks" / "1-2 months" options.
+Timestamp: 2026-04-17T00:00:00Z
+
+--- EXTRACTED CONTENT (lines 179-196 of skills/arc-wave/SKILL.md) ---
+### Step 4: Gather Wave Details
+
+Ask only for the wave name/theme. The wave's `target` (time estimate) is intentionally not collected here — treat `target` as unset (empty string or missing key) for downstream Steps 6, 10, and 11. Do not reintroduce the Target question earlier in the flow or behind any flag/branch.
+
+```
+AskUserQuestion({
+  questions: [
+    {
+      question: "What is the wave name/theme? (e.g., 'Core Capture Flow', 'Shaping Pipeline')",
+      header: "Theme",
+      options: [
+        { label: "Provide theme", description: "Type a descriptive wave name in the text field" }
+      ],
+      multiSelect: false
+    }
+  ]
+})
+```
+
+--- CHECKS ---
+[x] AskUserQuestion has exactly one question object
+[x] That question's header is "Theme" (wave name/theme)
+[x] No "Target timeframe" question present
+[x] No 1-2 weeks / 3-4 weeks / 1-2 months options present
+[x] Explanatory sentence clarifies target is unset downstream and not reintroduced
+[x] The removed options strings "1-2 weeks", "3-4 weeks", "1-2 months" do not appear
+    anywhere else in SKILL.md (verified via parallel grep)
+
+Status: PASS

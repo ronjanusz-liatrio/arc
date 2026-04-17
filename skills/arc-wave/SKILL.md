@@ -24,7 +24,7 @@ flowchart LR
     A --> B[Assess readiness]
     B --> C[Assess wave scope]
     C --> D{Select shaped ideas}
-    D --> E[Gather theme + target]
+    D --> E[Gather theme]
     E --> F[Ensure ROADMAP exists]
     F --> G[Update ROADMAP]
     G --> H[Update BACKLOG]
@@ -178,6 +178,8 @@ AskUserQuestion({
 
 ### Step 4: Gather Wave Details
 
+Ask only for the wave name/theme. The wave's `target` (time estimate) is intentionally not collected here — treat `target` as unset (empty string or missing key) for downstream Steps 6, 10, and 11. Do not reintroduce the Target question earlier in the flow or behind any flag/branch.
+
 ```
 AskUserQuestion({
   questions: [
@@ -186,16 +188,6 @@ AskUserQuestion({
       header: "Theme",
       options: [
         { label: "Provide theme", description: "Type a descriptive wave name in the text field" }
-      ],
-      multiSelect: false
-    },
-    {
-      question: "Target timeframe for this wave?",
-      header: "Target",
-      options: [
-        { label: "1-2 weeks", description: "Short sprint — focused delivery" },
-        { label: "3-4 weeks", description: "Standard wave — room for iteration" },
-        { label: "1-2 months", description: "Extended wave — larger scope or research" }
       ],
       multiSelect: false
     }
