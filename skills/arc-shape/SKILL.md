@@ -3,6 +3,28 @@ name: arc-shape
 description: "Interactive idea refinement — take a captured idea and transform it into a spec-ready brief with problem clarity, customer fit, scope, and feasibility analysis. Invoke when an idea is captured and ready for a deep dive — when the user says 'shape this idea', 'let's refine X', 'turn this into a brief', or 'this idea needs more detail'. Requires at least one captured idea in BACKLOG; produces a shaped brief handed to /cw-spec. Not for raw capture (use /arc-capture) or wave planning (use /arc-wave)."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion, Agent
+requires:
+  files:
+    - docs/BACKLOG.md
+  artifacts:
+    - BACKLOG
+  state: "idea.status = 'captured'"
+produces:
+  files:
+    - docs/BACKLOG.md
+    - docs/skill/arc/shape-report.md
+  artifacts:
+    - BACKLOG
+    - shape-report
+  state-transition: "captured -> shaped"
+consumes:
+  from:
+    - { skill: /arc-capture, artifact: BACKLOG }
+triggers:
+  condition: "at least one idea in BACKLOG has idea.status = 'captured' and is ready for a deep refinement pass"
+  alternates:
+    - /arc-capture
+    - /arc-wave
 ---
 
 # /arc-shape — Interactive Idea Refinement

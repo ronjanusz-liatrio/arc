@@ -3,6 +3,33 @@ name: arc-sync
 description: "README lifecycle management — scaffold a new README from Arc artifacts or update managed sections to match VISION, CUSTOMER, BACKLOG, ROADMAP, and wave archives. Invoke when scaffolding a project README for the first time, when artifacts have drifted from README, or before sharing the project — when the user says 'update the README', 'sync docs', 'the README is stale', or 'scaffold a README'. Runs a migration sweep on each invocation. Not for product-content edits — update VISION/CUSTOMER/BACKLOG first, then run /arc-sync."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
+requires:
+  files:
+    - docs/VISION.md
+  artifacts:
+    - VISION
+  state: ""
+produces:
+  files:
+    - README.md
+    - docs/BACKLOG.md
+    - docs/ROADMAP.md
+    - docs/skill/arc/waves/{wave-slug}.md
+  artifacts:
+    - README
+    - BACKLOG
+    - ROADMAP
+    - wave-archive
+  state-transition: ""
+consumes:
+  from:
+    - { skill: /arc-wave, artifact: ROADMAP }
+    - { skill: /arc-shape, artifact: BACKLOG }
+triggers:
+  condition: "README is missing, stale, or drifted from current Arc artifacts, or before sharing the project externally"
+  alternates:
+    - /arc-status
+    - /arc-audit
 ---
 
 # /arc-sync — README Lifecycle Management

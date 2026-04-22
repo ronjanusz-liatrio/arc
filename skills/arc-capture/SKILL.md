@@ -3,6 +3,22 @@ name: arc-capture
 description: "Fast idea capture — record raw product ideas to the backlog before they're forgotten, no analysis required. Invoke when you have a raw thought, feature request, bug report, or user feedback that needs capturing — when the user says 'jot this down', 'log this idea', 'add to backlog', or 'I just thought of something'. Does not refine or prioritize — that happens in /arc-shape. Prerequisites: none (creates BACKLOG if absent)."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
+requires:
+  files: []
+  artifacts:
+    - BACKLOG
+  state: ""
+produces:
+  files:
+    - docs/BACKLOG.md
+  artifacts:
+    - BACKLOG
+  state-transition: "raw -> captured"
+consumes: {}
+triggers:
+  condition: "any time a raw idea, feature request, bug report, or user feedback needs recording"
+  alternates:
+    - /arc-shape
 ---
 
 # /arc-capture — Fast Idea Capture

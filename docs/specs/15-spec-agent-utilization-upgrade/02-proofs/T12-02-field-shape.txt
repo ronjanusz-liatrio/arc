@@ -1,0 +1,122 @@
+Type: cli (field-shape contract check)
+Command: for each skill, assert top-level keys equal [name, description,
+         user-invocable, allowed-tools, requires, produces, consumes, triggers]
+         in exact order, and assert every required sub-field is present.
+Expected: 9 of 9 skills PASS the shape contract from references/frontmatter-fields.md
+Timestamp: 2026-04-22T22:41:31.356534+00:00
+
+| Skill | 8 keys in order | requires | produces | consumes | triggers | state-preview | transition |
+|-------|-----------------|----------|----------|----------|----------|---------------|------------|
+| arc-capture | PASS | PASS | PASS | PASS | PASS | `(empty)` | `raw -> captured` |
+| arc-shape | PASS | PASS | PASS | PASS | PASS | `idea.status = 'captured'` | `captured -> shaped` |
+| arc-wave | PASS | PASS | PASS | PASS | PASS | `shaped_count >= 1 AND wave_active = false` | `shaped -> spec-ready` |
+| arc-ship | PASS | PASS | PASS | PASS | PASS | `idea.status = 'spec-ready' AND validation_status = 'PASS'` | `spec-ready -> shipped` |
+| arc-status | PASS | PASS | PASS | PASS | PASS | `(empty)` | `(empty)` |
+| arc-audit | PASS | PASS | PASS | PASS | PASS | `(empty)` | `(empty)` |
+| arc-assess | PASS | PASS | PASS | PASS | PASS | `(empty)` | `raw -> captured` |
+| arc-sync | PASS | PASS | PASS | PASS | PASS | `(empty)` | `(empty)` |
+| arc-help | PASS | PASS | PASS | PASS | PASS | `(empty)` | `(empty)` |
+
+Per-skill detail:
+
+- arc-capture
+    requires.files      = []
+    requires.artifacts  = ['BACKLOG']
+    requires.state      = ''
+    produces.files      = ['docs/BACKLOG.md']
+    produces.artifacts  = ['BACKLOG']
+    produces.state-transition = 'raw -> captured'
+    consumes.from       = (empty)
+    triggers.condition  = 'any time a raw idea, feature request, bug report, or user feedback needs recording'
+    triggers.alternates = [/arc-shape]
+
+- arc-shape
+    requires.files      = ['docs/BACKLOG.md']
+    requires.artifacts  = ['BACKLOG']
+    requires.state      = 'idea.status = 'captured''
+    produces.files      = ['docs/BACKLOG.md', 'docs/skill/arc/shape-report.md']
+    produces.artifacts  = ['BACKLOG', 'shape-report']
+    produces.state-transition = 'captured -> shaped'
+    consumes.from       = /arc-capture:BACKLOG
+    triggers.condition  = 'at least one idea in BACKLOG has idea.status = 'captured' and is ready for a deep refinement pass'
+    triggers.alternates = [/arc-capture, /arc-wave]
+
+- arc-wave
+    requires.files      = ['docs/BACKLOG.md', 'docs/VISION.md']
+    requires.artifacts  = ['BACKLOG', 'VISION']
+    requires.state      = 'shaped_count >= 1 AND wave_active = false'
+    produces.files      = ['docs/ROADMAP.md', 'docs/BACKLOG.md', 'docs/skill/arc/wave-report.md', 'CLAUDE.md']
+    produces.artifacts  = ['ROADMAP', 'BACKLOG', 'wave-report']
+    produces.state-transition = 'shaped -> spec-ready'
+    consumes.from       = /arc-shape:shaped-brief
+    triggers.condition  = 'shaped_count >= 1 AND wave_active = false'
+    triggers.alternates = [/arc-shape, /arc-audit]
+
+- arc-ship
+    requires.files      = ['docs/BACKLOG.md', 'docs/ROADMAP.md']
+    requires.artifacts  = ['BACKLOG', 'ROADMAP']
+    requires.state      = 'idea.status = 'spec-ready' AND validation_status = 'PASS''
+    produces.files      = ['docs/BACKLOG.md', 'docs/ROADMAP.md', 'docs/skill/arc/waves/{wave-slug}.md', 'CLAUDE.md']
+    produces.artifacts  = ['BACKLOG', 'ROADMAP', 'wave-archive']
+    produces.state-transition = 'spec-ready -> shipped'
+    consumes.from       = /arc-wave:wave-report, /cw-validate:validation-report
+    triggers.condition  = 'idea.status = 'spec-ready' AND validation_status = 'PASS''
+    triggers.alternates = [/arc-audit]
+
+- arc-status
+    requires.files      = ['docs/BACKLOG.md']
+    requires.artifacts  = ['BACKLOG']
+    requires.state      = ''
+    produces.files      = []
+    produces.artifacts  = []
+    produces.state-transition = ''
+    consumes.from       = (empty)
+    triggers.condition  = 'any time a quick read-only project snapshot is needed'
+    triggers.alternates = [/arc-audit]
+
+- arc-audit
+    requires.files      = ['docs/BACKLOG.md']
+    requires.artifacts  = ['BACKLOG']
+    requires.state      = ''
+    produces.files      = ['docs/skill/arc/review-report.md', 'docs/BACKLOG.md']
+    produces.artifacts  = ['BACKLOG', 'review-report']
+    produces.state-transition = ''
+    consumes.from       = (empty)
+    triggers.condition  = 'pipeline problems detected or pre-milestone health check needed'
+    triggers.alternates = [/arc-status]
+
+- arc-assess
+    requires.files      = []
+    requires.artifacts  = []
+    requires.state      = ''
+    produces.files      = ['docs/BACKLOG.md', 'docs/VISION.md', 'docs/CUSTOMER.md', 'docs/skill/arc/align-report.md', 'docs/skill/arc/align-manifest.md']
+    produces.artifacts  = ['BACKLOG', 'VISION', 'CUSTOMER', 'align-report']
+    produces.state-transition = 'raw -> captured'
+    consumes.from       = (empty)
+    triggers.condition  = 'project inception or first-time Arc adoption on an existing codebase with scattered product-direction content'
+    triggers.alternates = [/arc-capture, /arc-sync]
+
+- arc-sync
+    requires.files      = ['docs/VISION.md']
+    requires.artifacts  = ['VISION']
+    requires.state      = ''
+    produces.files      = ['README.md', 'docs/BACKLOG.md', 'docs/ROADMAP.md', 'docs/skill/arc/waves/{wave-slug}.md']
+    produces.artifacts  = ['README', 'BACKLOG', 'ROADMAP', 'wave-archive']
+    produces.state-transition = ''
+    consumes.from       = /arc-wave:ROADMAP, /arc-shape:BACKLOG
+    triggers.condition  = 'README is missing, stale, or drifted from current Arc artifacts, or before sharing the project externally'
+    triggers.alternates = [/arc-status, /arc-audit]
+
+- arc-help
+    requires.files      = []
+    requires.artifacts  = []
+    requires.state      = ''
+    produces.files      = []
+    produces.artifacts  = []
+    produces.state-transition = ''
+    consumes.from       = (empty)
+    triggers.condition  = 'user needs an index of Arc skills, a workflow overview, or installation instructions'
+    triggers.alternates = [/arc-status]
+
+======================================================================
+Status: PASS — all 9 skills satisfy the frontmatter contract.

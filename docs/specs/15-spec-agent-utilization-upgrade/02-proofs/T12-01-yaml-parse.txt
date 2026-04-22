@@ -1,0 +1,385 @@
+Type: file + cli (yaml round-trip parse)
+Command: python -c 'yaml.safe_load(frontmatter)' on every skills/arc-*/SKILL.md
+Expected: every frontmatter block parses without error and exposes 8 keys:
+         name, description, user-invocable, allowed-tools, requires, produces, consumes, triggers
+Timestamp: 2026-04-22T22:41:14.583571Z
+
+======================================================================
+SKILL: arc-capture
+FILE:  skills/arc-capture/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-capture",
+  "description": "Fast idea capture \u2014 record raw product ideas to the backlog before they're forgotten, no analysis required. Invoke when you have a raw thought, feature request, bug report, or user feedback that needs capturing \u2014 when the user says 'jot this down', 'log this idea', 'add to backlog', or 'I just thought of something'. Does not refine or prioritize \u2014 that happens in /arc-shape. Prerequisites: none (creates BACKLOG if absent).",
+  "user-invocable": true,
+  "allowed-tools": "Glob, Grep, Read, Write, Edit, AskUserQuestion",
+  "requires": {
+    "files": [],
+    "artifacts": [
+      "BACKLOG"
+    ],
+    "state": ""
+  },
+  "produces": {
+    "files": [
+      "docs/BACKLOG.md"
+    ],
+    "artifacts": [
+      "BACKLOG"
+    ],
+    "state-transition": "raw -> captured"
+  },
+  "consumes": {},
+  "triggers": {
+    "condition": "any time a raw idea, feature request, bug report, or user feedback needs recording",
+    "alternates": [
+      "/arc-shape"
+    ]
+  }
+}
+
+======================================================================
+SKILL: arc-shape
+FILE:  skills/arc-shape/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-shape",
+  "description": "Interactive idea refinement \u2014 take a captured idea and transform it into a spec-ready brief with problem clarity, customer fit, scope, and feasibility analysis. Invoke when an idea is captured and ready for a deep dive \u2014 when the user says 'shape this idea', 'let's refine X', 'turn this into a brief', or 'this idea needs more detail'. Requires at least one captured idea in BACKLOG; produces a shaped brief handed to /cw-spec. Not for raw capture (use /arc-capture) or wave planning (use /arc-wave).",
+  "user-invocable": true,
+  "allowed-tools": "Glob, Grep, Read, Write, Edit, AskUserQuestion, Agent",
+  "requires": {
+    "files": [
+      "docs/BACKLOG.md"
+    ],
+    "artifacts": [
+      "BACKLOG"
+    ],
+    "state": "idea.status = 'captured'"
+  },
+  "produces": {
+    "files": [
+      "docs/BACKLOG.md",
+      "docs/skill/arc/shape-report.md"
+    ],
+    "artifacts": [
+      "BACKLOG",
+      "shape-report"
+    ],
+    "state-transition": "captured -> shaped"
+  },
+  "consumes": {
+    "from": [
+      {
+        "skill": "/arc-capture",
+        "artifact": "BACKLOG"
+      }
+    ]
+  },
+  "triggers": {
+    "condition": "at least one idea in BACKLOG has idea.status = 'captured' and is ready for a deep refinement pass",
+    "alternates": [
+      "/arc-capture",
+      "/arc-wave"
+    ]
+  }
+}
+
+======================================================================
+SKILL: arc-wave
+FILE:  skills/arc-wave/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-wave",
+  "description": "Delivery cycle management \u2014 organize spec-ready ideas into a themed wave with a clear goal and target, then hand off to /cw-spec. Invoke when you have shaped ideas ready to commit to in the next cycle \u2014 when the user says 'plan the next wave', 'let's start a sprint', 'organize these ideas into a release', or 'what should we build next'. Requires at least one shaped idea; promotes to spec-ready; updates ROADMAP and ARC:product-context. Not for checking status (use /arc-status) or capturing new ideas (use /arc-capture).",
+  "user-invocable": true,
+  "allowed-tools": "Glob, Grep, Read, Write, Edit, AskUserQuestion",
+  "requires": {
+    "files": [
+      "docs/BACKLOG.md",
+      "docs/VISION.md"
+    ],
+    "artifacts": [
+      "BACKLOG",
+      "VISION"
+    ],
+    "state": "shaped_count >= 1 AND wave_active = false"
+  },
+  "produces": {
+    "files": [
+      "docs/ROADMAP.md",
+      "docs/BACKLOG.md",
+      "docs/skill/arc/wave-report.md",
+      "CLAUDE.md"
+    ],
+    "artifacts": [
+      "ROADMAP",
+      "BACKLOG",
+      "wave-report"
+    ],
+    "state-transition": "shaped -> spec-ready"
+  },
+  "consumes": {
+    "from": [
+      {
+        "skill": "/arc-shape",
+        "artifact": "shaped-brief"
+      }
+    ]
+  },
+  "triggers": {
+    "condition": "shaped_count >= 1 AND wave_active = false",
+    "alternates": [
+      "/arc-shape",
+      "/arc-audit"
+    ]
+  }
+}
+
+======================================================================
+SKILL: arc-ship
+FILE:  skills/arc-ship/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-ship",
+  "description": "Mark validated ideas as shipped \u2014 transition spec-ready ideas to shipped after /cw-validate confirms PASS, archive to wave file, then remove from BACKLOG. Invoke when implementation is complete and validation passed \u2014 when the user says 'ship this', 'mark as done', 'archive this idea', or 'implementation is complete'. Requires an Overall PASS in the cw-validate report; does nothing without it. Not for ideas still in development (use /arc-status to check) or closing a wave (that is /arc-wave).",
+  "user-invocable": true,
+  "allowed-tools": "Glob, Grep, Read, Write, Edit, AskUserQuestion",
+  "requires": {
+    "files": [
+      "docs/BACKLOG.md",
+      "docs/ROADMAP.md"
+    ],
+    "artifacts": [
+      "BACKLOG",
+      "ROADMAP"
+    ],
+    "state": "idea.status = 'spec-ready' AND validation_status = 'PASS'"
+  },
+  "produces": {
+    "files": [
+      "docs/BACKLOG.md",
+      "docs/ROADMAP.md",
+      "docs/skill/arc/waves/{wave-slug}.md",
+      "CLAUDE.md"
+    ],
+    "artifacts": [
+      "BACKLOG",
+      "ROADMAP",
+      "wave-archive"
+    ],
+    "state-transition": "spec-ready -> shipped"
+  },
+  "consumes": {
+    "from": [
+      {
+        "skill": "/arc-wave",
+        "artifact": "wave-report"
+      },
+      {
+        "skill": "/cw-validate",
+        "artifact": "validation-report"
+      }
+    ]
+  },
+  "triggers": {
+    "condition": "idea.status = 'spec-ready' AND validation_status = 'PASS'",
+    "alternates": [
+      "/arc-audit"
+    ]
+  }
+}
+
+======================================================================
+SKILL: arc-status
+FILE:  skills/arc-status/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-status",
+  "description": "Project pulse check \u2014 read-only snapshot of project health across five dimensions: current wave, backlog distribution, in-flight specs, git momentum, and lifecycle gaps. Invoke anytime you want a quick overview without making changes \u2014 when the user says 'what's the status', 'where are we', 'give me a project summary', or 'what should we work on next'. Emits a next-step recommendation. Lightweight alternative to /arc-audit, which writes a diagnostic report and offers interactive fixes.",
+  "user-invocable": true,
+  "allowed-tools": "Glob, Grep, Read, Bash, AskUserQuestion, Skill",
+  "requires": {
+    "files": [
+      "docs/BACKLOG.md"
+    ],
+    "artifacts": [
+      "BACKLOG"
+    ],
+    "state": ""
+  },
+  "produces": {
+    "files": [],
+    "artifacts": [],
+    "state-transition": ""
+  },
+  "consumes": {},
+  "triggers": {
+    "condition": "any time a quick read-only project snapshot is needed",
+    "alternates": [
+      "/arc-audit"
+    ]
+  }
+}
+
+======================================================================
+SKILL: arc-audit
+FILE:  skills/arc-audit/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-audit",
+  "description": "Pipeline health audit \u2014 comprehensive health check across 10+ dimensions: stale ideas, priority imbalance, brief completeness, wave alignment, broken ROADMAP refs, persona coverage, and phase alignment. Writes a diagnostic report and offers interactive fixes. Invoke when diagnosing pipeline problems or before major milestones \u2014 when the user says 'audit the pipeline', 'check for issues', 'something feels off', or 'run a health check'. More thorough than /arc-status; use /arc-status for a quick read-only overview.",
+  "user-invocable": true,
+  "allowed-tools": "Glob, Grep, Read, Write, Edit, AskUserQuestion",
+  "requires": {
+    "files": [
+      "docs/BACKLOG.md"
+    ],
+    "artifacts": [
+      "BACKLOG"
+    ],
+    "state": ""
+  },
+  "produces": {
+    "files": [
+      "docs/skill/arc/review-report.md",
+      "docs/BACKLOG.md"
+    ],
+    "artifacts": [
+      "BACKLOG",
+      "review-report"
+    ],
+    "state-transition": ""
+  },
+  "consumes": {},
+  "triggers": {
+    "condition": "pipeline problems detected or pre-milestone health check needed",
+    "alternates": [
+      "/arc-status"
+    ]
+  }
+}
+
+======================================================================
+SKILL: arc-assess
+FILE:  skills/arc-assess/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-assess",
+  "description": "Codebase discovery and migration \u2014 scan a project for product-direction content scattered across README, TODO lists, docs/, and code comments, then import into Arc artifacts (BACKLOG, VISION, CUSTOMER). Invoke at project inception or when adopting Arc into an existing project \u2014 when the user says 'set up arc', 'import existing docs', 'migrate our backlog', or 'scan the repo for product content'. One-time or periodic consolidation; run before /arc-capture or /arc-shape on a new project.",
+  "user-invocable": true,
+  "allowed-tools": "Glob, Grep, Read, Write, Edit, Bash, AskUserQuestion, Agent",
+  "requires": {
+    "files": [],
+    "artifacts": [],
+    "state": ""
+  },
+  "produces": {
+    "files": [
+      "docs/BACKLOG.md",
+      "docs/VISION.md",
+      "docs/CUSTOMER.md",
+      "docs/skill/arc/align-report.md",
+      "docs/skill/arc/align-manifest.md"
+    ],
+    "artifacts": [
+      "BACKLOG",
+      "VISION",
+      "CUSTOMER",
+      "align-report"
+    ],
+    "state-transition": "raw -> captured"
+  },
+  "consumes": {},
+  "triggers": {
+    "condition": "project inception or first-time Arc adoption on an existing codebase with scattered product-direction content",
+    "alternates": [
+      "/arc-capture",
+      "/arc-sync"
+    ]
+  }
+}
+
+======================================================================
+SKILL: arc-sync
+FILE:  skills/arc-sync/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-sync",
+  "description": "README lifecycle management \u2014 scaffold a new README from Arc artifacts or update managed sections to match VISION, CUSTOMER, BACKLOG, ROADMAP, and wave archives. Invoke when scaffolding a project README for the first time, when artifacts have drifted from README, or before sharing the project \u2014 when the user says 'update the README', 'sync docs', 'the README is stale', or 'scaffold a README'. Runs a migration sweep on each invocation. Not for product-content edits \u2014 update VISION/CUSTOMER/BACKLOG first, then run /arc-sync.",
+  "user-invocable": true,
+  "allowed-tools": "Glob, Grep, Read, Write, Edit, AskUserQuestion",
+  "requires": {
+    "files": [
+      "docs/VISION.md"
+    ],
+    "artifacts": [
+      "VISION"
+    ],
+    "state": ""
+  },
+  "produces": {
+    "files": [
+      "README.md",
+      "docs/BACKLOG.md",
+      "docs/ROADMAP.md",
+      "docs/skill/arc/waves/{wave-slug}.md"
+    ],
+    "artifacts": [
+      "README",
+      "BACKLOG",
+      "ROADMAP",
+      "wave-archive"
+    ],
+    "state-transition": ""
+  },
+  "consumes": {
+    "from": [
+      {
+        "skill": "/arc-wave",
+        "artifact": "ROADMAP"
+      },
+      {
+        "skill": "/arc-shape",
+        "artifact": "BACKLOG"
+      }
+    ]
+  },
+  "triggers": {
+    "condition": "README is missing, stale, or drifted from current Arc artifacts, or before sharing the project externally",
+    "alternates": [
+      "/arc-status",
+      "/arc-audit"
+    ]
+  }
+}
+
+======================================================================
+SKILL: arc-help
+FILE:  skills/arc-help/SKILL.md
+PARSED YAML (8 top-level keys):
+{
+  "name": "arc-help",
+  "description": "Quick reference guide \u2014 overview of all 9 Arc skills, artifacts, workflow, and installation instructions. Invoke when you need a skill index, workflow diagram, or installation instructions \u2014 when the user says 'what can arc do', 'show me the arc skills', 'how do I install arc', or 'I'm new to arc'. Always outputs the full reference; does not accept arguments or take actions.",
+  "user-invocable": true,
+  "allowed-tools": [],
+  "requires": {
+    "files": [],
+    "artifacts": [],
+    "state": ""
+  },
+  "produces": {
+    "files": [],
+    "artifacts": [],
+    "state-transition": ""
+  },
+  "consumes": {},
+  "triggers": {
+    "condition": "user needs an index of Arc skills, a workflow overview, or installation instructions",
+    "alternates": [
+      "/arc-status"
+    ]
+  }
+}
+
+======================================================================
+Status: PASS — all 9 frontmatters round-trip through PyYAML 6.0.3 without error.

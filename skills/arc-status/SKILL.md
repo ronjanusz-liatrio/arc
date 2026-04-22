@@ -3,6 +3,21 @@ name: arc-status
 description: "Project pulse check — read-only snapshot of project health across five dimensions: current wave, backlog distribution, in-flight specs, git momentum, and lifecycle gaps. Invoke anytime you want a quick overview without making changes — when the user says 'what's the status', 'where are we', 'give me a project summary', or 'what should we work on next'. Emits a next-step recommendation. Lightweight alternative to /arc-audit, which writes a diagnostic report and offers interactive fixes."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Bash, AskUserQuestion, Skill
+requires:
+  files:
+    - docs/BACKLOG.md
+  artifacts:
+    - BACKLOG
+  state: ""
+produces:
+  files: []
+  artifacts: []
+  state-transition: ""
+consumes: {}
+triggers:
+  condition: "any time a quick read-only project snapshot is needed"
+  alternates:
+    - /arc-audit
 ---
 
 # /arc-status — Project Pulse Check

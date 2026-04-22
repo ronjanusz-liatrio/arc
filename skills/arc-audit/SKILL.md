@@ -3,6 +3,25 @@ name: arc-audit
 description: "Pipeline health audit — comprehensive health check across 10+ dimensions: stale ideas, priority imbalance, brief completeness, wave alignment, broken ROADMAP refs, persona coverage, and phase alignment. Writes a diagnostic report and offers interactive fixes. Invoke when diagnosing pipeline problems or before major milestones — when the user says 'audit the pipeline', 'check for issues', 'something feels off', or 'run a health check'. More thorough than /arc-status; use /arc-status for a quick read-only overview."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
+requires:
+  files:
+    - docs/BACKLOG.md
+  artifacts:
+    - BACKLOG
+  state: ""
+produces:
+  files:
+    - docs/skill/arc/review-report.md
+    - docs/BACKLOG.md
+  artifacts:
+    - BACKLOG
+    - review-report
+  state-transition: ""
+consumes: {}
+triggers:
+  condition: "pipeline problems detected or pre-milestone health check needed"
+  alternates:
+    - /arc-status
 ---
 
 # /arc-audit — Pipeline Health Audit

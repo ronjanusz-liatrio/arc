@@ -3,6 +3,29 @@ name: arc-assess
 description: "Codebase discovery and migration — scan a project for product-direction content scattered across README, TODO lists, docs/, and code comments, then import into Arc artifacts (BACKLOG, VISION, CUSTOMER). Invoke at project inception or when adopting Arc into an existing project — when the user says 'set up arc', 'import existing docs', 'migrate our backlog', or 'scan the repo for product content'. One-time or periodic consolidation; run before /arc-capture or /arc-shape on a new project."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, Bash, AskUserQuestion, Agent
+requires:
+  files: []
+  artifacts: []
+  state: ""
+produces:
+  files:
+    - docs/BACKLOG.md
+    - docs/VISION.md
+    - docs/CUSTOMER.md
+    - docs/skill/arc/align-report.md
+    - docs/skill/arc/align-manifest.md
+  artifacts:
+    - BACKLOG
+    - VISION
+    - CUSTOMER
+    - align-report
+  state-transition: "raw -> captured"
+consumes: {}
+triggers:
+  condition: "project inception or first-time Arc adoption on an existing codebase with scattered product-direction content"
+  alternates:
+    - /arc-capture
+    - /arc-sync
 ---
 
 # /arc-assess — Codebase Discovery and Migration
