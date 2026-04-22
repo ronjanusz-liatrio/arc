@@ -1,6 +1,6 @@
 ---
 name: arc-help
-description: "Quick reference guide — overview of all Arc skills, artifacts, workflow, and installation"
+description: "Quick reference guide — overview of all 9 Arc skills, artifacts, workflow, and installation instructions. Invoke when you need a skill index, workflow diagram, or installation instructions — when the user says 'what can arc do', 'show me the arc skills', 'how do I install arc', or 'I'm new to arc'. Always outputs the full reference; does not accept arguments or take actions."
 user-invocable: true
 allowed-tools: []
 ---

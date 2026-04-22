@@ -1,0 +1,42 @@
+Type: file
+Description: Before/after description comparison for all 9 arc skills
+Timestamp: 2026-04-22T00:00:00Z
+Status: PASS
+
+=== BEFORE / AFTER DESCRIPTIONS ===
+
+--- arc-assess ---
+BEFORE: "Codebase discovery and migration — consolidate scattered product-direction content into Arc-managed artifacts"
+AFTER:  "Codebase discovery and migration — scan a project for product-direction content scattered across README, TODO lists, docs/, and code comments, then import into Arc artifacts (BACKLOG, VISION, CUSTOMER). Invoke at project inception or when adopting Arc into an existing project — when the user says 'set up arc', 'import existing docs', 'migrate our backlog', or 'scan the repo for product content'. One-time or periodic consolidation; run before /arc-capture or /arc-shape on a new project."
+
+--- arc-audit ---
+BEFORE: "Pipeline health audit — check backlog health, wave alignment, and cross-reference integrity across all product artifacts"
+AFTER:  "Pipeline health audit — comprehensive health check across 10+ dimensions: stale ideas, priority imbalance, brief completeness, wave alignment, broken ROADMAP refs, persona coverage, and phase alignment. Writes a diagnostic report and offers interactive fixes. Invoke when diagnosing pipeline problems or before major milestones — when the user says 'audit the pipeline', 'check for issues', 'something feels off', or 'run a health check'. More thorough than /arc-status; use /arc-status for a quick read-only overview."
+
+--- arc-capture ---
+BEFORE: "Fast idea capture — record a raw idea to the backlog in under 30 seconds"
+AFTER:  "Fast idea capture — record raw product ideas to the backlog before they're forgotten, no analysis required. Invoke when you have a raw thought, feature request, bug report, or user feedback that needs capturing — when the user says 'jot this down', 'log this idea', 'add to backlog', or 'I just thought of something'. Does not refine or prioritize — that happens in /arc-shape. Prerequisites: none (creates BACKLOG if absent)."
+
+--- arc-help ---
+BEFORE: "Quick reference guide — overview of all Arc skills, artifacts, workflow, and installation"
+AFTER:  "Quick reference guide — overview of all 9 Arc skills, artifacts, workflow, and installation instructions. Invoke when you need a skill index, workflow diagram, or installation instructions — when the user says 'what can arc do', 'show me the arc skills', 'how do I install arc', or 'I'm new to arc'. Always outputs the full reference; does not accept arguments or take actions."
+
+--- arc-shape ---
+BEFORE: "Interactive idea refinement — transform a captured idea into a spec-ready brief using parallel subagent analysis"
+AFTER:  "Interactive idea refinement — take a captured idea and transform it into a spec-ready brief with problem clarity, customer fit, scope, and feasibility analysis. Invoke when an idea is captured and ready for a deep dive — when the user says 'shape this idea', 'let's refine X', 'turn this into a brief', or 'this idea needs more detail'. Requires at least one captured idea in BACKLOG; produces a shaped brief handed to /cw-spec. Not for raw capture (use /arc-capture) or wave planning (use /arc-wave)."
+
+--- arc-ship ---
+BEFORE: "Mark a validated idea as shipped — verify proof artifacts exist, archive to wave file, then remove from BACKLOG"
+AFTER:  "Mark validated ideas as shipped — transition spec-ready ideas to shipped after /cw-validate confirms PASS, archive to wave file, then remove from BACKLOG. Invoke when implementation is complete and validation passed — when the user says 'ship this', 'mark as done', 'archive this idea', or 'implementation is complete'. Requires an Overall PASS in the cw-validate report; does nothing without it. Not for ideas still in development (use /arc-status to check) or closing a wave (that is /arc-wave)."
+
+--- arc-status ---
+BEFORE: "Project pulse check — summarize current wave, backlog, in-flight specs, and recent activity in one inline view"
+AFTER:  "Project pulse check — read-only snapshot of project health across five dimensions: current wave, backlog distribution, in-flight specs, git momentum, and lifecycle gaps. Invoke anytime you want a quick overview without making changes — when the user says 'what's the status', 'where are we', 'give me a project summary', or 'what should we work on next'. Emits a next-step recommendation. Lightweight alternative to /arc-audit, which writes a diagnostic report and offers interactive fixes."
+
+--- arc-sync ---
+BEFORE: "README lifecycle management — scaffold or update README.md with Arc-managed sections synced to product direction artifacts"
+AFTER:  "README lifecycle management — scaffold a new README from Arc artifacts or update managed sections to match VISION, CUSTOMER, BACKLOG, ROADMAP, and wave archives. Invoke when scaffolding a project README for the first time, when artifacts have drifted from README, or before sharing the project — when the user says 'update the README', 'sync docs', 'the README is stale', or 'scaffold a README'. Runs a migration sweep on each invocation. Not for product-content edits — update VISION/CUSTOMER/BACKLOG first, then run /arc-sync."
+
+--- arc-wave ---
+BEFORE: "Delivery cycle management — group shaped ideas into a wave, update the roadmap, and prepare handoff to the SDD pipeline"
+AFTER:  "Delivery cycle management — organize spec-ready ideas into a themed wave with a clear goal and target, then hand off to /cw-spec. Invoke when you have shaped ideas ready to commit to in the next cycle — when the user says 'plan the next wave', 'let's start a sprint', 'organize these ideas into a release', or 'what should we build next'. Requires at least one shaped idea; promotes to spec-ready; updates ROADMAP and ARC:product-context. Not for checking status (use /arc-status) or capturing new ideas (use /arc-capture)."

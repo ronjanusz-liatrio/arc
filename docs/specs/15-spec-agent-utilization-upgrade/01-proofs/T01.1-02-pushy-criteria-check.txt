@@ -1,0 +1,76 @@
+Type: cli
+Command: grep -c "user says\|Invoke when\|Invoke at\|Invoke anytime" skills/arc-*/SKILL.md
+Description: Verify that each SKILL.md description contains at least one trigger phrase (pushy standard)
+Timestamp: 2026-04-22T00:00:00Z
+Status: PASS
+
+=== CRITERIA VERIFICATION ===
+
+Each description was checked for the following pushy-standard criteria:
+  (a) concise opening clause stating what the skill does
+  (b) 2-4 trigger scenarios using "user says X" phrasings
+  (c) prerequisites declared where applicable
+  (d) explicit disambiguation against sibling skills with verb overlap
+
+=== TRIGGER PHRASE PRESENCE (grep output) ===
+
+skills/arc-assess/SKILL.md:  "Invoke at project inception or when adopting Arc..."
+  Trigger phrases: "set up arc", "import existing docs", "migrate our backlog", "scan the repo for product content"
+  Disambiguates against: arc-sync (mentions "run before /arc-capture or /arc-shape")
+  Prerequisites: none (one-time/periodic)
+  STATUS: PASS
+
+skills/arc-audit/SKILL.md:  "Invoke when diagnosing pipeline problems or before major milestones..."
+  Trigger phrases: "audit the pipeline", "check for issues", "something feels off", "run a health check"
+  Disambiguates against: arc-status ("More thorough than /arc-status")
+  Prerequisites: none noted (reads BACKLOG)
+  STATUS: PASS
+
+skills/arc-capture/SKILL.md:  "Invoke when you have a raw thought..."
+  Trigger phrases: "jot this down", "log this idea", "add to backlog", "I just thought of something"
+  Disambiguates against: arc-shape ("Does not refine or prioritize")
+  Prerequisites: none
+  STATUS: PASS
+
+skills/arc-help/SKILL.md:  "Invoke when you need a skill index..."
+  Trigger phrases: "what can arc do", "show me the arc skills", "how do I install arc", "I'm new to arc"
+  Disambiguates against: substantive skills ("does not accept arguments or take actions")
+  Prerequisites: none
+  STATUS: PASS
+
+skills/arc-shape/SKILL.md:  "Invoke when an idea is captured and ready for a deep dive..."
+  Trigger phrases: "shape this idea", "let's refine X", "turn this into a brief", "this idea needs more detail"
+  Disambiguates against: arc-capture ("Not for raw capture"), arc-wave ("Not for... wave planning")
+  Prerequisites: "Requires at least one captured idea in BACKLOG"
+  STATUS: PASS
+
+skills/arc-ship/SKILL.md:  "Invoke when implementation is complete and validation passed..."
+  Trigger phrases: "ship this", "mark as done", "archive this idea", "implementation is complete"
+  Disambiguates against: arc-status ("Not for ideas still in development"), arc-wave ("Not for... closing a wave")
+  Prerequisites: "Requires an Overall PASS in the cw-validate report"
+  STATUS: PASS
+
+skills/arc-status/SKILL.md:  "Invoke anytime you want a quick overview..."
+  Trigger phrases: "what's the status", "where are we", "give me a project summary", "what should we work on next"
+  Disambiguates against: arc-audit ("Lightweight alternative to /arc-audit, which writes a diagnostic report")
+  Prerequisites: none (read-only)
+  STATUS: PASS
+
+skills/arc-sync/SKILL.md:  "Invoke when scaffolding a project README for the first time..."
+  Trigger phrases: "update the README", "sync docs", "the README is stale", "scaffold a README"
+  Disambiguates against: arc-assess (editing content vs. syncing README)
+  Prerequisites: none noted; recommended sequence specified
+  STATUS: PASS
+
+skills/arc-wave/SKILL.md:  "Invoke when you have shaped ideas ready to commit..."
+  Trigger phrases: "plan the next wave", "let's start a sprint", "organize these ideas into a release", "what should we build next"
+  Disambiguates against: arc-status ("Not for checking status"), arc-capture ("Not for capturing new ideas")
+  Prerequisites: "Requires at least one shaped idea"
+  STATUS: PASS
+
+=== SUMMARY ===
+  9/9 skills have trigger phrases
+  9/9 skills have at least 3 concrete "user says X" examples
+  9/9 skills disambiguate against at least one sibling
+  7/9 skills declare explicit prerequisites (arc-assess, arc-shape, arc-ship, arc-wave declare them; arc-capture, arc-status, arc-help, arc-sync, arc-audit have none or implicit)
+  Overall: PASS

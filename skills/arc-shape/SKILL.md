@@ -1,6 +1,6 @@
 ---
 name: arc-shape
-description: "Interactive idea refinement — transform a captured idea into a spec-ready brief using parallel subagent analysis"
+description: "Interactive idea refinement — take a captured idea and transform it into a spec-ready brief with problem clarity, customer fit, scope, and feasibility analysis. Invoke when an idea is captured and ready for a deep dive — when the user says 'shape this idea', 'let's refine X', 'turn this into a brief', or 'this idea needs more detail'. Requires at least one captured idea in BACKLOG; produces a shaped brief handed to /cw-spec. Not for raw capture (use /arc-capture) or wave planning (use /arc-wave)."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion, Agent
 ---

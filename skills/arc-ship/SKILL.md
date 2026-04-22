@@ -1,6 +1,6 @@
 ---
 name: arc-ship
-description: "Mark a validated idea as shipped — verify proof artifacts exist, archive to wave file, then remove from BACKLOG"
+description: "Mark validated ideas as shipped — transition spec-ready ideas to shipped after /cw-validate confirms PASS, archive to wave file, then remove from BACKLOG. Invoke when implementation is complete and validation passed — when the user says 'ship this', 'mark as done', 'archive this idea', or 'implementation is complete'. Requires an Overall PASS in the cw-validate report; does nothing without it. Not for ideas still in development (use /arc-status to check) or closing a wave (that is /arc-wave)."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 ---

@@ -1,6 +1,6 @@
 ---
 name: arc-wave
-description: "Delivery cycle management — group shaped ideas into a wave, update the roadmap, and prepare handoff to the SDD pipeline"
+description: "Delivery cycle management — organize spec-ready ideas into a themed wave with a clear goal and target, then hand off to /cw-spec. Invoke when you have shaped ideas ready to commit to in the next cycle — when the user says 'plan the next wave', 'let's start a sprint', 'organize these ideas into a release', or 'what should we build next'. Requires at least one shaped idea; promotes to spec-ready; updates ROADMAP and ARC:product-context. Not for checking status (use /arc-status) or capturing new ideas (use /arc-capture)."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 ---

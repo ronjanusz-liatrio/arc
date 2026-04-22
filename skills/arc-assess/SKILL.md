@@ -1,6 +1,6 @@
 ---
 name: arc-assess
-description: "Codebase discovery and migration — consolidate scattered product-direction content into Arc-managed artifacts"
+description: "Codebase discovery and migration — scan a project for product-direction content scattered across README, TODO lists, docs/, and code comments, then import into Arc artifacts (BACKLOG, VISION, CUSTOMER). Invoke at project inception or when adopting Arc into an existing project — when the user says 'set up arc', 'import existing docs', 'migrate our backlog', or 'scan the repo for product content'. One-time or periodic consolidation; run before /arc-capture or /arc-shape on a new project."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, Bash, AskUserQuestion, Agent
 ---
