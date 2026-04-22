@@ -1,0 +1,20 @@
+Type: cli
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv compile -s schemas/<file> --spec=draft7 -c ajv-formats
+Expected: Each schema compiles successfully as Draft-07.
+Timestamp: 2026-04-22T22:40:54Z
+---
+
+### backlog-entry.schema.json
+schema /home/ron.linux/arc/schemas/backlog-entry.schema.json is valid
+
+### brief.schema.json
+schema /home/ron.linux/arc/schemas/brief.schema.json is valid
+
+### roadmap-row.schema.json
+schema /home/ron.linux/arc/schemas/roadmap-row.schema.json is valid
+
+### wave.schema.json
+schema /home/ron.linux/arc/schemas/wave.schema.json is valid
+
+---
+Status: PASS

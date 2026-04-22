@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/liatrio/arc/schemas/roadmap-row.schema.json",
+  "title": "RoadmapRow",
+  "description": "A single row in the docs/ROADMAP.md Wave Summary Table. Columns are Wave, Goal, Status, Target, and Ideas. The 'wave' column must match the wave-archive naming convention 'Wave N: Name'. 'Target' may be 'TBD' when no estimate is committed. 'Ideas' is an integer count (the number of spec-ready ideas in the wave). Completed waves are archived and removed from ROADMAP, so this schema only permits Planned or Active.",
+  "type": "object",
+  "required": ["wave", "goal", "status", "target", "ideas"],
+  "additionalProperties": false,
+  "properties": {
+    "wave": {
+      "type": "string",
+      "pattern": "^Wave \\d+: .+$",
+      "description": "Wave identifier in the exact form 'Wave N: Name', e.g. 'Wave 3: Wave Lifecycle Closure'."
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Wave goal (short phrase or sentence)."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Planned", "Active"],
+      "description": "ROADMAP-visible lifecycle status. 'Completed' waves are archived to docs/skill/arc/waves/ and removed from ROADMAP, so they MUST NOT appear here."
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Target timeframe. Either a concrete value (e.g. '1-2 weeks', 'Q2 2026') or the literal 'TBD' when no estimate is committed."
+    },
+    "ideas": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of spec-ready ideas selected into this wave."
+    }
+  }
+}

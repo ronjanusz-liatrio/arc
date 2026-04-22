@@ -1,0 +1,71 @@
+Type: cli
+Command: ajv validate (negative-case spot checks — each malformed instance MUST fail with a specific diagnostic)
+Expected: Each schema produces an actionable error pinpointing the missing/invalid field.
+Timestamp: 2026-04-22T22:41:18Z
+
+Bad instances:
+
+--- bad-backlog.json ---
+{"title":"Missing stuff","status":"shaped","priority":"P1-High","captured":"2026-04-01T12:00:00Z"}
+
+--- bad-brief.json ---
+{"title":"X","problem":"too short","proposed_solution":"x","success_criteria":["a","b"],"constraints":[],"assumptions":[],"wave_assignment":"","open_questions":"None"}
+
+--- bad-wave.json ---
+{"number":3,"name":"Nope","theme":"t","goal":"g","status":"Completed","ideas":[{"title":"x"}]}
+
+--- bad-roadmap-row.json ---
+{"wave":"Not formatted correctly","goal":"g","status":"Completed","target":"TBD","ideas":0}
+
+---
+
+### EXPECT FAIL: schemas/backlog-entry.schema.json <- /tmp/arc-schema-check/bad-backlog.json
+/tmp/arc-schema-check/bad-backlog.json invalid
+[
+  {
+    instancePath: '',
+    schemaPath: '#/allOf/0/then/required',
+    keyword: 'required',
+    params: { missingProperty: 'shaped' },
+    message: "must have required property 'shaped'"
+  }
+]
+
+### EXPECT FAIL: schemas/brief.schema.json <- /tmp/arc-schema-check/bad-brief.json
+/tmp/arc-schema-check/bad-brief.json invalid
+[
+  {
+    instancePath: '/problem',
+    schemaPath: '#/properties/problem/minLength',
+    keyword: 'minLength',
+    params: { limit: 40 },
+    message: 'must NOT have fewer than 40 characters'
+  }
+]
+
+### EXPECT FAIL: schemas/wave.schema.json <- /tmp/arc-schema-check/bad-wave.json
+/tmp/arc-schema-check/bad-wave.json invalid
+[
+  {
+    instancePath: '',
+    schemaPath: '#/allOf/0/then/required',
+    keyword: 'required',
+    params: { missingProperty: 'completed' },
+    message: "must have required property 'completed'"
+  }
+]
+
+### EXPECT FAIL: schemas/roadmap-row.schema.json <- /tmp/arc-schema-check/bad-roadmap-row.json
+/tmp/arc-schema-check/bad-roadmap-row.json invalid
+[
+  {
+    instancePath: '/wave',
+    schemaPath: '#/properties/wave/pattern',
+    keyword: 'pattern',
+    params: { pattern: '^Wave \\d+: .+$' },
+    message: 'must match pattern "^Wave \\d+: .+$"'
+  }
+]
+
+---
+Status: PASS (all 4 schemas correctly rejected their malformed instances with specific diagnostics)
