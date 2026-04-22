@@ -1,0 +1,15 @@
+Type: file
+Command: grep "frontmatter-fields.md" references/README.md | wc -l
+Expected: references/README.md cross-links frontmatter-fields.md (at least 1 match)
+Timestamp: 2026-04-22T00:00:00Z
+Status: PASS
+
+--- OUTPUT ---
+2
+
+--- VERIFICATION ---
+references/README.md contains 2 references to frontmatter-fields.md:
+  1. Table row entry in the References table
+  2. "In All Arc Skills (frontmatter contract)" section in "How They Are Used"
+
+Cross-link from references/README.md is confirmed present.

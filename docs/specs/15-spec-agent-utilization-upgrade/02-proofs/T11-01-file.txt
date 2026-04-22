@@ -1,0 +1,30 @@
+Type: file
+Command: test -f references/frontmatter-fields.md && echo EXISTS || echo MISSING
+Expected: File references/frontmatter-fields.md exists
+Timestamp: 2026-04-22T00:00:00Z
+Status: PASS
+
+--- OUTPUT ---
+EXISTS
+
+--- VERIFICATION ---
+File /home/ron.linux/arc/references/frontmatter-fields.md created with 345 lines.
+
+Sections present:
+  ## Why These Fields Exist
+  ## Field Reference
+  ### requires
+  ### produces
+  ### consumes
+  ### triggers
+  ## Worked Examples
+  ### Example 1: arc-capture (always valid, no upstream dependencies)
+  ### Example 2: arc-wave (state-gated, consumes from arc-shape)
+  ### Example 3: arc-ship (double-gated — status + validation)
+  ## Interaction with Existing Fields
+  ## Cross-References
+
+All four field sections (requires, produces, consumes, triggers) are present.
+Each section contains a populated example drawn from an existing arc skill.
+State predicate vocabulary table documents idea.status, shaped_count,
+spec_ready_count, wave_active, and validation_status.

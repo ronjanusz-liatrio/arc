@@ -10,6 +10,7 @@ This directory contains the authoritative definitions and models used by `/arc-c
 | [`brief-format.md`](brief-format.md) | Spec-ready brief structure — the exact template, field descriptions, validation checklist, and examples for the artifact consumed by `/cw-spec`. |
 | [`wave-planning.md`](wave-planning.md) | Wave organization principles: capacity constraints by Temper phase, precedence rules for idea ordering, theme grouping guidance, and Temper phase compatibility. |
 | [`wave-archive.md`](wave-archive.md) | Wave archive schema, file naming conventions, lifecycle (writers and readers), fallback handling, and idempotency rules for `docs/skill/arc/waves/`. |
+| [`frontmatter-fields.md`](frontmatter-fields.md) | Shape of the four structured frontmatter fields (`requires`, `produces`, `consumes`, `triggers`) added to every Arc SKILL.md — value types, sub-fields, predicate vocabulary, and 3 worked examples. |
 
 ## How They Are Used
 
@@ -24,3 +25,6 @@ This directory contains the authoritative definitions and models used by `/arc-c
 - **idea-lifecycle.md** — Defines the Spec-Ready stage: entry criteria (status `shaped`), wave assignment, and backward transition to Shape.
 - **wave-planning.md** — Guides wave sizing, idea selection, theme coherence, and Temper phase compatibility.
 - **brief-format.md** — Referenced when preparing handoff briefs for `/cw-spec`.
+
+### In All Arc Skills (frontmatter contract)
+- **frontmatter-fields.md** — Defines the shape of `requires`, `produces`, `consumes`, and `triggers` frontmatter fields. Used by T02.2 (skill author populating frontmatter) and `scripts/parse-frontmatter.sh` (dependency-graph generator).
