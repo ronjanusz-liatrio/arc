@@ -1,0 +1,16 @@
+Type: file
+Description: Verify all three new template files exist under templates/
+Command: ls /home/ron.linux/arc/templates/*.tmpl.md
+Expected: templates/wave-report.tmpl.md, templates/audit-report.tmpl.md, templates/shape-report.tmpl.md present alongside existing 4 templates
+Timestamp: 2026-04-22T15:41:00Z
+
+--- OUTPUT ---
+/home/ron.linux/arc/templates/BACKLOG.tmpl.md
+/home/ron.linux/arc/templates/CUSTOMER.tmpl.md
+/home/ron.linux/arc/templates/ROADMAP.tmpl.md
+/home/ron.linux/arc/templates/VISION.tmpl.md
+/home/ron.linux/arc/templates/audit-report.tmpl.md
+/home/ron.linux/arc/templates/shape-report.tmpl.md
+/home/ron.linux/arc/templates/wave-report.tmpl.md
+
+Status: PASS — All 3 new templates present alongside existing 4 templates.

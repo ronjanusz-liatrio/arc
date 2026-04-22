@@ -1,0 +1,98 @@
+Type: file
+Description: Verify {SlotName} placeholder convention and no divergent syntax
+Command: grep -Pho '\{[A-Za-z][A-Za-z0-9]*\}' templates/*.tmpl.md | sort -u (plus check for divergent syntax)
+Expected: All placeholders follow {SlotName} form; no <<Slot>>, ${Slot}, or [[Slot]] found
+Timestamp: 2026-04-22T15:41:00Z
+
+--- SAMPLE SLOT NAMES (wave-report.tmpl.md) ---
+{CapturedCount}
+{CreatedTimestamp}
+{DeliveryRisk}
+{DependencyOrBlocker}
+{FailingGates}
+{GateStatus}
+{HardGateFailures}
+{IdeaAnchor}
+{IdeaHandoffSummary}
+{IdeaIndex}
+{IdeaPriority}
+{IdeaSummary}
+{IdeaTitle}
+{ScopeConstraint}
+{ShapedCount}
+{ShippedCount}
+{SpecReadyCount}
+{TemperPhase}
+{TemperRecommendation}
+{TotalCount}
+{WaveGoalParagraph}
+{WaveName}
+{WaveTarget}
+{WaveTheme}
+
+--- SAMPLE SLOT NAMES (audit-report.tmpl.md) ---
+{BH1Finding}
+{BH1Severity}
+{BH2Finding}
+{BH2Severity}
+{BH3Finding}
+{BH3Severity}
+{BH4Finding}
+{BH4Severity}
+{BH5Finding}
+{BH5Severity}
+{BriefFixCount}
+{CaptureToShapeFlow}
+{CapturedCount}
+{CriticalAction}
+{GeneratedTimestamp}
+{HealthRating}
+{InfoAction}
+{OtherFixDescription}
+{RoadmapRefFixCount}
+{ShapedCount}
+{ShapeToSpecReadyFlow}
+{ShippedCount}
+{SpecReadyCount}
+{SpecReadyToShippedFlow}
+{StaleFixCount}
+{TableFixCount}
+{TemperArtifactCoverage}
+{TemperGatesSummary}
+{TemperImplication}
+{TemperPhase}
+{TotalCount}
+{WA10Finding}
+{WA10Severity}
+... (WA1-WA9 pattern repeated)
+{WarningAction}
+
+--- SAMPLE SLOT NAMES (shape-report.tmpl.md) ---
+{CapturedSummary}
+{CustomerFitFinding}
+{CustomerFitRating}
+{DeferredOpenQuestion}
+{FeasibilityFinding}
+{FeasibilityRating}
+{IdeaTitle}
+{ProblemClarityFinding}
+{ProblemClarityRating}
+{RelevantSkillsBlock}
+{ResolvedGap}
+{ScopeFinding}
+{ScopeRating}
+{ShapedAssumption}
+{ShapedConstraint}
+{ShapedOpenQuestion}
+{ShapedProblem}
+{ShapedProposedSolution}
+{ShapedSuccessCriterion}
+{ShapedTimestamp}
+{SkillDiscoveryFinding}
+{SkillDiscoveryResult}
+
+--- DIVERGENT SYNTAX CHECK ---
+Command: grep -Pn '<<[A-Za-z]|\$\{[A-Za-z]|\[\[[A-Za-z]' templates/wave-report.tmpl.md templates/audit-report.tmpl.md templates/shape-report.tmpl.md
+Result: No output (no divergent syntax found)
+
+Status: PASS — All placeholders use the {SlotName} convention; no divergent syntax detected.

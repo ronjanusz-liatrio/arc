@@ -1,0 +1,40 @@
+Type: file
+Description: Verify each template ends with an Acceptance Criteria section containing 3-5 bullets
+Command: grep "^## Acceptance Criteria" + bullet count check via awk for each template
+Expected: Each template's last section is "Acceptance Criteria" with 3-5 pass/fail checkable bullets
+Timestamp: 2026-04-22T15:41:00Z
+
+--- wave-report.tmpl.md ---
+Last section: ## Acceptance Criteria (line 149)
+Bullet count: 5
+
+Bullets:
+- The rendered wave report contains a **Target:** line that either states the captured timeframe verbatim or renders `TBD (use /arc-wave to add)` when no estimate was collected — the line is never omitted or left blank.
+- Every {SlotName} placeholder from this template is replaced with a concrete value in the rendered output — no literal {SlotName} text remains in docs/skill/arc/wave-report.md.
+- The rendered report contains all six top-level sections in order: Wave Goal, Selected Ideas, Dependencies and Blockers, Engineering Readiness, Temper Context, Handoff Instructions, and Backlog Status.
+- The Backlog Status table shows counts for all four lifecycle stages (Captured, Shaped, Spec-Ready, Shipped) plus a bolded Total row.
+- The Per-Idea Handoff table contains one row per idea selected into the wave, each with a non-empty /cw-spec next action summary.
+
+--- audit-report.tmpl.md ---
+Last section: ## Acceptance Criteria (line 187)
+Bullet count: 5
+
+Bullets:
+- The rendered audit report contains all five Backlog Health rows (BH-1 through BH-5) in the Backlog Health Findings table, each with a non-empty finding, severity, and recommended action.
+- The rendered audit report contains all ten Wave Alignment rows (WA-1 through WA-10) in the Wave Alignment Findings table; rows for checks skipped due to absent artifacts render as N/A with an info severity rather than being omitted.
+- The Status Distribution Summary section shows counts for all four lifecycle stages and includes a Pipeline Health assessment paragraph covering all three flow transitions.
+- The Engineering Maturity section is included when Temper is installed and omitted entirely when Temper is not installed — no partial rendering of that section occurs.
+- Every {SlotName} placeholder from this template is replaced with a concrete value in the rendered output — no literal {SlotName} text remains in docs/skill/arc/review-report.md.
+
+--- shape-report.tmpl.md ---
+Last section: ## Acceptance Criteria (line 170)
+Bullet count: 5
+
+Bullets:
+- The rendered shape report contains a Subagent Analysis Summary table with all five dimension rows (Problem Clarity, Customer Fit, Scope, Feasibility, Skill Discovery), each with a non-empty rating and key finding.
+- The After (Shaped Brief) section contains all six required subsections in order: Problem, Proposed Solution, Success Criteria, Constraints, Assumptions, and Open Questions — each with at least one non-placeholder value.
+- The Gaps Resolved During Q&A section lists at least one entry or explicitly states None — it is never absent from the rendered report.
+- The Open Questions Deferred section lists deferred questions or explicitly states None — it is never absent from the rendered report.
+- Every {SlotName} placeholder from this template is replaced with a concrete value in the rendered output — no literal {SlotName} text remains in docs/skill/arc/shape-report.md.
+
+Status: PASS — All 3 templates end with Acceptance Criteria as their final section; each has exactly 5 bullets (within the 3-5 range); each bullet is phrased as a pass/fail check.
