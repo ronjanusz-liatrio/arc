@@ -1,0 +1,55 @@
+Type: file
+Check: references/skill-orchestration.md exists and contains all required sections
+Expected: File exists with sections ## State Vector, ## Skill Validity Matrix, ## Ordering Invariants, ## Dispatcher Precedence, ## Worked Example
+Timestamp: 2026-04-22T00:00:00Z
+
+--- Section Presence Check ---
+
+$ grep -n "^## " references/skill-orchestration.md
+5:## State Vector
+31:## Skill Validity Matrix
+51:## Ordering Invariants
+75:## Dispatcher Precedence
+102:## Worked Example
+137:## Cross-References
+
+--- State Vector Fields Check ---
+
+$ grep -E "idea_status|shaped_count|spec_ready_count|wave_active|validation_status" references/skill-orchestration.md | head -10
+| `idea_status` | string (enum) | `"captured"` \| `"shaped"` \| `"spec-ready"` \| `"shipped"` | The lifecycle status of the most recently active idea (or the lowest-precedence unblocked status if multiple ideas are active). For multi-idea projects, interpret in conjunction with the count fields. |
+| `shaped_count` | integer | ≥ 0 | Number of ideas in `docs/BACKLOG.md` with `Status: shaped`. |
+| `spec_ready_count` | integer | ≥ 0 | Number of ideas in `docs/BACKLOG.md` with `Status: spec-ready`. |
+| `wave_active` | boolean | `true` \| `false` | `true` when `docs/ROADMAP.md` contains at least one wave with `Status: Active` or `Status: Planned`. |
+| `validation_status` | string (enum) | `"PASS"` \| `"PENDING"` \| `"FAIL"` \| `"N/A"` | The validation outcome for the most recent spec-pipeline run. `"N/A"` when no spec has been validated yet. |
+
+--- Skill Count in Matrix ---
+
+$ grep -c "^| \`/arc-" references/skill-orchestration.md
+9
+
+--- Invariant Labels Check ---
+
+$ grep -E "### I[1-5]:" references/skill-orchestration.md
+### I1: Backlog Consistency
+### I2: Wave Closure
+### I3: Roadmap Closure
+### I4: Temporal Monotonicity
+### I5: Brief Atomicity
+
+--- Dispatcher Precedence: /arc-status Named as Coordinator ---
+
+$ grep "arc-status.*coordinator" references/skill-orchestration.md
+`/arc-status` is the **coordinator skill**. Its Step 7 implements the canonical next-step recommendation using a first-match-wins precedence list.
+
+--- Precedence Table P1-P7 Check ---
+
+$ grep -E "^\| P[1-7]" references/skill-orchestration.md
+| P1 | A Validation → Shipped gap exists (`spec_ready_count >= 1 AND validation_status = "PASS"`) | `/arc-ship` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
+| P2 | A Plan → Validation gap exists (spec directory has plan evidence but no validation report) | `/cw-validate` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
+| P3 | A Spec → Plan gap exists (spec directory exists but has no plan evidence) | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
+| P4 | A Shaped → Spec gap exists (`shaped_count >= 1` and no spec directory for the shaped idea) | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
+| P5 | A Captured → Shaped gap exists on a P0 or P1 idea | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
+| P6 | No gaps AND `wave_active = true` | `/arc-wave` or `/arc-audit` | "No gaps detected and {Wave Name} is in progress — check wave health?" |
+| P7 | No gaps AND `wave_active = false` | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+
+Status: PASS

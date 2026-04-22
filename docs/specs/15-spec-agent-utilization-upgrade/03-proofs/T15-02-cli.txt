@@ -1,0 +1,34 @@
+Type: cli
+Command: grep -E "^## " references/skill-orchestration.md
+Expected: Five section headers including State Vector, Skill Validity Matrix, Ordering Invariants, Dispatcher Precedence, Worked Example
+Timestamp: 2026-04-22T00:00:00Z
+
+--- Output ---
+
+$ grep -E "^## " /home/ron.linux/arc/references/skill-orchestration.md
+## State Vector
+## Skill Validity Matrix
+## Ordering Invariants
+## Dispatcher Precedence
+## Worked Example
+## Cross-References
+
+--- Skill Validity Matrix row count ---
+
+$ grep -c "^| \`/arc-" /home/ron.linux/arc/references/skill-orchestration.md
+9
+
+--- All 9 arc skills present in matrix ---
+
+$ grep "^| \`/arc-" /home/ron.linux/arc/references/skill-orchestration.md
+| `/arc-capture` | Always — no prerequisites | `docs/BACKLOG.md` (created if absent) |
+| `/arc-shape` | At least one idea with `idea_status = "captured"` exists in the backlog | `docs/BACKLOG.md` with ≥ 1 captured entry; `docs/CUSTOMER.md` (created from template if absent) |
+| `/arc-wave` | `shaped_count >= 1 AND wave_active = false` | `docs/VISION.md` (created if absent); `docs/ROADMAP.md` (created if absent) |
+| `/arc-ship` | `spec_ready_count >= 1 AND validation_status = "PASS"` | `docs/BACKLOG.md` with ≥ 1 spec-ready entry; `docs/specs/NN-spec-*/NN-validation-*.md` with `**Overall**: PASS`; wave archive directory |
+| `/arc-status` | Always — read-only; no prerequisites | `docs/BACKLOG.md` (required); all others optional with graceful fallback |
+| `/arc-audit` | Always — produces a report with interactive fixes | `docs/BACKLOG.md` (required); `docs/ROADMAP.md`, `docs/VISION.md`, `docs/CUSTOMER.md` (optional) |
+| `/arc-assess` | Always — but most useful at project inception or when adopting Arc into an existing project | Target project directory readable; Arc artifacts created if confirmed |
+| `/arc-sync` | Always — scaffold mode when no `README.md` exists; update mode otherwise | `README.md` (created in scaffold mode); Arc artifact files for sync content |
+| `/arc-help` | Always — no prerequisites, no side effects | None |
+
+Status: PASS
