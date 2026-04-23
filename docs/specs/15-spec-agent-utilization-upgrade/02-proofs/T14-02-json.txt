@@ -1,0 +1,55 @@
+Type: file (JSON syntax check)
+Command: scripts/parse-frontmatter.sh --format json skills/arc-*/SKILL.md | jq '.'
+Expected: Valid JSON with 9 skills and all contract fields (requires, produces, consumes, triggers)
+Timestamp: 2026-04-23T10:35:00Z
+
+Output:
+  - File: docs/specs/15-spec-agent-utilization-upgrade/02-proofs/frontmatter-parse.json
+  - Lines: 298
+  - Valid JSON structure with 9 top-level skill keys:
+    * arc-assess
+    * arc-audit
+    * arc-capture
+    * arc-help
+    * arc-shape
+    * arc-ship
+    * arc-status
+    * arc-sync
+    * arc-wave
+
+Contract Fields per Skill:
+  - All 9 skills have: requires, produces, consumes, triggers
+  - requires: files[], artifacts[], state (string)
+  - produces: files[], artifacts[], state-transition (string)
+  - consumes: from[] array with skill and artifact references
+  - triggers: condition (string) and alternates[] array
+
+Sample Entry (arc-shape):
+  {
+    "requires": {
+      "files": ["docs/BACKLOG.md"],
+      "artifacts": ["BACKLOG"],
+      "state": "idea.status = 'captured'"
+    },
+    "produces": {
+      "files": ["docs/BACKLOG.md", "docs/skill/arc/shape-report.md"],
+      "artifacts": ["BACKLOG", "shape-report"],
+      "state-transition": "captured -> shaped"
+    },
+    "consumes": {
+      "from": [
+        {"skill": "/arc-capture", "artifact": "BACKLOG"}
+      ]
+    },
+    "triggers": {
+      "condition": "at least one idea in BACKLOG has idea.status = 'captured' and is ready for a deep refinement pass",
+      "alternates": ["/arc-capture", "/arc-wave"]
+    }
+  }
+
+JSON Validation:
+  - Command: jq empty docs/specs/15-spec-agent-utilization-upgrade/02-proofs/frontmatter-parse.json
+  - Result: SUCCESS (no errors)
+  - All JSON structure valid and parseable
+
+Status: PASS

@@ -1,0 +1,298 @@
+{
+  "arc-assess": {
+    "requires": {
+      "files": [],
+      "artifacts": [],
+      "state": ""
+    },
+    "produces": {
+      "files": [
+        "docs/BACKLOG.md",
+        "docs/VISION.md",
+        "docs/CUSTOMER.md",
+        "docs/skill/arc/align-report.md",
+        "docs/skill/arc/align-manifest.md"
+      ],
+      "artifacts": [
+        "BACKLOG",
+        "VISION",
+        "CUSTOMER",
+        "align-report"
+      ],
+      "state-transition": "raw -> captured"
+    },
+    "consumes": {},
+    "triggers": {
+      "condition": "project inception or first-time Arc adoption on an existing codebase with scattered product-direction content",
+      "alternates": [
+        "/arc-capture",
+        "/arc-sync"
+      ]
+    }
+  },
+  "arc-audit": {
+    "requires": {
+      "files": [
+        "docs/BACKLOG.md"
+      ],
+      "artifacts": [
+        "BACKLOG"
+      ],
+      "state": ""
+    },
+    "produces": {
+      "files": [
+        "docs/skill/arc/review-report.md",
+        "docs/BACKLOG.md"
+      ],
+      "artifacts": [
+        "BACKLOG",
+        "review-report"
+      ],
+      "state-transition": ""
+    },
+    "consumes": {},
+    "triggers": {
+      "condition": "pipeline problems detected or pre-milestone health check needed",
+      "alternates": [
+        "/arc-status"
+      ]
+    }
+  },
+  "arc-capture": {
+    "requires": {
+      "files": [],
+      "artifacts": [
+        "BACKLOG"
+      ],
+      "state": ""
+    },
+    "produces": {
+      "files": [
+        "docs/BACKLOG.md"
+      ],
+      "artifacts": [
+        "BACKLOG"
+      ],
+      "state-transition": "raw -> captured"
+    },
+    "consumes": {},
+    "triggers": {
+      "condition": "any time a raw idea, feature request, bug report, or user feedback needs recording",
+      "alternates": [
+        "/arc-shape"
+      ]
+    }
+  },
+  "arc-help": {
+    "requires": {
+      "files": [],
+      "artifacts": [],
+      "state": ""
+    },
+    "produces": {
+      "files": [],
+      "artifacts": [],
+      "state-transition": ""
+    },
+    "consumes": {},
+    "triggers": {
+      "condition": "user needs an index of Arc skills, a workflow overview, or installation instructions",
+      "alternates": [
+        "/arc-status"
+      ]
+    }
+  },
+  "arc-shape": {
+    "requires": {
+      "files": [
+        "docs/BACKLOG.md"
+      ],
+      "artifacts": [
+        "BACKLOG"
+      ],
+      "state": "idea.status = 'captured'"
+    },
+    "produces": {
+      "files": [
+        "docs/BACKLOG.md",
+        "docs/skill/arc/shape-report.md"
+      ],
+      "artifacts": [
+        "BACKLOG",
+        "shape-report"
+      ],
+      "state-transition": "captured -> shaped"
+    },
+    "consumes": {
+      "from": [
+        {
+          "skill": "/arc-capture",
+          "artifact": "BACKLOG"
+        }
+      ]
+    },
+    "triggers": {
+      "condition": "at least one idea in BACKLOG has idea.status = 'captured' and is ready for a deep refinement pass",
+      "alternates": [
+        "/arc-capture",
+        "/arc-wave"
+      ]
+    }
+  },
+  "arc-ship": {
+    "requires": {
+      "files": [
+        "docs/BACKLOG.md",
+        "docs/ROADMAP.md"
+      ],
+      "artifacts": [
+        "BACKLOG",
+        "ROADMAP"
+      ],
+      "state": "idea.status = 'spec-ready' AND validation_status = 'PASS'"
+    },
+    "produces": {
+      "files": [
+        "docs/BACKLOG.md",
+        "docs/ROADMAP.md",
+        "docs/skill/arc/waves/{wave-slug}.md",
+        "CLAUDE.md"
+      ],
+      "artifacts": [
+        "BACKLOG",
+        "ROADMAP",
+        "wave-archive"
+      ],
+      "state-transition": "spec-ready -> shipped"
+    },
+    "consumes": {
+      "from": [
+        {
+          "skill": "/arc-wave",
+          "artifact": "wave-report"
+        },
+        {
+          "skill": "/cw-validate",
+          "artifact": "validation-report"
+        }
+      ]
+    },
+    "triggers": {
+      "condition": "idea.status = 'spec-ready' AND validation_status = 'PASS'",
+      "alternates": [
+        "/arc-audit"
+      ]
+    }
+  },
+  "arc-status": {
+    "requires": {
+      "files": [
+        "docs/BACKLOG.md"
+      ],
+      "artifacts": [
+        "BACKLOG"
+      ],
+      "state": ""
+    },
+    "produces": {
+      "files": [],
+      "artifacts": [],
+      "state-transition": ""
+    },
+    "consumes": {},
+    "triggers": {
+      "condition": "any time a quick read-only project snapshot is needed",
+      "alternates": [
+        "/arc-audit"
+      ]
+    }
+  },
+  "arc-sync": {
+    "requires": {
+      "files": [
+        "docs/VISION.md"
+      ],
+      "artifacts": [
+        "VISION"
+      ],
+      "state": ""
+    },
+    "produces": {
+      "files": [
+        "README.md",
+        "docs/BACKLOG.md",
+        "docs/ROADMAP.md",
+        "docs/skill/arc/waves/{wave-slug}.md"
+      ],
+      "artifacts": [
+        "README",
+        "BACKLOG",
+        "ROADMAP",
+        "wave-archive"
+      ],
+      "state-transition": ""
+    },
+    "consumes": {
+      "from": [
+        {
+          "skill": "/arc-wave",
+          "artifact": "ROADMAP"
+        },
+        {
+          "skill": "/arc-shape",
+          "artifact": "BACKLOG"
+        }
+      ]
+    },
+    "triggers": {
+      "condition": "README is missing, stale, or drifted from current Arc artifacts, or before sharing the project externally",
+      "alternates": [
+        "/arc-status",
+        "/arc-audit"
+      ]
+    }
+  },
+  "arc-wave": {
+    "requires": {
+      "files": [
+        "docs/BACKLOG.md",
+        "docs/VISION.md"
+      ],
+      "artifacts": [
+        "BACKLOG",
+        "VISION"
+      ],
+      "state": "shaped_count >= 1 AND wave_active = false"
+    },
+    "produces": {
+      "files": [
+        "docs/ROADMAP.md",
+        "docs/BACKLOG.md",
+        "docs/skill/arc/wave-report.md",
+        "CLAUDE.md"
+      ],
+      "artifacts": [
+        "ROADMAP",
+        "BACKLOG",
+        "wave-report"
+      ],
+      "state-transition": "shaped -> spec-ready"
+    },
+    "consumes": {
+      "from": [
+        {
+          "skill": "/arc-shape",
+          "artifact": "shaped-brief"
+        }
+      ]
+    },
+    "triggers": {
+      "condition": "shaped_count >= 1 AND wave_active = false",
+      "alternates": [
+        "/arc-shape",
+        "/arc-audit"
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+Type: file (mermaid syntax check)
+Command: scripts/parse-frontmatter.sh --format mermaid skills/arc-*/SKILL.md
+Expected: Valid Mermaid flowchart syntax with 9 skills (nodes) and dependency edges
+Timestamp: 2026-04-23T10:35:00Z
+
+Output:
+  - File: docs/specs/15-spec-agent-utilization-upgrade/02-proofs/dependency-graph.md
+  - Lines: 21
+  - Valid Mermaid fenced block with:
+    * Theme initialization block (Liatrio colors)
+    * flowchart LR directive
+    * 9 skill nodes: arc-assess, arc-audit, arc-capture, arc-help, arc-shape, arc-ship, arc-status, arc-sync, arc-wave
+    * 6 sibling edges: cap-->shp, wav-->shi, wav-->syn, shp-->syn, shp-->wav, ext-->shi
+    * 1 external upstream note node
+    * Liatrio color scheme (teal #11B5A4, orange #E8662F, dark #1B2A3D)
+
+Syntax Validation:
+  - Manual inspection: VALID
+  - Reasons: 
+    * Proper fence markers (```mermaid...```)
+    * Valid flowchart LR syntax
+    * Valid node IDs (short slugs: cap, shp, wav, shi, sta, aud, ass, syn, hlp)
+    * Valid node labels (full path names: /arc-*)
+    * Valid edge syntax (src --> dst)
+    * Valid node styling (node_id["label"] and classDef syntax)
+    * Proper escaping of special characters in config block
+
+Status: PASS
