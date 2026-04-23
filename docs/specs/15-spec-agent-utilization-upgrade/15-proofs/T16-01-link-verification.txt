@@ -1,0 +1,34 @@
+Type: file
+Test: Verify skill-orchestration.md is cross-linked from CLAUDE.md, README.md, and references/README.md
+Expected: All three files contain markdown links to references/skill-orchestration.md
+Timestamp: 2026-04-23T00:00:00Z
+
+VERIFICATION RESULTS:
+====================
+
+1. CLAUDE.md - Link Check
+   File: /home/ron.linux/arc/CLAUDE.md
+   Search: references/skill-orchestration.md
+   Found: YES
+   Content: "See [`references/skill-orchestration.md`](references/skill-orchestration.md) for the state vector, validity matrix, ordering invariants, and dispatcher precedence that govern when each skill is appropriate to invoke."
+   Location: New section "Skill Orchestration" after "Structure"
+   Status: PASS
+
+2. README.md - Link Check
+   File: /home/ron.linux/arc/README.md
+   Search: references/skill-orchestration.md
+   Found: YES
+   Content: "See [`references/skill-orchestration.md`](references/skill-orchestration.md) for the dispatcher precedence that determines which skill to invoke next based on project state."
+   Location: After Skills table, before Features section
+   Status: PASS
+
+3. references/README.md - Link Check
+   File: /home/ron.linux/arc/references/README.md
+   Search: skill-orchestration.md
+   Found: YES
+   Content: Table row with "skill-orchestration.md" and description "State vector definition, skill validity conditions, ordering invariants, and dispatcher precedence that determines when each skill is appropriate to invoke."
+   Location: New row in References table
+   Status: PASS
+
+OVERALL STATUS: PASS
+All three required cross-links are in place with appropriate context descriptions.

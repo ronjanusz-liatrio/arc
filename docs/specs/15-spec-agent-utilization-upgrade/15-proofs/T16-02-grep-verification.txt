@@ -1,0 +1,15 @@
+Type: cli
+Command: grep -n "skill-orchestration" /home/ron.linux/arc/CLAUDE.md /home/ron.linux/arc/README.md /home/ron.linux/arc/references/README.md
+Expected: All three files contain references to skill-orchestration
+Timestamp: 2026-04-23T00:00:00Z
+
+GREP OUTPUT:
+============
+/home/ron.linux/arc/references/README.md:15:| [`skill-orchestration.md`](skill-orchestration.md) | State vector definition, skill validity conditions, ordering invariants, and dispatcher precedence that determines when each skill is appropriate to invoke. |
+/home/ron.linux/arc/CLAUDE.md:26:See [`references/skill-orchestration.md`](references/skill-orchestration.md) for the state vector, validity matrix, ordering invariants, and dispatcher precedence that govern when each skill is appropriate to invoke.
+/home/ron.linux/arc/README.md:77:See [`references/skill-orchestration.md`](references/skill-orchestration.md) for the dispatcher precedence that determines which skill to invoke next based on project state.
+
+SUMMARY:
+========
+Files containing 'skill-orchestration': 3
+Status: PASS

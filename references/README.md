@@ -12,6 +12,7 @@ This directory contains the authoritative definitions and models used by `/arc-c
 | [`wave-archive.md`](wave-archive.md) | Wave archive schema, file naming conventions, lifecycle (writers and readers), fallback handling, and idempotency rules for `docs/skill/arc/waves/`. |
 | [`frontmatter-fields.md`](frontmatter-fields.md) | Shape of the four structured frontmatter fields (`requires`, `produces`, `consumes`, `triggers`) added to every Arc SKILL.md — value types, sub-fields, predicate vocabulary, and 3 worked examples. |
 | [`schema-tooling.md`](schema-tooling.md) | JSON Schema CLI decision (`ajv-cli@5` + `ajv-formats@2`), canonical invocation for validator scripts, exit code semantics, and link to T04.2 proof artifacts. |
+| [`skill-orchestration.md`](skill-orchestration.md) | State vector definition, skill validity conditions, ordering invariants, and dispatcher precedence that determines when each skill is appropriate to invoke. |
 
 ## How They Are Used
 

@@ -74,6 +74,8 @@ stateDiagram-v2
 | `/arc-audit` | Audit backlog health and wave alignment across all product artifacts |
 | `/arc-help` | Quick reference guide — overview of all skills, artifacts, workflow, and installation |
 
+See [`references/skill-orchestration.md`](references/skill-orchestration.md) for the dispatcher precedence that determines which skill to invoke next based on project state.
+
 ## Features
 
 <!--# BEGIN ARC:features -->

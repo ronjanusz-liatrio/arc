@@ -21,6 +21,10 @@ See [README.md](README.md) for the full design.
 - `references/` — Shared reference docs (idea lifecycle, brief format, wave planning)
 - `.claude-plugin/` — Plugin packaging metadata
 
+## Skill Orchestration
+
+See [`references/skill-orchestration.md`](references/skill-orchestration.md) for the state vector, validity matrix, ordering invariants, and dispatcher precedence that govern when each skill is appropriate to invoke.
+
 ## Skill Context Markers
 
 Every Arc skill SKILL.md file opens with a context marker in the format `**ARC-{SKILL-NAME}**`, where SKILL-NAME is the full directory name including the `arc-` prefix, converted to uppercase. For example, the skill at `skills/arc-capture/SKILL.md` opens with `**ARC-CAPTURE**`, and `skills/arc-shape/SKILL.md` opens with `**ARC-SHAPE**`. This marker ensures that LLM responses are clearly attributed to the correct Arc skill context. Future Arc skills must follow this convention.
