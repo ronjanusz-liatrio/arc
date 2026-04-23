@@ -1,0 +1,22 @@
+diff --git a/.claude-plugin/plugin.json b/.claude-plugin/plugin.json
+index d294b55..380d268 100644
+--- a/.claude-plugin/plugin.json
++++ b/.claude-plugin/plugin.json
+@@ -2,6 +2,17 @@
+   "name": "arc",
+   "version": "0.18.0",
+   "description": "Lightweight product direction for spec-driven development. Capture ideas, shape them into spec-ready briefs, and feed them into the claude-workflow SDD pipeline.",
++  "skills": [
++    "arc-assess",
++    "arc-audit",
++    "arc-capture",
++    "arc-help",
++    "arc-shape",
++    "arc-ship",
++    "arc-status",
++    "arc-sync",
++    "arc-wave"
++  ],
+   "companions": [
+     { "name": "temper",          "required": true,  "install": "claude plugin install temper" },
+     { "name": "claude-workflow",  "required": true,  "install": "claude plugin install claude-workflow" },

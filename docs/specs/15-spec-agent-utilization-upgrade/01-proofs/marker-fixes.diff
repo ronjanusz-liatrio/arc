@@ -1,0 +1,39 @@
+diff --git a/skills/arc-assess/SKILL.md b/skills/arc-assess/SKILL.md
+index 416455f..124b466 100644
+--- a/skills/arc-assess/SKILL.md
++++ b/skills/arc-assess/SKILL.md
+@@ -32,7 +32,7 @@ triggers:
+ 
+ ## Context Marker
+ 
+-Always begin your response with: **ARC-ALIGN**
++Always begin your response with: **ARC-ASSESS**
+ 
+ ## Overview
+ 
+diff --git a/skills/arc-audit/SKILL.md b/skills/arc-audit/SKILL.md
+index 14c2542..db6dffa 100644
+--- a/skills/arc-audit/SKILL.md
++++ b/skills/arc-audit/SKILL.md
+@@ -28,7 +28,7 @@ triggers:
+ 
+ ## Context Marker
+ 
+-Always begin your response with: **ARC-REVIEW**
++Always begin your response with: **ARC-AUDIT**
+ 
+ ## Overview
+ 
+diff --git a/skills/arc-sync/SKILL.md b/skills/arc-sync/SKILL.md
+index f6e1942..2bfd3fb 100644
+--- a/skills/arc-sync/SKILL.md
++++ b/skills/arc-sync/SKILL.md
+@@ -36,7 +36,7 @@ triggers:
+ 
+ ## Context Marker
+ 
+-Always begin your response with: **ARC-README**
++Always begin your response with: **ARC-SYNC**
+ 
+ ## Overview
+ 

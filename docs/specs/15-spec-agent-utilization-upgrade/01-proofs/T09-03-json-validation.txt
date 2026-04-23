@@ -1,0 +1,44 @@
+Type: test
+Command: python3 -m json.tool .claude-plugin/marketplace.json && python3 -m json.tool .claude-plugin/plugin.json
+Expected: Both JSON files parse without errors
+Timestamp: 2026-04-23T10:00:00Z
+
+MARKETPLACE.JSON VALIDATION:
+===========================
+File: .claude-plugin/marketplace.json
+Command: python3 -m json.tool .claude-plugin/marketplace.json
+Result: SUCCESS (valid JSON)
+
+Plugin description includes all 9 skills:
+✓ arc-capture
+✓ arc-shape
+✓ arc-wave
+✓ arc-sync
+✓ arc-audit
+✓ arc-assess
+✓ arc-status
+✓ arc-ship
+✓ arc-help
+
+PLUGIN.JSON VALIDATION:
+======================
+File: .claude-plugin/plugin.json
+Command: python3 -m json.tool .claude-plugin/plugin.json
+Result: SUCCESS (valid JSON)
+
+Skills array contains all 9 skills in alphabetical order:
+1. arc-assess
+2. arc-audit
+3. arc-capture
+4. arc-help
+5. arc-shape
+6. arc-ship
+7. arc-status
+8. arc-sync
+9. arc-wave
+
+Note: The "skills" field was added as additive metadata per the spec.
+Claude Code's plugin.json schema does not formally define this field yet.
+This addition serves as documentation and future-proofing for plugin metadata.
+
+Status: PASS

@@ -32,7 +32,7 @@ triggers:
 
 ## Context Marker
 
-Always begin your response with: **ARC-ALIGN**
+Always begin your response with: **ARC-ASSESS**
 
 ## Overview
 

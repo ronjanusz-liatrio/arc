@@ -36,7 +36,7 @@ triggers:
 
 ## Context Marker
 
-Always begin your response with: **ARC-README**
+Always begin your response with: **ARC-SYNC**
 
 ## Overview
 

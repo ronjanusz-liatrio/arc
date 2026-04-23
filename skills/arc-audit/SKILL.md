@@ -28,7 +28,7 @@ triggers:
 
 ## Context Marker
 
-Always begin your response with: **ARC-REVIEW**
+Always begin your response with: **ARC-AUDIT**
 
 ## Overview
 
