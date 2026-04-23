@@ -1,0 +1,29 @@
+Type: cli
+Command: scripts/validate-roadmap.sh docs/ROADMAP.md docs/BACKLOG.md
+         scripts/validate-brief.sh "Add rewrite mode to arc-sync injection prompt" docs/BACKLOG.md
+         scripts/validate-brief.sh "Nonexistent Idea" docs/BACKLOG.md
+Expected: validate-roadmap exits 0 on empty ROADMAP; validate-brief exits 1 for captured and missing ideas
+Timestamp: 2026-04-23T10:25:00Z
+
+--- validate-roadmap.sh (empty ROADMAP — should exit 0) ---
+$ bash scripts/validate-roadmap.sh docs/ROADMAP.md docs/BACKLOG.md
+validate-roadmap: found 0 wave row(s) in ROADMAP
+validate-roadmap: PASS: ROADMAP table is empty (no waves — acceptable for new projects)
+EXIT: 0
+
+--- validate-brief.sh (captured idea — should exit 1) ---
+$ bash scripts/validate-brief.sh "Add rewrite mode to arc-sync injection prompt" docs/BACKLOG.md
+validate-brief: FAIL: idea "Add rewrite mode to arc-sync injection prompt" has status="captured" (expected "shaped")
+EXIT: 1
+
+--- validate-brief.sh (nonexistent idea — should exit 1) ---
+$ bash scripts/validate-brief.sh "Nonexistent Idea" docs/BACKLOG.md
+validate-brief: FAIL: idea "Nonexistent Idea" not found in docs/BACKLOG.md
+EXIT: 1
+
+--- file permissions ---
+$ ls -la scripts/validate-brief.sh scripts/validate-roadmap.sh
+-rwxr-xr-x  scripts/validate-brief.sh
+-rwxr-xr-x  scripts/validate-roadmap.sh
+
+Status: PASS

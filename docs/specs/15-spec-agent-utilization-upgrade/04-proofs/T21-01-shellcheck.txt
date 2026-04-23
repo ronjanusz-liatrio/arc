@@ -1,0 +1,16 @@
+Type: cli
+Command: shellcheck --severity=style scripts/validate-brief.sh && shellcheck --severity=style scripts/validate-roadmap.sh
+Expected: both scripts exit 0 with no diagnostics (ShellCheck clean)
+Timestamp: 2026-04-23T10:25:00Z
+
+--- validate-brief.sh ---
+shellcheck --severity=style scripts/validate-brief.sh
+(no output — clean)
+Exit: 0
+
+--- validate-roadmap.sh ---
+shellcheck --severity=style scripts/validate-roadmap.sh
+(no output — clean)
+Exit: 0
+
+Status: PASS
