@@ -1,0 +1,105 @@
+{
+  "skill": "arc-help",
+  "queries": [
+    {
+      "query": "What Arc skills are available?",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; explicit skill-index request."
+    },
+    {
+      "query": "Show me the workflow",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; workflow-diagram request."
+    },
+    {
+      "query": "How do I install Arc?",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; installation lookup."
+    },
+    {
+      "query": "What can arc do?",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — the exact adjacent phrasing called out in the research report."
+    },
+    {
+      "query": "Help — where do I even start with this plugin?",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — beginner help request."
+    },
+    {
+      "query": "Give me the cheat sheet for all the /arc commands",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'cheat sheet' maps to skill index."
+    },
+    {
+      "query": "Which skill do I run to refine an idea?",
+      "expected_trigger": true,
+      "rationale": "Help surface — skill-discovery question answered by the reference guide."
+    },
+    {
+      "query": "Explain the Arc idea lifecycle from capture to ship",
+      "expected_trigger": true,
+      "rationale": "Help surface — lifecycle walkthrough is in the reference guide."
+    },
+    {
+      "query": "Is there a list of all the Arc artifacts somewhere?",
+      "expected_trigger": true,
+      "rationale": "Help surface — artifact index is part of arc-help output."
+    },
+    {
+      "query": "New to Arc — show me the overview",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — new-user onboarding help request."
+    },
+    {
+      "query": "What's the status of our current wave?",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status; looks like a help question but asks for live state, not docs."
+    },
+    {
+      "query": "Audit the backlog for me",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit; actionable diagnostic, not documentation lookup."
+    },
+    {
+      "query": "Can you help me shape this 'dark mode' idea?",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-shape; the word 'help' is not a help-index request."
+    },
+    {
+      "query": "Help me capture a bunch of ideas from this customer call",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-capture; 'help me' + actionable verb routes to the substantive skill."
+    },
+    {
+      "query": "Help plan the next wave with these four shaped ideas",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-wave; 'help' + actionable planning verb."
+    },
+    {
+      "query": "Could you walk me through shipping this validated feature?",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-ship; an actionable ship request, not docs lookup."
+    },
+    {
+      "query": "Help me update the README",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-sync; actionable README update, not docs lookup."
+    },
+    {
+      "query": "What does the backlog look like right now?",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-status; a live-state question, not a how-to question."
+    },
+    {
+      "query": "man git",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; unrelated CLI help request."
+    },
+    {
+      "query": "What's the best pizza place nearby?",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; unrelated general help."
+    }
+  ]
+}

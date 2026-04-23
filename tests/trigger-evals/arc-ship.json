@@ -1,0 +1,105 @@
+{
+  "skill": "arc-ship",
+  "queries": [
+    {
+      "query": "Ship this validated feature",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; explicit ship verb + validated precondition."
+    },
+    {
+      "query": "The wave is done, mark these ideas as shipped",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; batch-ship at wave close."
+    },
+    {
+      "query": "Validation passed, move to archive",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; PASS → archive is the arc-ship transition."
+    },
+    {
+      "query": "Wrap this one up — cw-validate said PASS",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'wrap this up' after PASS is ship intent."
+    },
+    {
+      "query": "Cross it off — dark mode is done and validated",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'cross it off' means mark shipped."
+    },
+    {
+      "query": "Put the SSO feature to bed now that it's through validation",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'put to bed' post-validation is ship."
+    },
+    {
+      "query": "Archive the completed wave 3 ideas into the wave file",
+      "expected_trigger": true,
+      "rationale": "Ship surface — wave-archive writing is arc-ship behaviour."
+    },
+    {
+      "query": "Transition the spec-ready items to shipped after cw-validate passes",
+      "expected_trigger": true,
+      "rationale": "Ship surface — state-transition spec-ready → shipped."
+    },
+    {
+      "query": "Remove the dark-mode entry from BACKLOG — it's live in prod",
+      "expected_trigger": true,
+      "rationale": "Ship surface — BACKLOG removal on ship."
+    },
+    {
+      "query": "Close out the finished work and record it in the wave archive",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'close out' + 'wave archive' maps to ship."
+    },
+    {
+      "query": "Write a validation report",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to /cw-validate (Appendix A); validation authoring runs before ship."
+    },
+    {
+      "query": "What's pipeline health?",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status (Appendix A); read-only health query."
+    },
+    {
+      "query": "Audit whether any spec-ready ideas have missing validation reports",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit; diagnostic sweep, not the ship transition itself."
+    },
+    {
+      "query": "Capture a new idea — ship tracking dashboard",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-capture; raw entry despite the word 'ship'."
+    },
+    {
+      "query": "Plan the next wave with the remaining shaped ideas",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-wave; forward planning, not completion."
+    },
+    {
+      "query": "Shape this customer request into a brief",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-shape; refinement, not completion."
+    },
+    {
+      "query": "Update the README with the shipped features from wave 3",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-sync; README sync post-ship, not the archival action itself."
+    },
+    {
+      "query": "Run the cw-validate pass on this spec",
+      "expected_trigger": false,
+      "rationale": "Routes to /cw-validate; the prerequisite check, not ship."
+    },
+    {
+      "query": "Deploy the new build to production",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; deployment tooling, not arc-ship's lifecycle marker."
+    },
+    {
+      "query": "Tag the git repo with the latest release number",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; git/release tooling, not arc artifact transition."
+    }
+  ]
+}

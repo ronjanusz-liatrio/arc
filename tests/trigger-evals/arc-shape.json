@@ -1,0 +1,105 @@
+{
+  "skill": "arc-shape",
+  "queries": [
+    {
+      "query": "Shape the 'Dark Mode' idea for me",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; explicit shape verb against a captured idea."
+    },
+    {
+      "query": "I want to prepare this for the next wave",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; wave preparation implies shaping the brief first."
+    },
+    {
+      "query": "Refine these three ideas",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; 'refine' is the canonical arc-shape verb."
+    },
+    {
+      "query": "Flesh out the SSO idea so it's ready for spec",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'flesh out' maps to idea refinement."
+    },
+    {
+      "query": "Work up a proper brief for the CSV export request",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'work up a brief' is adjacent to shape."
+    },
+    {
+      "query": "Let's dig into the 'weekly digest' idea and size it up",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'dig into' plus 'size it up' is shape-intent."
+    },
+    {
+      "query": "Turn the captured auth-bug idea into a spec-ready brief",
+      "expected_trigger": true,
+      "rationale": "Shape surface — explicit captured → spec-ready transition."
+    },
+    {
+      "query": "I need a problem statement and success criteria for the dark-mode idea",
+      "expected_trigger": true,
+      "rationale": "Shape surface — brief fields enumerated triggers refinement."
+    },
+    {
+      "query": "Tighten up the onboarding-tour idea before we plan next cycle",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'tighten up' before planning is shape."
+    },
+    {
+      "query": "Run the shaping subagents on the top three captured items",
+      "expected_trigger": true,
+      "rationale": "Shape surface — direct reference to parallel subagent analysis."
+    },
+    {
+      "query": "Just record this quick thought",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-capture (Appendix A); raw capture only."
+    },
+    {
+      "query": "Write the detailed spec for this feature",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to /cw-spec (Appendix A); spec authoring lives downstream of shape."
+    },
+    {
+      "query": "Plan the next wave with the already-shaped ideas",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-wave; grouping shaped ideas, not shaping one."
+    },
+    {
+      "query": "Audit the pipeline for incomplete briefs",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit; diagnostic sweep across briefs, not authoring a brief."
+    },
+    {
+      "query": "Jot down the idea the user just asked about",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-capture; raw capture phrasing."
+    },
+    {
+      "query": "Ship this already-validated feature to archive",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-ship; lifecycle completion, not refinement."
+    },
+    {
+      "query": "What's the status of the pipeline?",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-status; read-only pulse, not shape."
+    },
+    {
+      "query": "Update the README to mention dark-mode support",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-sync; README management, not brief authoring."
+    },
+    {
+      "query": "Implement the dark-mode UI in the settings panel",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; engineering implementation, not product shaping."
+    },
+    {
+      "query": "Create three new Jira tickets from these captured ideas",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; ticket creation in external tool, not Arc shape."
+    }
+  ]
+}

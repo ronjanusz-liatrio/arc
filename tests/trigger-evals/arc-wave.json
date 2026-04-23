@@ -1,0 +1,105 @@
+{
+  "skill": "arc-wave",
+  "queries": [
+    {
+      "query": "Plan the next delivery wave with these 4 ideas",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; explicit wave planning verb + count."
+    },
+    {
+      "query": "Time to group these ideas into a wave",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; grouping shaped ideas into a wave."
+    },
+    {
+      "query": "I'm ready to commit to the next 2 weeks",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; cycle commitment implies wave planning."
+    },
+    {
+      "query": "Let's line up what we're building this sprint",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'line up this sprint' maps to wave grouping."
+    },
+    {
+      "query": "Bundle the top three shaped items and kick off the cycle",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'bundle' + 'cycle' signals wave."
+    },
+    {
+      "query": "Pick what we're doing next round and write it up on the roadmap",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'what we're doing next round' + ROADMAP update is wave."
+    },
+    {
+      "query": "Promote these shaped ideas to spec-ready and start the wave",
+      "expected_trigger": true,
+      "rationale": "Wave surface — state-transition shaped → spec-ready happens in arc-wave."
+    },
+    {
+      "query": "Set the theme and goal for wave 3 and hand off to /cw-spec",
+      "expected_trigger": true,
+      "rationale": "Wave surface — theme, goal, and cw-spec handoff are wave Step outputs."
+    },
+    {
+      "query": "Update ROADMAP.md with the next wave's ideas",
+      "expected_trigger": true,
+      "rationale": "Wave surface — ROADMAP update is exclusive to arc-wave."
+    },
+    {
+      "query": "Organize the spec-ready backlog into a themed delivery wave",
+      "expected_trigger": true,
+      "rationale": "Wave surface — explicit verb + theme."
+    },
+    {
+      "query": "What's the current status?",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status (Appendix A); read-only pulse."
+    },
+    {
+      "query": "Write specs for the next wave ideas",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to /cw-spec (Appendix A); spec authoring runs after wave handoff."
+    },
+    {
+      "query": "Shape the 'dark mode' idea before we plan anything",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-shape; wave requires shaped ideas as input."
+    },
+    {
+      "query": "Capture this new feature request before we forget",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-capture; raw entry, not wave planning."
+    },
+    {
+      "query": "Audit wave alignment for stale spec-ready ideas",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit; diagnostic sweep includes wave alignment."
+    },
+    {
+      "query": "Ship the completed ideas from wave 2 now that validation passed",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-ship; lifecycle completion of an existing wave."
+    },
+    {
+      "query": "Sync the README with the latest wave archive entry",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-sync; README management, not wave planning."
+    },
+    {
+      "query": "Show me the wave-planning reference doc",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-help or plain Read; documentation lookup, not planning action."
+    },
+    {
+      "query": "Configure the CI pipeline for the next release cycle",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; CI/CD config, not product wave planning."
+    },
+    {
+      "query": "Schedule a standup for tomorrow morning",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; calendar task unrelated to delivery wave."
+    }
+  ]
+}

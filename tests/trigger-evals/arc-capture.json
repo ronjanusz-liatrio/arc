@@ -1,0 +1,105 @@
+{
+  "skill": "arc-capture",
+  "queries": [
+    {
+      "query": "I have a quick idea — add keyboard shortcuts",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; explicit raw idea for capture."
+    },
+    {
+      "query": "Customer asked for SSO",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; unshaped customer request needing backlog entry."
+    },
+    {
+      "query": "We found a bug in the auth flow",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; bug report captured without analysis."
+    },
+    {
+      "query": "Jot this down before I forget: dark mode toggle in settings",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'jot this down' is the canonical adjacent phrasing named in the spec."
+    },
+    {
+      "query": "Add to the list: CSV export for reports",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'add to the list' maps to recording on the backlog."
+    },
+    {
+      "query": "Stick this on the backlog — users want email digests",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — colloquial 'stick this on the backlog' is capture intent."
+    },
+    {
+      "query": "New feature request from the CEO: weekly usage summary email",
+      "expected_trigger": true,
+      "rationale": "Capture surface — feature request with no analysis requested."
+    },
+    {
+      "query": "Quick thought — we should probably track failed login attempts",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'quick thought' signals raw capture before refinement."
+    },
+    {
+      "query": "Log this: the onboarding tour breaks on Safari",
+      "expected_trigger": true,
+      "rationale": "Capture surface — 'log this' is adjacent to record-to-backlog."
+    },
+    {
+      "query": "Can you note that we want a dark theme sometime down the line?",
+      "expected_trigger": true,
+      "rationale": "Capture surface — 'note that' plus deferred timing is raw capture."
+    },
+    {
+      "query": "Let me shape this idea",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-shape (Appendix A); explicit refinement request."
+    },
+    {
+      "query": "What's the backlog status?",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status (Appendix A); read-only health query."
+    },
+    {
+      "query": "Refine the SSO idea into a spec-ready brief",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-shape; explicit brief-building request."
+    },
+    {
+      "query": "Audit the backlog for stale captured ideas",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit; diagnostic sweep, not capture."
+    },
+    {
+      "query": "Show me what's in the backlog right now",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status; read-only snapshot, no new idea."
+    },
+    {
+      "query": "Scan the repo for scattered TODOs and bring them into Arc",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-assess; migration sweep, not single-idea capture."
+    },
+    {
+      "query": "Ship the dark-mode feature now that validation passed",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-ship; lifecycle completion, not new entry."
+    },
+    {
+      "query": "Plan the next wave with these four ideas",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-wave; grouping shaped ideas, not capture."
+    },
+    {
+      "query": "Write unit tests for the login service",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; engineering task unrelated to product-direction capture."
+    },
+    {
+      "query": "Summarize yesterday's standup notes into meeting minutes",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; note summarization is not backlog capture."
+    }
+  ]
+}

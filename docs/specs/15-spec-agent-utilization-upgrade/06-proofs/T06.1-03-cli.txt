@@ -1,0 +1,13 @@
+Type: cli
+Command: scenario-4 + scenario-5 checks — informal phrasing in arc-capture + sibling near-miss in arc-status
+Expected: 'jot' phrasing appears in arc-capture should-trigger; 'audit the pipeline' appears in arc-status should-NOT-trigger annotated to arc-audit
+Timestamp: 2026-04-23T17:20:00Z
+---
+=== arc-capture should-trigger queries containing 'jot' ===
+Jot this down before I forget: dark mode toggle in settings
+
+=== arc-status should-NOT-trigger 'audit the pipeline' near-misses ===
+Audit the pipeline and fix issues :: Near-miss routes to arc-audit (Appendix A); writes a report and offers fixes.
+Audit the pipeline for stale ideas :: Near-miss routes to arc-audit; diagnostic sweep despite shared 'pipeline' keyword.
+
+Status: PASS

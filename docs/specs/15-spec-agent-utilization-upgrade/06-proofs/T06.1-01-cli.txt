@@ -1,0 +1,17 @@
+Type: cli
+Command: ls tests/trigger-evals/*.json | wc -l ; ls tests/trigger-evals/*.json
+Expected: exit 0; 9 files listed, one per arc skill
+Timestamp: 2026-04-23T17:19:46Z
+---
+File count: 9
+tests/trigger-evals/arc-assess.json
+tests/trigger-evals/arc-audit.json
+tests/trigger-evals/arc-capture.json
+tests/trigger-evals/arc-help.json
+tests/trigger-evals/arc-shape.json
+tests/trigger-evals/arc-ship.json
+tests/trigger-evals/arc-status.json
+tests/trigger-evals/arc-sync.json
+tests/trigger-evals/arc-wave.json
+
+Status: PASS

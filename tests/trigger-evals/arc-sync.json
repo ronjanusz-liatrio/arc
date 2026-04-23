@@ -1,0 +1,105 @@
+{
+  "skill": "arc-sync",
+  "queries": [
+    {
+      "query": "Scaffold a README from our product direction",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; README scaffolding from Arc artifacts."
+    },
+    {
+      "query": "Update the README with the new wave",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; managed-section update post-wave."
+    },
+    {
+      "query": "Sync the README features list",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; explicit sync verb on README."
+    },
+    {
+      "query": "The README is stale — make it match the current backlog and roadmap",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'README is stale' signals sync intent."
+    },
+    {
+      "query": "Bring the README up to date before I share the repo",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'bring up to date before sharing' is sync surface."
+    },
+    {
+      "query": "Refresh the managed sections in README.md",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'refresh managed sections' maps to sync."
+    },
+    {
+      "query": "Propagate VISION and CUSTOMER changes into the README",
+      "expected_trigger": true,
+      "rationale": "Sync surface — artifact → README propagation is sync behaviour."
+    },
+    {
+      "query": "Initialize the README for this new project using Arc artifacts",
+      "expected_trigger": true,
+      "rationale": "Sync surface — first-time README scaffolding."
+    },
+    {
+      "query": "Regenerate the README's 'Current Wave' managed block",
+      "expected_trigger": true,
+      "rationale": "Sync surface — managed-block regeneration from artifacts."
+    },
+    {
+      "query": "Run the README migration sweep",
+      "expected_trigger": true,
+      "rationale": "Sync surface — migration sweep runs on each arc-sync invocation."
+    },
+    {
+      "query": "Consolidate scattered backlog items",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-assess (Appendix A); scattered-content migration."
+    },
+    {
+      "query": "What's the current status?",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status (Appendix A); read-only pulse."
+    },
+    {
+      "query": "Audit the README for broken ROADMAP references",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit; diagnostic sweep, not regeneration."
+    },
+    {
+      "query": "Capture a new idea — improved README screenshots",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-capture; raw entry despite mentioning README."
+    },
+    {
+      "query": "Shape the 'project homepage' idea into a brief",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-shape; refinement, not README sync."
+    },
+    {
+      "query": "Plan the next wave with shaped ideas",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-wave; forward planning."
+    },
+    {
+      "query": "Ship the README-refresh feature now that it's validated",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-ship; lifecycle completion."
+    },
+    {
+      "query": "Scan the repo for scattered product content and import it",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-assess; discovery + migration, not README regeneration."
+    },
+    {
+      "query": "Sync the local branch with origin/main",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; git sync, not README sync."
+    },
+    {
+      "query": "Sync the application state with the backend database",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; application-level sync, not README management."
+    }
+  ]
+}

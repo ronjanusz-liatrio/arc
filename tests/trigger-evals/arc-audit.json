@@ -1,0 +1,105 @@
+{
+  "skill": "arc-audit",
+  "queries": [
+    {
+      "query": "Audit the product pipeline",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; explicit audit verb."
+    },
+    {
+      "query": "Something feels off in the backlog",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; vague concern prompts diagnostic sweep."
+    },
+    {
+      "query": "Check for issues before release",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; pre-milestone health check."
+    },
+    {
+      "query": "Something's off with the backlog — find what",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'something's off' is audit-intent (diagnosis)."
+    },
+    {
+      "query": "Run the health check across our product artifacts",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'health check' is the audit description verb."
+    },
+    {
+      "query": "Look for stale ideas and broken roadmap refs",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — enumerated audit dimensions without the word 'audit'."
+    },
+    {
+      "query": "Do a pre-milestone sweep across BACKLOG and ROADMAP",
+      "expected_trigger": true,
+      "rationale": "Audit surface — pre-milestone comprehensive check."
+    },
+    {
+      "query": "Find stale captured ideas and priority imbalance in the backlog",
+      "expected_trigger": true,
+      "rationale": "Audit surface — two named audit dimensions in one query."
+    },
+    {
+      "query": "Run cross-reference integrity checks across product artifacts",
+      "expected_trigger": true,
+      "rationale": "Audit surface — cross-reference integrity is the audit's own phrasing."
+    },
+    {
+      "query": "I want a diagnostic report with recommended fixes for the pipeline",
+      "expected_trigger": true,
+      "rationale": "Audit surface — diagnostic report + interactive fixes is the audit output."
+    },
+    {
+      "query": "Quick status check",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status (Appendix A); read-only pulse, no report written."
+    },
+    {
+      "query": "Audit engineering gates",
+      "expected_trigger": false,
+      "rationale": "Near-miss from Appendix A; routes to Temper's engineering audit, not arc product audit."
+    },
+    {
+      "query": "Show me a 30-second project overview",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status; quick read-only overview."
+    },
+    {
+      "query": "What's the status of the current wave?",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-status; read-only wave state."
+    },
+    {
+      "query": "Capture this issue — backlog items don't match ROADMAP",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-capture; raw issue entry despite audit-like content."
+    },
+    {
+      "query": "Shape the 'audit dashboard' idea into a brief",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-shape; refinement despite the word 'audit'."
+    },
+    {
+      "query": "Plan the next wave with these shaped ideas",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-wave; forward planning, not diagnostic review."
+    },
+    {
+      "query": "Sync the README with the latest audit findings",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-sync; README management after an audit, not the audit itself."
+    },
+    {
+      "query": "Run security audit on the authentication code",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; security/code audit, not arc product audit."
+    },
+    {
+      "query": "Audit our AWS cost allocation for last quarter",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; finance audit, not arc product artifacts."
+    }
+  ]
+}

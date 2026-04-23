@@ -1,0 +1,16 @@
+Type: cli
+Command: jq '[.queries[].expected_trigger] | group_by(.) | map({key: .[0], count: length})' over all 9 files
+Expected: each output equals [{key:false,count:10},{key:true,count:10}] (order-independent)
+Timestamp: 2026-04-23T17:19:52Z
+---
+[PASS] arc-capture => [{"key":false,"count":10},{"key":true,"count":10}]
+[PASS] arc-shape => [{"key":false,"count":10},{"key":true,"count":10}]
+[PASS] arc-wave => [{"key":false,"count":10},{"key":true,"count":10}]
+[PASS] arc-ship => [{"key":false,"count":10},{"key":true,"count":10}]
+[PASS] arc-status => [{"key":false,"count":10},{"key":true,"count":10}]
+[PASS] arc-audit => [{"key":false,"count":10},{"key":true,"count":10}]
+[PASS] arc-assess => [{"key":false,"count":10},{"key":true,"count":10}]
+[PASS] arc-sync => [{"key":false,"count":10},{"key":true,"count":10}]
+[PASS] arc-help => [{"key":false,"count":10},{"key":true,"count":10}]
+
+Status: PASS

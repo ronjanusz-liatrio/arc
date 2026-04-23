@@ -1,0 +1,105 @@
+{
+  "skill": "arc-status",
+  "queries": [
+    {
+      "query": "What's the status?",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; canonical status query."
+    },
+    {
+      "query": "Show me the project pulse",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; 'project pulse' is arc-status's own description verb."
+    },
+    {
+      "query": "Quick overview before standup",
+      "expected_trigger": true,
+      "rationale": "Appendix A seed; read-only overview request."
+    },
+    {
+      "query": "How are we doing across the pipeline right now?",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'how are we doing' is adjacent to status pulse."
+    },
+    {
+      "query": "Give me the 30-second read on the project",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — '30-second read' maps to quick snapshot."
+    },
+    {
+      "query": "Where are we at on the current wave?",
+      "expected_trigger": true,
+      "rationale": "Informal phrasing — 'where are we at' is status intent."
+    },
+    {
+      "query": "Summarize backlog, wave, and in-flight specs in one view",
+      "expected_trigger": true,
+      "rationale": "Status surface — the five-dimension inline snapshot."
+    },
+    {
+      "query": "What should I work on next?",
+      "expected_trigger": true,
+      "rationale": "Status surface — arc-status emits a next-step recommendation."
+    },
+    {
+      "query": "Is there an active wave right now?",
+      "expected_trigger": true,
+      "rationale": "Status surface — read-only wave-active query."
+    },
+    {
+      "query": "Tell me the recent activity and git momentum on this project",
+      "expected_trigger": true,
+      "rationale": "Status surface — git momentum is one of the five status dimensions."
+    },
+    {
+      "query": "Audit the pipeline and fix issues",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit (Appendix A); writes a report and offers fixes."
+    },
+    {
+      "query": "Update the README",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-sync (Appendix A); README management."
+    },
+    {
+      "query": "Audit the pipeline for stale ideas",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit; diagnostic sweep despite shared 'pipeline' keyword."
+    },
+    {
+      "query": "Check brief completeness across the shaped ideas",
+      "expected_trigger": false,
+      "rationale": "Near-miss routes to arc-audit; brief-completeness is one of its 10 dimensions."
+    },
+    {
+      "query": "Capture a new idea — status dashboard widget",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-capture; raw entry despite the word 'status'."
+    },
+    {
+      "query": "Shape the 'status page' idea into a spec-ready brief",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-shape; refinement despite the word 'status'."
+    },
+    {
+      "query": "Plan the next wave",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-wave; forward planning."
+    },
+    {
+      "query": "Ship the completed ideas from the current wave",
+      "expected_trigger": false,
+      "rationale": "Routes to arc-ship; lifecycle completion."
+    },
+    {
+      "query": "Check the CI build status",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; CI/CD status, not product pipeline status."
+    },
+    {
+      "query": "What's the weather today?",
+      "expected_trigger": false,
+      "rationale": "Out-of-domain; unrelated small talk."
+    }
+  ]
+}
