@@ -1,0 +1,18 @@
+Type: cli
+Command: shellcheck --severity=style scripts/validate-backlog.sh && ls -la scripts/validate-backlog.sh
+Expected: ShellCheck exits 0 (no warnings), file is executable (-rwxr-xr-)
+Timestamp: 2026-04-23T10:27:00Z
+
+--- shellcheck stdout ---
+(no output — clean)
+
+--- shellcheck exit code ---
+0
+
+--- ls -la output ---
+-rwxr-xr-x 1 ron ron 11379 Apr 23 10:27 scripts/validate-backlog.sh
+
+--- File mode ---
+0755 (rwxr-xr-x) -- executable by owner, group, and others
+
+Status: PASS

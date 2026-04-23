@@ -1,0 +1,15 @@
+Type: cli
+Command: scripts/validate-backlog.sh docs/BACKLOG.md
+Expected: Exit code 0, PASS summary mentioning 20 entries
+Timestamp: 2026-04-23T10:27:00Z
+
+--- stdout ---
+validate-backlog: PASS -- 20 entries validated (20 pass, 0 fail)
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+0
+
+Status: PASS
