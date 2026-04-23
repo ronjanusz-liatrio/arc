@@ -1,0 +1,51 @@
+Type: cli
+Command: scripts/state.sh across output-shape fixtures
+Expected: all six output fields present with correct types; wave_active toggles with ROADMAP; validation_status picks up the latest **Overall**: verdict
+Timestamp: 2026-04-23T17:27:29Z
+
+---- Fixture 1: shaped + spec-ready + shipped; Active wave; PENDING validation ----
+{
+  "idea_status_counts": {
+    "captured": 0,
+    "shaped": 1,
+    "spec_ready": 1,
+    "shipped": 1
+  },
+  "wave_active": true,
+  "current_wave": "Wave 1: First delivery",
+  "validation_status": "PENDING",
+  "gaps": [
+    {
+      "type": "shaped_no_spec",
+      "idea": "Fake shaped idea",
+      "remediation": "write a spec with /cw-spec"
+    },
+    {
+      "type": "spec_ready_no_pass",
+      "idea": "Fake spec-ready idea",
+      "remediation": "validate with /cw-validate"
+    }
+  ],
+  "timestamp": "2026-04-23T17:27:29Z"
+}
+
+---- Field shape check ----
+{
+  "has_idea_status_counts": true,
+  "has_wave_active": true,
+  "current_wave_is_string": true,
+  "validation_status_string": true,
+  "gaps_is_array": true,
+  "timestamp_iso8601": true
+}
+
+---- Fixture 2: ROADMAP with no data rows (current_wave should be null) ----
+{
+  "wave_active": false,
+  "current_wave": null
+}
+
+---- Fixture 3: validation FAIL should override PENDING ----
+"FAIL"
+
+Status: PASS

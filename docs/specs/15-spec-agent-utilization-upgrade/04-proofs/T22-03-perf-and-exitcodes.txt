@@ -1,0 +1,40 @@
+Type: cli
+Command: scripts/state.sh (performance + exit-code probes)
+Expected: 50-idea max run time < 500 ms; exit 1 on unreadable BACKLOG or ROADMAP
+Timestamp: 2026-04-23T17:27:12Z
+
+---- 50-idea synthetic repo output (summary) ----
+{
+  "idea_status_counts": {
+    "captured": 50,
+    "shaped": 0,
+    "spec_ready": 0,
+    "shipped": 0
+  },
+  "wave_active": false,
+  "current_wave": null,
+  "validation_status": "N/A",
+  "gap_count": 0
+}
+
+---- wall-clock timings (3 trials) ----
+Trial 1: 17 ms
+Trial 2: 14 ms
+Trial 3: 14 ms
+Max:     17 ms
+Status: PASS (max < 500 ms budget)
+
+---- exit-code matrix ----
+
+Case 1: BACKLOG missing
+  exit code: 1
+  stderr:    state.sh: cannot read BACKLOG at /tmp/tmp.OGeTKgpRLY/docs/BACKLOG.md
+
+Case 2: ROADMAP missing
+  exit code: 1
+  stderr:    state.sh: cannot read ROADMAP at /tmp/tmp.OGeTKgpRLY/docs/ROADMAP.md
+
+Case 3: both present (happy path)
+  exit code: 0
+
+All three cases behave as specified.

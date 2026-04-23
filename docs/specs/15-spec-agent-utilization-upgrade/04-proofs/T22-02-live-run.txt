@@ -1,0 +1,50 @@
+Type: cli
+Command: scripts/state.sh | jq .
+Expected: valid JSON with fields idea_status_counts, wave_active, current_wave, validation_status, gaps, timestamp
+Timestamp: 2026-04-23T17:26:40Z
+
+---- scripts/state.sh on the current repo ----
+{
+  "idea_status_counts": {
+    "captured": 20,
+    "shaped": 0,
+    "spec_ready": 0,
+    "shipped": 0
+  },
+  "wave_active": false,
+  "current_wave": null,
+  "validation_status": "PASS",
+  "gaps": [
+    {
+      "type": "captured_high_pri",
+      "idea": "Add rewrite mode to arc-sync injection prompt",
+      "remediation": "shape with /arc-shape"
+    },
+    {
+      "type": "captured_high_pri",
+      "idea": "Remove time estimates from arc-wave",
+      "remediation": "shape with /arc-shape"
+    }
+  ],
+  "timestamp": "2026-04-23T17:26:40Z"
+}
+(exit: 0)
+
+---- jq .idea_status_counts ----
+{
+  "captured": 20,
+  "shaped": 0,
+  "spec_ready": 0,
+  "shipped": 0
+}
+
+---- required keys and integer types ----
+[
+  true,
+  true,
+  true,
+  true,
+  true
+]
+
+Status: PASS
