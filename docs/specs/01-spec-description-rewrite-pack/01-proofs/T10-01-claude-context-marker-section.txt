@@ -1,0 +1,32 @@
+Type: file
+File: CLAUDE.md
+Description: Skill Context Markers documentation section added
+Timestamp: 2026-04-23T00:00:00Z
+
+CONTENT VERIFICATION:
+====================
+
+Section heading found: "## Skill Context Markers" - YES
+Format pattern documented: "**ARC-{SKILL-NAME}**" - YES
+Example 1: "**ARC-CAPTURE**" - YES
+Example 2: "**ARC-SHAPE**" - YES
+Purpose statement present - YES
+Future guidance included - YES
+Sentence count: 4 (within 3-5 range) - PASS
+
+GREP VERIFICATION:
+==================
+Grepping for context markers section:
+## Skill Context Markers
+
+Every Arc skill SKILL.md file opens with a context marker in the format `**ARC-{SKILL-NAME}**`, where SKILL-NAME is the full directory name including the `arc-` prefix, converted to uppercase. For example, the skill at `skills/arc-capture/SKILL.md` opens with `**ARC-CAPTURE**`, and `skills/arc-shape/SKILL.md` opens with `**ARC-SHAPE**`. This marker ensures that LLM responses are clearly attributed to the correct Arc skill context. Future Arc skills must follow this convention.
+
+
+VALIDATION:
+===========
+- ARC:-managed sections untouched: ✓
+- Pure additive edit: ✓
+- Markdown formatting valid: ✓
+- Convention clearly documented: ✓
+
+Status: PASS
