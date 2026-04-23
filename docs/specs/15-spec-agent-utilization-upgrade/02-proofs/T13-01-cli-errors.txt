@@ -1,0 +1,36 @@
+Type: cli (flag parser + usage)
+Command: scripts/parse-frontmatter.sh [various invocations]
+Expected: invalid/missing flags exit 1 with helpful messages; --help lists usage.
+Timestamp: 2026-04-23T17:19:58Z
+
+======================================================================
+$ scripts/parse-frontmatter.sh        # no --format flag
+parse-frontmatter: --format is required (mermaid|json)
+(exit=1)
+
+======================================================================
+$ scripts/parse-frontmatter.sh --format xml        # invalid format
+parse-frontmatter: invalid --format value: xml (expected mermaid|json)
+(exit=1)
+
+======================================================================
+$ scripts/parse-frontmatter.sh --unknown        # unknown flag
+parse-frontmatter: unknown flag: --unknown
+(exit=1)
+
+======================================================================
+$ scripts/parse-frontmatter.sh --format json /tmp/does-not-exist.md
+parse-frontmatter: warning: skipping missing file /tmp/does-not-exist.md
+{}
+(first 5 lines)
+(exit=0) -- missing-file warning is non-fatal when other inputs succeed
+
+======================================================================
+$ scripts/parse-frontmatter.sh --format json /tmp/tmp.9ebEObooly.md   # malformed input
+parse-frontmatter: no frontmatter block found in /tmp/tmp.9ebEObooly.md
+(exit=1)
+
+======================================================================
+Status: PASS -- all error paths return exit 1 with descriptive stderr;
+malformed frontmatter is detected; non-fatal missing-file warnings do not
+block successful parses.

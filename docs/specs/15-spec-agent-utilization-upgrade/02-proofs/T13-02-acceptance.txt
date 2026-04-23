@@ -1,0 +1,151 @@
+Type: cli (acceptance criteria check for both output formats)
+Command: scripts/parse-frontmatter.sh --format mermaid | json
+Expected: Mermaid block under 50 lines with 9 arc-* nodes and a flowchart
+          declaration; JSON object with 9 entries each exposing requires,
+          produces, consumes, triggers.
+Timestamp: 2026-04-23T17:20:23Z
+
+======================================================================
+ASSERT: Mermaid fenced block <= 50 lines
+  actual lines: 21
+  status: PASS
+
+ASSERT: Mermaid contains 'flowchart' declaration
+  count: 1
+  status: PASS
+
+ASSERT: Mermaid contains exactly 9 arc-* nodes
+  count: 9
+  status: PASS
+
+ASSERT: JSON is a single valid document
+  result: OK
+
+ASSERT: JSON has 9 skill entries
+  count: 9
+  status: PASS
+
+ASSERT: every JSON entry exposes requires/produces/consumes/triggers
+  matching entries: 9 / 9
+  status: PASS
+
+ASSERT: skills with sibling consumes.from are edge targets in Mermaid
+  sibling-consuming skills: arc-shape,arc-ship,arc-sync,arc-wave
+  [PASS] arc-shape (id=shp) is an edge target
+  [PASS] arc-ship (id=shi) is an edge target
+  [PASS] arc-sync (id=syn) is an edge target
+  [PASS] arc-wave (id=wav) is an edge target
+
+======================================================================
+--- MERMAID OUTPUT (captured verbatim) ---
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+flowchart LR
+    ass["/arc-assess"]
+    aud["/arc-audit"]
+    cap["/arc-capture"]
+    hlp["/arc-help"]
+    shp["/arc-shape"]
+    shi["/arc-ship"]
+    sta["/arc-status"]
+    syn["/arc-sync"]
+    wav["/arc-wave"]
+    cap --> shp
+    wav --> shi
+    wav --> syn
+    shp --> syn
+    shp --> wav
+    ext("external upstream"):::ext
+    ext --> shi
+    classDef ext fill:#1B2A3D,stroke:#0D8F82,color:#FFFFFF,stroke-dasharray:4 2
+```
+
+======================================================================
+--- JSON OUTPUT (first 60 lines) ---
+{
+  "arc-assess": {
+    "requires": {
+      "files": [],
+      "artifacts": [],
+      "state": ""
+    },
+    "produces": {
+      "files": [
+        "docs/BACKLOG.md",
+        "docs/VISION.md",
+        "docs/CUSTOMER.md",
+        "docs/skill/arc/align-report.md",
+        "docs/skill/arc/align-manifest.md"
+      ],
+      "artifacts": [
+        "BACKLOG",
+        "VISION",
+        "CUSTOMER",
+        "align-report"
+      ],
+      "state-transition": "raw -> captured"
+    },
+    "consumes": {},
+    "triggers": {
+      "condition": "project inception or first-time Arc adoption on an existing codebase with scattered product-direction content",
+      "alternates": [
+        "/arc-capture",
+        "/arc-sync"
+      ]
+    }
+  },
+  "arc-audit": {
+    "requires": {
+      "files": [
+        "docs/BACKLOG.md"
+      ],
+      "artifacts": [
+        "BACKLOG"
+      ],
+      "state": ""
+    },
+    "produces": {
+      "files": [
+        "docs/skill/arc/review-report.md",
+        "docs/BACKLOG.md"
+      ],
+      "artifacts": [
+        "BACKLOG",
+        "review-report"
+      ],
+      "state-transition": ""
+    },
+    "consumes": {},
+    "triggers": {
+      "condition": "pipeline problems detected or pre-milestone health check needed",
+      "alternates": [
+        "/arc-status"
+      ]
+    }
+...
+--- JSON OUTPUT (last 20 lines) ---
+      ],
+      "state-transition": "shaped -> spec-ready"
+    },
+    "consumes": {
+      "from": [
+        {
+          "skill": "/arc-shape",
+          "artifact": "shaped-brief"
+        }
+      ]
+    },
+    "triggers": {
+      "condition": "shaped_count >= 1 AND wave_active = false",
+      "alternates": [
+        "/arc-shape",
+        "/arc-audit"
+      ]
+    }
+  }
+}
+
+======================================================================
+Status: PASS -- Mermaid block is 21 lines with 9 arc-* nodes;
+JSON document contains all 9 skills with the four contract fields;
+every sibling-consuming skill appears as a Mermaid edge target.
