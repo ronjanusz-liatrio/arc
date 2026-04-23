@@ -1,0 +1,20 @@
+Type: file
+Description: Cross-link from references/README.md to references/schema-tooling.md
+Expected: README.md references the new schema-tooling.md file in its References table and How They Are Used section
+Timestamp: 2026-04-23T14:31:00Z
+---
+
+File: references/README.md - References Table (line 14):
+| [`schema-tooling.md`](schema-tooling.md) | JSON Schema CLI decision (`ajv-cli@5` + `ajv-formats@2`), canonical invocation for validator scripts, exit code semantics, and link to T04.2 proof artifacts. |
+
+File: references/README.md - How They Are Used section (lines 33-34):
+### In All Validator Scripts (schema validation)
+- **schema-tooling.md** — Specifies the JSON Schema CLI toolchain (`ajv-cli@5` + `ajv-formats@2`), the canonical npx invocation, and exit code semantics. Used by `scripts/validate-*.sh` implementations (T04.3, T04.4, T04.5) to ensure consistent validation behavior across all schema checks.
+
+VERIFICATION:
+✓ schema-tooling.md added to References table
+✓ schema-tooling.md linked in "How They Are Used" with context
+✓ Cross-link points to downstream tasks (#20, #21) that depend on this decision
+
+---
+Status: PASS

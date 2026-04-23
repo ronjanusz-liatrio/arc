@@ -11,6 +11,7 @@ This directory contains the authoritative definitions and models used by `/arc-c
 | [`wave-planning.md`](wave-planning.md) | Wave organization principles: capacity constraints by Temper phase, precedence rules for idea ordering, theme grouping guidance, and Temper phase compatibility. |
 | [`wave-archive.md`](wave-archive.md) | Wave archive schema, file naming conventions, lifecycle (writers and readers), fallback handling, and idempotency rules for `docs/skill/arc/waves/`. |
 | [`frontmatter-fields.md`](frontmatter-fields.md) | Shape of the four structured frontmatter fields (`requires`, `produces`, `consumes`, `triggers`) added to every Arc SKILL.md — value types, sub-fields, predicate vocabulary, and 3 worked examples. |
+| [`schema-tooling.md`](schema-tooling.md) | JSON Schema CLI decision (`ajv-cli@5` + `ajv-formats@2`), canonical invocation for validator scripts, exit code semantics, and link to T04.2 proof artifacts. |
 
 ## How They Are Used
 
@@ -28,3 +29,6 @@ This directory contains the authoritative definitions and models used by `/arc-c
 
 ### In All Arc Skills (frontmatter contract)
 - **frontmatter-fields.md** — Defines the shape of `requires`, `produces`, `consumes`, and `triggers` frontmatter fields. Used by T02.2 (skill author populating frontmatter) and `scripts/parse-frontmatter.sh` (dependency-graph generator).
+
+### In All Validator Scripts (schema validation)
+- **schema-tooling.md** — Specifies the JSON Schema CLI toolchain (`ajv-cli@5` + `ajv-formats@2`), the canonical npx invocation, and exit code semantics. Used by `scripts/validate-*.sh` implementations (T04.3, T04.4, T04.5) to ensure consistent validation behavior across all schema checks.
