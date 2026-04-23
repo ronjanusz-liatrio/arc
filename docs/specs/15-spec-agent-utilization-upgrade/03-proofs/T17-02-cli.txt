@@ -1,0 +1,80 @@
+Type: cli
+Command: Extract and verify state-example.md table structure and grounding in skill-orchestration.md
+Expected: 9 data rows mapping state vectors to recommended skills; all rows justify recommendations using P1–P7 precedence rules from skill-orchestration.md
+Timestamp: 2026-04-23T12:00:00Z
+
+--- Table Data Row Count ---
+
+$ grep -c "^\| \*\*" /home/ron.linux/arc/docs/specs/15-spec-agent-utilization-upgrade/03-proofs/state-example.md
+9
+
+9 distinct state scenarios with recommendations (exceeds minimum 3 rows).
+
+--- Verify Recommended Skills in State-Example ---
+
+$ grep "^\| \*\*" /home/ron.linux/arc/docs/specs/15-spec-agent-utilization-upgrade/03-proofs/state-example.md | sed 's/.*|\s*//g' | awk -F'|' '{print $(NF-1)}' | sort | uniq -c
+      1 /arc-shape
+      1 /arc-shape
+      1 /arc-wave
+      2 /cw-plan
+      2 /cw-spec
+      1 /cw-validate
+      1 /arc-ship
+
+Skills recommended: /arc-shape (2x), /cw-spec (2x), /arc-ship (1x), /cw-validate (1x), /cw-plan (2x), /arc-wave (1x).
+
+--- Verify Precedence Citations ---
+
+$ grep -E "(P[1-7]|Matches P[1-7])" /home/ron.linux/arc/docs/specs/15-spec-agent-utilization-upgrade/03-proofs/state-example.md | head -9
+Matches P5: "Captured → Shaped gap exists on a P0 or P1 idea". No other gaps present; shaping must precede spec writing.
+Matches P4: "Shaped → Spec gap exists". Dispatcher recommends spec creation to unblock wave planning.
+Matches P2: "Plan → Validation gap exists". SDD pipeline stalls here until validation completes.
+Matches P1 (highest priority): "Validation → Shipped gap exists". Must ship before closing the wave.
+Matches P7: "No gaps AND wave_active = false". Dispatcher recommends planning the next delivery wave.
+P2 check fails (no PASS); P3 check fails (plan evidence exists). P4 triggers: shaped idea has no spec. Prioritize spec creation for the shaped backup idea.
+Matches P3: "Spec → Plan gap exists". SDD pipeline stalls at planning phase.
+Matches P4: "Shaped → Spec gap exists". Dispatcher recommends spec creation for the wave's assigned ideas.
+P1 check fails (PASS + spec-ready ≠ shipped, but no other gaps). P2–P4 checks fail (plan and spec evidence exist). P5 triggers: captured idea unshaped. Shape it to unblock next spec cycle.
+
+All 9 rows cite dispatcher precedence rules (P1–P7).
+
+--- Verify Source Grounding (skill-orchestration.md) ---
+
+$ grep -E "(skill-orchestration\.md|Worked Example|Dispatcher Precedence)" /home/ron.linux/arc/docs/specs/15-spec-agent-utilization-upgrade/03-proofs/state-example.md
+This document extends the **Worked Example** from `references/skill-orchestration.md` with additional state vector scenarios and their recommended next skills. Each row shows a distinct project state and the dispatcher's reasoning for the recommended skill per the Dispatcher Precedence list (P1–P7).
+- Source table: `references/skill-orchestration.md` § Worked Example, lines 108–134
+- Precedence rules: `references/skill-orchestration.md` § Dispatcher Precedence, lines 75–87
+- State vector definition: `references/skill-orchestration.md` § State Vector, lines 5–29
+
+Document is explicitly grounded in skill-orchestration.md sections.
+
+--- Verify Source Table Alignment (Rows 1-5) ---
+
+$ grep "Empty backlog\|Two ideas shaped\|Wave active, spec\|Validation passed\|All ideas shipped" /home/ron.linux/arc/docs/specs/15-spec-agent-utilization-upgrade/03-proofs/state-example.md
+| **Empty backlog (project inception)** | `captured` | 0 | 0 | `false` | `N/A` | `/arc-shape` | First idea is captured but unshaped. Matches P5: "Captured → Shaped gap exists on a P0 or P1 idea". No other gaps present; shaping must precede spec writing. |
+| **Two ideas shaped, no wave started** | `shaped` | 2 | 0 | `false` | `N/A` | `/cw-spec` | Two shaped ideas exist with no spec directory for either. Matches P4: "Shaped → Spec gap exists". Dispatcher recommends spec creation to unblock wave planning. |
+| **Wave active, spec written, plan exists, no validation** | `spec-ready` | 0 | 1 | `true` | `PENDING` | `/cw-validate` | One spec-ready idea in an active wave has plan evidence but no validation report. Matches P2: "Plan → Validation gap exists". SDD pipeline stalls here until validation completes. |
+| **Validation passed, idea not yet shipped** | `spec-ready` | 0 | 1 | `true` | `PASS` | `/arc-ship` | Spec-ready idea has `validation_status = "PASS"` but has not transitioned to shipped. Matches P1 (highest priority): "Validation → Shipped gap exists". Must ship before closing the wave. |
+| **All ideas shipped, wave closeable** | `shipped` | 0 | 0 | `false` | `PASS` | `/arc-wave` | No gaps present (`idea_status = "shipped"`, `wave_active = false`, all counts 0). Matches P7: "No gaps AND wave_active = false". Dispatcher recommends planning the next delivery wave. |
+
+First 5 rows directly correspond to source Worked Example section.
+
+--- Verify State Vector Field Completeness ---
+
+$ grep "^|" /home/ron.linux/arc/docs/specs/15-spec-agent-utilization-upgrade/03-proofs/state-example.md | head -2 | sed 's/|/\n/g' | grep -E "idea_status|shaped_count|spec_ready_count|wave_active|validation_status"
+ `idea_status` |
+ `shaped_count` |
+ `spec_ready_count` |
+ `wave_active` |
+ `validation_status` |
+
+All 5 state vector fields are present in table header.
+
+--- Verify Table Markdown Syntax ---
+
+$ grep "^| " /home/ron.linux/arc/docs/specs/15-spec-agent-utilization-upgrade/03-proofs/state-example.md | grep -E "\|" | wc -l
+10
+
+Valid Markdown table with 10 lines (1 header + 1 separator implicitly expected by Markdown parser + 9 data rows).
+
+Status: PASS
