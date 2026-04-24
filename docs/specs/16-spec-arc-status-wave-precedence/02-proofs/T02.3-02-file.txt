@@ -1,0 +1,82 @@
+Type: file
+Command: sed -n '566,610p' skills/arc-status/references/status-dimensions.md
+Expected: The `AskUserQuestion Format` subsection documents:
+  - The three-options invariant: Recommended + Alternative + Done for now, Done for now always last
+  - An Alternative-Skill Selection table covering all 14 priorities, identical to SKILL.md Step 7's table (authored by T02.2)
+  - The "Never offer the recommended skill as its own alternative" constraint
+  - The AskUserQuestion prompt shape with exactly three options in the prescribed order
+Timestamp: 2026-04-24T18:37:00Z
+
+----- Captured Output -----
+### AskUserQuestion Format
+
+The prompt must **always** include at least 3 options: the recommended skill (labeled `(Recommended)`), exactly one alternative skill selected per the rules below, and `Done for now`. These three options are mandatory on every invocation — the prompt is never reduced to fewer than three, and `Done for now` is always the final option.
+
+#### Alternative-Skill Selection
+
+Select the alternative skill per the matched priority:
+
+| Matched Priority | Alternative Skill Selection Rule |
+|------------------|-----------------------------------|
+| 1 (empty wave) | `/arc-audit` |
+| 2 (wave-linked LG-5) | Next-lower-priority wave-linked gap skill that also matched among Priorities 3–6 (in order: `/cw-validate`, `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 3 (wave-linked LG-4) | Next-lower-priority wave-linked gap skill that also matched among Priorities 4–6 (in order: `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 4 (wave-linked LG-3) | Next-lower-priority wave-linked gap skill that also matched among Priorities 5–6 (in order: `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 5 (wave-linked LG-2) | The wave-linked P0/P1 LG-1 skill (`/arc-shape`) if Priority 6 also matched. Otherwise `/arc-audit`. |
+| 6 (wave-linked LG-1 P0/P1) | `/arc-audit` (no lower-priority wave-linked gap exists). |
+| 7 (planned clean wave → `/arc-wave`) | `/arc-audit` |
+| 8 (active clean wave → `/arc-audit`) | `/arc-wave` |
+| 9 (no-wave LG-5) | Next-lower-priority no-wave gap skill that also matched among Priorities 10–13 (in order: `/cw-validate`, `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 10 (no-wave LG-4) | Next-lower-priority no-wave gap skill that also matched among Priorities 11–13 (in order: `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 11 (no-wave LG-3) | Next-lower-priority no-wave gap skill that also matched among Priorities 12–13 (in order: `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 12 (no-wave LG-2) | The no-wave P0/P1 LG-1 skill (`/arc-shape`) if Priority 13 also matched. Otherwise `/arc-audit`. |
+| 13 (no-wave LG-1 P0/P1) | `/arc-audit` (no lower-priority no-wave gap exists). |
+| 14 (no wave, no gaps) | `/arc-audit` |
+
+**Never offer the recommended skill as its own alternative.** If a fall-through would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 14 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
+
+#### Prompt Shape
+
+The `question` field must include the fully-substituted reason template from the precedence row so the user understands why this skill is being recommended.
+
+```
+AskUserQuestion({
+  questions: [{
+    question: "{reason template with concrete values filled in}",
+    header: "Next Step",
+    options: [
+      { label: "Run {recommended skill} (Recommended)", description: "{one-line description of what the skill does}" },
+      { label: "Run {alternative skill}", description: "{one-line description of the alternative}" },
+      { label: "Done for now", description: "Exit without running any skill" }
+    ]
+  }]
+})
+```
+
+----- Comparison vs. SKILL.md Step 7 Alternative-Skill Selection (T02.2) -----
+
+Row  SKILL.md Alternative                                Reference Alternative                              Match
+------------------------------------------------------------------------------------------------------------------
+1    /arc-audit                                          /arc-audit                                         PASS
+2    cascade P3-6, else /arc-audit                       cascade P3-6, else /arc-audit                      PASS
+3    cascade P4-6, else /arc-audit                       cascade P4-6, else /arc-audit                      PASS
+4    cascade P5-6, else /arc-audit                       cascade P5-6, else /arc-audit                      PASS
+5    /arc-shape if P6 matched, else /arc-audit           /arc-shape if P6 matched, else /arc-audit          PASS
+6    /arc-audit                                          /arc-audit                                         PASS
+7    /arc-audit                                          /arc-audit                                         PASS
+8    /arc-wave                                           /arc-wave                                          PASS
+9    cascade P10-13, else /arc-audit                     cascade P10-13, else /arc-audit                    PASS
+10   cascade P11-13, else /arc-audit                     cascade P11-13, else /arc-audit                    PASS
+11   cascade P12-13, else /arc-audit                     cascade P12-13, else /arc-audit                    PASS
+12   /arc-shape if P13 matched, else /arc-audit          /arc-shape if P13 matched, else /arc-audit         PASS
+13   /arc-audit                                          /arc-audit                                         PASS
+14   /arc-audit                                          /arc-audit                                         PASS
+
+----- Three-Options Invariant Checks -----
+
+- Preamble asserts: "must always include at least 3 options" — PRESENT (first sentence of AskUserQuestion Format).
+- Order assertion: "Done for now is always the final option" — PRESENT (end of same paragraph).
+- Prompt shape block lists exactly three options with Done for now last — PRESENT.
+- Never-self-as-alternative rule: PRESENT (immediately after alternative table).
+
+Status: PASS

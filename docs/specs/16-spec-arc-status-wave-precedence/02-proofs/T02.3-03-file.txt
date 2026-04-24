@@ -1,0 +1,46 @@
+Type: file
+Command: sed -n '521,521p;546,562p' skills/arc-status/references/status-dimensions.md
+Expected: The rewritten Evaluation Logic:
+  1. Explicitly names both branches: Active-wave branch (Priorities 1-8) and No-wave branch (Priorities 9-14).
+  2. Binds the active-wave branch to WL-3 scope tagging (wave-linked vs. backlog-only).
+  3. Explains the no-wave branch preserves legacy gap-first recommendation behavior.
+  4. Carries the P0/P1 filter for Priority 6 / Priority 13, Priority 1 precondition, Priorities 7-8 gating, and wave-name interpolation — all inherited or re-asserted from SKILL.md Step 7 (T02.1).
+  5. Contains an explicit cross-reference to the preceding `## Wave Linkage Detection` section (WL-1, WL-2, WL-3).
+Timestamp: 2026-04-24T18:38:00Z
+
+----- Captured Output (Cross-Reference to Wave Linkage Detection) -----
+This section depends on the algorithm defined in [Wave Linkage Detection](#wave-linkage-detection) above — specifically WL-1 (active wave resolution), WL-2 (wave-linked idea set), and WL-3 (gap scope tagging). The precedence rows refer to "wave-linked" and "backlog-only" gaps exactly as those terms are defined by WL-3.
+
+----- Captured Output (Evaluation Logic) -----
+### Evaluation Logic
+
+1. Resolve the **active wave name** and **active wave status** from Step 2 (WL-1). Compute the **wave-linked idea set** per WL-2 and tag each lifecycle gap detected in Step 6 with a scope field of `wave-linked` or `backlog-only` per WL-3.
+2. Select the applicable branch:
+   - **Active-wave branch (Priorities 1–8)** — taken when the active wave name is non-null. Only gaps tagged `wave-linked` by WL-3 can satisfy Priorities 2–6. Backlog-only gaps remain visible in the Lifecycle Gaps table (with `Backlog (outside wave)` in the Scope column) but never drive the recommendation in this branch, and they are not considered by Priorities 7 and 8.
+   - **No-wave branch (Priorities 9–14)** — taken when the active wave name is null. All detected gaps are eligible (the scope field is functionally unused in this branch because WL-3 tags every gap as `backlog-only` when there is no active wave). This branch preserves the pre-change gap-first recommendation behavior.
+3. Walk the precedence rows of the selected branch top-to-bottom. At the first row whose condition matches, stop and use that row's recommended skill and reason template.
+4. Substitute `{Name}`, `{status}`, `{Idea Title}`, `{Priority}`, and `{NN}-spec-{name}` into the reason template from the matched row. See "Wave-name interpolation" below for the `{Name}` substitution rule.
+5. Select the **alternative skill** for the `AskUserQuestion` prompt using the rules in the next subsection.
+
+**Priority 6 / Priority 13 P0/P1 filter.** Only LG-1 (Captured → Shaped) gaps whose subject idea has `Priority: P0` or `Priority: P1` in its `docs/BACKLOG.md` metadata block qualify. Ideas with `Priority: P2`, `Priority: P3`, or an unset priority do not trigger Priority 6 or Priority 13. This matches the pre-change Priority-5 filter behavior.
+
+**Priority 1 precondition.** Priority 1 fires only when the active wave name is non-null **and** the wave-linked idea set from WL-2 is empty. An empty wave with no backlog linkage blocks all of Priorities 2–6 (no wave-linked gap subject can exist) and also blocks Priorities 7 and 8 (a clean wave with assigned ideas, not a wave with zero ideas).
+
+**Priorities 7 and 8 gating.** Priorities 7 and 8 require the wave-linked idea set to be non-empty **and** every detected gap tagged `wave-linked` by WL-3 to be absent (i.e., no wave-linked LG-* gap matched Priorities 2–6). A wave with only backlog-only gaps satisfies this "no wave-linked gaps remain" condition.
+
+**Wave-name interpolation.** Whenever a reason template substitutes `{Name}`, the active wave name resolved by WL-1 is passed through verbatim — no escaping transformations beyond standard JSON string encoding. Em dashes, colons, and other markdown-special characters appear in the rendered `AskUserQuestion` question exactly as they appear in `docs/ROADMAP.md`.
+
+----- Requirement Coverage Check -----
+
+Requirement                                                                          Evidence                                                    Result
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Both active-wave and no-wave branches explicitly named                               Evaluation Logic step 2 bullets                              PASS
+Active-wave branch scoped by WL-3 wave-linked tagging                                Step 2 first bullet                                          PASS
+No-wave branch preserves legacy gap-first behavior                                   Step 2 second bullet                                         PASS
+Priority 6 / Priority 13 P0/P1 filter matches SKILL.md Step 7                        First callout paragraph                                      PASS
+Priority 1 precondition documented (non-null wave AND empty wave-linked set)         Second callout paragraph                                     PASS
+Priorities 7-8 gating documented                                                     Third callout paragraph                                      PASS
+Wave-name interpolation rule (verbatim pass-through)                                 Fourth callout paragraph                                     PASS
+Cross-reference to Wave Linkage Detection (WL-1/WL-2/WL-3)                           Section preamble (line 521)                                  PASS
+
+Status: PASS

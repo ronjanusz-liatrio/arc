@@ -1,0 +1,64 @@
+Type: file
+Command: sed -n '517,542p' skills/arc-status/references/status-dimensions.md
+Expected: The `## Next-Step Suggestion Precedence` section's Precedence Table has exactly 14 rows matching the Step 7 precedence in SKILL.md (authored by T02.1) with the following identity checks:
+  - Row 1: empty wave → /arc-wave
+  - Rows 2-6: wave-linked LG-5..LG-1(P0/P1) → /arc-ship, /cw-validate, /cw-plan, /cw-spec, /arc-shape
+  - Row 7: planned clean wave → /arc-wave
+  - Row 8: active clean wave → /arc-audit
+  - Rows 9-13: no-wave LG-5..LG-1(P0/P1) → /arc-ship, /cw-validate, /cw-plan, /cw-spec, /arc-shape
+  - Row 14: no wave, no gaps → /arc-wave
+  Each row carries the matching reason template verbatim from the spec.
+  The table uses the 4-column shape (Priority | Condition | Recommended Skill | Reason Template) without a separate "Alternative Skill" column, since alternative selection is factored into its own table below.
+Timestamp: 2026-04-24T18:36:00Z
+
+----- Captured Output -----
+## Next-Step Suggestion Precedence
+
+After emitting all summary sections, `/arc-status` recommends the single most relevant next skill. The recommendation uses a **first-match-wins precedence list** — evaluate conditions from Priority 1 downward and stop at the first match. The list is **wave-state-aware**: Priorities 1–8 apply when an active wave exists (the **active wave name** resolved in Step 2 is non-null), and Priorities 9–14 apply when the active wave name is null (no ROADMAP, empty table, or all rows Completed).
+
+This section depends on the algorithm defined in [Wave Linkage Detection](#wave-linkage-detection) above — specifically WL-1 (active wave resolution), WL-2 (wave-linked idea set), and WL-3 (gap scope tagging). The precedence rows refer to "wave-linked" and "backlog-only" gaps exactly as those terms are defined by WL-3.
+
+---
+
+### Precedence Table
+
+| Priority | Condition | Recommended Skill | Reason Template |
+|----------|-----------|-------------------|-----------------|
+| 1 | Active wave exists AND wave-linked idea set is empty | `/arc-wave` | "Wave {Name} is {status} but has no ideas assigned — assign backlog ideas?" |
+| 2 | Wave-linked LG-5 (Validation → Shipped) gap exists | `/arc-ship` | "{Idea Title} (in Wave {Name}) has a validation PASS but is still spec-ready — ship it?" |
+| 3 | Wave-linked LG-4 (Plan → Validation) gap exists | `/cw-validate` | "{NN}-spec-{name} (in Wave {Name}) has plan evidence but no validation report — validate it?" |
+| 4 | Wave-linked LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} (in Wave {Name}) has a spec but no plan — plan it?" |
+| 5 | Wave-linked LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} (in Wave {Name}) is shaped but has no spec — write a spec?" |
+| 6 | Wave-linked LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} (in Wave {Name}) is captured at {Priority} but unshaped — shape it?" |
+| 7 | Active wave status is `planned` AND no wave-linked gaps remain | `/arc-wave` | "Wave {Name} is planned with no open gaps on assigned ideas — activate it?" |
+| 8 | Active wave status is `active` AND no wave-linked gaps remain | `/arc-audit` | "Wave {Name} is active and wave-linked work is clean — audit wave health?" |
+| 9 | No active wave AND an LG-5 (Validation → Shipped) gap exists | `/arc-ship` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
+| 10 | No active wave AND an LG-4 (Plan → Validation) gap exists | `/cw-validate` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
+| 11 | No active wave AND an LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
+| 12 | No active wave AND an LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
+| 13 | No active wave AND an LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
+| 14 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+
+----- Row-by-Row Identity Check vs. SKILL.md Step 7 (T02.1) -----
+
+Row  SKILL.md Recommended    Reference Recommended    Match
+-----------------------------------------------------------
+1    /arc-wave               /arc-wave                PASS
+2    /arc-ship               /arc-ship                PASS
+3    /cw-validate            /cw-validate             PASS
+4    /cw-plan                /cw-plan                 PASS
+5    /cw-spec                /cw-spec                 PASS
+6    /arc-shape              /arc-shape               PASS
+7    /arc-wave               /arc-wave                PASS
+8    /arc-audit              /arc-audit               PASS
+9    /arc-ship               /arc-ship                PASS
+10   /cw-validate            /cw-validate             PASS
+11   /cw-plan                /cw-plan                 PASS
+12   /cw-spec                /cw-spec                 PASS
+13   /arc-shape              /arc-shape               PASS
+14   /arc-wave               /arc-wave                PASS
+
+Total rows: 14 (matches SKILL.md Step 7 precedence table).
+Wave-state branching (P1-8 active-wave; P9-14 no-wave) explicitly stated in the section preamble.
+
+Status: PASS

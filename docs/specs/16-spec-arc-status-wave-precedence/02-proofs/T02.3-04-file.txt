@@ -1,0 +1,63 @@
+Type: file
+Command: git diff --stat skills/arc-status/references/status-dimensions.md && git diff skills/arc-status/references/status-dimensions.md | grep "^@@"
+Expected: All edits are confined to the `## Next-Step Suggestion Precedence` section (starts at line 517 in the post-edit file). The `## Wave Linkage Detection` section (lines 371-515, T01.5 territory authored by worker-2) is untouched. The `### User Selection Handling` subsection is preserved verbatim per task instructions. No files other than `skills/arc-status/references/status-dimensions.md` are modified.
+Timestamp: 2026-04-24T18:39:00Z
+
+----- Captured Output (diff stats) -----
+ skills/arc-status/references/status-dimensions.md | 84 ++++++++++++++++-------
+ 1 file changed, 60 insertions(+), 24 deletions(-)
+
+----- Captured Output (hunk headers) -----
+@@ -516,47 +516,83 @@ Given a ROADMAP where the first non-Completed row has Wave `Wave 4 — Foo` and
+@@ -564,8 +600,8 @@ AskUserQuestion({
+
+----- Scope Analysis -----
+
+Pre-edit reference file layout:
+  Lines 1-48    : Overview (SD-1 "Current Wave")
+  Lines 50-93   : SD-2 Backlog Snapshot
+  Lines 97-143  : SD-3 In-Flight Specs
+  Lines 147-177 : SD-4 Recent Activity
+  Lines 181-368 : Lifecycle Gap Detection (LG-1..LG-5, No Gaps, Error Handling)
+  Lines 371-515 : Wave Linkage Detection (WL-1..WL-4, Worked Example) — T01.5 territory (worker-2)
+  Lines 517-586 : Next-Step Suggestion Precedence — THIS TASK's scope
+  Lines 589+    : Cross-References
+
+Hunk 1 @ -516,47 +516,83:
+  - Location: Next-Step Suggestion Precedence section, from section preamble through AskUserQuestion Format preamble.
+  - Changes: Expanded Precedence Table from 7 rows to 14 rows, rewrote Evaluation Logic with two-branch (active-wave/no-wave) explanation, restructured AskUserQuestion Format with new Alternative-Skill Selection table.
+  - Authored by: worker-8 (T02.3) — THIS TASK.
+
+Hunk 2 @ -564,8 +600,8:
+  - Location: Prompt shape code block inside AskUserQuestion Format — minor text tweak to align description wording with SKILL.md Step 7.
+  - Authored by: worker-8 (T02.3) — THIS TASK.
+
+Untouched regions:
+  - Lines 1-368   (SD-1 through LG-5/Error Handling): UNTOUCHED
+  - Lines 371-515 (Wave Linkage Detection, T01.5 territory): UNTOUCHED — verified by the "Given a ROADMAP where the first non-Completed row has Wave `Wave 4 — Foo`..." context line on hunk 1, which is the last line of T01.5's Worked Example paragraph (line 485 in post-edit file).
+  - User Selection Handling subsection: PRESERVED VERBATIM per task instruction ("The User Selection Handling subsection remains unchanged").
+  - Cross-References section: UNTOUCHED.
+
+----- Files Modified Check -----
+
+$ git diff --name-only
+skills/arc-status/references/status-dimensions.md
+
+Only one file modified. No edits to skills/arc-status/SKILL.md (worker-7 T01.4 territory).
+
+----- User Selection Handling Preservation Check -----
+
+Post-edit content:
+### User Selection Handling
+
+| Selection | Action |
+|-----------|--------|
+| Recommended skill | Invoke via `Skill({ name: "{skill-name}" })` |
+| Alternative skill | Invoke via `Skill({ name: "{skill-name}" })` |
+| Done for now | Exit silently — no skill invocation, no further output |
+
+**Constraint:** No skill is ever invoked without the user explicitly selecting it from the AskUserQuestion prompt.
+
+This matches the pre-edit content byte-for-byte. The git diff hunks confirm no changes land inside this subsection.
+
+Status: PASS

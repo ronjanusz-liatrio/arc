@@ -516,47 +516,83 @@ Given a ROADMAP where the first non-Completed row has Wave `Wave 4 — Foo` and 
 
 ## Next-Step Suggestion Precedence
 
-After emitting all summary sections, `/arc-status` recommends the single most relevant next skill. The recommendation uses a **first-match-wins precedence list** — evaluate conditions from Priority 1 downward and stop at the first match.
+After emitting all summary sections, `/arc-status` recommends the single most relevant next skill. The recommendation uses a **first-match-wins precedence list** — evaluate conditions from Priority 1 downward and stop at the first match. The list is **wave-state-aware**: Priorities 1–8 apply when an active wave exists (the **active wave name** resolved in Step 2 is non-null), and Priorities 9–14 apply when the active wave name is null (no ROADMAP, empty table, or all rows Completed).
+
+This section depends on the algorithm defined in [Wave Linkage Detection](#wave-linkage-detection) above — specifically WL-1 (active wave resolution), WL-2 (wave-linked idea set), and WL-3 (gap scope tagging). The precedence rows refer to "wave-linked" and "backlog-only" gaps exactly as those terms are defined by WL-3.
 
 ---
 
 ### Precedence Table
 
-| Priority | Condition | Recommended Skill | Alternative Skill | Reason Template |
-|----------|-----------|-------------------|-------------------|-----------------|
-| 1 | A Validation → Shipped gap exists (LG-5) | `/arc-ship` | Next matching gap skill, or `/arc-audit` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
-| 2 | A Plan → Validation gap exists (LG-4) | `/cw-validate` | Next matching gap skill, or `/arc-audit` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
-| 3 | A Spec → Plan gap exists (LG-3) | `/cw-plan` | Next matching gap skill, or `/arc-audit` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
-| 4 | A Shaped → Spec gap exists (LG-2) | `/cw-spec` | Next matching gap skill, or `/arc-audit` | "{Idea Title} is shaped but has no spec — write a spec?" |
-| 5 | A Captured → Shaped gap exists on a P0 or P1 idea (LG-1) | `/arc-shape` | `/arc-audit` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
-| 6 | No gaps detected AND current wave is in progress | `/arc-wave` or `/arc-audit` | The other of `/arc-wave` or `/arc-audit` | "No gaps detected and {Wave Name} is in progress — check wave health?" |
-| 7 | No gaps detected AND no current wave | `/arc-wave` | `/arc-audit` | "No gaps and no active wave — plan the next delivery wave?" |
+| Priority | Condition | Recommended Skill | Reason Template |
+|----------|-----------|-------------------|-----------------|
+| 1 | Active wave exists AND wave-linked idea set is empty | `/arc-wave` | "Wave {Name} is {status} but has no ideas assigned — assign backlog ideas?" |
+| 2 | Wave-linked LG-5 (Validation → Shipped) gap exists | `/arc-ship` | "{Idea Title} (in Wave {Name}) has a validation PASS but is still spec-ready — ship it?" |
+| 3 | Wave-linked LG-4 (Plan → Validation) gap exists | `/cw-validate` | "{NN}-spec-{name} (in Wave {Name}) has plan evidence but no validation report — validate it?" |
+| 4 | Wave-linked LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} (in Wave {Name}) has a spec but no plan — plan it?" |
+| 5 | Wave-linked LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} (in Wave {Name}) is shaped but has no spec — write a spec?" |
+| 6 | Wave-linked LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} (in Wave {Name}) is captured at {Priority} but unshaped — shape it?" |
+| 7 | Active wave status is `planned` AND no wave-linked gaps remain | `/arc-wave` | "Wave {Name} is planned with no open gaps on assigned ideas — activate it?" |
+| 8 | Active wave status is `active` AND no wave-linked gaps remain | `/arc-audit` | "Wave {Name} is active and wave-linked work is clean — audit wave health?" |
+| 9 | No active wave AND an LG-5 (Validation → Shipped) gap exists | `/arc-ship` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
+| 10 | No active wave AND an LG-4 (Plan → Validation) gap exists | `/cw-validate` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
+| 11 | No active wave AND an LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
+| 12 | No active wave AND an LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
+| 13 | No active wave AND an LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
+| 14 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
 
 ---
 
 ### Evaluation Logic
 
-1. Collect all lifecycle gaps detected in Step 6 (LG-1 through LG-5).
-2. Walk the precedence table from Priority 1 to Priority 7.
-3. At the first matching condition, select that row's recommended skill and reason template.
-4. For the alternative skill: pick the next-lower-priority gap skill that also has a detected gap. If no other gap exists, use `/arc-audit` as the default alternative.
-5. If no gaps were detected at all, use Priority 6 (wave in progress) or Priority 7 (no wave).
+1. Resolve the **active wave name** and **active wave status** from Step 2 (WL-1). Compute the **wave-linked idea set** per WL-2 and tag each lifecycle gap detected in Step 6 with a scope field of `wave-linked` or `backlog-only` per WL-3.
+2. Select the applicable branch:
+   - **Active-wave branch (Priorities 1–8)** — taken when the active wave name is non-null. Only gaps tagged `wave-linked` by WL-3 can satisfy Priorities 2–6. Backlog-only gaps remain visible in the Lifecycle Gaps table (with `Backlog (outside wave)` in the Scope column) but never drive the recommendation in this branch, and they are not considered by Priorities 7 and 8.
+   - **No-wave branch (Priorities 9–14)** — taken when the active wave name is null. All detected gaps are eligible (the scope field is functionally unused in this branch because WL-3 tags every gap as `backlog-only` when there is no active wave). This branch preserves the pre-change gap-first recommendation behavior.
+3. Walk the precedence rows of the selected branch top-to-bottom. At the first row whose condition matches, stop and use that row's recommended skill and reason template.
+4. Substitute `{Name}`, `{status}`, `{Idea Title}`, `{Priority}`, and `{NN}-spec-{name}` into the reason template from the matched row. See "Wave-name interpolation" below for the `{Name}` substitution rule.
+5. Select the **alternative skill** for the `AskUserQuestion` prompt using the rules in the next subsection.
 
-**Priority 5 filter:** Only Captured → Shaped gaps on P0 or P1 ideas qualify. To determine priority, read the `Priority:` field from the idea's metadata block in `docs/BACKLOG.md`. If the captured idea's priority is P2, P3, or unset, it does not trigger Priority 5.
+**Priority 6 / Priority 13 P0/P1 filter.** Only LG-1 (Captured → Shaped) gaps whose subject idea has `Priority: P0` or `Priority: P1` in its `docs/BACKLOG.md` metadata block qualify. Ideas with `Priority: P2`, `Priority: P3`, or an unset priority do not trigger Priority 6 or Priority 13. This matches the pre-change Priority-5 filter behavior.
 
-**Priority 6 detection:** A "current wave in progress" means Step 2 found a non-completed wave row in the roadmap. If Step 2 fell back to "No roadmap found" or "All waves completed", the wave is not in progress — use Priority 7 instead.
+**Priority 1 precondition.** Priority 1 fires only when the active wave name is non-null **and** the wave-linked idea set from WL-2 is empty. An empty wave with no backlog linkage blocks all of Priorities 2–6 (no wave-linked gap subject can exist) and also blocks Priorities 7 and 8 (a clean wave with assigned ideas, not a wave with zero ideas).
+
+**Priorities 7 and 8 gating.** Priorities 7 and 8 require the wave-linked idea set to be non-empty **and** every detected gap tagged `wave-linked` by WL-3 to be absent (i.e., no wave-linked LG-* gap matched Priorities 2–6). A wave with only backlog-only gaps satisfies this "no wave-linked gaps remain" condition.
+
+**Wave-name interpolation.** Whenever a reason template substitutes `{Name}`, the active wave name resolved by WL-1 is passed through verbatim — no escaping transformations beyond standard JSON string encoding. Em dashes, colons, and other markdown-special characters appear in the rendered `AskUserQuestion` question exactly as they appear in `docs/ROADMAP.md`.
 
 ---
 
 ### AskUserQuestion Format
 
-The prompt must always include at least 3 options:
+The prompt must **always** include at least 3 options: the recommended skill (labeled `(Recommended)`), exactly one alternative skill selected per the rules below, and `Done for now`. These three options are mandatory on every invocation — the prompt is never reduced to fewer than three, and `Done for now` is always the final option.
 
-1. **Recommended skill** — labeled with "(Recommended)" suffix
-2. **Alternative skill** — a secondary action the user can take instead
-3. **"Done for now"** — exit without invoking any skill
+#### Alternative-Skill Selection
 
-The `question` field must include the reason from the precedence table so the user understands why this skill is being recommended.
+Select the alternative skill per the matched priority:
+
+| Matched Priority | Alternative Skill Selection Rule |
+|------------------|-----------------------------------|
+| 1 (empty wave) | `/arc-audit` |
+| 2 (wave-linked LG-5) | Next-lower-priority wave-linked gap skill that also matched among Priorities 3–6 (in order: `/cw-validate`, `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 3 (wave-linked LG-4) | Next-lower-priority wave-linked gap skill that also matched among Priorities 4–6 (in order: `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 4 (wave-linked LG-3) | Next-lower-priority wave-linked gap skill that also matched among Priorities 5–6 (in order: `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 5 (wave-linked LG-2) | The wave-linked P0/P1 LG-1 skill (`/arc-shape`) if Priority 6 also matched. Otherwise `/arc-audit`. |
+| 6 (wave-linked LG-1 P0/P1) | `/arc-audit` (no lower-priority wave-linked gap exists). |
+| 7 (planned clean wave → `/arc-wave`) | `/arc-audit` |
+| 8 (active clean wave → `/arc-audit`) | `/arc-wave` |
+| 9 (no-wave LG-5) | Next-lower-priority no-wave gap skill that also matched among Priorities 10–13 (in order: `/cw-validate`, `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 10 (no-wave LG-4) | Next-lower-priority no-wave gap skill that also matched among Priorities 11–13 (in order: `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 11 (no-wave LG-3) | Next-lower-priority no-wave gap skill that also matched among Priorities 12–13 (in order: `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 12 (no-wave LG-2) | The no-wave P0/P1 LG-1 skill (`/arc-shape`) if Priority 13 also matched. Otherwise `/arc-audit`. |
+| 13 (no-wave LG-1 P0/P1) | `/arc-audit` (no lower-priority no-wave gap exists). |
+| 14 (no wave, no gaps) | `/arc-audit` |
+
+**Never offer the recommended skill as its own alternative.** If a fall-through would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 14 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
+
+#### Prompt Shape
+
+The `question` field must include the fully-substituted reason template from the precedence row so the user understands why this skill is being recommended.
 
 ```
 AskUserQuestion({
@@ -564,8 +600,8 @@ AskUserQuestion({
     question: "{reason template with concrete values filled in}",
     header: "Next Step",
     options: [
-      { label: "Run {recommended skill} (Recommended)", description: "{what the skill does}" },
-      { label: "Run {alternative skill}", description: "{what the alternative does}" },
+      { label: "Run {recommended skill} (Recommended)", description: "{one-line description of what the skill does}" },
+      { label: "Run {alternative skill}", description: "{one-line description of the alternative}" },
       { label: "Done for now", description: "Exit without running any skill" }
     ]
   }]
