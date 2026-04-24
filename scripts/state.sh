@@ -210,29 +210,50 @@ esac
 
 VALIDATION_STATUS="N/A"
 if [[ -d "$SPECS_DIR" ]]; then
-  # Collect validation files sorted newest-first by mtime.
-  mapfile -t VALIDATION_FILES < <(
-    find "$SPECS_DIR" -mindepth 2 -maxdepth 2 -type f -name '*-validation-*.md' \
-      -printf '%T@ %p\n' 2>/dev/null \
-      | sort -rn \
-      | awk '{ sub(/^[^ ]+ /, ""); print }'
+  # Collect validation files (portable: no GNU find -printf, no bash4 mapfile).
+  # We read NUL-delimited find output into a bash-3.2-safe array, then sort
+  # newest-first via POSIX `ls -t` which is available on BSD and GNU.
+  VALIDATION_FILES=()
+  while IFS= read -r -d '' _vf; do
+    VALIDATION_FILES+=("$_vf")
+  done < <(
+    find "$SPECS_DIR" -mindepth 2 -maxdepth 2 -type f -name '*-validation-*.md' -print0 2>/dev/null
   )
+
+  if [[ ${#VALIDATION_FILES[@]} -gt 0 ]]; then
+    _sorted=()
+    while IFS= read -r _line; do
+      [[ -z "$_line" ]] && continue
+      _sorted+=("$_line")
+    done < <(ls -1t "${VALIDATION_FILES[@]}" 2>/dev/null)
+    if [[ ${#_sorted[@]} -gt 0 ]]; then
+      VALIDATION_FILES=("${_sorted[@]}")
+    fi
+  fi
 
   newest_status=""
   saw_fail="false"
-  for vfile in "${VALIDATION_FILES[@]}"; do
-    [[ -r "$vfile" ]] || continue
-    line="$(grep -m1 -E '^\*\*Overall\*\*:' "$vfile" 2>/dev/null || true)"
-    [[ -n "$line" ]] || continue
-    verdict="$(printf '%s' "$line" | awk -F ':' '{ sub(/^[[:space:]]+/, "", $2); sub(/[[:space:]]+$/, "", $2); print toupper($2) }')"
-    case "$verdict" in
-      PASS|PENDING|FAIL) ;;
-      *) verdict="" ;;
-    esac
-    [[ -z "$verdict" ]] && continue
-    [[ "$verdict" == "FAIL" ]] && saw_fail="true"
-    [[ -z "$newest_status" ]] && newest_status="$verdict"
-  done
+  # Only iterate when the array is non-empty (bash 3.2 treats an empty
+  # unset array under `set -u` as "unbound variable").
+  if [[ ${#VALIDATION_FILES[@]} -gt 0 ]]; then
+    for vfile in "${VALIDATION_FILES[@]}"; do
+      [[ -r "$vfile" ]] || continue
+      line="$(grep -m1 -E '^\*\*Overall\*\*:' "$vfile" 2>/dev/null || true)"
+      [[ -n "$line" ]] || continue
+      verdict="$(printf '%s' "$line" | awk -F ':' '{ sub(/^[[:space:]]+/, "", $2); sub(/[[:space:]]+$/, "", $2); print toupper($2) }')"
+      # Accept verdicts by prefix so suffixed forms like "PENDING - awaiting review"
+      # or "FAIL (2 issues)" still contribute to FAIL > PENDING > PASS precedence.
+      case "$verdict" in
+        FAIL*)    verdict="FAIL" ;;
+        PENDING*) verdict="PENDING" ;;
+        PASS*)    verdict="PASS" ;;
+        *)        verdict="" ;;
+      esac
+      [[ -z "$verdict" ]] && continue
+      [[ "$verdict" == "FAIL" ]] && saw_fail="true"
+      [[ -z "$newest_status" ]] && newest_status="$verdict"
+    done
+  fi
 
   if [[ "$saw_fail" == "true" ]]; then
     VALIDATION_STATUS="FAIL"
@@ -264,8 +285,12 @@ fi
 
 SPEC_SLUGS=""
 if [[ -d "$SPECS_DIR" ]]; then
+  # Portable replacement for GNU `find -printf '%f\n'`. Emit NUL-delimited
+  # absolute paths, then strip to basename in a bash read-loop. Avoids
+  # GNU-only flags so macOS (BSD find) behaves identically.
   SPEC_SLUGS="$(
-    find "$SPECS_DIR" -mindepth 1 -maxdepth 1 -type d -name '*-spec-*' -printf '%f\n' 2>/dev/null \
+    find "$SPECS_DIR" -mindepth 1 -maxdepth 1 -type d -name '*-spec-*' -print0 2>/dev/null \
+      | { while IFS= read -r -d '' _d; do basename "$_d"; done; } \
       | awk -F '-spec-' 'NF == 2 { print tolower($2) }'
   )"
 fi

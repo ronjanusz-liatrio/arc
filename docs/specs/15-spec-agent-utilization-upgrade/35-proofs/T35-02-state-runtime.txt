@@ -1,0 +1,52 @@
+# T35 Proof 02: state.sh runtime, exit code, and output shape
+# Command: scripts/state.sh | jq .
+# Expected: exit 0, wall time < 500ms, all 6 top-level keys present
+# Timestamp: 2026-04-24T01:39:33Z
+
+$ time scripts/state.sh > /tmp/state.out
+
+real	0m0.034s
+user	0m0.022s
+sys	0m0.016s
+
+# state.sh exit code: 0
+
+$ jq "." /tmp/state.out
+{
+  "idea_status_counts": {
+    "captured": 20,
+    "shaped": 0,
+    "spec_ready": 0,
+    "shipped": 0
+  },
+  "wave_active": false,
+  "current_wave": null,
+  "validation_status": "PASS",
+  "gaps": [
+    {
+      "type": "captured_high_pri",
+      "idea": "Add rewrite mode to arc-sync injection prompt",
+      "remediation": "shape with /arc-shape"
+    },
+    {
+      "type": "captured_high_pri",
+      "idea": "Remove time estimates from arc-wave",
+      "remediation": "shape with /arc-shape"
+    }
+  ],
+  "timestamp": "2026-04-24T01:39:33Z"
+}
+
+$ jq "keys" /tmp/state.out
+[
+  "current_wave",
+  "gaps",
+  "idea_status_counts",
+  "timestamp",
+  "validation_status",
+  "wave_active"
+]
+
+# Expected keys: ["current_wave","gaps","idea_status_counts","timestamp","validation_status","wave_active"]
+# Actual keys:   ["current_wave","gaps","idea_status_counts","timestamp","validation_status","wave_active"]
+# Status: PASS

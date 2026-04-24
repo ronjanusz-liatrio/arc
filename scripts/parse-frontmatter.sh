@@ -89,10 +89,15 @@ case "$FORMAT" in
 esac
 
 # Default to skills/arc-*/SKILL.md relative to repo root when no paths given.
+# Portable alternative to `find -print0 | sort -z` (GNU coreutils only): emit
+# newline-delimited paths and sort them with POSIX `sort`.  SKILL.md paths
+# under skills/arc-* never contain newlines by construction, so the simpler
+# line-delimited pipeline is safe on macOS (BSD sort) and Linux alike.
 if [[ ${#FILES[@]} -eq 0 ]]; then
-  while IFS= read -r -d '' f; do
+  while IFS= read -r f; do
+    [[ -z "$f" ]] && continue
     FILES+=("$f")
-  done < <(find "$REPO_ROOT/skills" -maxdepth 2 -type f -name 'SKILL.md' -path '*/arc-*' -print0 | sort -z)
+  done < <(find "$REPO_ROOT/skills" -maxdepth 2 -type f -name 'SKILL.md' -path '*/arc-*' -print | sort)
 fi
 
 [[ ${#FILES[@]} -gt 0 ]] || die "no SKILL.md paths supplied and none discovered under $REPO_ROOT/skills"

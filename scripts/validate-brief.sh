@@ -99,12 +99,23 @@ if [[ ! -s "$SECTION_FILE" ]]; then
 fi
 
 # Extract the status field from the metadata list items.
+# Uses portable 2-arg awk match() + substr() so the script works on
+# stock macOS /usr/bin/awk (BSD awk); gawk's 3-arg match(s, re, arr) is not
+# available there.
 IDEA_STATUS="$(awk '
   /^- \*\*Status:\*\*/ {
-    match($0, /\*\*Status:\*\*[[:space:]]*([^[:space:]]+)/, arr)
-    if (RSTART) { print arr[1]; exit }
-    # fallback: take everything after the colon
-    sub(/.*\*\*Status:\*\*[[:space:]]*/, ""); gsub(/[[:space:]]+$/, ""); print; exit
+    # Drop the "- **Status:**" prefix (and surrounding whitespace), then take
+    # everything up to the first whitespace as the status token.
+    line = $0
+    sub(/.*\*\*Status:\*\*[[:space:]]*/, "", line)
+    sub(/[[:space:]]+$/, "", line)
+    if (match(line, /^[^[:space:]]+/)) {
+      print substr(line, RSTART, RLENGTH)
+      exit
+    }
+    # Fallback: whole remaining line.
+    print line
+    exit
   }
 ' "$SECTION_FILE")"
 

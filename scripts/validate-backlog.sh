@@ -110,13 +110,19 @@ awk '
 # e.g.: "| [(deferred) Batch capture](#...) | captured | P3-Low | -- |"
 #    -> "(deferred) Batch capture"
 extract_table_title() {
+  # Portable 2-arg awk match() + substr(): avoids gawk's 3-arg match(s, re, arr)
+  # so the script runs on stock macOS /usr/bin/awk (one true awk / BSD awk).
   printf '%s' "$1" | awk '
     {
       # Remove leading pipe + whitespace
       sub(/^\|[[:space:]]*/, "")
       # Remove markdown link: "[text](#anchor)" -> "text"
-      if (match($0, /\[([^]]+)\]\([^)]*\)/, arr)) {
-        title = arr[1]
+      if (match($0, /\[[^]]+\]\([^)]*\)/)) {
+        cell = substr($0, RSTART, RLENGTH)
+        # Strip leading "[" and everything from the closing "]" onward.
+        sub(/^\[/, "", cell)
+        sub(/\].*$/, "", cell)
+        title = cell
       } else {
         # Plain title cell (strip up to first "|")
         title = $0
@@ -129,19 +135,38 @@ extract_table_title() {
   '
 }
 
-# Build an associative array of table titles -> row status for cross-check.
-declare -A TABLE_SEEN
+# Parallel arrays replacing a bash-4 associative array, so the script runs on
+# macOS stock bash 3.2. TABLE_KEYS[i] holds the lowercase title (lookup key),
+# TABLE_VALUES[i] holds the original-cased title.  Order preserved via
+# TABLE_ORDER (list of lowercase keys in first-seen order).
+TABLE_KEYS=()
+TABLE_VALUES=()
 TABLE_ORDER=()
+
+# Helper: lookup a value in the parallel arrays by key. Echos the value if
+# present and returns 0; returns 1 when the key is absent.
+table_lookup() {
+  local needle="$1"
+  local i
+  for ((i = 0; i < ${#TABLE_KEYS[@]}; i++)); do
+    if [[ "${TABLE_KEYS[$i]}" == "$needle" ]]; then
+      printf '%s' "${TABLE_VALUES[$i]}"
+      return 0
+    fi
+  done
+  return 1
+}
 
 while IFS= read -r row; do
   [[ -z "${row}" ]] && continue
   title="$(extract_table_title "${row}")"
   [[ -z "${title}" ]] && continue
   lower_title="$(printf '%s' "${title}" | tr '[:upper:]' '[:lower:]')"
-  if [[ -n "${TABLE_SEEN[${lower_title}]+x}" ]]; then
+  if table_lookup "${lower_title}" >/dev/null; then
     warn "duplicate title in summary table: '${title}'"
   fi
-  TABLE_SEEN["${lower_title}"]="${title}"
+  TABLE_KEYS+=("${lower_title}")
+  TABLE_VALUES+=("${title}")
   TABLE_ORDER+=("${lower_title}")
 done < "${TABLE_FILE}"
 
@@ -150,8 +175,22 @@ done < "${TABLE_FILE}"
 SECTIONS_FILE="${WORK_DIR}/sections.ndjson"
 : > "${SECTIONS_FILE}"
 
-declare -A SECTION_SEEN
+# Parallel arrays (bash 3.2-safe) analogous to TABLE_KEYS/TABLE_VALUES above.
+SECTION_KEYS=()
+SECTION_VALUES=()
 SECTION_ORDER=()
+
+section_lookup() {
+  local needle="$1"
+  local i
+  for ((i = 0; i < ${#SECTION_KEYS[@]}; i++)); do
+    if [[ "${SECTION_KEYS[$i]}" == "$needle" ]]; then
+      printf '%s' "${SECTION_VALUES[$i]}"
+      return 0
+    fi
+  done
+  return 1
+}
 
 # emit_section writes the current section state as one NDJSON line and resets.
 emit_section() {
@@ -164,10 +203,11 @@ emit_section() {
   lower="$(printf '%s' "${title}" | tr '[:upper:]' '[:lower:]')"
 
   # Track duplicates
-  if [[ -n "${SECTION_SEEN[${lower}]+x}" ]]; then
+  if section_lookup "${lower}" >/dev/null; then
     warn "duplicate section title: '${title}'"
   fi
-  SECTION_SEEN["${lower}"]="${title}"
+  SECTION_KEYS+=("${lower}")
+  SECTION_VALUES+=("${title}")
   SECTION_ORDER+=("${lower}")
 
   # Build JSON via jq to handle escaping correctly.
@@ -284,22 +324,28 @@ parse_sections_bash "${BACKLOG_FILE}"
 FAIL=0
 
 # Invariant C: every table title has a matching section
-for lower in "${TABLE_ORDER[@]}"; do
-  if [[ -z "${SECTION_SEEN[${lower}]+x}" ]]; then
-    printf 'validate-backlog: ERROR: summary table title missing its ## section: "%s"\n' \
-      "${TABLE_SEEN[${lower}]}" >&2
-    FAIL=1
-  fi
-done
+if [[ ${#TABLE_ORDER[@]} -gt 0 ]]; then
+  for lower in "${TABLE_ORDER[@]}"; do
+    if ! section_lookup "${lower}" >/dev/null; then
+      original="$(table_lookup "${lower}")"
+      printf 'validate-backlog: ERROR: summary table title missing its ## section: "%s"\n' \
+        "${original}" >&2
+      FAIL=1
+    fi
+  done
+fi
 
 # Invariant D: every section has a matching table row
-for lower in "${SECTION_ORDER[@]}"; do
-  if [[ -z "${TABLE_SEEN[${lower}]+x}" ]]; then
-    printf 'validate-backlog: ERROR: ## section has no summary table row: "%s"\n' \
-      "${SECTION_SEEN[${lower}]}" >&2
-    FAIL=1
-  fi
-done
+if [[ ${#SECTION_ORDER[@]} -gt 0 ]]; then
+  for lower in "${SECTION_ORDER[@]}"; do
+    if ! table_lookup "${lower}" >/dev/null; then
+      original="$(section_lookup "${lower}")"
+      printf 'validate-backlog: ERROR: ## section has no summary table row: "%s"\n' \
+        "${original}" >&2
+      FAIL=1
+    fi
+  done
+fi
 
 # ---- phase 4: per-entry schema validation -----------------------------------
 

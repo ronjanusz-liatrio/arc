@@ -1,0 +1,18 @@
+# T35 Proof 03: state.sh validation-status prefix matcher
+# Command: synthetic BACKLOG+ROADMAP+validation fixtures with suffixed verdicts
+# Expected: "PENDING - awaiting review" -> PENDING; "FAIL (2 issues)" -> FAIL; "PASS" -> PASS
+# Expected: FAIL > PENDING > PASS precedence preserved across multiple files
+# Timestamp: 2026-04-24T01:39:51Z
+
+--- Case A: "PENDING - awaiting review" ---
+result: PENDING
+--- Case B: "FAIL (2 blocking issues)" ---
+result: FAIL
+--- Case C: "PASS" ---
+result: PASS
+--- Case D: PASS file + FAIL file -> precedence picks FAIL ---
+result: FAIL
+
+# Assertions:
+# Cases passing: 4 / 4
+# Status: PASS

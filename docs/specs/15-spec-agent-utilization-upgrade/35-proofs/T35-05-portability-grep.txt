@@ -1,0 +1,24 @@
+# T35 Proof 05: no live GNU-only / bash-4 idioms remain in the 4 fixed scripts
+# Command: grep for mapfile, declare -A, find -printf, sort -z, 3-arg awk match()
+# Expected: matches only in comments; no live code
+# Timestamp: 2026-04-24T01:40:31Z
+
+$ grep -nE "mapfile|declare -A|find .*-printf|sort -z" scripts/state.sh scripts/validate-backlog.sh scripts/validate-brief.sh scripts/parse-frontmatter.sh
+/home/ron.linux/arc/scripts/parse-frontmatter.sh:92:# Portable alternative to `find -print0 | sort -z` (GNU coreutils only): emit
+/home/ron.linux/arc/scripts/state.sh:213:  # Collect validation files (portable: no GNU find -printf, no bash4 mapfile).
+/home/ron.linux/arc/scripts/state.sh:288:  # Portable replacement for GNU `find -printf '%f\n'`. Emit NUL-delimited
+
+# All matches above are in # comments documenting what was replaced.
+
+$ grep -nE "match\([^,]+,[^,]+,[^)]+\)" scripts/*.sh
+/home/ron.linux/arc/scripts/validate-backlog.sh:113:  # Portable 2-arg awk match() + substr(): avoids gawk's 3-arg match(s, re, arr)
+/home/ron.linux/arc/scripts/validate-brief.sh:103:# stock macOS /usr/bin/awk (BSD awk); gawk's 3-arg match(s, re, arr) is not
+
+# Only matches are the comments documenting why we use 2-arg match().
+
+$ grep -nE "match\(" scripts/state.sh scripts/validate-backlog.sh scripts/validate-brief.sh scripts/parse-frontmatter.sh | grep -v "^#\|# "
+/home/ron.linux/arc/scripts/state.sh:357:        if (match(p, /P[0-9]+/)) {
+/home/ron.linux/arc/scripts/validate-brief.sh:112:    if (match(line, /^[^[:space:]]+/)) {
+/home/ron.linux/arc/scripts/validate-backlog.sh:120:      if (match($0, /\[[^]]+\]\([^)]*\)/)) {
+
+# Status: PASS
