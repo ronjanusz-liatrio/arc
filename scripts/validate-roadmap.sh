@@ -98,14 +98,15 @@ awk '
     # Split on " | " — allow variable whitespace
     n = split(row, cols, /[[:space:]]*\|[[:space:]]*/);
     if (n < 5) next
-    wave   = cols[1]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", wave)
-    goal   = cols[2]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", goal)
-    status = cols[3]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", status)
-    target = cols[4]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", target)
-    ideas  = cols[5]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", ideas)
+    wave   = cols[1]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", wave);  gsub(/\t/, " ", wave)
+    goal   = cols[2]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", goal);  gsub(/\t/, " ", goal)
+    status = cols[3]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", status); gsub(/\t/, " ", status)
+    target = cols[4]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", target); gsub(/\t/, " ", target)
+    ideas  = cols[5]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", ideas);  gsub(/\t/, " ", ideas)
     # Skip truly empty rows
     if (wave == "" && goal == "") next
-    # Emit tab-separated values; ideas coerced to integer
+    # Emit tab-separated values; ideas coerced to integer. Embedded tabs in
+    # cells were replaced with spaces above so the TSV boundary stays clean.
     printf "%s\t%s\t%s\t%s\t%d\n", wave, goal, status, target, (ideas+0)
   }
 ' "$ROADMAP_PATH" > "$TSV_FILE"

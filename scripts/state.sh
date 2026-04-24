@@ -240,14 +240,16 @@ if [[ -d "$SPECS_DIR" ]]; then
       [[ -r "$vfile" ]] || continue
       line="$(grep -m1 -E '^\*\*Overall\*\*:' "$vfile" 2>/dev/null || true)"
       [[ -n "$line" ]] || continue
-      verdict="$(printf '%s' "$line" | awk -F ':' '{ sub(/^[[:space:]]+/, "", $2); sub(/[[:space:]]+$/, "", $2); print toupper($2) }')"
-      # Accept verdicts by prefix so suffixed forms like "PENDING - awaiting review"
-      # or "FAIL (2 issues)" still contribute to FAIL > PENDING > PASS precedence.
+      # Extract only the first whitespace-delimited token from the verdict
+      # so suffixed forms like "PENDING - awaiting review" or "FAIL (2 issues)"
+      # normalize to the bare token, and accidental identifiers like
+      # "PASSTHROUGH" or "FAILSAFE" are not mis-matched by a glob prefix.
+      verdict="$(printf '%s' "$line" | awk -F ':' '{ sub(/^[[:space:]]+/, "", $2); sub(/[[:space:]]+$/, "", $2); split($2, a, /[[:space:]]/); print toupper(a[1]) }')"
       case "$verdict" in
-        FAIL*)    verdict="FAIL" ;;
-        PENDING*) verdict="PENDING" ;;
-        PASS*)    verdict="PASS" ;;
-        *)        verdict="" ;;
+        FAIL)    verdict="FAIL" ;;
+        PENDING) verdict="PENDING" ;;
+        PASS)    verdict="PASS" ;;
+        *)       verdict="" ;;
       esac
       [[ -z "$verdict" ]] && continue
       [[ "$verdict" == "FAIL" ]] && saw_fail="true"

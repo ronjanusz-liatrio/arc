@@ -8,7 +8,6 @@ requires:
     - docs/BACKLOG.md
   artifacts:
     - BACKLOG
-    - ROADMAP
   state: "idea.status = 'spec-ready' AND validation_status = 'PASS'"
 produces:
   files:
