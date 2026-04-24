@@ -1,0 +1,23 @@
+Type: cli
+Command: bash scripts/parse-frontmatter.sh --format json | jq keys
+Expected: exit 0, all 9 arc-* skills listed
+Timestamp: 2026-04-24T00:00:00Z
+
+--- OUTPUT ---
+[
+  "arc-assess",
+  "arc-audit",
+  "arc-capture",
+  "arc-help",
+  "arc-shape",
+  "arc-ship",
+  "arc-status",
+  "arc-sync",
+  "arc-wave"
+]
+
+Exit: 0
+
+Verification: 9 skills present, exit 0 — live-repo behavior unchanged
+
+Status: PASS

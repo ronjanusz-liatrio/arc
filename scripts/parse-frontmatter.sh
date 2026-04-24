@@ -144,7 +144,10 @@ build_combined_json() {
       continue
     fi
 
-    fm_file="$WORK_DIR/$(basename "$(dirname "$file")").yaml"
+    # Derive a unique temp filename from a sanitized hash of the full path so
+    # that two inputs sharing the same parent-dir name never collide and so
+    # that special characters in $file cannot influence the temp path.
+    fm_file="$WORK_DIR/fm-$(printf '%s' "$file" | sha256sum | cut -c1-12).yaml"
     if ! extract_frontmatter "$file" > "$fm_file"; then
       die "failed to extract frontmatter from $file"
     fi

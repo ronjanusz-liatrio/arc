@@ -1,0 +1,35 @@
+Type: test
+Command: bash scripts/parse-frontmatter.sh --format json /tmp/collision-test/foo/arc-capture/SKILL.md /tmp/collision-test/bar/arc-capture/SKILL.md
+Expected: JSON output containing BOTH "foo-capture" and "bar-capture" keys (no silent overwrite)
+Timestamp: 2026-04-24T00:00:00Z
+
+Test setup:
+  - /tmp/collision-test/foo/arc-capture/SKILL.md  (name: foo-capture)
+  - /tmp/collision-test/bar/arc-capture/SKILL.md  (name: bar-capture)
+  - Both share same parent directory name: "arc-capture"
+  - Old code: fm_file="$WORK_DIR/$(basename "$(dirname "$file")").yaml" -> same path for both
+  - New code: fm_file="$WORK_DIR/fm-$(printf '%s' "$file" | sha256sum | cut -c1-12).yaml" -> unique per path
+
+--- OUTPUT ---
+{
+  "foo-capture": {
+    "requires": {},
+    "produces": {},
+    "consumes": {},
+    "triggers": {}
+  },
+  "bar-capture": {
+    "requires": {},
+    "produces": {},
+    "consumes": {},
+    "triggers": {}
+  }
+}
+
+Exit: 0
+
+Verification:
+  - Both keys present: YES ("foo-capture" and "bar-capture")
+  - No silent overwrite: CONFIRMED (both entries in output)
+
+Status: PASS
