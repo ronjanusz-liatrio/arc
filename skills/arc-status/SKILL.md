@@ -264,19 +264,32 @@ See `skills/arc-status/references/status-dimensions.md` (Lifecycle Gap Detection
 
 ### Step 7: Next-Step Suggestion
 
-After emitting all summary sections, recommend the single most relevant next skill based on the pulse findings. The recommendation uses a **first-match-wins precedence list** — evaluate from top to bottom and stop at the first matching condition.
+After emitting all summary sections, recommend the single most relevant next skill based on the pulse findings. The recommendation uses a **first-match-wins precedence list** — evaluate from Priority 1 downward and stop at the first matching condition. The list is **wave-state-aware**: Priorities 1–8 apply when an active wave exists (the **active wave name** resolved in Step 2 is non-null), and Priorities 9–14 apply when the active wave name is null (no ROADMAP, empty table, or all rows Completed).
 
 #### Precedence List
 
 | Priority | Condition | Recommended Skill | Reason Template |
 |----------|-----------|-------------------|-----------------|
-| 1 | A Validation → Shipped gap exists | `/arc-ship` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
-| 2 | A Plan → Validation gap exists (and no P1 match) | `/cw-validate` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
-| 3 | A Spec → Plan gap exists (and no P1–P2 match) | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
-| 4 | A Shaped → Spec gap exists (and no P1–P3 match) | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
-| 5 | A Captured → Shaped gap exists on a P0 or P1 idea (and no P1–P4 match) | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
-| 6 | No gaps detected AND current wave is in progress | `/arc-wave` or `/arc-audit` | "No gaps detected and {Wave Name} is in progress — check wave health?" |
-| 7 | No gaps detected AND no current wave (all completed or no roadmap) | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+| 1 | Active wave exists AND wave-linked idea set is empty | `/arc-wave` | "Wave {Name} is {status} but has no ideas assigned — assign backlog ideas?" |
+| 2 | Wave-linked LG-5 (Validation → Shipped) gap exists | `/arc-ship` | "{Idea Title} (in Wave {Name}) has a validation PASS but is still spec-ready — ship it?" |
+| 3 | Wave-linked LG-4 (Plan → Validation) gap exists | `/cw-validate` | "{NN}-spec-{name} (in Wave {Name}) has plan evidence but no validation report — validate it?" |
+| 4 | Wave-linked LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} (in Wave {Name}) has a spec but no plan — plan it?" |
+| 5 | Wave-linked LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} (in Wave {Name}) is shaped but has no spec — write a spec?" |
+| 6 | Wave-linked LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} (in Wave {Name}) is captured at {Priority} but unshaped — shape it?" |
+| 7 | Active wave status is `planned` AND no wave-linked gaps remain | `/arc-wave` | "Wave {Name} is planned with no open gaps on assigned ideas — activate it?" |
+| 8 | Active wave status is `active` AND no wave-linked gaps remain | `/arc-audit` | "Wave {Name} is active and wave-linked work is clean — audit wave health?" |
+| 9 | No active wave AND an LG-5 (Validation → Shipped) gap exists | `/arc-ship` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
+| 10 | No active wave AND an LG-4 (Plan → Validation) gap exists | `/cw-validate` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
+| 11 | No active wave AND an LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
+| 12 | No active wave AND an LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
+| 13 | No active wave AND an LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
+| 14 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+
+**Priority 6 / Priority 13 P0/P1 filter.** Only LG-1 (Captured → Shaped) gaps on ideas whose `Priority:` field in the idea's metadata block in `docs/BACKLOG.md` is `P0` or `P1` qualify. Ideas with `Priority: P2`, `P3`, or an unset priority do not trigger Priority 6 or Priority 13 — this matches the pre-change Priority-5 filter behavior.
+
+**Wave scope and backlog-only gaps.** Gaps tagged `backlog-only` in Step 6 (see `references/status-dimensions.md` WL-3) **never satisfy Priorities 2–6** and are **not considered by Priorities 7 and 8**. When an active wave exists, backlog-only gaps remain visible in the Lifecycle Gaps table (with `Backlog (outside wave)` in the Scope column) but do not drive the recommendation. Backlog-only gaps can only match Priorities 9–13, which are reachable only when the active wave name resolved in Step 2 is null.
+
+**Wave-name interpolation.** Whenever a reason template substitutes `{Name}`, the active wave name resolved in Step 2 is passed through verbatim — no escaping transformations beyond standard JSON string encoding. Em dashes, colons, and other markdown-special characters appear in the `AskUserQuestion` question exactly as they appear in `docs/ROADMAP.md`.
 
 See `skills/arc-status/references/status-dimensions.md` (Next-Step Suggestion Precedence) for the full precedence logic.
 

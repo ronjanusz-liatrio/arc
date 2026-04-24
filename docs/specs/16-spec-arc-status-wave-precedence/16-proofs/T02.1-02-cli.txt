@@ -1,0 +1,42 @@
+Type: cli
+Command: awk '/^### Step 7/,/^### Step 8|^## References/' skills/arc-status/SKILL.md | grep -nE '^\| [0-9]+ \|'
+Expected: 14 priority rows emitted by the Step 7 Precedence List, Priorities 1–14 present exactly in order, each row has four pipe-delimited columns (Priority, Condition, Recommended Skill, Reason Template).
+Timestamp: 2026-04-24T00:00:00Z
+Status: PASS
+
+Output (ordered, unmodified)
+----------------------------------------------------------------------
+9:| 1 | Active wave exists AND wave-linked idea set is empty | `/arc-wave` | "Wave {Name} is {status} but has no ideas assigned — assign backlog ideas?" |
+10:| 2 | Wave-linked LG-5 (Validation → Shipped) gap exists | `/arc-ship` | "{Idea Title} (in Wave {Name}) has a validation PASS but is still spec-ready — ship it?" |
+11:| 3 | Wave-linked LG-4 (Plan → Validation) gap exists | `/cw-validate` | "{NN}-spec-{name} (in Wave {Name}) has plan evidence but no validation report — validate it?" |
+12:| 4 | Wave-linked LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} (in Wave {Name}) has a spec but no plan — plan it?" |
+13:| 5 | Wave-linked LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} (in Wave {Name}) is shaped but has no spec — write a spec?" |
+14:| 6 | Wave-linked LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} (in Wave {Name}) is captured at {Priority} but unshaped — shape it?" |
+15:| 7 | Active wave status is `planned` AND no wave-linked gaps remain | `/arc-wave` | "Wave {Name} is planned with no open gaps on assigned ideas — activate it?" |
+16:| 8 | Active wave status is `active` AND no wave-linked gaps remain | `/arc-audit` | "Wave {Name} is active and wave-linked work is clean — audit wave health?" |
+17:| 9 | No active wave AND an LG-5 (Validation → Shipped) gap exists | `/arc-ship` | "{Idea Title} has a validation PASS but is still spec-ready — ship it?" |
+18:| 10 | No active wave AND an LG-4 (Plan → Validation) gap exists | `/cw-validate` | "{NN}-spec-{name} has plan evidence but no validation report — validate it?" |
+19:| 11 | No active wave AND an LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
+20:| 12 | No active wave AND an LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
+21:| 13 | No active wave AND an LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
+22:| 14 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+
+Row count: 14 (matches spec Unit 2 — 14-row precedence table)
+
+Cross-check against spec rows 119–132 of docs/specs/16-spec-arc-status-wave-precedence/16-spec-arc-status-wave-precedence.md:
+  Priority 1  — `/arc-wave`     — empty wave ....................... MATCH
+  Priority 2  — `/arc-ship`     — wave-linked LG-5 ................. MATCH
+  Priority 3  — `/cw-validate`  — wave-linked LG-4 ................. MATCH
+  Priority 4  — `/cw-plan`      — wave-linked LG-3 ................. MATCH
+  Priority 5  — `/cw-spec`      — wave-linked LG-2 ................. MATCH
+  Priority 6  — `/arc-shape`    — wave-linked LG-1 P0/P1 .......... MATCH
+  Priority 7  — `/arc-wave`     — planned + clean .................. MATCH
+  Priority 8  — `/arc-audit`    — active + clean ................... MATCH
+  Priority 9  — `/arc-ship`     — no-wave LG-5 ..................... MATCH
+  Priority 10 — `/cw-validate`  — no-wave LG-4 ..................... MATCH
+  Priority 11 — `/cw-plan`      — no-wave LG-3 ..................... MATCH
+  Priority 12 — `/cw-spec`      — no-wave LG-2 ..................... MATCH
+  Priority 13 — `/arc-shape`    — no-wave LG-1 P0/P1 ............... MATCH
+  Priority 14 — `/arc-wave`     — no wave, no gaps ................. MATCH
+
+Result: PASS — exactly 14 priority rows, skill column and reason template match spec rows 119–132 for all 14 entries.

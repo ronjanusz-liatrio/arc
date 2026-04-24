@@ -1,0 +1,45 @@
+Type: cli
+Command: awk '/^### Step 7/,/^### Step 8|^## References/' skills/arc-status/SKILL.md | grep -cE '^\*\*Priority 6 / Priority 13 P0/P1 filter\.\*\*|^\*\*Wave scope and backlog-only gaps\.\*\*|^\*\*Wave-name interpolation\.\*\*'
+Expected: 3 clarifier-paragraph headings inside Step 7 — (a) Priority 6 / Priority 13 P0/P1 filter, (b) Wave scope and backlog-only gaps, (c) Wave-name interpolation.
+Timestamp: 2026-04-24T00:00:00Z
+Status: PASS
+
+Output
+----------------------------------------------------------------------
+3
+
+Requirement-by-requirement cross-check (from task #8 description and spec Unit 2 FRs)
+----------------------------------------------------------------------
+
+FR1 — "replace the existing Step 7 precedence with the following table, evaluated first-match-wins from Priority 1 downward" (spec line 114)
+  PASS — Precedence List now has 14 rows (see T02.1-02-cli.txt). Introductory paragraph states "evaluate from Priority 1 downward and stop at the first matching condition".
+
+FR2 — "The system shall never recommend a skill driven by a backlog-only gap when an active wave exists. Backlog-only gaps do not satisfy Priorities 2–6 and are not considered by Priorities 7 and 8." (spec lines 144–146)
+  PASS — covered by the **Wave scope and backlog-only gaps** clarifier paragraph. Verbatim quote: "Gaps tagged `backlog-only` in Step 6 (see `references/status-dimensions.md` WL-3) **never satisfy Priorities 2–6** and are **not considered by Priorities 7 and 8**."
+
+FR3 — "Backlog-only gaps can only match Priorities 9–13 when the wave is null" (task description)
+  PASS — same clarifier paragraph: "Backlog-only gaps can only match Priorities 9–13, which are reachable only when the active wave name resolved in Step 2 is null."
+
+FR4 — "The Priority 6 P0/P1 filter shall read the `Priority:` field from the idea's metadata block in `docs/BACKLOG.md`, matching the existing Priority-5 filter behavior" (spec lines 150–152)
+  PASS — covered by the **Priority 6 / Priority 13 P0/P1 filter** clarifier paragraph. Verbatim quote: "Only LG-1 (Captured → Shaped) gaps on ideas whose `Priority:` field in the idea's metadata block in `docs/BACKLOG.md` is `P0` or `P1` qualify. … this matches the pre-change Priority-5 filter behavior."
+
+FR5 — "When the active wave name contains characters that need escaping inside an AskUserQuestion label or question string, the system shall pass the wave name verbatim — no escaping transformations beyond standard JSON string encoding" (spec lines 153–156)
+  PASS — covered by the **Wave-name interpolation** clarifier paragraph. Verbatim quote: "the active wave name resolved in Step 2 is passed through verbatim — no escaping transformations beyond standard JSON string encoding. Em dashes, colons, and other markdown-special characters appear in the `AskUserQuestion` question exactly as they appear in `docs/ROADMAP.md`."
+
+Scope boundary checks (what this task did NOT modify)
+----------------------------------------------------------------------
+  - Step 6 (owned by worker-3 — T01.2): unchanged by this task. The working-tree diff on Step 6 is worker-3's Step 6.0 preamble; T02.1 committed only the Step 7 hunk.
+  - "Select the alternative skill" block (owned by T02.2, task #9): unchanged — still references P1–P5 and P6–P7. Correcting those ranges to P1–P6, P7/P8, P9–P13, and P14 is task #9's responsibility.
+  - `skills/arc-status/references/status-dimensions.md` Next-Step Suggestion Precedence section (owned by T02.3, task #10): unchanged — still shows the 7-row precedence. Rewriting it to mirror Step 7 is task #10's responsibility.
+  - Step 7 "Handle User Selection" and "Critical Constraints for Step 7" blocks: unchanged — not in T02.1 scope.
+
+Baseline verification commands (repo-wide sanity)
+----------------------------------------------------------------------
+  bash scripts/validate-backlog.sh
+    validate-backlog: PASS -- 20 entries validated (20 pass, 0 fail)
+  bash scripts/validate-roadmap.sh
+    validate-roadmap: PASS: ROADMAP table is empty (no waves — acceptable for new projects)
+  bash scripts/parse-frontmatter.sh skills/arc-status/SKILL.md --format json
+    FRONTMATTER parse OK (frontmatter block intact, requires/produces/consumes/triggers unchanged)
+
+Result: PASS — all five functional requirements from Unit 2 that fall within T02.1's scope are documented in Step 7. Worker-boundary constraints respected.
