@@ -70,9 +70,19 @@
           "items": { "type": "string", "minLength": 1 }
         },
         "open_questions": {
-          "type": "array",
-          "items": { "type": "string", "minLength": 1 },
-          "description": "Unresolved clarifications. Empty or absent means 'None'."
+          "oneOf": [
+            {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "description": "List of outstanding questions."
+            },
+            {
+              "type": "string",
+              "enum": ["None"],
+              "description": "Literal 'None' when shaping resolved all questions."
+            }
+          ],
+          "description": "Either an array of question strings or the literal string 'None'. Matches brief.schema.json."
         }
       }
     }

@@ -1,0 +1,10 @@
+Type: cli
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/backlog-entry.schema.json -d schemas/tests/backlog-entry-pass.json --spec=draft7 -c ajv-formats
+Expected: exit 0, existing fixture still valid (regression check)
+Timestamp: 2026-04-23T00:00:00Z
+
+Output:
+schemas/tests/backlog-entry-pass.json valid
+EXIT_CODE: 0
+
+Status: PASS

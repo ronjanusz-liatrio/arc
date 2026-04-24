@@ -1,0 +1,24 @@
+{
+  "title": "Add rewrite mode to arc-sync injection prompt",
+  "status": "shaped",
+  "priority": "P1-High",
+  "captured": "2026-04-12T19:15:00Z",
+  "shaped": "2026-04-13T10:00:00Z",
+  "summary": "When arc-sync detects injection mode, offer a rewrite option that re-homes content into ARC:/TEMPER: managed sections.",
+  "brief": {
+    "problem": "Users who already have an existing README are blocked from using arc-sync injection mode because there is no rewrite path available to migrate their existing content into managed sections.",
+    "proposed_solution": "Extend arc-sync with a rewrite option that holistically reads the existing README and re-homes its content into ARC:/TEMPER: managed sections.",
+    "success_criteria": [
+      "arc-sync detects an existing README without ARC: markers and offers the rewrite option",
+      "Rewrite mode produces a README with all content inside ARC:/TEMPER: sections",
+      "Existing content is preserved without data loss during the rewrite"
+    ],
+    "constraints": [
+      "Must not modify files outside the target README"
+    ],
+    "assumptions": [
+      "Users running rewrite mode have reviewed their existing README and accept potential reformatting"
+    ],
+    "open_questions": "None"
+  }
+}
