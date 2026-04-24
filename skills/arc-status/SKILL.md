@@ -295,11 +295,28 @@ See `skills/arc-status/references/status-dimensions.md` (Next-Step Suggestion Pr
 
 #### Present Recommendation
 
-Use `AskUserQuestion` to present the recommendation. The prompt must include at least 3 options: the recommended skill (labeled "(Recommended)"), one alternative skill, and "Done for now".
+Use `AskUserQuestion` to present the recommendation. The prompt must **always** include at least 3 options: the recommended skill (labeled `(Recommended)`), exactly one alternative skill selected per the rules below, and `Done for now`. These three options are mandatory on every invocation — the prompt is never reduced to fewer than three, and `Done for now` is always the final option.
 
-Select the **alternative skill** as follows:
-- If the recommended skill is a gap remediation (P1–P5), offer the next-lower-precedence gap skill that also has a match. If no other gap exists, offer `/arc-audit` as a general health check.
-- If the recommended skill is `/arc-wave` or `/arc-audit` (P6–P7), offer the other one as the alternative.
+Select the **alternative skill** per the matched priority:
+
+| Matched Priority | Alternative Skill Selection Rule |
+|------------------|-----------------------------------|
+| 1 (empty wave) | `/arc-audit` |
+| 2 (wave-linked LG-5) | Next-lower-priority wave-linked gap skill that also matched among Priorities 3–6 (in order: `/cw-validate`, `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 3 (wave-linked LG-4) | Next-lower-priority wave-linked gap skill that also matched among Priorities 4–6 (in order: `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 4 (wave-linked LG-3) | Next-lower-priority wave-linked gap skill that also matched among Priorities 5–6 (in order: `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 5 (wave-linked LG-2) | The wave-linked P0/P1 LG-1 skill (`/arc-shape`) if Priority 6 also matched. Otherwise `/arc-audit`. |
+| 6 (wave-linked LG-1 P0/P1) | `/arc-audit` (no lower-priority wave-linked gap exists). |
+| 7 (planned clean wave → `/arc-wave`) | `/arc-audit` |
+| 8 (active clean wave → `/arc-audit`) | `/arc-wave` |
+| 9 (no-wave LG-5) | Next-lower-priority no-wave gap skill that also matched among Priorities 10–13 (in order: `/cw-validate`, `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 10 (no-wave LG-4) | Next-lower-priority no-wave gap skill that also matched among Priorities 11–13 (in order: `/cw-plan`, `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 11 (no-wave LG-3) | Next-lower-priority no-wave gap skill that also matched among Priorities 12–13 (in order: `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
+| 12 (no-wave LG-2) | The no-wave P0/P1 LG-1 skill (`/arc-shape`) if Priority 13 also matched. Otherwise `/arc-audit`. |
+| 13 (no-wave LG-1 P0/P1) | `/arc-audit` (no lower-priority no-wave gap exists). |
+| 14 (no wave, no gaps) | `/arc-audit` |
+
+**Never offer the recommended skill as its own alternative.** If the fall-through rule would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 14 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
 
 **Prompt format:**
 

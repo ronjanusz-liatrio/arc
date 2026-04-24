@@ -1,0 +1,27 @@
+Type: file
+Command: grep -n "at least 3 options\|Recommended\|Done for now" skills/arc-status/SKILL.md
+Expected: The AskUserQuestion prompt format always includes three options:
+  1. Recommended skill labeled "(Recommended)"
+  2. One alternative skill
+  3. "Done for now"
+Additionally, "Done for now" must exit silently without invoking any skill (User Selection Handling preserved from prior implementation).
+Timestamp: 2026-04-24T14:16:00Z
+
+----- Captured Output -----
+292:| Priority | Condition | Recommended Skill | Reason Template |
+319:Use `AskUserQuestion` to present the recommendation. The prompt must **always** include at least 3 options: the recommended skill (labeled `(Recommended)`), exactly one alternative skill selected per the rules below, and `Done for now`. These three options are mandatory on every invocation — the prompt is never reduced to fewer than three, and `Done for now` is always the final option.
+350:      { label: "Run {recommended skill} (Recommended)", description: "{one-line description of what the skill does}" },
+352:      { label: "Done for now", description: "Exit without running any skill" }
+364:- **If the user selects "Done for now":** exit silently. Do not invoke any skill. Do not emit further output.
+370:- **ALWAYS** include "Done for now" as the last option
+
+----- Verification vs. Spec FRs -----
+
+Requirement: "Prompt must include at least three options"       : PRESENT (line 319 body directive)
+Requirement: "(Recommended) label on recommended skill"          : PRESENT (line 350, prompt-format code block)
+Requirement: "Alternative skill as separate option"              : PRESENT (prompt format line 351, verified by table at lines 300-317)
+Requirement: "'Done for now' as last option"                     : PRESENT (line 352 in prompt format; line 370 invariant constraint)
+Requirement: "Done for now exits silently, no skill invoked"     : PRESENT (line 364 User Selection Handling preserved unchanged)
+Requirement: "ALWAYS include 'Done for now' as the last option"  : PRESENT (line 370 Critical Constraints preserved unchanged)
+
+Status: PASS

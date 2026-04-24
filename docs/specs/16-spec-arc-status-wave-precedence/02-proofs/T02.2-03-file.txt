@@ -1,0 +1,33 @@
+Type: file
+Command: git diff --stat skills/arc-status/SKILL.md && git diff skills/arc-status/SKILL.md | grep "^@@"
+Expected: Edits are confined to two non-conflicting hunks:
+  1. Worker-5's Step 6.6 additions (hunk beginning near line 231) — NOT part of this task
+  2. This task's changes to the "Present Recommendation" block (hunk beginning near line 316)
+The Step 7 precedence table (lines 269-294) and the User Selection / Critical Constraints blocks remain unchanged by this task.
+Timestamp: 2026-04-24T14:17:00Z
+
+----- Captured Output (diff stats) -----
+ skills/arc-status/SKILL.md | 48 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 43 insertions(+), 5 deletions(-)
+
+----- Captured Output (hunk headers) -----
+@@ -231,6 +231,27 @@ See `skills/arc-status/references/status-dimensions.md` (WL-2 Wave-Linked Idea S
+@@ -295,11 +316,28 @@ See `skills/arc-status/references/status-dimensions.md` (Next-Step Suggestion Pr
+
+----- Scope Analysis -----
+
+Hunk 1 @ line 231 (Step 6.6 postamble):
+  - Authored by: worker-5 (T01.3) — parallel worker in shared worktree
+  - T02.2 did NOT author this hunk; it appears in `git diff` because changes are not yet committed.
+  - Nothing in this hunk was modified by T02.2.
+
+Hunk 2 @ line 316 (Present Recommendation block):
+  - Authored by: worker-6 (T02.2) — THIS TASK
+  - Removed: 2 stale bullet points referencing obsolete P1-P5, P6-P7 priorities.
+  - Added: per-priority alternative-skill selection table + "at least 3 options" invariant.
+  - Did NOT touch the Step 7 precedence table (lines 269-294, authored by worker-4 / T02.1).
+  - Did NOT touch "Handle User Selection" or "Critical Constraints for Step 7" (preserved unchanged).
+
+Constraint confirmed: T02.2 edit is confined to the Step 7 "Select the alternative skill" / "Present Recommendation" block only.
+
+Status: PASS
