@@ -1,0 +1,30 @@
+Type: cli
+Command: (a) bash scripts/parse-frontmatter.sh skills/arc-status/SKILL.md --format json | jq -r '.["arc-status"].requires.files[]'
+         (b) awk '/^#### Step 6\.0/,/^#### LG-1/' skills/arc-status/SKILL.md | grep -o 'Wave 4 — Foo' | wc -l
+         (c) grep -n "Step 6.0: Compute Wave-Linked Idea Set" skills/arc-status/SKILL.md
+         (d) bash scripts/validate-backlog.sh | tail -1
+         (e) bash scripts/validate-roadmap.sh | tail -1
+Expected:
+  (a) docs/BACKLOG.md emitted - frontmatter still parses as valid JSON.
+  (b) A non-zero count (the em-dash variant "Wave 4 — Foo" appears at least twice in the preamble's case-sensitivity examples), proving Unicode em dashes are preserved verbatim on disk.
+  (c) Exactly one match for the new Step 6.0 heading, confirming it is present and unique.
+  (d) validate-backlog: PASS.
+  (e) validate-roadmap: PASS.
+Timestamp: 2026-04-24T00:00:00Z
+Status: PASS
+
+---
+
+(a) docs/BACKLOG.md
+
+(b)       2
+
+(c) 173:#### Step 6.0: Compute Wave-Linked Idea Set (Preamble)
+
+(d) validate-backlog: PASS -- 20 entries validated (20 pass, 0 fail)
+
+(e) validate-roadmap: PASS: ROADMAP table is empty (no waves - acceptable for new projects)
+
+---
+
+All five checks PASS. The Step 6.0 preamble has been inserted, frontmatter is valid, em dashes are preserved, and the repository validators report no regression. Worker-4's concurrent edit of Step 7 coexists with this change without conflict.

@@ -170,6 +170,25 @@ Detect stalled transitions in the idea lifecycle pipeline. Read `skills/arc-stat
 
 For each gap type below, run the detection logic. If a detection check fails (unreadable file, malformed metadata, missing directory), treat it as a **skipped check with a warning** — do not abort. Continue to the next gap check.
 
+#### Step 6.0: Compute Wave-Linked Idea Set (Preamble)
+
+Before running the five gap checks, compute the **wave-linked idea set** so each detected gap can later be tagged with a scope label. This preamble runs once per invocation.
+
+1. If the **active wave name** from Step 2 is null, the wave-linked idea set is the **empty set**. Skip steps 2–5 of this preamble. (Downstream gap scope tagging will treat every gap as `backlog-only`, and the Scope column will be omitted per the no-wave branch — see the renderer rules referenced from `status-dimensions.md` (WL-4).)
+2. Otherwise, re-read (or reuse the already-parsed) `docs/BACKLOG.md` summary table — the first markdown table whose columns include `Title`, `Status`, `Priority`, and `Wave` (same table as Step 3).
+3. For each data row of that table (skipping header and separator rows):
+   a. Extract the `Title` column value.
+   b. Extract the `Wave` column value.
+   c. Trim surrounding whitespace from **both** the row's `Wave` value and the **active wave name** from Step 2.
+   d. Compare the two trimmed strings by **exact case-sensitive string match** — no lowercasing, no Unicode normalization, no substring or prefix matching. `Wave 4 — Foo` matches `  Wave 4 — Foo  ` but does not match `wave 4 — foo`, `WAVE 4 — FOO`, or `Wave 4 - Foo` (hyphen vs. em dash).
+   e. If the trimmed `Wave` value equals the trimmed active wave name, add the idea's **Title** (as it appears in the Title column, untrimmed) to the **wave-linked idea set**.
+4. Rows whose `Wave` column is empty, missing, or does not match are excluded.
+5. Retain the resulting wave-linked idea set for use by the gap-tagging logic in T01.3 and the renderer in T01.4. The five gap checks (LG-1 through LG-5) below continue to execute unchanged — the wave-linked set does not suppress any detection; it only provides the membership lookup used after detection.
+
+This preamble also defines the **spec-to-idea linkage** used by the spec-scoped gaps LG-3 and LG-4: for a gap whose subject is a spec directory (e.g., `docs/specs/NN-spec-name/`), look up the `docs/BACKLOG.md` idea entry whose `Spec:` field equals that spec directory path; if such an idea is found and its title is in the wave-linked idea set, the gap is considered wave-linked; otherwise backlog-only. The lookup is performed at tag time (see T01.3), not in this preamble.
+
+See `skills/arc-status/references/status-dimensions.md` (WL-2 Wave-Linked Idea Set, and WL-3 Gap Scope Tagging for the spec-to-idea linkage) for the authoritative algorithm, edge cases, and worked example.
+
 #### LG-1: Captured → Shaped
 
 1. Read `docs/BACKLOG.md`.
