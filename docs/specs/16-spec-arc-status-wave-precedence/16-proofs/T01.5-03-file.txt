@@ -1,0 +1,20 @@
+Type: file
+Command: Verify section ordering in status-dimensions.md
+Expected: Section ordering matches the "Step 6 → Step 7 reasoning" requirement:
+  1. `## Lifecycle Gap Detection` appears first
+  2. `## Wave Linkage Detection` appears after Lifecycle Gap Detection
+  3. `## Next-Step Suggestion Precedence` appears after Wave Linkage Detection
+Timestamp: 2026-04-24T11:20:30Z
+
+Section line numbers (from grep -n output):
+  Line 181: `## Lifecycle Gap Detection`
+  Line 371: `## Wave Linkage Detection`    (new section)
+  Line 517: `## Next-Step Suggestion Precedence`
+
+Ordering check:
+  [PASS] 181 < 371 (Lifecycle Gap Detection precedes Wave Linkage Detection)
+  [PASS] 371 < 517 (Wave Linkage Detection precedes Next-Step Suggestion Precedence)
+  [PASS] Net ordering: Lifecycle Gap Detection → Wave Linkage Detection → Next-Step Suggestion Precedence
+  [PASS] Ordering matches the "Step 6 → Step 7 reasoning" requirement from T01.5's task description
+
+Status: PASS

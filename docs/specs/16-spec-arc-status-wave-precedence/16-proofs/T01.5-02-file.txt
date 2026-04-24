@@ -1,0 +1,46 @@
+Type: file
+Command: grep -n for required content tokens in skills/arc-status/references/status-dimensions.md
+Expected: The new "Wave Linkage Detection" section contains every requirement from the task description:
+  - Active wave resolution rule (first non-Completed ROADMAP row, wave name + wave status)
+  - Exact case-sensitive match rule with whitespace trim on the BACKLOG Wave column
+  - Null-wave fallback (wave-linked set is empty)
+  - Spec-to-idea linkage via BACKLOG Spec: field for LG-3/LG-4 gaps
+  - `--` scope for skipped checks in active-wave mode
+  - Worked example for three-idea BACKLOG against wave name "Wave 4 — Foo"
+Timestamp: 2026-04-24T11:20:15Z
+
+Verification Checks:
+
+[PASS] Active wave resolution — "first row whose Status column is not `Completed`" (line 385)
+  Source: WL-1 Detection Logic Step 3
+
+[PASS] Wave name + wave status extracted from same row (lines 386-388)
+  Source: WL-1 Detection Logic Step 4 (both Active wave name and Active wave status extracted)
+
+[PASS] Exact case-sensitive match rule (line 419, 425)
+  "d. Compare the two trimmed strings by **exact case-sensitive string match**."
+  "**Case-sensitive**: `Wave 4 — Foo` matches `Wave 4 — Foo` but not `wave 4 — foo`..."
+
+[PASS] Whitespace trim rule on BACKLOG Wave column (line 418, 426)
+  "c. Trim surrounding whitespace from both the row's Wave value and from the active `wave_name`."
+  "**Whitespace-trimmed**: leading and trailing whitespace on either side is removed before comparison"
+
+[PASS] Null-wave fallback (wave-linked set is empty) (lines 389, 413)
+  "If no non-Completed row exists — no ROADMAP file, empty table, or every row has Status `Completed` — the active wave name is `null`..."
+  "If `wave_name` from WL-1 is `null`, the wave-linked set is the empty set."
+
+[PASS] Spec-to-idea linkage via BACKLOG Spec: field for LG-3/LG-4 (lines 452-455)
+  "2. **LG-3 (Spec → Plan) and LG-4 (Plan → Validation)** — the subject is a spec directory...
+   Resolve the spec's linked backlog idea via the `Spec:` field..."
+
+[PASS] `--` scope for skipped checks in active-wave mode (lines 459, 477)
+  "4. **Skipped checks** — when a lifecycle check could not execute... Its scope is `--`..."
+  "For a skipped check (scope `--`), the Scope cell is the literal string `--`."
+
+[PASS] Worked example with three-idea BACKLOG and wave name "Wave 4 — Foo" (lines 485-513)
+  Header: "Given a ROADMAP where the first non-Completed row has Wave `Wave 4 — Foo` and Status `active`, and a BACKLOG containing three ideas"
+  Three ideas: Idea-A (Wave 4 — Foo), Idea-B (empty), Idea-C (whitespace-padded)
+  Outcomes shown: wave-linked (Idea-A, Idea-C) and backlog-only (Idea-B)
+  Contrast with null-wave case documented at line 513
+
+Status: PASS

@@ -1,0 +1,46 @@
+Type: file
+Command: grep -n '^##\|^###' skills/arc-status/references/status-dimensions.md
+Expected:
+  - `## Wave Linkage Detection` heading exists
+  - `## Wave Linkage Detection` appears after `## Lifecycle Gap Detection` heading
+  - `## Wave Linkage Detection` appears before `## Next-Step Suggestion Precedence` heading
+  - Sub-headings WL-1, WL-2, WL-3, WL-4, and Worked Example are all present
+Timestamp: 2026-04-24T11:20:00Z
+
+Actual Output:
+7:## SD-1: Current Wave
+50:## SD-2: Backlog Snapshot
+97:## SD-3: In-Flight Specs
+147:## SD-4: Recent Activity
+181:## Lifecycle Gap Detection
+187:### LG-1: Captured → Shaped
+214:### LG-2: Shaped → Spec
+244:### LG-3: Spec → Plan
+276:### LG-4: Plan → Validation
+306:### LG-5: Validation → Shipped
+341:### No Gaps Detected
+353:### Error Handling
+371:## Wave Linkage Detection
+377:### WL-1: Active Wave Resolution
+407:### WL-2: Wave-Linked Idea Set
+441:### WL-3: Gap Scope Tagging
+468:### WL-4: Scope Column Rendering
+483:### Worked Example
+517:## Next-Step Suggestion Precedence
+523:### Precedence Table
+537:### Evaluation Logic
+551:### AskUserQuestion Format
+577:### User Selection Handling
+589:## Cross-References
+
+Verification Checks:
+  [PASS] Line 371: `## Wave Linkage Detection` heading exists
+  [PASS] Line 371 (Wave Linkage Detection) is after line 181 (Lifecycle Gap Detection)
+  [PASS] Line 371 (Wave Linkage Detection) is before line 517 (Next-Step Suggestion Precedence)
+  [PASS] Line 377: `### WL-1: Active Wave Resolution` sub-heading exists
+  [PASS] Line 407: `### WL-2: Wave-Linked Idea Set` sub-heading exists
+  [PASS] Line 441: `### WL-3: Gap Scope Tagging` sub-heading exists
+  [PASS] Line 468: `### WL-4: Scope Column Rendering` sub-heading exists
+  [PASS] Line 483: `### Worked Example` sub-heading exists
+
+Status: PASS

@@ -368,6 +368,152 @@ The skill does not terminate on detection failures. All gap checks that can exec
 
 ---
 
+## Wave Linkage Detection
+
+`/arc-status` scopes lifecycle-gap recommendations to the active delivery wave when one exists. This section documents how the active wave is resolved, how the wave-linked idea set is computed, how spec-scoped gaps (LG-3 and LG-4) inherit wave scope, and how skipped checks render in active-wave mode. The algorithm is consumed by Step 6 (gap scope tagging), Step 6's table renderer (Scope column rendering), and Step 7 (Next-Step Suggestion Precedence).
+
+---
+
+### WL-1: Active Wave Resolution
+
+**Purpose:** Produce a `(wave_name, wave_status)` tuple — or `(null, null)` — that represents the single active delivery wave used by all downstream wave-linkage logic.
+
+**Detection Logic:**
+
+1. Read `docs/ROADMAP.md` using the same parse as SD-1 (Current Wave).
+2. Locate the wave summary table — the first markdown table after the `# ROADMAP` heading with columns Wave, Goal, Status, Target, Ideas.
+3. Walk the data rows top-to-bottom. The **first row whose Status column is not `Completed`** is the active wave row.
+4. Extract two values from that row:
+   - **Active wave name** — the verbatim string in the Wave column, with surrounding whitespace trimmed. The extracted name is preserved verbatim otherwise (em dashes, colons, and other markdown-special characters are not escaped or altered).
+   - **Active wave status** — the Status column value, expected to be one of `planned` or `active`. The legacy value `Completed` is excluded by the first-non-Completed filter above.
+5. If no non-Completed row exists — no ROADMAP file, empty table, or every row has Status `Completed` — the active wave name is `null` and the active wave status is `null`.
+
+**Inputs:**
+
+- `docs/ROADMAP.md` — wave summary table (shared with SD-1)
+
+**Outputs:**
+
+- `wave_name`: string or `null`
+- `wave_status`: `planned`, `active`, or `null`
+
+**Notes:**
+
+- The resolution is authoritative: the spec does not second-guess the Status field (no stalled-wave detection, no date-based heuristics).
+- Only the first non-Completed row is considered. Later non-Completed rows in the same table are ignored — the skill assumes one active wave at a time.
+
+---
+
+### WL-2: Wave-Linked Idea Set
+
+**Purpose:** Compute the set of backlog idea titles whose Wave column matches the active wave name, used to tag each lifecycle gap as `wave-linked` or `backlog-only`.
+
+**Detection Logic:**
+
+1. If `wave_name` from WL-1 is `null`, the wave-linked set is the empty set. Skip the remaining steps.
+2. Read `docs/BACKLOG.md` and locate the summary table (the first table containing columns Title, Status, Priority, Wave — shared with SD-2).
+3. For each data row:
+   a. Extract the `Title` column value (the idea title).
+   b. Extract the `Wave` column value.
+   c. Trim surrounding whitespace from both the row's Wave value and from the active `wave_name`.
+   d. Compare the two trimmed strings by **exact case-sensitive string match**.
+   e. If the trimmed Wave value equals the trimmed `wave_name`, add the idea's title (untrimmed, as it appears in the Title column) to the wave-linked set.
+4. Rows whose Wave column is empty, missing, or does not match are not added to the set.
+
+**Match Rules:**
+
+- **Case-sensitive**: `Wave 4 — Foo` matches `Wave 4 — Foo` but not `wave 4 — foo` or `WAVE 4 — FOO`.
+- **Whitespace-trimmed**: leading and trailing whitespace on either side is removed before comparison — `  Wave 4 — Foo  ` matches `Wave 4 — Foo`.
+- **No normalization beyond trim**: internal whitespace, em dashes, hyphens, and Unicode characters must match exactly. `Wave 4 - Foo` (hyphen) does not match `Wave 4 — Foo` (em dash).
+- **No partial or substring matching**: `Wave 4` does not match `Wave 4 — Foo`.
+
+**Inputs:**
+
+- `wave_name` from WL-1
+- `docs/BACKLOG.md` summary table
+
+**Outputs:**
+
+- `wave_linked_ideas`: set of idea titles (possibly empty)
+
+---
+
+### WL-3: Gap Scope Tagging
+
+**Purpose:** Assign each lifecycle gap detected in Step 6 a `scope` field of `wave-linked` or `backlog-only`, used by the table renderer to populate the Scope column and by Step 7 to filter which gaps drive the next-step recommendation.
+
+**Detection Logic:**
+
+For each detected gap, determine its subject idea and consult the wave-linked set:
+
+1. **LG-1 (Captured → Shaped) and LG-2 (Shaped → Spec)** — the subject is the backlog idea title identified during gap detection.
+   - If the subject title is in `wave_linked_ideas` → `scope = wave-linked`.
+   - Otherwise → `scope = backlog-only`.
+2. **LG-3 (Spec → Plan) and LG-4 (Plan → Validation)** — the subject is a spec directory (e.g., `docs/specs/07-spec-thing/`). Resolve the spec's linked backlog idea via the `Spec:` field:
+   a. Scan `docs/BACKLOG.md` idea entries for a `Spec:` field whose value equals the spec directory path (e.g., `docs/specs/07-spec-thing/`).
+   b. If a matching backlog idea is found and its title is in `wave_linked_ideas` → `scope = wave-linked`.
+   c. If no matching backlog idea is found, or the matched idea's title is not in `wave_linked_ideas` → `scope = backlog-only`.
+3. **LG-5 (Validation → Shipped)** — the subject is the backlog idea identified in LG-5's detection logic (the idea whose `Spec:` field matches the spec directory with a passing validation report).
+   - If the subject's title is in `wave_linked_ideas` → `scope = wave-linked`.
+   - Otherwise → `scope = backlog-only`.
+4. **Skipped checks** — when a lifecycle check could not execute (see Error Handling), the resulting row has no resolvable subject. Its scope is `--` (a placeholder, not `wave-linked` or `backlog-only`).
+5. **No active wave (WL-1 returned `null`)** — scope tagging is functionally unused. The scope field may be computed as `backlog-only` for all gaps but is ignored by both the table renderer (no Scope column is emitted) and Step 7 (no-wave branch of the precedence).
+
+**Outputs:**
+
+- Each gap is tagged with `scope ∈ { wave-linked, backlog-only, -- }`.
+
+---
+
+### WL-4: Scope Column Rendering
+
+**Purpose:** Conditionally render the Scope column in the Lifecycle Gaps table.
+
+**Rendering Rules:**
+
+1. If `wave_name` from WL-1 is not null, render the Lifecycle Gaps table with four columns: `Gap | Item | Remediation | Scope`.
+   - For a gap tagged `wave-linked`, the Scope cell is the literal string `Wave: {wave_name}` (verbatim wave name — no escaping beyond standard markdown table cell content).
+   - For a gap tagged `backlog-only`, the Scope cell is the literal string `Backlog (outside wave)`.
+   - For a skipped check (scope `--`), the Scope cell is the literal string `--`.
+2. If `wave_name` is null, render the table in its existing three-column format: `Gap | Item | Remediation`. No Scope column is emitted and the scope field on each gap is ignored.
+3. The `No lifecycle gaps detected.` message (see "No Gaps Detected" above) is unchanged regardless of wave state — no table is rendered in that case.
+
+---
+
+### Worked Example
+
+Given a ROADMAP where the first non-Completed row has Wave `Wave 4 — Foo` and Status `active`, and a BACKLOG containing three ideas:
+
+| Title | Status | Priority | Wave |
+|-------|--------|----------|------|
+| Idea-A | captured | P1 | `Wave 4 — Foo` |
+| Idea-B | shaped | P0 | _(empty)_ |
+| Idea-C | captured | P2 | `  Wave 4 — Foo  ` |
+
+**WL-1 output:** `wave_name = "Wave 4 — Foo"`, `wave_status = "active"`.
+
+**WL-2 output:** After trimming and case-sensitive comparison, `wave_linked_ideas = { "Idea-A", "Idea-C" }`. Idea-B is excluded (empty Wave column).
+
+**WL-3 output (assuming each idea has a matching gap):**
+
+- Idea-A has LG-1 (captured, unshaped) → `scope = wave-linked`.
+- Idea-B has LG-2 (shaped, no spec) → `scope = backlog-only`.
+- Idea-C has LG-1 (captured, unshaped) → `scope = wave-linked` (trim rule applied).
+
+**WL-4 rendered table:**
+
+```markdown
+| Gap | Item | Remediation | Scope |
+|-----|------|-------------|-------|
+| Captured → Shaped | Idea-A | Run /arc-shape | Wave: Wave 4 — Foo |
+| Shaped → Spec | Idea-B | Run /cw-spec | Backlog (outside wave) |
+| Captured → Shaped | Idea-C | Run /arc-shape | Wave: Wave 4 — Foo |
+```
+
+**Contrast — null active wave:** If the same BACKLOG is rendered against a ROADMAP with no non-Completed rows, WL-1 returns `(null, null)`, WL-2 returns the empty set, and WL-4 renders the three-column table with no Scope column. Step 7 falls through to the no-wave precedence branch.
+
+---
+
 ## Next-Step Suggestion Precedence
 
 After emitting all summary sections, `/arc-status` recommends the single most relevant next skill. The recommendation uses a **first-match-wins precedence list** — evaluate conditions from Priority 1 downward and stop at the first match.
