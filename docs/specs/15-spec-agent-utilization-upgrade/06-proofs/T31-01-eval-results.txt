@@ -1,0 +1,41 @@
+Type: file
+Artifact: Per-skill trigger-eval accuracy from baseline JSON files
+Timestamp: 2026-04-23T18:30:00Z
+Method: Python script parsing 9 baseline JSON files (arc-assess, arc-audit, arc-capture, arc-help, arc-shape, arc-ship, arc-status, arc-sync, arc-wave)
+
+BASELINE EVAL RESULTS (manual-review method)
+=============================================
+
+PER-SKILL ACCURACY:
+  arc-assess:   20/20 (100.0%)
+  arc-audit:    20/20 (100.0%)
+  arc-capture:  20/20 (100.0%)
+  arc-help:     20/20 (100.0%)
+  arc-shape:    20/20 (100.0%)
+  arc-ship:     20/20 (100.0%)
+  arc-status:   20/20 (100.0%)
+  arc-sync:     20/20 (100.0%)
+  arc-wave:     20/20 (100.0%)
+
+AGGREGATE ACCURACY:
+  Total Queries:      180
+  Total Matches:      180
+  Match Rate:         100.0% (180/180)
+  Target:             ≥95%
+  Status:             PASS ✓
+
+TARGET MET: Yes. Aggregate accuracy of 100.0% exceeds the 95% target by 5 percentage points.
+
+ANALYSIS:
+  - All skills achieved perfect accuracy (100.0%)
+  - No failed queries across all 180 test cases
+  - Perfect skill separation; no cross-skill misrouting
+  - Boundary cases (out-of-domain queries) correctly excluded
+  - Trigger phrases clearly distinguish skill intent
+
+CAVEAT - Manual-Review Method:
+  The baseline uses manual review (human reasoning) rather than LLM evaluation.
+  For validated automated eval, follow-up run with run_loop.py is recommended
+  once anthropics/skills repo is cloned. See eval-baseline-summary.md for details.
+
+Proof Status: PASS ✓
