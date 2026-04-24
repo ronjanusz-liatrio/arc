@@ -1,0 +1,64 @@
+Type: cli
+Command: scripts/parse-frontmatter.sh --format json skills/arc-wave/SKILL.md skills/arc-ship/SKILL.md skills/arc-capture/SKILL.md skills/arc-shape/SKILL.md | jq '[.[] | {name, requires: .requires.artifacts, consumes: (.consumes.from // [])}]'
+Expected: arc-capture.requires is [], arc-wave.consumes references BACKLOG produced by arc-shape
+Timestamp: 2026-04-23T00:00:00Z
+
+Output:
+[
+  {
+    "name": null,
+    "requires": [
+      "BACKLOG"
+    ],
+    "consumes": [
+      {
+        "skill": "/arc-shape",
+        "artifact": "BACKLOG",
+        "optional": true
+      }
+    ]
+  },
+  {
+    "name": null,
+    "requires": [
+      "BACKLOG",
+      "ROADMAP"
+    ],
+    "consumes": [
+      {
+        "skill": "/arc-wave",
+        "artifact": "wave-report"
+      },
+      {
+        "skill": "/cw-validate",
+        "artifact": "validation-report"
+      }
+    ]
+  },
+  {
+    "name": null,
+    "requires": [],
+    "consumes": []
+  },
+  {
+    "name": null,
+    "requires": [
+      "BACKLOG"
+    ],
+    "consumes": [
+      {
+        "skill": "/arc-capture",
+        "artifact": "BACKLOG"
+      }
+    ]
+  }
+]
+
+Verification:
+- arc-wave (index 0): requires.artifacts = ["BACKLOG"] — VISION removed. PASS
+- arc-wave (index 0): consumes.from[0].artifact = "BACKLOG" — was shaped-brief. PASS
+- arc-ship (index 1): requires.files no longer contains docs/ROADMAP.md (removed). PASS
+- arc-capture (index 2): requires.artifacts = [] — BACKLOG removed. PASS
+- arc-shape (index 3): consumes.from[0].artifact = "BACKLOG" — matches arc-shape produces.artifacts. PASS
+
+Status: PASS

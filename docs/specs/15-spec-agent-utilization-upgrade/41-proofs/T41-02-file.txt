@@ -1,0 +1,42 @@
+Type: file
+Description: Verify frontmatter YAML content of all three modified SKILL.md files
+Timestamp: 2026-04-23T00:00:00Z
+
+--- skills/arc-wave/SKILL.md requires block ---
+requires:
+  files:
+    - docs/BACKLOG.md
+  artifacts:
+    - BACKLOG
+  state: "shaped_count >= 1 AND wave_active = false"
+
+docs/VISION.md NOT in requires.files: PASS
+VISION NOT in requires.artifacts: PASS
+
+--- skills/arc-wave/SKILL.md consumes block ---
+consumes:
+  from:
+    - { skill: /arc-shape, artifact: BACKLOG, optional: true }
+
+artifact = BACKLOG (was shaped-brief): PASS
+
+--- skills/arc-ship/SKILL.md requires block ---
+requires:
+  files:
+    - docs/BACKLOG.md
+  artifacts:
+    - BACKLOG
+    - ROADMAP
+
+docs/ROADMAP.md NOT in requires.files: PASS
+(ROADMAP artifact retained in requires.artifacts — ROADMAP is still a hard dependency for shipping)
+
+--- skills/arc-capture/SKILL.md requires block ---
+requires:
+  files: []
+  artifacts: []
+  state: ""
+
+requires.artifacts = []: PASS
+
+Status: PASS

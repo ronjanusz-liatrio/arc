@@ -5,8 +5,7 @@ user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 requires:
   files: []
-  artifacts:
-    - BACKLOG
+  artifacts: []
   state: ""
 produces:
   files:

@@ -6,7 +6,6 @@ allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 requires:
   files:
     - docs/BACKLOG.md
-    - docs/ROADMAP.md
   artifacts:
     - BACKLOG
     - ROADMAP

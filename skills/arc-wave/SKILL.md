@@ -6,10 +6,8 @@ allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 requires:
   files:
     - docs/BACKLOG.md
-    - docs/VISION.md
   artifacts:
     - BACKLOG
-    - VISION
   state: "shaped_count >= 1 AND wave_active = false"
 produces:
   files:
@@ -24,7 +22,7 @@ produces:
   state-transition: "shaped -> spec-ready"
 consumes:
   from:
-    - { skill: /arc-shape, artifact: shaped-brief }
+    - { skill: /arc-shape, artifact: BACKLOG, optional: true }
 triggers:
   condition: "shaped_count >= 1 AND wave_active = false"
   alternates:
