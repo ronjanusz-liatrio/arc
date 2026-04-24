@@ -1,0 +1,38 @@
+Type: cli
+Check: README.md contains required sections (run_loop.py invocation, expected_trigger field, baseline files, 95% accuracy target)
+Expected: Each grep returns count ≥ 1
+Timestamp: 2026-04-23T00:00:00Z
+
+--- Commands and Output ---
+
+$ grep -c "run_loop.py" tests/trigger-evals/README.md
+7
+
+$ grep -c "expected_trigger" tests/trigger-evals/README.md
+6
+
+$ grep -c "baseline" tests/trigger-evals/README.md
+8
+
+$ grep -c "95" tests/trigger-evals/README.md
+3
+
+--- Section Headings Verification ---
+
+$ grep "^## " tests/trigger-evals/README.md
+## Purpose
+## File Inventory
+## JSON Shape
+## Running the Eval
+## Interpreting Results
+## Accuracy Target
+## Baseline Result Files
+## Related Files
+
+--- Result ---
+PASS: All required sections present.
+  - run_loop.py invocation documented (7 occurrences)
+  - expected_trigger field documented (6 occurrences)
+  - baseline files documented (8 occurrences)
+  - ≥95% accuracy target documented (3 occurrences)
+  - 8 major sections covering all required content areas

@@ -1,0 +1,13 @@
+Type: file
+Check: tests/trigger-evals/README.md exists and is non-empty
+Expected: file present with ≥ 100 lines covering all required sections
+Timestamp: 2026-04-23T00:00:00Z
+
+--- Command ---
+wc -l tests/trigger-evals/README.md
+
+--- Output ---
+216 tests/trigger-evals/README.md
+
+--- Result ---
+PASS: README.md created with 216 lines
