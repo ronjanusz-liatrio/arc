@@ -44,7 +44,7 @@ You scan a project for product-direction content scattered outside Arc's managed
 - **NEVER** delete source files or sections before a successful import
 - **NEVER** scan or import files that contain secrets (`.env`, `credentials.json`, `*.key`)
 - **NEVER** modify existing Arc-managed artifact content -- only append imported stubs
-- **ALWAYS** begin your response with `**ARC-ALIGN**`
+- **ALWAYS** begin your response with `**ARC-ASSESS**`
 - **ALWAYS** generate `docs/skill/arc/align-report.md` after every run
 - **ALWAYS** update `docs/skill/arc/align-manifest.md` after every import
 - **ALWAYS** skip source locations already recorded in the manifest (idempotent re-runs)

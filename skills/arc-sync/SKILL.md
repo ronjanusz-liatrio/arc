@@ -54,7 +54,7 @@ Managed sections use the marker format `<!--# BEGIN ARC:{section-name} -->` / `<
 - **NEVER** expose internal priority metadata (P0/P1/P2/P3) in the README
 - **NEVER** write to README.md without user approval via AskUserQuestion
 - **NEVER** run without a substantive VISION.md (>200 non-whitespace characters)
-- **ALWAYS** begin your response with `**ARC-README**`
+- **ALWAYS** begin your response with `**ARC-SYNC**`
 - **ALWAYS** run trust-signal validation against the output before presenting for approval
 - **ALWAYS** guarantee all evaluable trust signals pass on scaffold output
 - **ALWAYS** use "Not yet defined" placeholders only when the source artifact is absent
