@@ -1,0 +1,11 @@
+Type: cli
+Command: grep -cE '\*\*ARC-HELP\*\*' skills/arc-help/SKILL.md
+Expected: Output "2" (header + body directive)
+Timestamp: 2026-04-23T00:00:00Z
+
+Output:
+2
+
+EXIT_CODE: 0
+
+Status: PASS

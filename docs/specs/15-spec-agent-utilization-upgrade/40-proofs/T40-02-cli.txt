@@ -1,0 +1,13 @@
+Type: cli
+Command: grep -A 2 "## Critical Constraints" skills/arc-help/SKILL.md
+Expected: Exit 0, output contains "ALWAYS begin your response with"
+Timestamp: 2026-04-23T00:00:00Z
+
+Output:
+## Critical Constraints
+
+- **ALWAYS** begin your response with `**ARC-HELP**`
+
+EXIT_CODE: 0
+
+Status: PASS

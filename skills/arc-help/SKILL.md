@@ -30,6 +30,10 @@ Arc is a Claude Code plugin for lightweight product direction. It manages the id
 
 Arc is the upstream companion to [temper](https://github.com/ronjanusz-liatrio/temper) (engineering maturity) and [claude-workflow](https://github.com/ronjanusz-liatrio/claude-workflow) (spec-driven development). Arc shapes **what** gets built before temper governs **how** it gets built. Shaped ideas flow from Arc into the claude-workflow SDD pipeline (`/cw-spec` -> `/cw-plan` -> `/cw-dispatch`).
 
+## Critical Constraints
+
+- **ALWAYS** begin your response with `**ARC-HELP**`
+
 ## Skills
 
 Arc provides nine skills for managing the product idea lifecycle:
