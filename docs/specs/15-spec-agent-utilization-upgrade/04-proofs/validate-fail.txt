@@ -1,0 +1,102 @@
+Type: cli
+Command: Validators running against fail fixtures demonstrating schema violations
+Expected: Exit 1 with diagnostic output showing schema validation failures
+Timestamp: 2026-04-24T01:03:49Z
+
+=== Validator Test 1: Fail Fixture - backlog-entry-missing-brief.json ===
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/backlog-entry.schema.json -d schemas/tests/backlog-entry-missing-brief.json --spec=draft7 -c ajv-formats
+Expected: Exit 1, diagnostic mentioning missing 'brief' field
+
+--- stdout ---
+schemas/tests/backlog-entry-missing-brief.json invalid
+[
+  {
+    instancePath: '',
+    schemaPath: '#/allOf/0/then/required',
+    keyword: 'required',
+    params: { missingProperty: 'brief' },
+    message: "must have required property 'brief'"
+  }
+]
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+1
+
+Diagnostic: The backlog entry has status='shaped' but is missing the required 'brief' object. The schema enforces via allOf/then/required that shaped items must include a brief property.
+
+=== Validator Test 2: Fail Fixture - brief-too-few-success-criteria.json ===
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/brief.schema.json -d schemas/tests/brief-too-few-success-criteria.json --spec=draft7 -c ajv-formats
+Expected: Exit 1, diagnostic mentioning minimum success_criteria requirement
+
+--- stdout ---
+schemas/tests/brief-too-few-success-criteria.json invalid
+[
+  {
+    instancePath: '/success_criteria',
+    schemaPath: '#/properties/success_criteria/minItems',
+    keyword: 'minItems',
+    params: { limit: 3 },
+    message: 'must NOT have fewer than 3 items'
+  }
+]
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+1
+
+Diagnostic: Brief success_criteria array has only 2 items but schema requires a minimum of 3 well-articulated success criteria.
+
+=== Validator Test 3: Fail Fixture - roadmap-row-invalid-wave-pattern.json ===
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/roadmap-row.schema.json -d schemas/tests/roadmap-row-invalid-wave-pattern.json --spec=draft7 -c ajv-formats
+Expected: Exit 1, diagnostic mentioning invalid wave pattern
+
+--- stdout ---
+schemas/tests/roadmap-row-invalid-wave-pattern.json invalid
+[
+  {
+    instancePath: '/wave',
+    schemaPath: '#/properties/wave/pattern',
+    keyword: 'pattern',
+    params: { pattern: '^Wave \\d+:' },
+    message: "must match pattern \"^Wave \\\\d+:\""
+  }
+]
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+1
+
+Diagnostic: Wave name 'Wave4-AgentUtilizationUpgrade' does not match the required pattern '^Wave \\d+:' which expects format like 'Wave 4: Agent Utilization Upgrade'.
+
+=== Validator Test 4: Fail Fixture - wave-missing-completed-timestamp.json ===
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/wave.schema.json -d schemas/tests/wave-missing-completed-timestamp.json --spec=draft7 -c ajv-formats
+Expected: Exit 1, diagnostic mentioning missing completed timestamp for Completed status
+
+--- stdout ---
+schemas/tests/wave-missing-completed-timestamp.json invalid
+[
+  {
+    instancePath: '',
+    schemaPath: '#/allOf/1/then/required',
+    keyword: 'required',
+    params: { missingProperty: 'completed' },
+    message: "must have required property 'completed'"
+  }
+]
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+1
+
+Diagnostic: Wave has status='Completed' but is missing the required 'completed' timestamp field. The schema enforces via allOf/then/required that completed waves must include a completed ISO 8601 timestamp.
+
+Status: PASS (all fail fixtures demonstrate expected validation failures)

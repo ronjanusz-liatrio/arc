@@ -1,0 +1,121 @@
+Type: cli
+Command: Multiple validators running against real artifacts + state.sh
+Expected: All validators exit 0, state.sh produces JSON output with validation_status: PASS
+Timestamp: 2026-04-24T01:03:49Z
+
+=== Validator Test 1: validate-backlog.sh ===
+Command: scripts/validate-backlog.sh docs/BACKLOG.md
+Expected: Exit 0, PASS summary showing 20 entries
+
+--- stdout ---
+validate-backlog: PASS -- 20 entries validated (20 pass, 0 fail)
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+0
+
+=== Validator Test 2: validate-roadmap.sh ===
+Command: scripts/validate-roadmap.sh docs/ROADMAP.md
+Expected: Exit 0, PASS for empty roadmap
+
+--- stdout ---
+validate-roadmap: found 0 wave row(s) in ROADMAP
+validate-roadmap: PASS: ROADMAP table is empty (no waves — acceptable for new projects)
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+0
+
+=== Validator Test 3: Fixture Schema Validation (backlog-entry-pass.json) ===
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/backlog-entry.schema.json -d schemas/tests/backlog-entry-pass.json --spec=draft7 -c ajv-formats
+Expected: Exit 0, fixture validates cleanly
+
+--- stdout ---
+schemas/tests/backlog-entry-pass.json valid
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+0
+
+=== Validator Test 4: Fixture Schema Validation (brief-pass.json) ===
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/brief.schema.json -d schemas/tests/brief-pass.json --spec=draft7 -c ajv-formats
+Expected: Exit 0, fixture validates cleanly
+
+--- stdout ---
+schemas/tests/brief-pass.json valid
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+0
+
+=== Validator Test 5: Fixture Schema Validation (wave-pass.json) ===
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/wave.schema.json -d schemas/tests/wave-pass.json --spec=draft7 -c ajv-formats
+Expected: Exit 0, fixture validates cleanly
+
+--- stdout ---
+schemas/tests/wave-pass.json valid
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+0
+
+=== Validator Test 6: Fixture Schema Validation (roadmap-row-pass.json) ===
+Command: npx --yes --package=ajv-cli@5 --package=ajv-formats@2 ajv validate -s schemas/roadmap-row.schema.json -d schemas/tests/roadmap-row-pass.json --spec=draft7 -c ajv-formats
+Expected: Exit 0, fixture validates cleanly
+
+--- stdout ---
+schemas/tests/roadmap-row-pass.json valid
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+0
+
+=== State Vector Output ===
+Command: scripts/state.sh
+Expected: Exit 0, JSON state vector with validation_status: PASS
+
+--- stdout ---
+{
+  "idea_status_counts": {
+    "captured": 20,
+    "shaped": 0,
+    "spec_ready": 0,
+    "shipped": 0
+  },
+  "wave_active": false,
+  "current_wave": null,
+  "validation_status": "PASS",
+  "gaps": [
+    {
+      "type": "captured_high_pri",
+      "idea": "Add rewrite mode to arc-sync injection prompt",
+      "remediation": "shape with /arc-shape"
+    },
+    {
+      "type": "captured_high_pri",
+      "idea": "Remove time estimates from arc-wave",
+      "remediation": "shape with /arc-shape"
+    }
+  ],
+  "timestamp": "2026-04-24T01:03:49Z"
+}
+
+--- stderr ---
+(none)
+
+--- Exit code ---
+0
+
+Status: PASS
