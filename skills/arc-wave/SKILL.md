@@ -331,60 +331,12 @@ After writing, verify:
 
 ### Step 10: Generate Wave Report
 
-Read `skills/arc-wave/references/wave-report-template.md` for the report format.
-
-Save to `docs/skill/arc/wave-report.md`:
-
-```markdown
-# Wave Report: {Wave Name}
-
-**Created:** {ISO 8601 timestamp}
-**Theme:** {wave theme}
-**Target:** {timeframe}
-
-## Wave Goal
-
-{Goal paragraph connecting wave to product vision}
-
-## Selected Ideas
-
-| # | Title | Priority | Summary |
-|---|-------|----------|---------|
-| 1 | [{Title}](docs/BACKLOG.md#{anchor}) | {Priority} | {summary} |
-
-## Dependencies and Blockers
-
-- {Dependencies or "None identified"}
-
-## Temper Context
-
-**Phase:** {phase or "Not available"}
-**Hard gate failures:** {list or "None" or "Not available"}
-**Scope constraint:** {constraint or "No constraints applied"}
-
-## Handoff Instructions
-
-For each spec-ready idea, run `/cw-spec` with the idea's brief as input:
-
-| Idea | Status | Next Action |
-|------|--------|-------------|
-| {Title} | spec-ready | `/cw-spec` — {brief summary} |
-
-## Backlog Status
-
-| Status | Count |
-|--------|-------|
-| Captured | {N} |
-| Shaped | {N} |
-| Spec-Ready | {N} |
-| Shipped | {N} |
-| **Total** | **{N}** |
-```
+Read `templates/wave-report.tmpl.md` for the report format. Render each `{SlotName}` placeholder with values derived from the wave planning session. Save the rendered report to `docs/skill/arc/wave-report.md`.
 
 **Rendering the `**Target:**` header line in the wave report:**
 
 - **When `target` is set:** render the header line verbatim as `**Target:** {timeframe}` using the captured value (e.g., `**Target:** 2 weeks`).
-- **When `target` is unset** (empty string or missing — the default after Step 4): render the exact literal line `**Target:** TBD (use /arc-wave to add)`. Do not omit the line, leave it blank, or substitute a different hint string. The placeholder form matches the one used in the Step 6 ROADMAP wave entry so the reader sees the same reminder hint in both places. See `skills/arc-wave/references/wave-report-template.md` (Field Descriptions → Target) for the documented populated and placeholder forms.
+- **When `target` is unset** (empty string or missing — the default after Step 4): render the exact literal line `**Target:** TBD (use /arc-wave to add)`. Do not omit the line, leave it blank, or substitute a different hint string. The placeholder form matches the one used in the Step 6 ROADMAP wave entry so the reader sees the same reminder hint in both places. See `templates/wave-report.tmpl.md` (Field Descriptions → WaveTarget) for the documented populated and placeholder forms.
 
 Do not rewrite or normalize the `**Target:**` value in any pre-existing wave report file — the placeholder rule applies only to the wave report being generated for the newly created wave.
 
@@ -429,7 +381,7 @@ AskUserQuestion({
 
 ## References
 
-- `skills/arc-wave/references/wave-report-template.md` — Wave report format
+- `templates/wave-report.tmpl.md` — Wave report format and slot definitions
 - `skills/arc-wave/references/bootstrap-protocol.md` — ARC: namespace injection rules
 - `references/wave-planning.md` — Wave sizing, precedence, theme grouping
 - `references/wave-archive.md` — Wave archive schema, file naming, and completion lifecycle

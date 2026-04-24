@@ -1,0 +1,15 @@
+{
+  "number": 3,
+  "name": "Wave Lifecycle Closure",
+  "theme": "Archive completed waves and prune live documents of historical noise.",
+  "goal": "Ensure shipped ideas are removed from BACKLOG and ROADMAP and stored in per-wave archive files.",
+  "target": "2026-04-15",
+  "status": "Completed",
+  "ideas": [
+    {
+      "title": "Per-wave archive at docs/skill/arc/waves/",
+      "status": "shipped",
+      "priority": "P1-High"
+    }
+  ]
+}

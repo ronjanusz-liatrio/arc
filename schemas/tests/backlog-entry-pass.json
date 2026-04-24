@@ -1,0 +1,7 @@
+{
+  "title": "Add rewrite mode to arc-sync injection prompt",
+  "status": "captured",
+  "priority": "P1-High",
+  "captured": "2026-04-12T19:15:00Z",
+  "summary": "When arc-sync detects injection mode (existing README without ARC: markers), offer a rewrite option that reads the existing README holistically and re-homes content into ARC:/TEMPER: managed sections."
+}

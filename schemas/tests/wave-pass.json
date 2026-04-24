@@ -1,0 +1,15 @@
+{
+  "number": 4,
+  "name": "Agent Utilization Upgrade",
+  "theme": "Upgrade Arc into an autonomous-agent-ready project-management substrate",
+  "goal": "Make Arc the upstream product-direction layer for agent-driven development teams",
+  "target": "TBD",
+  "status": "Planned",
+  "ideas": [
+    {
+      "title": "Add rewrite mode to arc-sync injection prompt",
+      "status": "spec-ready",
+      "priority": "P1-High"
+    }
+  ]
+}

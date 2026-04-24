@@ -1,0 +1,10 @@
+Type: cli
+Command: grep -n "templates/wave-report.tmpl.md" skills/arc-wave/SKILL.md
+Expected: Two or more lines confirming the template reference exists in arc-wave Step 10 and References
+Timestamp: 2026-04-23T00:00:00Z
+Status: PASS
+
+Output:
+334:Read `templates/wave-report.tmpl.md` for the report format. Render each `{SlotName}` placeholder with values derived from the wave planning session. Save the rendered report to `docs/skill/arc/wave-report.md`.
+339:- **When `target` is unset** (empty string or missing — the default after Step 4): render the exact literal line `**Target:** TBD (use /arc-wave to add)`. Do not omit the line, leave it blank, or substitute a different hint string. The placeholder form matches the one used in the Step 6 ROADMAP wave entry so the reader sees the same reminder hint in both places. See `templates/wave-report.tmpl.md` (Field Descriptions → WaveTarget) for the documented populated and placeholder forms.
+384:- `templates/wave-report.tmpl.md` — Wave report format and slot definitions

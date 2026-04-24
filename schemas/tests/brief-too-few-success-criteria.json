@@ -1,0 +1,17 @@
+{
+  "title": "Add rewrite mode to arc-sync injection prompt",
+  "problem": "When arc-sync encounters an existing README without ARC: markers, there is no rewrite path available. Product Owners must manually migrate content, introducing errors and wasted effort.",
+  "proposed_solution": "Offer a rewrite option that reads the existing README holistically and re-homes content into ARC:/TEMPER: managed sections.",
+  "success_criteria": [
+    "arc-sync detects injection mode when ARC: markers are absent.",
+    "User is prompted to choose between inject and rewrite modes."
+  ],
+  "constraints": [
+    "Must preserve all non-ARC content from the existing README."
+  ],
+  "assumptions": [
+    "The existing README is well-formed UTF-8 text."
+  ],
+  "wave_assignment": "Wave 4: Agent Utilization Upgrade",
+  "open_questions": "None"
+}

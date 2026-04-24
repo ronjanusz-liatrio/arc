@@ -1,0 +1,9 @@
+Type: cli
+Command: grep -n "templates/shape-report.tmpl.md" skills/arc-shape/SKILL.md
+Expected: Two or more lines confirming the template reference exists in arc-shape Step 7 and References
+Timestamp: 2026-04-23T00:00:00Z
+Status: PASS
+
+Output:
+432:Read `templates/shape-report.tmpl.md` for the report format. Render each `{SlotName}` placeholder with values from the shaping session. Save the rendered report to `docs/skill/arc/shape-report.md`.
+460:- `templates/shape-report.tmpl.md` — Shape report format, slot definitions, and acceptance criteria

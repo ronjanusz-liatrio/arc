@@ -1,0 +1,18 @@
+{
+  "title": "Wave archive",
+  "problem": "After waves complete, docs/BACKLOG.md and docs/ROADMAP.md retain all shipped items indefinitely. The Product Owner and Tech Lead lose signal-to-noise as historical entries inflate both files.",
+  "proposed_solution": "Per-wave archive at docs/skill/arc/waves/NN-wave-name.md. arc-ship writes archive and prunes BACKLOG/ROADMAP atomically.",
+  "success_criteria": [
+    "Zero Status: shipped rows in BACKLOG.",
+    "Zero Status: Completed waves in ROADMAP.",
+    "One archive file per completed wave plus orphan fallback."
+  ],
+  "constraints": [
+    "Idempotent migration; archive-first write ordering; no shell text-processing tools."
+  ],
+  "assumptions": [
+    "Each shipped idea belongs to one wave; existing artifact-migration patterns apply."
+  ],
+  "wave_assignment": "Wave 3: Wave Lifecycle Closure",
+  "open_questions": "None"
+}

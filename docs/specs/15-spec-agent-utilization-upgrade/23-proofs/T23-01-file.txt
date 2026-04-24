@@ -1,0 +1,33 @@
+Type: file
+Description: Fixture inventory — all 9 fixture files + README exist under schemas/tests/
+Expected: 9 JSON fixture files (4 PASS, 5 FAIL) plus README.md present
+Timestamp: 2026-04-23T17:59:00Z
+
+=== schemas/tests/ listing ===
+README.md
+backlog-entry-missing-brief.json
+backlog-entry-missing-required-title.json
+backlog-entry-pass.json
+brief-pass.json
+brief-too-few-success-criteria.json
+roadmap-row-invalid-wave-pattern.json
+roadmap-row-pass.json
+wave-missing-completed-timestamp.json
+wave-pass.json
+
+PASS fixtures (4):
+  backlog-entry-pass.json
+  brief-pass.json
+  wave-pass.json
+  roadmap-row-pass.json
+
+FAIL fixtures (5):
+  backlog-entry-missing-required-title.json   -- violates: 'title' required
+  backlog-entry-missing-brief.json            -- violates: allOf 'brief' required when status=shaped
+  brief-too-few-success-criteria.json         -- violates: success_criteria minItems:3
+  wave-missing-completed-timestamp.json       -- violates: allOf 'completed' required when status=Completed
+  roadmap-row-invalid-wave-pattern.json       -- violates: wave pattern ^Wave \d+: .+$
+
+Total fixture files: 9 (requirement: >=8)
+
+Status: PASS

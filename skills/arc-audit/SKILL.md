@@ -288,7 +288,7 @@ Apply the thresholds from audit-dimensions.md to determine the overall rating:
 
 ### Step 5: Generate Report
 
-Read `skills/arc-audit/references/review-report-template.md` for the full report format.
+Read `templates/audit-report.tmpl.md` for the full report format. Render each `{SlotName}` placeholder with values derived from the audit session.
 
 Create `docs/skill/arc/review-report.md` with:
 
@@ -405,7 +405,7 @@ AskUserQuestion({
 ## References
 
 - `skills/arc-audit/references/audit-dimensions.md` — Health check definitions, detection logic, thresholds, severity levels, and configurable parameters
-- `skills/arc-audit/references/review-report-template.md` — Report format and section layout for `docs/skill/arc/review-report.md`
+- `templates/audit-report.tmpl.md` — Report format, slot definitions, and acceptance criteria for `docs/skill/arc/review-report.md`
 - `skills/arc-sync/references/trust-signals.md` — Structural trust-signal definitions used by WA-7 (TS-1 through TS-10)
 - `references/wave-archive.md` — Wave archive schema, shipped-count derivation, and reader/writer contract
 - `references/idea-lifecycle.md` — Idea status transitions, timestamp fields, and lifecycle phases

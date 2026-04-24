@@ -429,37 +429,7 @@ Update the idea's section in `docs/BACKLOG.md`:
 
 ### Step 7: Generate Shape Report
 
-Save a shaping report to `docs/skill/arc/shape-report.md`:
-
-```markdown
-# Shape Report: {Title}
-
-**Shaped:** {ISO 8601 timestamp}
-**Idea:** {Title}
-**Status:** captured → shaped
-
-## Before (Captured Stub)
-{Original one-line summary}
-
-## Subagent Analysis Summary
-
-| Dimension | Rating | Key Finding |
-|-----------|--------|-------------|
-| Problem Clarity | {rating} | {finding} |
-| Customer Fit | {rating} | {finding} |
-| Scope | {size} | {finding} |
-| Feasibility | {rating} | {finding} |
-| Skill Discovery | {Skills found / No skills / Skipped} | {finding} |
-
-## After (Shaped Brief)
-{Full brief content}
-
-## Gaps Resolved During Q&A
-- {Gap and how it was resolved}
-
-## Open Questions Deferred
-- {Questions explicitly deferred, or "None"}
-```
+Read `templates/shape-report.tmpl.md` for the report format. Render each `{SlotName}` placeholder with values from the shaping session. Save the rendered report to `docs/skill/arc/shape-report.md`.
 
 ### Step 8: Offer Next Steps
 
@@ -487,6 +457,7 @@ AskUserQuestion({
 
 - `skills/arc-shape/references/shaping-dimensions.md` — Four analysis dimension definitions and subagent prompts
 - `skills/arc-shape/references/brief-validation.md` — Readiness criteria and validation checklist
+- `templates/shape-report.tmpl.md` — Shape report format, slot definitions, and acceptance criteria
 - `references/brief-format.md` — Target brief structure
 - `references/idea-lifecycle.md` — Shape stage definition, transitions
 - `templates/BACKLOG.tmpl.md` — BACKLOG storage format

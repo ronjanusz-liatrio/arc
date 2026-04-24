@@ -1,0 +1,9 @@
+Type: cli
+Command: grep -n "templates/audit-report.tmpl.md" skills/arc-audit/SKILL.md
+Expected: Two or more lines confirming the template reference exists in arc-audit Step 5 and References
+Timestamp: 2026-04-23T00:00:00Z
+Status: PASS
+
+Output:
+291:Read `templates/audit-report.tmpl.md` for the full report format. Render each `{SlotName}` placeholder with values derived from the audit session.
+408:- `templates/audit-report.tmpl.md` — Report format, slot definitions, and acceptance criteria for `docs/skill/arc/review-report.md`

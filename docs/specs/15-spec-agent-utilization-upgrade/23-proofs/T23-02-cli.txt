@@ -1,0 +1,48 @@
+Type: cli
+Description: check-jsonschema validation run against all 9 fixtures
+Tool: check-jsonschema (via pip3 install check-jsonschema)
+Expected: All 4 PASS fixtures exit 0; all 5 FAIL fixtures exit 1 with descriptive diagnostics
+Timestamp: 2026-04-23T17:59:00Z
+
+=== PASS fixtures ===
+--- schemas/tests/backlog-entry-pass.json ---
+ok -- validation done
+Exit: 0
+--- schemas/tests/brief-pass.json ---
+ok -- validation done
+Exit: 0
+--- schemas/tests/wave-pass.json ---
+ok -- validation done
+Exit: 0
+--- schemas/tests/roadmap-row-pass.json ---
+ok -- validation done
+Exit: 0
+
+=== FAIL fixtures ===
+--- schemas/tests/backlog-entry-missing-required-title.json ---
+Schema validation errors were encountered.
+  schemas/tests/backlog-entry-missing-required-title.json::$: 'title' is a required property
+Exit: 1
+--- schemas/tests/backlog-entry-missing-brief.json ---
+Schema validation errors were encountered.
+  schemas/tests/backlog-entry-missing-brief.json::$: 'brief' is a required property
+Exit: 1
+--- schemas/tests/brief-too-few-success-criteria.json ---
+Schema validation errors were encountered.
+  schemas/tests/brief-too-few-success-criteria.json::$.success_criteria: [...] is too short
+Exit: 1
+--- schemas/tests/wave-missing-completed-timestamp.json ---
+Schema validation errors were encountered.
+  schemas/tests/wave-missing-completed-timestamp.json::$: 'completed' is a required property
+Exit: 1
+--- schemas/tests/roadmap-row-invalid-wave-pattern.json ---
+Schema validation errors were encountered.
+  schemas/tests/roadmap-row-invalid-wave-pattern.json::$.wave: 'Wave4-AgentUtilizationUpgrade' does not match '^Wave \d+: .+$'
+Exit: 1
+
+Summary:
+  PASS fixtures:  4/4 exited 0 (expected)
+  FAIL fixtures:  5/5 exited 1 (expected)
+  All diagnostics name the specific violated rule.
+
+Status: PASS
