@@ -1,17 +1,26 @@
 # Validation Report: agent-utilization-upgrade
 
-**Validated:** 2026-04-24T01:15:00Z
-**Re-validated after remediation:** 2026-04-24T01:25:00Z
+**Validated:** 2026-04-24T01:15:00Z (initial)
+**Re-validated after H1 remediation:** 2026-04-24T01:25:00Z (commit `303b420`)
+**Re-validated after /cw-review fix pass:** 2026-04-24T02:30:00Z (commits `02674d3`, `df5cd37`, `52bfb2f`, `62bc677`, `1ae3c9f`, `6e03ed3`, `7477b34`)
 **Spec:** `docs/specs/15-spec-agent-utilization-upgrade/15-spec-agent-utilization-upgrade.md`
-**Overall:** **PASS** (after H1 remediation in commit `303b420`)
+**Overall:** **PASS** (all gates green after both remediation passes)
 **Gates:** A[P] B[P] C[P] D[P] E[P] F[P]
 
 ## Executive Summary
 
-- **Implementation Ready:** Yes — initial HIGH issue (H1) remediated in commit `303b420`; all 9 SKILL.md files now have single, consistent `ARC-{SKILL-NAME}` markers.
+- **Implementation Ready:** Yes — 12 blocking code-review findings all remediated across 7 fix commits; no regressions on original 31 spec FRs.
 - **Requirements Verified:** 31/31 requirements verified (100%).
-- **Proof Artifacts Working:** All re-executed proofs pass (scripts/state.sh, scripts/parse-frontmatter.sh, scripts/validate-backlog.sh, schema-validation-pass/fail fixtures).
-- **Files Changed vs. Expected:** 135 files changed, all in declared scope. Known path-hygiene issues (4 misplaced proof directories, 2 bundled commits) are MEDIUM.
+- **Proof Artifacts Working:** All re-executed proofs pass. Additional smoke tests post-fix:
+  - `scripts/state.sh` emits clean JSON, validation_status accurate
+  - `scripts/validate-backlog.sh` exits 0 on real BACKLOG (20/20 entries)
+  - `scripts/validate-roadmap.sh` exits 0 on real ROADMAP (empty, accepted)
+  - `scripts/validate-brief.sh` exits 1 with named-field diagnostic on empty-bullet section (FIX-37 verified)
+  - `scripts/parse-frontmatter.sh` handles duplicate parent-dir-name inputs without collision (FIX-38 verified)
+  - `schemas/tests/backlog-entry-open-questions-none.json` validates cleanly (FIX-39 verified)
+  - All 9 SKILL.md files have exactly one `ARC-{SKILL-NAME}` marker (H1 + FIX-40 verified)
+  - `arc-capture.requires.artifacts == []`, `arc-wave.consumes → BACKLOG` (FIX-41 verified)
+- **Files Changed vs. Expected:** 135 implementation files + 7 fix commits (all in scope). M1-M5 proof-path hygiene cleaned in `9108f0f`. M6 (2 bundled-task commits) remains history-only.
 
 ## Coverage Matrix: Functional Requirements by Unit
 
