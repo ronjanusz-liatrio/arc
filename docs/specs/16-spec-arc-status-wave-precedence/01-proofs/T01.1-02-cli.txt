@@ -1,0 +1,20 @@
+Type: cli
+Description: Confirm that the terms "active wave name" and "active wave status" are referenced throughout Step 2 of skills/arc-status/SKILL.md, including on the null-fallback branches (ROADMAP-missing and all-Completed) and the matched-row branch.
+Command: awk '/^### Step 2/,/^### Step 3/' skills/arc-status/SKILL.md | grep -n -E "(active wave name|active wave status)"
+Expected: At least 5 hits — two null-fallback branches, one matched-row extraction definition for each of name and status, and one downstream-consumption note mentioning both.
+Timestamp: 2026-04-24T11:17:10Z
+Status: PASS
+
+--- BEGIN OUTPUT ---
+1:1. If `docs/ROADMAP.md` was not found in Step 1, set **active wave name** = null and **active wave status** = null, emit the fallback, and move to Step 3:
+13:4. If all rows have Status `Completed` (or the table is empty), set **active wave name** = null and **active wave status** = null, emit:
+20:   - **active wave name** — the verbatim string in the Wave column (pass through em dashes, colons, and other characters without transformation beyond trimming surrounding whitespace).
+21:   - **active wave status** — the verbatim string in the Status column; under the template-enforced vocabulary this is one of `planned` or `active` (the `Completed` value is excluded by the row filter in step 3).
+32:6. The **active wave name** and **active wave status** values resolved in steps 1, 4, or 5 are consumed by Step 6 (wave-linked gap scoping) and Step 7 (precedence evaluation). When either value is null, downstream steps follow their no-wave branches. The rendered output format of this step is not affected by downstream consumption.
+--- END OUTPUT ---
+
+Result: 5 grep hits in Step 2. Each of the four required coverage points is satisfied:
+- Line 1 (branch: ROADMAP missing): both name and status set to null.
+- Line 13 (branch: all rows Completed): both name and status set to null.
+- Lines 20 and 21 (branch: matched row): explicit extraction definitions for name (line 20) and status (line 21).
+- Line 32 (downstream contract): both values named as inputs to Steps 6 and 7.

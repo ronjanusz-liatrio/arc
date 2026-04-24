@@ -1,0 +1,61 @@
+Type: file
+Description: Verify skills/arc-status/SKILL.md Step 2 has been updated to extract the active wave status value and expose it (along with the active wave name) to downstream steps, without changing the rendered output format.
+Command: git diff skills/arc-status/SKILL.md
+Expected: Step 2 adds explicit named values "active wave name" and "active wave status"; the rendered "**Current Wave** ... {Wave Name}: {Goal} / Status: {status} | Ideas: {count}" block is unchanged; null fallback for name and status is documented on the ROADMAP-missing and all-Completed branches.
+Timestamp: 2026-04-24T11:17:00Z
+Status: PASS
+
+--- BEGIN DIFF ---
+diff --git a/skills/arc-status/SKILL.md b/skills/arc-status/SKILL.md
+index 7f60161..91b6402 100644
+--- a/skills/arc-status/SKILL.md
++++ b/skills/arc-status/SKILL.md
+@@ -55,9 +55,9 @@ Read the following files. Only `docs/BACKLOG.md` is required — all others are
+
+ ### Step 2: Current Wave
+
+-Identify the active delivery wave from the roadmap.
++Identify the active delivery wave from the roadmap and expose its identity and status to downstream steps.
+
+-1. If `docs/ROADMAP.md` was not found in Step 1, emit the fallback and move to Step 3:
++1. If `docs/ROADMAP.md` was not found in Step 1, set **active wave name** = null and **active wave status** = null, emit the fallback, and move to Step 3:
+    ```
+    **Current Wave**
+
+@@ -65,13 +65,18 @@ Identify the active delivery wave from the roadmap.
+    ```
+ 2. Parse the wave summary table in `docs/ROADMAP.md` — the first markdown table after the `# ROADMAP` heading. Each row has columns: Wave, Goal, Status, Target, Ideas.
+ 3. Scan rows top-to-bottom. The **current wave** is the first row where the Status column is not `Completed`.
+-4. If all rows have Status `Completed`, emit:
++4. If all rows have Status `Completed` (or the table is empty), set **active wave name** = null and **active wave status** = null, emit:
+    ```
+    **Current Wave**
+
+    All waves completed — run /arc-wave to plan the next wave.
+    ```
+-5. Otherwise emit the current wave summary:
++5. Otherwise extract the following values from the matched row and retain them for downstream steps:
++   - **active wave name** — the verbatim string in the Wave column (pass through em dashes, colons, and other characters without transformation beyond trimming surrounding whitespace).
++   - **active wave status** — the verbatim string in the Status column; under the template-enforced vocabulary this is one of `planned` or `active` (the `Completed` value is excluded by the row filter in step 3).
++   - **goal text**, **target**, and **idea count** — used for the rendered summary below.
++
++   Then emit the current wave summary (format unchanged):
+    ```
+    **Current Wave**
+
+@@ -79,6 +84,8 @@ Identify the active delivery wave from the roadmap.
+    Status: {status} | Ideas: {count}
+    ```
+
++6. The **active wave name** and **active wave status** values resolved in steps 1, 4, or 5 are consumed by Step 6 (wave-linked gap scoping) and Step 7 (precedence evaluation). When either value is null, downstream steps follow their no-wave branches. The rendered output format of this step is not affected by downstream consumption.
++
+ See `skills/arc-status/references/status-dimensions.md` (SD-1) for the full detection logic and parsing details.
+
+ ### Step 3: Backlog Snapshot
+--- END DIFF ---
+
+Evidence summary:
+- "active wave name" appears in Step 2 (ROADMAP-missing branch, all-Completed branch, match-row branch, and downstream-consumption note).
+- "active wave status" appears in Step 2 (same four places), with vocabulary restricted to "planned | active" (Completed excluded by the row filter).
+- The rendered template block "{Wave Name}: {Goal} / Status: {status} | Ideas: {count}" is preserved byte-for-byte (context-only in the diff).
+- Null fallback is documented for both values on the two no-wave branches, satisfying the spec's "If no such row exists ... wave name is null" and "If wave name is null, wave status is null" requirements.

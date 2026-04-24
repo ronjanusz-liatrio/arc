@@ -55,9 +55,9 @@ Read the following files. Only `docs/BACKLOG.md` is required — all others are 
 
 ### Step 2: Current Wave
 
-Identify the active delivery wave from the roadmap.
+Identify the active delivery wave from the roadmap and expose its identity and status to downstream steps.
 
-1. If `docs/ROADMAP.md` was not found in Step 1, emit the fallback and move to Step 3:
+1. If `docs/ROADMAP.md` was not found in Step 1, set **active wave name** = null and **active wave status** = null, emit the fallback, and move to Step 3:
    ```
    **Current Wave**
 
@@ -65,19 +65,26 @@ Identify the active delivery wave from the roadmap.
    ```
 2. Parse the wave summary table in `docs/ROADMAP.md` — the first markdown table after the `# ROADMAP` heading. Each row has columns: Wave, Goal, Status, Target, Ideas.
 3. Scan rows top-to-bottom. The **current wave** is the first row where the Status column is not `Completed`.
-4. If all rows have Status `Completed`, emit:
+4. If all rows have Status `Completed` (or the table is empty), set **active wave name** = null and **active wave status** = null, emit:
    ```
    **Current Wave**
 
    All waves completed — run /arc-wave to plan the next wave.
    ```
-5. Otherwise emit the current wave summary:
+5. Otherwise extract the following values from the matched row and retain them for downstream steps:
+   - **active wave name** — the verbatim string in the Wave column (pass through em dashes, colons, and other characters without transformation beyond trimming surrounding whitespace).
+   - **active wave status** — the verbatim string in the Status column; under the template-enforced vocabulary this is one of `planned` or `active` (the `Completed` value is excluded by the row filter in step 3).
+   - **goal text**, **target**, and **idea count** — used for the rendered summary below.
+
+   Then emit the current wave summary (format unchanged):
    ```
    **Current Wave**
 
    {Wave Name}: {Goal}
    Status: {status} | Ideas: {count}
    ```
+
+6. The **active wave name** and **active wave status** values resolved in steps 1, 4, or 5 are consumed by Step 6 (wave-linked gap scoping) and Step 7 (precedence evaluation). When either value is null, downstream steps follow their no-wave branches. The rendered output format of this step is not affected by downstream consumption.
 
 See `skills/arc-status/references/status-dimensions.md` (SD-1) for the full detection logic and parsing details.
 

@@ -1,0 +1,36 @@
+Type: cli
+Description: Confirm that the edited skills/arc-status/SKILL.md still produces valid frontmatter JSON through the plugin's parse-frontmatter.sh validator, i.e. the YAML header and body split are intact and the declared allowed-tools, requires, produces, consumes, and triggers sections are unchanged.
+Command: bash scripts/parse-frontmatter.sh skills/arc-status/SKILL.md --format json
+Expected: Valid JSON with a top-level "arc-status" key, requires.files = ["docs/BACKLOG.md"], produces.files = [], and triggers.alternates = ["/arc-audit"]. Exit status 0.
+Timestamp: 2026-04-24T11:17:20Z
+Status: PASS
+
+--- BEGIN OUTPUT ---
+{
+  "arc-status": {
+    "requires": {
+      "files": [
+        "docs/BACKLOG.md"
+      ],
+      "artifacts": [
+        "BACKLOG"
+      ],
+      "state": ""
+    },
+    "produces": {
+      "files": [],
+      "artifacts": [],
+      "state-transition": ""
+    },
+    "consumes": {},
+    "triggers": {
+      "condition": "any time a quick read-only project snapshot is needed",
+      "alternates": [
+        "/arc-audit"
+      ]
+    }
+  }
+}
+--- END OUTPUT ---
+
+Result: Frontmatter still parses as valid JSON. No change to requires/produces/consumes/triggers. The edit is scoped to the Step 2 prose body, not the contract metadata.
