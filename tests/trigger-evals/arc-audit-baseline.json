@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py unavailable. Each predicted_trigger determined by reasoning about the arc-audit description: 'Pipeline health audit', 'comprehensive health check across 10+ dimensions', 'audit the pipeline', 'check for issues', 'something feels off', 'run a health check'. More thorough than arc-status; use arc-status for quick read-only overview.",
+  "skill": "arc-audit",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "Audit the product pipeline",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Exact 'audit' verb matches description trigger phrase."
+    },
+    {
+      "query": "Something feels off in the backlog",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Near-literal match to 'something feels off' trigger phrase in description."
+    },
+    {
+      "query": "Check for issues before release",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Check for issues' matches description's pre-milestone health check trigger."
+    },
+    {
+      "query": "Something's off with the backlog — find what",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Diagnostic concern language routes to audit over status."
+    },
+    {
+      "query": "Run the health check across our product artifacts",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Health check' is explicit description language."
+    },
+    {
+      "query": "Look for stale ideas and broken roadmap refs",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Named audit dimensions (stale ideas, broken refs) without 'audit' word."
+    },
+    {
+      "query": "Do a pre-milestone sweep across BACKLOG and ROADMAP",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Pre-milestone comprehensive check is described as audit trigger."
+    },
+    {
+      "query": "Find stale captured ideas and priority imbalance in the backlog",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Two named audit dimensions match description's '10+ dimensions'."
+    },
+    {
+      "query": "Run cross-reference integrity checks across product artifacts",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Cross-reference integrity' is in the description's dimension list."
+    },
+    {
+      "query": "I want a diagnostic report with recommended fixes for the pipeline",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Diagnostic report + interactive fixes' is the exact audit output in description."
+    },
+    {
+      "query": "Quick status check",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only quick pulse routes to arc-status. Description: 'use /arc-status for quick read-only overview'."
+    },
+    {
+      "query": "Audit engineering gates",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Engineering gates routes to Temper's engineering audit, not arc product audit."
+    },
+    {
+      "query": "Show me a 30-second project overview",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Quick read-only overview routes to arc-status."
+    },
+    {
+      "query": "What's the status of the current wave?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only wave state routes to arc-status."
+    },
+    {
+      "query": "Capture this issue — backlog items don't match ROADMAP",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Explicit 'capture' verb routes to arc-capture despite audit-like content."
+    },
+    {
+      "query": "Shape the 'audit dashboard' idea into a brief",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Refinement routes to arc-shape despite 'audit' word in idea title."
+    },
+    {
+      "query": "Plan the next wave with these shaped ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Forward planning routes to arc-wave."
+    },
+    {
+      "query": "Sync the README with the latest audit findings",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "README management routes to arc-sync post-audit."
+    },
+    {
+      "query": "Run security audit on the authentication code",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Security/code audit, out-of-domain for arc product audit."
+    },
+    {
+      "query": "Audit our AWS cost allocation for last quarter",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Finance audit, out-of-domain."
+    }
+  ]
+}

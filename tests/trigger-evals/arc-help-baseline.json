@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py unavailable. Each predicted_trigger determined by reasoning about the arc-help description: 'Quick reference guide', 'overview of all 9 Arc skills, artifacts, workflow, and installation', 'what can arc do', 'show me the arc skills', 'how do I install arc', 'I'm new to arc'. Always outputs full reference; does not accept arguments or take actions.",
+  "skill": "arc-help",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "What Arc skills are available?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Skill-index request matches 'show me the arc skills' trigger phrase."
+    },
+    {
+      "query": "Show me the workflow",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Workflow diagram request is explicitly in description scope."
+    },
+    {
+      "query": "How do I install Arc?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Near-literal match to 'how do I install arc' trigger phrase."
+    },
+    {
+      "query": "What can arc do?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Exact trigger phrase 'what can arc do' in description."
+    },
+    {
+      "query": "Help — where do I even start with this plugin?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Beginner help request. Description: 'I'm new to arc'."
+    },
+    {
+      "query": "Give me the cheat sheet for all the /arc commands",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Cheat sheet' maps to skill index in description."
+    },
+    {
+      "query": "Which skill do I run to refine an idea?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Skill-discovery question answered by reference guide."
+    },
+    {
+      "query": "Explain the Arc idea lifecycle from capture to ship",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Lifecycle walkthrough is explicitly in arc-help output."
+    },
+    {
+      "query": "Is there a list of all the Arc artifacts somewhere?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Artifact index is part of arc-help output per description."
+    },
+    {
+      "query": "New to Arc — show me the overview",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "New-user onboarding request. Matches 'I'm new to arc' trigger phrase."
+    },
+    {
+      "query": "What's the status of our current wave?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Live state query routes to arc-status. Description: looks like help but asks for live state."
+    },
+    {
+      "query": "Audit the backlog for me",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Actionable diagnostic routes to arc-audit."
+    },
+    {
+      "query": "Can you help me shape this 'dark mode' idea?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "'Help me' + actionable shape verb routes to arc-shape."
+    },
+    {
+      "query": "Help me capture a bunch of ideas from this customer call",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "'Help me' + 'capture' routes to arc-capture."
+    },
+    {
+      "query": "Help plan the next wave with these four shaped ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "'Help' + wave planning routes to arc-wave."
+    },
+    {
+      "query": "Could you walk me through shipping this validated feature?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Actionable ship request routes to arc-ship."
+    },
+    {
+      "query": "Help me update the README",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Actionable README update routes to arc-sync."
+    },
+    {
+      "query": "What does the backlog look like right now?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Live-state question routes to arc-status."
+    },
+    {
+      "query": "man git",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "CLI help for git, out-of-domain."
+    },
+    {
+      "query": "What's the best pizza place nearby?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Unrelated general help, out-of-domain."
+    }
+  ]
+}

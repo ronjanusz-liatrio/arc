@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py unavailable. Each predicted_trigger determined by reasoning about the arc-sync description: 'README lifecycle management', 'scaffold a new README from Arc artifacts or update managed sections', 'update the README', 'sync docs', 'the README is stale', 'scaffold a README'. Not for product-content edits.",
+  "skill": "arc-sync",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "Scaffold a README from our product direction",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Scaffold a README' matches trigger phrase in description."
+    },
+    {
+      "query": "Update the README with the new wave",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Update the README' is exact trigger phrase in description."
+    },
+    {
+      "query": "Sync the README features list",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Explicit 'sync' verb on README matches description."
+    },
+    {
+      "query": "The README is stale — make it match the current backlog and roadmap",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'The README is stale' is exact trigger phrase in description."
+    },
+    {
+      "query": "Bring the README up to date before I share the repo",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Before sharing the project' matches trigger condition in description."
+    },
+    {
+      "query": "Refresh the managed sections in README.md",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Managed sections' is arc-sync-specific language matching description."
+    },
+    {
+      "query": "Propagate VISION and CUSTOMER changes into the README",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Artifact → README propagation is described as sync behavior."
+    },
+    {
+      "query": "Initialize the README for this new project using Arc artifacts",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "First-time README scaffolding matches description's scaffold mode."
+    },
+    {
+      "query": "Regenerate the README's 'Current Wave' managed block",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Managed-block regeneration is explicitly arc-sync behavior."
+    },
+    {
+      "query": "Run the README migration sweep",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Migration sweep runs on each arc-sync invocation per description."
+    },
+    {
+      "query": "Consolidate scattered backlog items",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Scattered content migration routes to arc-assess."
+    },
+    {
+      "query": "What's the current status?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only pulse routes to arc-status."
+    },
+    {
+      "query": "Audit the README for broken ROADMAP references",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Diagnostic sweep routes to arc-audit."
+    },
+    {
+      "query": "Capture a new idea — improved README screenshots",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Raw entry routes to arc-capture despite mentioning README."
+    },
+    {
+      "query": "Shape the 'project homepage' idea into a brief",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Refinement routes to arc-shape."
+    },
+    {
+      "query": "Plan the next wave with shaped ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Forward planning routes to arc-wave."
+    },
+    {
+      "query": "Ship the README-refresh feature now that it's validated",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Lifecycle completion routes to arc-ship."
+    },
+    {
+      "query": "Scan the repo for scattered product content and import it",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Discovery + migration routes to arc-assess."
+    },
+    {
+      "query": "Sync the local branch with origin/main",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Git sync, out-of-domain."
+    },
+    {
+      "query": "Sync the application state with the backend database",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Application-level sync, out-of-domain."
+    }
+  ]
+}

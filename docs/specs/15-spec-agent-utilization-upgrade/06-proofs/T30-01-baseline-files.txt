@@ -1,0 +1,20 @@
+Type: file
+Description: Verify 9 per-skill baseline JSON files exist in tests/trigger-evals/
+Command: ls tests/trigger-evals/*-baseline.json
+Expected: 9 files, one per Arc skill
+Timestamp: 2026-04-23T00:00:00Z
+
+=== OUTPUT ===
+tests/trigger-evals/arc-assess-baseline.json
+tests/trigger-evals/arc-audit-baseline.json
+tests/trigger-evals/arc-capture-baseline.json
+tests/trigger-evals/arc-help-baseline.json
+tests/trigger-evals/arc-shape-baseline.json
+tests/trigger-evals/arc-ship-baseline.json
+tests/trigger-evals/arc-status-baseline.json
+tests/trigger-evals/arc-sync-baseline.json
+tests/trigger-evals/arc-wave-baseline.json
+
+File count: 9
+
+Status: PASS

@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py unavailable. Each predicted_trigger determined by reasoning about the arc-wave description: 'Delivery cycle management', 'organize spec-ready ideas into a themed wave', 'plan the next wave', 'start a sprint', 'organize these ideas into a release', 'what should we build next'. Not for status checks or raw capture.",
+  "skill": "arc-wave",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "Plan the next delivery wave with these 4 ideas",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Near-literal match to 'plan the next wave' trigger phrase in description."
+    },
+    {
+      "query": "Time to group these ideas into a wave",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Group into a wave' directly matches description's wave-organization intent."
+    },
+    {
+      "query": "I'm ready to commit to the next 2 weeks",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Cycle commitment signals wave planning. Description: 'let's start a sprint'."
+    },
+    {
+      "query": "Let's line up what we're building this sprint",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Line up this sprint' maps to wave grouping. Sprint/wave equivalence."
+    },
+    {
+      "query": "Bundle the top three shaped items and kick off the cycle",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Bundle' shaped items + 'kick off cycle' is wave intent."
+    },
+    {
+      "query": "Pick what we're doing next round and write it up on the roadmap",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "ROADMAP update is exclusive to arc-wave per description."
+    },
+    {
+      "query": "Promote these shaped ideas to spec-ready and start the wave",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "State-transition shaped → spec-ready is explicitly arc-wave behavior."
+    },
+    {
+      "query": "Set the theme and goal for wave 3 and hand off to /cw-spec",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Theme + goal + cw-spec handoff are wave Step outputs."
+    },
+    {
+      "query": "Update ROADMAP.md with the next wave's ideas",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "ROADMAP update is wave-exclusive per description."
+    },
+    {
+      "query": "Organize the spec-ready backlog into a themed delivery wave",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Near-literal description language: 'organize spec-ready ideas into a themed wave'."
+    },
+    {
+      "query": "What's the current status?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only pulse routes to arc-status. Description: 'not for checking status'."
+    },
+    {
+      "query": "Write specs for the next wave ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Spec authoring routes to /cw-spec. Wave hands off to cw-spec but doesn't write specs."
+    },
+    {
+      "query": "Shape the 'dark mode' idea before we plan anything",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Explicit shape request routes to arc-shape. Wave requires shaped input."
+    },
+    {
+      "query": "Capture this new feature request before we forget",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Raw capture routes to arc-capture. Description: 'not for raw capture'."
+    },
+    {
+      "query": "Audit wave alignment for stale spec-ready ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Diagnostic sweep routes to arc-audit."
+    },
+    {
+      "query": "Ship the completed ideas from wave 2 now that validation passed",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Lifecycle completion routes to arc-ship."
+    },
+    {
+      "query": "Sync the README with the latest wave archive entry",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "README management routes to arc-sync."
+    },
+    {
+      "query": "Show me the wave-planning reference doc",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Documentation lookup routes to arc-help or plain Read."
+    },
+    {
+      "query": "Configure the CI pipeline for the next release cycle",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "CI/CD config is out-of-domain."
+    },
+    {
+      "query": "Schedule a standup for tomorrow morning",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Calendar task, out-of-domain."
+    }
+  ]
+}

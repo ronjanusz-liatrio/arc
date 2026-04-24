@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py was unavailable (anthropics/skills repo not cloned in this environment). Each predicted_trigger was determined by reasoning about whether a model reading the arc-capture description field would correctly route the query. Description key signals: 'fast idea capture', 'raw product ideas', 'jot this down', 'log this idea', 'add to backlog', 'no analysis required'. No-trigger signals: shape, audit, status, wave, ship, out-of-domain.",
+  "skill": "arc-capture",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "I have a quick idea — add keyboard shortcuts",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Raw idea, no analysis requested. Strong capture signal."
+    },
+    {
+      "query": "Customer asked for SSO",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Unshaped customer request. Classic capture surface."
+    },
+    {
+      "query": "We found a bug in the auth flow",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Bug report for backlog. Description includes 'bug report'."
+    },
+    {
+      "query": "Jot this down before I forget: dark mode toggle in settings",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Jot this down' is an exact trigger phrase in the description."
+    },
+    {
+      "query": "Add to the list: CSV export for reports",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Adding to list maps to backlog append. Strong capture signal."
+    },
+    {
+      "query": "Stick this on the backlog — users want email digests",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Explicit backlog mention with raw feature request."
+    },
+    {
+      "query": "New feature request from the CEO: weekly usage summary email",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Feature request with no analysis. Description covers 'feature request'."
+    },
+    {
+      "query": "Quick thought — we should probably track failed login attempts",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Quick thought' is adjacent to 'I just thought of something' in description."
+    },
+    {
+      "query": "Log this: the onboarding tour breaks on Safari",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Log this' is a near-literal match to 'log this idea' in description."
+    },
+    {
+      "query": "Can you note that we want a dark theme sometime down the line?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Deferred note to backlog. Capture intent without analysis."
+    },
+    {
+      "query": "Let me shape this idea",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Explicit 'shape' verb routes to arc-shape. Description warns: 'Not for refinement—that happens in /arc-shape'."
+    },
+    {
+      "query": "What's the backlog status?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only status query routes to arc-status."
+    },
+    {
+      "query": "Refine the SSO idea into a spec-ready brief",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Refinement + brief authoring routes to arc-shape."
+    },
+    {
+      "query": "Audit the backlog for stale captured ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Diagnostic sweep routes to arc-audit."
+    },
+    {
+      "query": "Show me what's in the backlog right now",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only snapshot routes to arc-status."
+    },
+    {
+      "query": "Scan the repo for scattered TODOs and bring them into Arc",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Migration sweep routes to arc-assess. Description signals mass-migration vs. single capture."
+    },
+    {
+      "query": "Ship the dark-mode feature now that validation passed",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Lifecycle completion routes to arc-ship."
+    },
+    {
+      "query": "Plan the next wave with these four ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Wave planning routes to arc-wave."
+    },
+    {
+      "query": "Write unit tests for the login service",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Engineering task, out-of-domain."
+    },
+    {
+      "query": "Summarize yesterday's standup notes into meeting minutes",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Note summarization, out-of-domain."
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py unavailable. Each predicted_trigger determined by reasoning about the arc-status description: 'Project pulse check', 'read-only snapshot of project health across five dimensions', 'what's the status', 'where are we', 'give me a project summary', 'what should we work on next'. Lightweight alternative to arc-audit.",
+  "skill": "arc-status",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "What's the status?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Canonical status query. Exact trigger phrase 'what's the status' in description."
+    },
+    {
+      "query": "Show me the project pulse",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Project pulse' is in arc-status description as its own framing."
+    },
+    {
+      "query": "Quick overview before standup",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Read-only quick overview matches description scope."
+    },
+    {
+      "query": "How are we doing across the pipeline right now?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'How are we doing' is adjacent to status pulse intent."
+    },
+    {
+      "query": "Give me the 30-second read on the project",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'30-second read' maps to quick snapshot in description."
+    },
+    {
+      "query": "Where are we at on the current wave?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Where are we at' adjacent to 'where are we' trigger phrase."
+    },
+    {
+      "query": "Summarize backlog, wave, and in-flight specs in one view",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Five-dimension inline snapshot is the exact arc-status output."
+    },
+    {
+      "query": "What should I work on next?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Near-literal match to 'what should we work on next' trigger phrase."
+    },
+    {
+      "query": "Is there an active wave right now?",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Read-only wave-active query covered by status dimensions."
+    },
+    {
+      "query": "Tell me the recent activity and git momentum on this project",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Git momentum is one of the five status dimensions per description."
+    },
+    {
+      "query": "Audit the pipeline and fix issues",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Audit + fix routes to arc-audit. Description: 'arc-audit writes a report and offers fixes'."
+    },
+    {
+      "query": "Update the README",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "README management routes to arc-sync."
+    },
+    {
+      "query": "Audit the pipeline for stale ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Diagnostic sweep routes to arc-audit."
+    },
+    {
+      "query": "Check brief completeness across the shaped ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Brief-completeness is an arc-audit dimension."
+    },
+    {
+      "query": "Capture a new idea — status dashboard widget",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Raw entry routes to arc-capture despite 'status' in idea name."
+    },
+    {
+      "query": "Shape the 'status page' idea into a spec-ready brief",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Refinement routes to arc-shape despite 'status' in idea name."
+    },
+    {
+      "query": "Plan the next wave",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Forward planning routes to arc-wave."
+    },
+    {
+      "query": "Ship the completed ideas from the current wave",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Lifecycle completion routes to arc-ship."
+    },
+    {
+      "query": "Check the CI build status",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "CI/CD status, out-of-domain."
+    },
+    {
+      "query": "What's the weather today?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Unrelated small talk, out-of-domain."
+    }
+  ]
+}

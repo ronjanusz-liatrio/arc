@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py unavailable. Each predicted_trigger determined by reasoning about the arc-assess description: 'Codebase discovery and migration', 'scan a project for product-direction content', 'set up arc', 'import existing docs', 'migrate our backlog', 'scan the repo for product content'. One-time or periodic consolidation; run before /arc-capture or /arc-shape on new project.",
+  "skill": "arc-assess",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "Scan the codebase and migrate ideas into Arc",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Exact 'scan' + 'migrate' verbs match description trigger phrases."
+    },
+    {
+      "query": "We're starting to use Arc — consolidate existing ideas",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Arc adoption + consolidation of existing ideas matches description's adoption-time scenario."
+    },
+    {
+      "query": "Check if there's scattered roadmap content",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Scattered-content discovery matches description's core scan behavior."
+    },
+    {
+      "query": "We just installed Arc — pull in whatever product stuff is already in the repo",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Adoption-time assess. 'Just installed Arc' + 'pull in' is strong signal."
+    },
+    {
+      "query": "Round up the TODOs and feature lists scattered across the docs folder",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Round up scattered' matches description's scattered-content import."
+    },
+    {
+      "query": "Sweep the project for product-direction notes and bring them into the backlog",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Sweep the project' + 'product-direction' is strong assess signal."
+    },
+    {
+      "query": "Import scattered feature requests from README and docs/ into Arc artifacts",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Explicit import from scattered sources. Description mentions README and docs/."
+    },
+    {
+      "query": "Run a one-time migration pass now that we're adopting Arc",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "One-time periodic migration explicitly mentioned in description."
+    },
+    {
+      "query": "Look for roadmap, customer, and vision content elsewhere in the repo",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "CUSTOMER/VISION/ROADMAP discovery is explicitly in arc-assess scope."
+    },
+    {
+      "query": "Bootstrap BACKLOG and VISION from existing project content",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "BACKLOG + VISION scaffolding from existing sources matches assess produces."
+    },
+    {
+      "query": "Record this new idea",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Single-idea capture routes to arc-capture. Not a migration sweep."
+    },
+    {
+      "query": "Update the README",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "README management routes to arc-sync. Description alternates list arc-sync."
+    },
+    {
+      "query": "Audit the backlog for stale items",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Diagnostic sweep routes to arc-audit."
+    },
+    {
+      "query": "Capture a single new idea I just thought of",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Single entry routes to arc-capture."
+    },
+    {
+      "query": "Shape the top three captured ideas into briefs",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Refinement routes to arc-shape."
+    },
+    {
+      "query": "Plan the next wave with shaped ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Forward planning routes to arc-wave."
+    },
+    {
+      "query": "What's the current pipeline status?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only pulse routes to arc-status."
+    },
+    {
+      "query": "Scaffold a README from the Arc artifacts",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "README scaffolding routes to arc-sync despite 'scaffold' verb."
+    },
+    {
+      "query": "Scan the codebase for SQL-injection vulnerabilities",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Security scanning, out-of-domain."
+    },
+    {
+      "query": "Migrate the database to a new schema",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Database migration, out-of-domain."
+    }
+  ]
+}

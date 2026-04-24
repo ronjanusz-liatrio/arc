@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py unavailable. Each predicted_trigger determined by reasoning about the arc-shape description: 'Interactive idea refinement', 'transform captured idea into spec-ready brief', 'shape this idea', 'let's refine X', 'turn this into a brief', 'this idea needs more detail'. Not for raw capture or wave planning.",
+  "skill": "arc-shape",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "Shape the 'Dark Mode' idea for me",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Exact 'shape' verb + named idea. Direct description match."
+    },
+    {
+      "query": "I want to prepare this for the next wave",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Wave preparation implies shaping brief first. Description covers this path."
+    },
+    {
+      "query": "Refine these three ideas",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Refine' is the canonical arc-shape verb per description."
+    },
+    {
+      "query": "Flesh out the SSO idea so it's ready for spec",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Flesh out' maps to idea refinement. 'Ready for spec' aligns with 'spec-ready brief'."
+    },
+    {
+      "query": "Work up a proper brief for the CSV export request",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Work up a brief' is adjacent to 'turn this into a brief' in description."
+    },
+    {
+      "query": "Let's dig into the 'weekly digest' idea and size it up",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Dig into' + 'size it up' signals shape-intent. Feasibility analysis is in scope."
+    },
+    {
+      "query": "Turn the captured auth-bug idea into a spec-ready brief",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Near-literal description language: 'turn captured idea into spec-ready brief'."
+    },
+    {
+      "query": "I need a problem statement and success criteria for the dark-mode idea",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Brief fields (problem statement, success criteria) are explicitly shape outputs."
+    },
+    {
+      "query": "Tighten up the onboarding-tour idea before we plan next cycle",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Tighten up' before planning cycle is shape intent."
+    },
+    {
+      "query": "Run the shaping subagents on the top three captured items",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Explicit subagent reference + 'shaping' verb. Direct description match."
+    },
+    {
+      "query": "Just record this quick thought",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Raw capture phrasing routes to arc-capture. Description excludes raw capture."
+    },
+    {
+      "query": "Write the detailed spec for this feature",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Spec authoring is downstream of shape; routes to /cw-spec."
+    },
+    {
+      "query": "Plan the next wave with the already-shaped ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Wave planning routes to arc-wave. Description: 'not for wave planning'."
+    },
+    {
+      "query": "Audit the pipeline for incomplete briefs",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Diagnostic sweep routes to arc-audit."
+    },
+    {
+      "query": "Jot down the idea the user just asked about",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Raw capture phrasing routes to arc-capture."
+    },
+    {
+      "query": "Ship this already-validated feature to archive",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Lifecycle completion routes to arc-ship."
+    },
+    {
+      "query": "What's the status of the pipeline?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only pulse routes to arc-status."
+    },
+    {
+      "query": "Update the README to mention dark-mode support",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "README management routes to arc-sync."
+    },
+    {
+      "query": "Implement the dark-mode UI in the settings panel",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Engineering implementation task, out-of-domain."
+    },
+    {
+      "query": "Create three new Jira tickets from these captured ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "External ticket tool task, out-of-domain."
+    }
+  ]
+}

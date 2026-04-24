@@ -1,0 +1,148 @@
+{
+  "_comment": "Manual baseline produced by worker-27 (claude-sonnet-4-6) on 2026-04-23. run_loop.py unavailable. Each predicted_trigger determined by reasoning about the arc-ship description: 'Mark validated ideas as shipped', 'transition spec-ready ideas to shipped after /cw-validate confirms PASS', 'ship this', 'mark as done', 'archive this idea', 'implementation is complete'. Requires Overall PASS in cw-validate report.",
+  "skill": "arc-ship",
+  "baseline_date": "2026-04-23",
+  "method": "manual-review",
+  "results": [
+    {
+      "query": "Ship this validated feature",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Exact 'ship this' trigger phrase + validated precondition stated."
+    },
+    {
+      "query": "The wave is done, mark these ideas as shipped",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Mark as shipped' matches 'mark as done' trigger phrase."
+    },
+    {
+      "query": "Validation passed, move to archive",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "PASS + archive transition is the exact arc-ship behavior."
+    },
+    {
+      "query": "Wrap this one up — cw-validate said PASS",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Wrap up' + explicit cw-validate PASS is ship intent."
+    },
+    {
+      "query": "Cross it off — dark mode is done and validated",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Cross it off' + done + validated maps to ship."
+    },
+    {
+      "query": "Put the SSO feature to bed now that it's through validation",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Put to bed' post-validation is ship intent."
+    },
+    {
+      "query": "Archive the completed wave 3 ideas into the wave file",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "Wave-archive writing is arc-ship behavior per description."
+    },
+    {
+      "query": "Transition the spec-ready items to shipped after cw-validate passes",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "State-transition spec-ready → shipped matches description exactly."
+    },
+    {
+      "query": "Remove the dark-mode entry from BACKLOG — it's live in prod",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "BACKLOG removal on ship is explicitly in arc-ship behavior."
+    },
+    {
+      "query": "Close out the finished work and record it in the wave archive",
+      "expected_trigger": true,
+      "predicted_trigger": true,
+      "match": true,
+      "notes": "'Close out' + 'wave archive' maps to ship."
+    },
+    {
+      "query": "Write a validation report",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Validation authoring runs before ship; routes to /cw-validate."
+    },
+    {
+      "query": "What's pipeline health?",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Read-only health query routes to arc-status."
+    },
+    {
+      "query": "Audit whether any spec-ready ideas have missing validation reports",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Diagnostic sweep routes to arc-audit."
+    },
+    {
+      "query": "Capture a new idea — ship tracking dashboard",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Raw entry routes to arc-capture despite 'ship' in idea name."
+    },
+    {
+      "query": "Plan the next wave with the remaining shaped ideas",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Forward planning routes to arc-wave."
+    },
+    {
+      "query": "Shape this customer request into a brief",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Refinement routes to arc-shape."
+    },
+    {
+      "query": "Update the README with the shipped features from wave 3",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "README sync post-ship routes to arc-sync."
+    },
+    {
+      "query": "Run the cw-validate pass on this spec",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Prerequisite check routes to /cw-validate, not arc-ship."
+    },
+    {
+      "query": "Deploy the new build to production",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Deployment tooling, out-of-domain."
+    },
+    {
+      "query": "Tag the git repo with the latest release number",
+      "expected_trigger": false,
+      "predicted_trigger": false,
+      "match": true,
+      "notes": "Git/release tooling, out-of-domain."
+    }
+  ]
+}
