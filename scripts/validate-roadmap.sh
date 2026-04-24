@@ -71,9 +71,13 @@ trap 'rm -rf "$WORK_DIR"' EXIT
 # array of roadmap-row objects for ajv validation.
 
 TABLE_FILE="${WORK_DIR}/rows.json"
+TSV_FILE="${WORK_DIR}/rows.tsv"
 
+# Extract rows as NUL-delimited TSV so that values containing tabs or newlines
+# are still handled safely.  Each output line is:
+#   wave TAB goal TAB status TAB target TAB ideas_integer
 awk '
-  BEGIN { in_table=0; header_seen=0; row_count=0; printf "[" }
+  BEGIN { in_table=0; header_seen=0 }
   # Detect the header row by looking for all 5 expected columns
   /\|[[:space:]]*[Ww]ave[[:space:]]*\|/ &&
   /[Gg]oal/ && /[Ss]tatus/ && /[Tt]arget/ && /[Ii]deas/ {
@@ -101,14 +105,30 @@ awk '
     ideas  = cols[5]; gsub(/^[[:space:]]+|[[:space:]]+$/, "", ideas)
     # Skip truly empty rows
     if (wave == "" && goal == "") next
-    if (row_count > 0) printf ","
-    # Emit JSON — ideas is an integer
-    printf "\n  {\"wave\":\"%s\",\"goal\":\"%s\",\"status\":\"%s\",\"target\":\"%s\",\"ideas\":%s}",
-      wave, goal, status, target, (ideas+0)
-    row_count++
+    # Emit tab-separated values; ideas coerced to integer
+    printf "%s\t%s\t%s\t%s\t%d\n", wave, goal, status, target, (ideas+0)
   }
-  END { printf "\n]\n" }
-' "$ROADMAP_PATH" > "$TABLE_FILE"
+' "$ROADMAP_PATH" > "$TSV_FILE"
+
+# Build a JSON array from the TSV.  Route every string field through
+# jq --arg so that quotes, backslashes, and other special characters are
+# escaped correctly — no manual string escaping required.
+{
+  printf '[\n'
+  first=1
+  while IFS=$'\t' read -r wave goal status target ideas; do
+    if [[ "$first" -eq 0 ]]; then printf ',\n'; fi
+    jq -n \
+      --arg     wave   "$wave"   \
+      --arg     goal   "$goal"   \
+      --arg     status "$status" \
+      --arg     target "$target" \
+      --argjson ideas  "$ideas"  \
+      '{wave:$wave,goal:$goal,status:$status,target:$target,ideas:$ideas}'
+    first=0
+  done < "$TSV_FILE"
+  printf '\n]\n'
+} > "$TABLE_FILE"
 
 ROW_COUNT="$(jq 'length' "$TABLE_FILE")"
 

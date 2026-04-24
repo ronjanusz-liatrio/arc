@@ -1,0 +1,12 @@
+Type: cli
+Command: shellcheck --severity=style scripts/validate-roadmap.sh
+Expected: no output (exit 0) — ShellCheck clean at style severity
+Timestamp: 2026-04-23T00:00:00Z
+
+--- OUTPUT ---
+(no output — exit 0)
+
+--- RESULT ---
+Status: PASS
+Exit code: 0
+ShellCheck clean at --severity=style

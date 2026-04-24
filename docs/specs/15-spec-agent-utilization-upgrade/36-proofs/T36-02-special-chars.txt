@@ -1,0 +1,29 @@
+Type: cli
+Command: scripts/validate-roadmap.sh <test-ROADMAP.md> <test-BACKLOG.md>
+Expected: exit 0 PASS with rows containing double-quotes and backslashes parsing as valid JSON
+Timestamp: 2026-04-23T00:00:00Z
+
+--- TEST FIXTURE (ROADMAP rows) ---
+| Wave 1: Ship "Foo" | Launch support | Active | Q1 2026 | 3 |
+| Wave 2: Fix \path\issues | Handle backslash paths | Planned | Q2 2026 | 2 |
+| Wave 3: Normal Wave | Basic goal with, comma | Planned | Q3 2026 | 5 |
+
+--- SCRIPT OUTPUT ---
+validate-roadmap: found 3 wave row(s) in ROADMAP
+validate-roadmap: validating 3 row(s) against schema...
+validate-roadmap: OK: all rows pass schema validation
+validate-roadmap: OK: active wave count = 1 (invariant I4 satisfied)
+validate-roadmap: OK: wave "Wave 1: Ship "Foo"" has ideas in BACKLOG
+validate-roadmap: OK: wave "Wave 2: Fix \path\issues" has ideas in BACKLOG
+validate-roadmap: OK: wave "Wave 3: Normal Wave" has ideas in BACKLOG
+validate-roadmap: PASS: ROADMAP is well-formed and consistent with BACKLOG
+
+--- RESULT ---
+Exit code: 0
+Status: PASS
+
+Key evidence:
+- Row with Wave 1: Ship "Foo" (double-quotes in wave name) parsed and validated successfully
+- Row with Wave 2: Fix \path\issues (backslashes in wave name) parsed and validated successfully
+- All 3 rows passed schema validation via ajv
+- jq correctly handled the escaped JSON output from jq -n --arg

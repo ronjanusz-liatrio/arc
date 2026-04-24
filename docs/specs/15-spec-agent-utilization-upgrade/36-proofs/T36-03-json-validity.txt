@@ -1,0 +1,28 @@
+Type: cli
+Command: Demonstrate old bug vs new jq --arg fix
+Expected: old approach produces invalid JSON; new approach produces valid JSON
+Timestamp: 2026-04-23T00:00:00Z
+
+--- OLD BUG DEMONSTRATION ---
+Old awk printf pattern produced:
+  {"wave":"Wave 1: Ship "Foo"","goal":"Launch "core" support","status":"Active","target":"Q1 2026","ideas":3}
+
+jq rejection of that string:
+  jq: parse error: Invalid numeric literal at line 1, column 27
+
+--- NEW FIX OUTPUT (jq -n --arg approach) ---
+{
+  "wave": "Wave 1: Ship \"Foo\"",
+  "goal": "Launch \"core\" support",
+  "status": "Active",
+  "target": "Q1 2026",
+  "ideas": 3
+}
+
+jq validates successfully (exit 0)
+
+--- RESULT ---
+Status: PASS
+Double-quotes in wave names and goals are correctly escaped as \" in JSON output.
+Backslashes are correctly escaped as \\ in JSON output.
+The jq --arg mechanism handles all escaping automatically.
