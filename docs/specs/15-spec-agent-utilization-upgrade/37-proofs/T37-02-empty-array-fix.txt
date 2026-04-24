@@ -1,0 +1,18 @@
+Type: cli
+Command: printf '%s\n' "" | jq -R . | jq -s 'map(select(. != "")) | length'
+Expected: 0 (was 1 before fix)
+Timestamp: 2026-04-24T01:44:51Z
+
+--- BEFORE FIX (reproduction) ---
+Command: printf '%s\n' "" | jq -R . | jq -s '. | length'
+Result: 1 (this was the bug: length=1 for empty input)
+
+--- AFTER FIX ---
+Command: printf '%s\n' "" | jq -R . | jq -s 'map(select(. != "")) | length'
+Result: 0
+
+--- POPULATED ARRAY (regression check) ---
+Command: printf '%s\n' "item1" "item2" | jq -R . | jq -s 'map(select(. != "")) | length'
+Result: 2 (expected: 2)
+
+Status: PASS

@@ -179,10 +179,10 @@ else
       --arg problem "$PROBLEM" \
       --arg proposed "$PROPOSED" \
       --arg wave "$WAVE_ASSIGN" \
-      --argjson sc "$(printf '%s\n' "$SC_ARRAY" | jq -R . | jq -s '.')" \
-      --argjson con "$(printf '%s\n' "$CON_ARRAY" | jq -R . | jq -s '.')" \
-      --argjson ass "$(printf '%s\n' "$ASS_ARRAY" | jq -R . | jq -s '.')" \
-      --argjson oq "$(printf '%s\n' "$OQ_ARRAY" | jq -R . | jq -s 'if length == 0 then "None" else . end')" \
+      --argjson sc "$(printf '%s\n' "$SC_ARRAY" | jq -R . | jq -s 'map(select(. != ""))')" \
+      --argjson con "$(printf '%s\n' "$CON_ARRAY" | jq -R . | jq -s 'map(select(. != ""))')" \
+      --argjson ass "$(printf '%s\n' "$ASS_ARRAY" | jq -R . | jq -s 'map(select(. != ""))')" \
+      --argjson oq "$(printf '%s\n' "$OQ_ARRAY" | jq -R . | jq -s 'map(select(. != "")) | if length == 0 then "None" else . end')" \
       '{
         title: $title,
         problem: $problem,
@@ -203,10 +203,17 @@ fi
 # ---- step 3: validate required fields are non-trivial (pre-schema check) ------
 
 # Verify the 5 mandatory fields are present and non-empty before calling ajv.
+# String fields are checked for empty/null; array fields are checked for length == 0.
 MISSING_FIELDS=""
-for field in title problem proposed_solution success_criteria constraints; do
+for field in title problem proposed_solution; do
   val="$(jq -r --arg f "$field" '.[$f] // empty' "$BRIEF_FILE" 2>/dev/null)"
   if [[ -z "$val" ]] || [[ "$val" == "null" ]]; then
+    MISSING_FIELDS="${MISSING_FIELDS} ${field}"
+  fi
+done
+for field in success_criteria constraints assumptions; do
+  len="$(jq --arg f "$field" '.[$f] | if type == "array" then length else 0 end' "$BRIEF_FILE" 2>/dev/null)"
+  if [[ -z "$len" ]] || [[ "$len" == "0" ]]; then
     MISSING_FIELDS="${MISSING_FIELDS} ${field}"
   fi
 done

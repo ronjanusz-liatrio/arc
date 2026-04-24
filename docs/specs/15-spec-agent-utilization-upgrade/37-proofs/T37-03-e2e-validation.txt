@@ -1,0 +1,33 @@
+Type: cli
+Command: validate-brief.sh 'Test Idea' /tmp/fixture-empty-sc.md
+Expected: exit 1, stderr contains 'FAIL: missing or empty brief fields: success_criteria'
+Timestamp: 2026-04-24T01:45:03Z
+
+--- EMPTY SUCCESS CRITERIA CASE ---
+Output:
+validate-brief: OK: idea "Empty SC Test Idea" found with status=shaped
+awk: warning: escape sequence `\*' treated as plain `*'
+awk: warning: escape sequence `\*' treated as plain `*'
+awk: warning: escape sequence `\*' treated as plain `*'
+awk: warning: escape sequence `\*' treated as plain `*'
+validate-brief: FAIL: missing or empty brief fields: success_criteria
+
+Exit code: 1 (expected: 1)
+EMPTY SC CHECK: PASS
+
+--- POPULATED SUCCESS CRITERIA CASE ---
+Output:
+validate-brief: OK: idea "Populated SC Test Idea" found with status=shaped
+awk: warning: escape sequence `\*' treated as plain `*'
+awk: warning: escape sequence `\*' treated as plain `*'
+awk: warning: escape sequence `\*' treated as plain `*'
+awk: warning: escape sequence `\*' treated as plain `*'
+validate-brief: OK: all 5 required brief fields present
+validate-brief: running ajv schema validation...
+/tmp/validate-brief-788872/brief.json valid
+validate-brief: PASS: brief for "Populated SC Test Idea" is schema-valid
+
+Exit code: 0 (expected: 0)
+POPULATED SC CHECK: PASS
+
+Status: PASS
