@@ -1,0 +1,28 @@
+Type: cli
+Description: Structural preservation check — Step 6 sub-step ordering is preserved (Step 6 header → Step 6.0 Preamble → LG-1..LG-5 → Step 6.6 Postamble → Emit block → Step 7). Worker-3's Step 6.0 (line 173) and worker-5's Step 6.6 (line 234) are untouched. Frontmatter parses. Both roadmap/backlog validators pass.
+Command: grep -n '^#### Step\|^#### LG-\|^#### Emit\|^### Step 6\|^### Step 7' skills/arc-status/SKILL.md && bash scripts/parse-frontmatter.sh skills/arc-status/SKILL.md --format json >/dev/null && bash scripts/validate-backlog.sh >/dev/null && bash scripts/validate-roadmap.sh >/dev/null
+Expected: Section ordering matches Step 6 → 6.0 → LG-1..5 → 6.6 → Emit → Step 7; all three scripts exit 0.
+Timestamp: 2026-04-24T18:36:13Z
+---
+=== Section ordering ===
+167:### Step 6: Lifecycle Gaps
+173:#### Step 6.0: Compute Wave-Linked Idea Set (Preamble)
+192:#### LG-1: Captured → Shaped
+199:#### LG-2: Shaped → Spec
+208:#### LG-3: Spec → Plan
+217:#### LG-4: Plan → Validation
+225:#### LG-5: Validation → Shipped
+234:#### Step 6.6: Tag Each Gap with Scope (Postamble)
+255:#### Emit Lifecycle Gaps
+301:### Step 7: Next-Step Suggestion
+
+=== Frontmatter parse ===
+frontmatter: OK (exit 0)
+
+=== validate-backlog.sh ===
+backlog: OK (exit 0)
+
+=== validate-roadmap.sh ===
+roadmap: OK (exit 0)
+---
+Status: PASS

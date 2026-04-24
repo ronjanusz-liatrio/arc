@@ -1,0 +1,19 @@
+Type: cli
+Description: Structural content check — the rewritten Emit block contains all required WL-4 render strings: Wave: {wave_name}, Backlog (outside wave), three-column no-wave branch header, four-column active-wave branch header, skipped-check renderings for both branches, and preserved No lifecycle gaps detected. message.
+Command: awk '/^#### Emit Lifecycle Gaps/,/^### Step 7:/' skills/arc-status/SKILL.md | grep -n -E 'Gap \| Item \| Remediation \| Scope|Gap \| Item \| Remediation \||Wave: \{wave_name\}|Backlog \(outside wave\)|No lifecycle gaps detected|active wave name from Step 2 is null|active wave name from Step 2 is non-null|\(skipped — \{reason\}\) \| -- \| -- \||\(skipped — \{reason\}\) \| -- \|'
+Expected: At least 8 matches covering both table headers, both Scope cell formats, both skipped-check renderings, the preserved no-gap message, and both conditional branches.
+Timestamp: 2026-04-24T18:36:01Z
+---
+9:  No lifecycle gaps detected.
+12:- If **gaps found AND the active wave name from Step 2 is null** (no active wave — no ROADMAP, empty table, or all rows Completed), emit the three-column table:
+16:  | Gap | Item | Remediation |
+24:  In this no-wave branch, the `scope` field tagged in Step 6.6 is ignored — no Scope column header, no Scope cells. A skipped-check row renders as `| {Gap Name} | (skipped — {reason}) | -- |` (three columns, unchanged from pre-change behavior).
+26:- If **gaps found AND the active wave name from Step 2 is non-null** (an active wave exists), emit the four-column table — the existing `Gap | Item | Remediation` columns **plus** a fourth `Scope` column:
+30:  | Gap | Item | Remediation | Scope |
+39:  - For a gap tagged `scope = wave-linked`: the Scope cell is the literal string `Wave: {wave_name}` where `{wave_name}` is the **verbatim active wave name** from Step 2 — no escaping, no trimming, no case folding. Special characters (em dashes, colons, etc.) pass through unchanged (e.g., `Wave: Wave 4 — Foo`).
+40:  - For a gap tagged `scope = backlog-only`: the Scope cell is the literal string `Backlog (outside wave)`.
+41:  - For a skipped-check row (scope `--`): the Scope cell is the literal string `--`. The full skipped row renders as `| {Gap Name} | (skipped — {reason}) | -- | -- |` (four columns — the Remediation cell retains its existing `--` placeholder and the Scope cell is also `--`).
+43:- The `No lifecycle gaps detected.` message is **not** augmented with a Scope column or any wave indicator in either branch — it is rendered byte-for-byte unchanged.
+---
+Match count: 10
+Status: PASS

@@ -1,0 +1,70 @@
+Type: file
+Description: git diff skills/arc-status/SKILL.md — single-hunk replacement of Emit Lifecycle Gaps block (+24/-9 lines)
+Command: git diff --stat skills/arc-status/SKILL.md && echo '---' && git diff skills/arc-status/SKILL.md
+Expected: Single hunk in Step 6 Emit block, adding conditional 4-column/3-column branches, no changes outside the Emit block, no changes to status-dimensions.md.
+Timestamp: 2026-04-24T18:35:46Z
+---
+ skills/arc-status/SKILL.md | 33 ++++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
+---
+diff --git a/skills/arc-status/SKILL.md b/skills/arc-status/SKILL.md
+index cdeab6a..cb79e2c 100644
+--- a/skills/arc-status/SKILL.md
++++ b/skills/arc-status/SKILL.md
+@@ -254,9 +254,16 @@ See `skills/arc-status/references/status-dimensions.md` (WL-3 Gap Scope Tagging)
+ 
+ #### Emit Lifecycle Gaps
+ 
+-After running all five gap checks, emit the results:
++After running all five gap checks (and the Step 6.6 postamble), emit the results. The table shape is **conditional on the active wave name resolved in Step 2**: when the active wave name is non-null, the table adds a `Scope` column; when the active wave name is null, the table renders in its existing three-column format unchanged.
+ 
+-- If **gaps found**, emit a table:
++- If **no gaps found**, emit the following regardless of wave state (no table is rendered):
++  ```
++  **Lifecycle Gaps**
++
++  No lifecycle gaps detected.
++  ```
++
++- If **gaps found AND the active wave name from Step 2 is null** (no active wave — no ROADMAP, empty table, or all rows Completed), emit the three-column table:
+   ```
+   **Lifecycle Gaps**
+ 
+@@ -268,20 +275,28 @@ After running all five gap checks, emit the results:
+   | Plan → Validation | {NN}-spec-{name} | Run /cw-validate |
+   | Validation → Shipped | {Idea Title} | Run /arc-ship |
+   ```
++  In this no-wave branch, the `scope` field tagged in Step 6.6 is ignored — no Scope column header, no Scope cells. A skipped-check row renders as `| {Gap Name} | (skipped — {reason}) | -- |` (three columns, unchanged from pre-change behavior).
+ 
+-- If **no gaps found**, emit:
++- If **gaps found AND the active wave name from Step 2 is non-null** (an active wave exists), emit the four-column table — the existing `Gap | Item | Remediation` columns **plus** a fourth `Scope` column:
+   ```
+   **Lifecycle Gaps**
+ 
+-  No lifecycle gaps detected.
++  | Gap | Item | Remediation | Scope |
++  |-----|------|-------------|-------|
++  | Captured → Shaped | {Idea Title} | Run /arc-shape | {Scope Cell} |
++  | Shaped → Spec | {Idea Title} | Run /cw-spec | {Scope Cell} |
++  | Spec → Plan | {NN}-spec-{name} | Run /cw-plan | {Scope Cell} |
++  | Plan → Validation | {NN}-spec-{name} | Run /cw-validate | {Scope Cell} |
++  | Validation → Shipped | {Idea Title} | Run /arc-ship | {Scope Cell} |
+   ```
++  The `{Scope Cell}` value is derived from the `scope` field that Step 6.6 tagged onto each row:
++  - For a gap tagged `scope = wave-linked`: the Scope cell is the literal string `Wave: {wave_name}` where `{wave_name}` is the **verbatim active wave name** from Step 2 — no escaping, no trimming, no case folding. Special characters (em dashes, colons, etc.) pass through unchanged (e.g., `Wave: Wave 4 — Foo`).
++  - For a gap tagged `scope = backlog-only`: the Scope cell is the literal string `Backlog (outside wave)`.
++  - For a skipped-check row (scope `--`): the Scope cell is the literal string `--`. The full skipped row renders as `| {Gap Name} | (skipped — {reason}) | -- | -- |` (four columns — the Remediation cell retains its existing `--` placeholder and the Scope cell is also `--`).
+ 
+-- If a **detection check was skipped**, include it in the table as:
+-  ```
+-  | {Gap Name} | (skipped — {reason}) | -- |
+-  ```
++- The `No lifecycle gaps detected.` message is **not** augmented with a Scope column or any wave indicator in either branch — it is rendered byte-for-byte unchanged.
+ 
+-See `skills/arc-status/references/status-dimensions.md` (Lifecycle Gap Detection) for the full detection predicates and error handling rules.
++See `skills/arc-status/references/status-dimensions.md` (Lifecycle Gap Detection for the detection predicates and error handling rules, and WL-4 Scope Column Rendering for the authoritative rendering rules and a worked example).
+ 
+ ### Step 7: Next-Step Suggestion
+ 
+---
+Status: PASS
