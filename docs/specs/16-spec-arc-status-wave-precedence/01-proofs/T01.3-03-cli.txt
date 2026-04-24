@@ -1,0 +1,45 @@
+Type: cli (structural + validator check)
+Command: grep -n "^#### Step\|^#### LG-\|^#### Emit\|^### Step" skills/arc-status/SKILL.md; parse-frontmatter.sh ... --format json; validate-backlog.sh; validate-roadmap.sh
+Expected:
+  1. Step 6.0 preamble (worker-3's) is unchanged at its prior line.
+  2. The new Step 6.6 postamble appears exactly once, directly between LG-5 and "Emit Lifecycle Gaps".
+  3. LG-1..LG-5 section headings are unchanged.
+  4. Step 7 heading ("### Step 7: Next-Step Suggestion") is present and untouched by this commit (worker-6 owns it in parallel).
+  5. Frontmatter still parses as valid JSON.
+  6. validate-backlog.sh and validate-roadmap.sh both PASS.
+Timestamp: 2026-04-24T00:00:00Z
+Status: PASS
+
+Output:
+---
+46:### Step 1: Read Context
+56:### Step 2: Current Wave
+91:### Step 3: Backlog Snapshot
+115:### Step 4: In-Flight Specs
+145:### Step 5: Recent Activity
+167:### Step 6: Lifecycle Gaps
+173:#### Step 6.0: Compute Wave-Linked Idea Set (Preamble)
+192:#### LG-1: Captured -> Shaped
+199:#### LG-2: Shaped -> Spec
+208:#### LG-3: Spec -> Plan
+217:#### LG-4: Plan -> Validation
+225:#### LG-5: Validation -> Shipped
+234:#### Step 6.6: Tag Each Gap with Scope (Postamble)
+255:#### Emit Lifecycle Gaps
+286:### Step 7: Next-Step Suggestion
+
+Ordering verification:
+  Step 6 (167) < Step 6.0 Preamble (173) < LG-1 (192) < LG-2 (199) < LG-3 (208) < LG-4 (217) < LG-5 (225) < Step 6.6 Postamble (234) < Emit Lifecycle Gaps (255) < Step 7 (286)
+  -> Postamble is correctly inserted AFTER LG-5 and BEFORE Emit Lifecycle Gaps.
+  -> Step 6.0 (worker-3's preamble) is intact at line 173 - built upon, not removed or duplicated.
+  -> Step 7 heading at line 286 is untouched by this commit (worker-6's parallel edit to the Present Recommendation subsection remains unstaged in the working tree).
+
+Frontmatter parse:
+  { "arc-status": { "requires": { ... } } }  -- valid JSON, no parse errors.
+
+Validators:
+  validate-backlog: PASS -- 20 entries validated (20 pass, 0 fail)
+  validate-roadmap: found 0 wave row(s) in ROADMAP
+  validate-roadmap: PASS: ROADMAP table is empty (no waves - acceptable for new projects)
+
+All six checks satisfied -> PASS.

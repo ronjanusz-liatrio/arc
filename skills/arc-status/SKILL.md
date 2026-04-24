@@ -231,6 +231,27 @@ See `skills/arc-status/references/status-dimensions.md` (WL-2 Wave-Linked Idea S
 5. If no matching idea is found, skip.
 6. Check the matched idea's `Status:` field. If `Status:` is `spec-ready` (not `shipped`), flag as gap.
 
+#### Step 6.6: Tag Each Gap with Scope (Postamble)
+
+After all five gap checks (LG-1 through LG-5) have run, but **before** the Lifecycle Gaps table is emitted, tag each detected gap (and each skipped-check row) with a `scope` field. The scope field is consumed by the table renderer (Scope column — see `references/status-dimensions.md` WL-4) and by Step 7 (to filter which gaps drive the next-step recommendation — see the "Wave scope and backlog-only gaps" note in Step 7).
+
+For each gap produced by the LG-* detections above, resolve its **subject idea title**, then look it up in the **wave-linked idea set** computed in Step 6.0. Assign `scope` as follows:
+
+1. **LG-1 (Captured → Shaped)** — subject = the backlog idea title flagged in LG-1 step 4. If the title is in the wave-linked idea set, `scope = wave-linked`; otherwise `scope = backlog-only`.
+2. **LG-2 (Shaped → Spec)** — subject = the backlog idea title flagged in LG-2 steps 4 or 6. If the title is in the wave-linked idea set, `scope = wave-linked`; otherwise `scope = backlog-only`.
+3. **LG-3 (Spec → Plan)** — subject = the spec directory (e.g., `docs/specs/NN-spec-name/`). Resolve the spec's linked backlog idea via the `Spec:` field:
+   a. Scan `docs/BACKLOG.md` idea entries for a `Spec:` field whose value equals this spec directory path (exact match after whitespace trim; trailing slash variants are treated as equivalent — strip the trailing slash before comparison).
+   b. If a matching backlog idea is found **and** its title is in the wave-linked idea set, `scope = wave-linked`.
+   c. If no matching backlog idea is found, **or** the matched idea's title is not in the wave-linked idea set, `scope = backlog-only`.
+4. **LG-4 (Plan → Validation)** — subject = the spec directory. Apply the same spec-to-idea resolution as LG-3 (steps 3a–3c above). `scope = wave-linked` only when the resolved backlog idea's title is in the wave-linked idea set; otherwise `scope = backlog-only`.
+5. **LG-5 (Validation → Shipped)** — subject = the backlog idea title resolved in LG-5 step 4 (the idea whose `Spec:` field matches the spec directory with a passing validation report). If the title is in the wave-linked idea set, `scope = wave-linked`; otherwise `scope = backlog-only`.
+6. **Skipped checks** — when a gap check was skipped (LG-1 through LG-5 detection threw an unrecoverable error, was unable to execute, or encountered malformed metadata), the resulting row has no resolvable subject. Tag `scope = --` (a placeholder, never `wave-linked` or `backlog-only`). Rendering and precedence both ignore `--` scopes.
+7. **No active wave** — when the **active wave name** from Step 2 is null, the wave-linked idea set from Step 6.0 is empty. Every detected gap therefore evaluates to `scope = backlog-only` by the rules above. In this branch the scope field is functionally unused — the table renderer (T01.4) omits the Scope column, and Step 7's no-wave precedence (Priorities 9–14) ignores the scope field entirely.
+
+Retain the `scope` value on every gap (and on every skipped-check row) for consumption by the Lifecycle Gaps table renderer and by Step 7. The five LG detection sections above are not modified by this postamble — tagging is a pure post-detection labelling pass with no side effects on which gaps were detected.
+
+See `skills/arc-status/references/status-dimensions.md` (WL-3 Gap Scope Tagging) for the authoritative algorithm, spec-to-idea lookup rules, and worked example.
+
 #### Emit Lifecycle Gaps
 
 After running all five gap checks, emit the results:
