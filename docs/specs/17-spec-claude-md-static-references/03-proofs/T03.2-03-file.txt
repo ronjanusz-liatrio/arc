@@ -1,0 +1,27 @@
+Type: file
+Command: git diff skills/arc-sync/SKILL.md
+Expected: exactly one line addition (+    - CLAUDE.md) within the produces.files list; no other frontmatter fields modified; no body content changed.
+Timestamp: 2026-04-27T00:00Z
+
+----- BEGIN DIFF -----
+diff --git a/skills/arc-sync/SKILL.md b/skills/arc-sync/SKILL.md
+index f4a453e..6e8f9ed 100644
+--- a/skills/arc-sync/SKILL.md
++++ b/skills/arc-sync/SKILL.md
+@@ -11,6 +11,7 @@ requires:
+   state: ""
+ produces:
+   files:
++    - CLAUDE.md
+     - README.md
+     - docs/BACKLOG.md
+     - docs/ROADMAP.md
+----- END DIFF -----
+
+----- BEGIN STAT -----
+ skills/arc-sync/SKILL.md | 1 +
+ 1 file changed, 1 insertion(+)
+----- END STAT -----
+
+Status: PASS
+Notes: Diff is one line added, zero lines removed. Hunk located in produces.files. No other frontmatter fields (name, description, allowed-tools, requires, artifacts, state-transition, consumes, triggers) were touched. No body content changed.

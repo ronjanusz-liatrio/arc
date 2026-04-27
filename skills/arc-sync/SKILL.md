@@ -11,6 +11,7 @@ requires:
   state: ""
 produces:
   files:
+    - CLAUDE.md
     - README.md
     - docs/BACKLOG.md
     - docs/ROADMAP.md

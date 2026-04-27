@@ -1,0 +1,27 @@
+Type: test
+Command: awk '/^produces:/,/^[a-z]/' skills/arc-sync/SKILL.md | grep -nE '^\s*- '
+Expected: exactly five list entries under produces.files in declared order:
+  1. CLAUDE.md
+  2. README.md
+  3. docs/BACKLOG.md
+  4. docs/ROADMAP.md
+  5. docs/skill/arc/waves/{wave-slug}.md
+Timestamp: 2026-04-27T00:00Z
+
+----- BEGIN OUTPUT (frontmatter slice, lines 12-23) -----
+  12: produces:
+  13:   files:
+  14:     - CLAUDE.md
+  15:     - README.md
+  16:     - docs/BACKLOG.md
+  17:     - docs/ROADMAP.md
+  18:     - docs/skill/arc/waves/{wave-slug}.md
+  19:   artifacts:
+  20:     - README
+  21:     - BACKLOG
+  22:     - ROADMAP
+  23:     - wave-archive
+----- END OUTPUT -----
+
+Status: PASS
+Notes: CLAUDE.md inserted at position 1 (alphabetically before README.md, both root-level files); existing entries preserved in original order at positions 2-5.

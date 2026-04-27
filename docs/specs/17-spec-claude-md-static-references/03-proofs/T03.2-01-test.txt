@@ -1,0 +1,17 @@
+Type: test
+Command: yq '.produces.files' skills/arc-sync/SKILL.md (frontmatter only via parse-frontmatter.sh)
+Expected: list contains 'CLAUDE.md' alongside README.md, docs/BACKLOG.md, docs/ROADMAP.md, docs/skill/arc/waves/{wave-slug}.md
+Timestamp: 2026-04-27T00:00Z
+
+----- BEGIN OUTPUT -----
+[
+  "CLAUDE.md",
+  "README.md",
+  "docs/BACKLOG.md",
+  "docs/ROADMAP.md",
+  "docs/skill/arc/waves/{wave-slug}.md"
+]
+----- END OUTPUT -----
+
+Status: PASS
+Notes: produces.files list now contains CLAUDE.md (entry 1 of 5). All four pre-existing entries preserved.
