@@ -1,0 +1,12 @@
+Type: test
+Description: Verify the legacy "Update Behavior" H2 section heading is absent from bootstrap-protocol.md
+Command: grep -n '^## Update Behavior$' skills/arc-wave/references/bootstrap-protocol.md
+Expected: 0 matches (exit code 1) — section removed
+Timestamp: 2026-04-27T00:00Z
+
+--- BEGIN OUTPUT ---
+(no output)
+exit=1
+--- END OUTPUT ---
+
+Status: PASS

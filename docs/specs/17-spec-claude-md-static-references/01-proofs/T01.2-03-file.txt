@@ -1,0 +1,26 @@
+Type: file
+Description: Verify the new "Migration and Idempotency" section is present, positioned between Coexistence Rules and Cross-References, and contains both required narrative elements (a) wholesale-replacement code path and (b) byte-identical idempotency guarantee
+Command: grep -nE '^(## Coexistence Rules|## Migration and Idempotency|## Cross-References)$' skills/arc-wave/references/bootstrap-protocol.md
+Expected: Coexistence Rules at smaller line number than Migration and Idempotency, and Migration and Idempotency at smaller line number than Cross-References
+Timestamp: 2026-04-27T00:00Z
+
+--- BEGIN OUTPUT ---
+64:## Coexistence Rules
+89:## Migration and Idempotency
+95:## Cross-References
+--- END OUTPUT ---
+
+Section ordering preserved: Coexistence Rules (64) -> Migration and Idempotency (89) -> Cross-References (95).
+
+Narrative content verification:
+Command: grep -nE 'idempotent|byte-identical|migration and routine writes share one code path|legacy live|already-migrated static' skills/arc-wave/references/bootstrap-protocol.md
+Expected: matches confirming both required narrative elements
+
+--- BEGIN OUTPUT ---
+91:Running the bootstrap protocol replaces **all** content between `<!--# BEGIN ARC:product-context -->` and `<!--# END ARC:product-context -->` with the static template above, regardless of what the prior content was — live counts from a legacy install, an already-migrated static block, hand-edited text, or anything else. Migration and routine writes share one code path: the algorithm always overwrites the marker-bounded region with the current template bytes. There is no "detect legacy format" branch and no opt-in to preserve prior content.
+93:The protocol is idempotent. Because the template is fixed (no derived values, no timestamps, no environment-dependent data), running the protocol twice in succession on the same file produces byte-identical bytes between the marker positions. The first run migrates or refreshes; the second run is a no-op diff.
+--- END OUTPUT ---
+
+Confirms (a) replaces all content between markers regardless of prior content (legacy live counts or already-migrated static), migration and routine writes share one code path; and (b) running twice produces byte-identical bytes between marker positions.
+
+Status: PASS

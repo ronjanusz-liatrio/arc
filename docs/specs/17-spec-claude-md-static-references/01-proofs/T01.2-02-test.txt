@@ -1,0 +1,20 @@
+Type: test
+Description: Verify the Field/Source/Fallback table that listed Vision/Phase/Wave/Personas/Backlog data sources is fully removed
+Command: grep -cE '^\| Field \| Source \| Fallback \|$' skills/arc-wave/references/bootstrap-protocol.md
+Expected: 0 — table header row removed
+Timestamp: 2026-04-27T00:00Z
+
+--- BEGIN OUTPUT ---
+0
+--- END OUTPUT ---
+
+Additional verification — the data-source rows are also gone:
+Command: grep -nE 'docs/skill/temper/management-report.md|First sentence of `docs/VISION.md`|persona names from `docs/CUSTOMER.md`|spec-ready counts from `docs/BACKLOG.md`' skills/arc-wave/references/bootstrap-protocol.md
+Expected: 0 matches
+
+--- BEGIN OUTPUT ---
+(no output)
+exit=1
+--- END OUTPUT ---
+
+Status: PASS

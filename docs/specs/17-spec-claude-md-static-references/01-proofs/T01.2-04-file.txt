@@ -1,0 +1,14 @@
+Type: file
+Description: Verify the spec acceptance grep — "no live-field labels in bootstrap-protocol.md" — still passes after T01.2 edits (no regression from T01.1)
+Command: grep -nE 'Backlog:|Current Wave:|Phase:|Primary Personas:|Vision:' skills/arc-wave/references/bootstrap-protocol.md
+Expected: 0 matches (exit code 1)
+Timestamp: 2026-04-27T00:00Z
+
+--- BEGIN OUTPUT ---
+(no output)
+exit=1
+--- END OUTPUT ---
+
+This proof confirms that T01.2's removal of the Update Behavior table also eliminates the only remaining occurrences of these labels in the file (the table rows had previously held them at lines 95-99). The spec's headline grep test now passes for the entire file, not just inside the static-block template.
+
+Status: PASS

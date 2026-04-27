@@ -86,19 +86,11 @@ If no CLAUDE.md exists in the project root:
 - Warn the user: "No CLAUDE.md found. Run `/temper-assess` to bootstrap the project, then re-run `/arc-wave` to inject product context."
 - Continue wave creation without CLAUDE.md injection
 
-## Update Behavior
+## Migration and Idempotency
 
-Each `/arc-wave` invocation updates the `ARC:product-context` section with current values:
+Running the bootstrap protocol replaces **all** content between `<!--# BEGIN ARC:product-context -->` and `<!--# END ARC:product-context -->` with the static template above, regardless of what the prior content was — live counts from a legacy install, an already-migrated static block, hand-edited text, or anything else. Migration and routine writes share one code path: the algorithm always overwrites the marker-bounded region with the current template bytes. There is no "detect legacy format" branch and no opt-in to preserve prior content.
 
-| Field | Source | Fallback |
-|-------|--------|----------|
-| Vision | First sentence of `docs/VISION.md` Summary section | "Not yet defined" |
-| Phase | Temper phase from `docs/skill/temper/management-report.md` | Omit line if unavailable |
-| Current Wave | Most recent active wave from `docs/ROADMAP.md` | "No active wave" |
-| Primary Personas | Primary persona names from `docs/CUSTOMER.md` | "Not yet defined" |
-| Backlog | Captured, shaped, spec-ready counts from `docs/BACKLOG.md` summary table; shipped count from `### {Title}` subsections across `docs/skill/arc/waves/*.md` | "0 captured, 0 shaped, 0 spec-ready, 0 shipped" |
-
-The section is idempotent — running `/arc-wave` multiple times produces the same result for the same underlying state.
+The protocol is idempotent. Because the template is fixed (no derived values, no timestamps, no environment-dependent data), running the protocol twice in succession on the same file produces byte-identical bytes between the marker positions. The first run migrates or refreshes; the second run is a no-op diff.
 
 ## Cross-References
 
