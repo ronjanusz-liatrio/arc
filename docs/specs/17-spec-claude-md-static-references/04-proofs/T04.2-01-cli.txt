@@ -1,0 +1,36 @@
+Type: cli (idempotency check)
+Command: python3 (re-apply bootstrap template to marker-bounded region; then git diff)
+Expected: Re-application produces byte-identical content; `git diff -- CLAUDE.md` shows zero changes (exit 0, empty stdout)
+Timestamp: 2026-04-27T00:00:00Z
+
+--- Output ---
+Current inner length: 832
+Template inner length: 832
+Inner regions byte-identical: True
+Full content byte-identical after re-apply: True
+git diff exit code (0 = no changes): 0
+git diff stdout: ''
+--- End Output ---
+
+Method: The verification script located the BEGIN/END ARC:product-context
+markers in /home/ron.linux/arc/CLAUDE.md, extracted the bytes between them
+(exclusive of markers, per the Insertion Algorithm in
+skills/arc-wave/references/bootstrap-protocol.md), and compared them to the
+canonical template literal copied verbatim from that protocol's documented
+template (lines 27-36 of bootstrap-protocol.md, with surrounding newlines
+matching the marker-bounded region).
+
+The script then performed a destructive re-write — replacing the inner region
+with the same template bytes — and ran `git diff --exit-code -- CLAUDE.md`.
+
+Result: PASS
+- Inner-region byte equality: True
+- Full-file byte equality after re-write: True
+- git diff exit code: 0 (no changes)
+- git diff stdout: empty
+
+Idempotency property holds: a second application of the static-block algorithm
+to the post-T04.1 file produces zero diff, confirming the migration target is
+a fixed point of the protocol.
+
+Status: PASS

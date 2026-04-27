@@ -1,0 +1,43 @@
+Type: cli (byte-identical preservation outside ARC markers)
+Command: python3 (compare pre-T04.1 vs current CLAUDE.md, partitioned at BEGIN/END markers)
+Expected: Bytes above `<!--# BEGIN ARC:product-context -->` and bytes below `<!--# END ARC:product-context -->` are byte-identical between HEAD~1 (pre-T04.1) and HEAD (post-T04.1).
+Timestamp: 2026-04-27T00:00:00Z
+
+Setup: `git show 99fb385^:CLAUDE.md > /tmp/claudemd-pre-T04.1.md`
+       (99fb385 is the T04.1 migration commit; 99fb385^ is the parent.)
+
+--- Output ---
+Pre-migration above-marker bytes: 1728
+Current above-marker bytes:      1728
+Above-marker byte-identical: True
+
+Pre-migration below-marker bytes: 516
+Current below-marker bytes:      516
+Below-marker byte-identical: True
+
+BEGIN marker in pre at byte: 1728
+BEGIN marker in cur at byte: 1728
+BEGIN marker preserved at same byte position: True
+--- End Output ---
+
+Method: The script extracted the bytes [0, idx_begin) (everything above the
+BEGIN marker line) and [idx_end + len(end_marker), EOF) (everything below the
+END marker line) from both the pre-migration and post-migration file contents,
+then compared them for byte equality. The marker positions themselves are also
+preserved (BEGIN at byte 1728 in both versions).
+
+Result: PASS
+- Above-marker bytes equal (1728 == 1728, content identical)
+- Below-marker bytes equal (516 == 516, content identical)
+- BEGIN marker byte position preserved (1728 in both)
+
+Cross-check via git diff:
+
+  $ git diff 99fb385^ 99fb385 -- CLAUDE.md
+
+shows exactly four removed lines and six added lines, all between the BEGIN
+and END ARC:product-context markers (legacy live-counts replaced with the
+static four-bullet template). No hunks touch the file's preamble or the
+SKILLZ:installed-skills section that follows.
+
+Status: PASS

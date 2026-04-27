@@ -1,0 +1,48 @@
+Type: cli (git diff scope check)
+Command: git diff 99fb385^ 99fb385 -- CLAUDE.md
+Expected: All `-` and `+` lines fall strictly between `<!--# BEGIN ARC:product-context -->` and `<!--# END ARC:product-context -->`. The BEGIN and END marker lines themselves are unchanged context (no `-`/`+` prefix). No additional hunks exist outside this region.
+Timestamp: 2026-04-27T00:00:00Z
+
+--- Output ---
+diff --git a/CLAUDE.md b/CLAUDE.md
+index 8e4719e..f841bec 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -32,10 +32,12 @@ Every Arc skill SKILL.md file opens with a context marker in the format `**ARC-{
+ <!--# BEGIN ARC:product-context -->
+ ## Product Context
+
+-- **Vision:** Lightweight product direction for spec-driven development — inspired by Linear's fast capture and clean triage, arc is the upstream companion to temper.
+-- **Current Wave:** No active wave
+-- **Primary Personas:** Product Owner, Developer, Tech Lead, Project Stakeholder, Reader, New Arc User
+-- **Backlog:** 20 captured, 0 shaped, 0 spec-ready, 11 shipped
++For live product status, see the source artifacts. This section intentionally contains no counts, statuses, or names — those drift; the linked files are authoritative.
++
++- [docs/BACKLOG.md](docs/BACKLOG.md) — current ideas with their lifecycle status (captured, shaped, spec-ready, shipped). Read before suggesting new ideas or proposing scope changes.
++- [docs/ROADMAP.md](docs/ROADMAP.md) — active and planned waves with goals and targets. Read when deciding what to work on next or to understand the current delivery cycle.
++- [docs/VISION.md](docs/VISION.md) — product vision, north-star problem, and strategic boundaries. Read when shaping new ideas or evaluating fit.
++- [docs/CUSTOMER.md](docs/CUSTOMER.md) — primary personas and their jobs-to-be-done. Read when scoping a feature or assessing customer fit.
+ <!--# END ARC:product-context -->
+
+ <!--# BEGIN SKILLZ:installed-skills -->
+--- End Output ---
+
+Analysis:
+- Single hunk @@ -32,10 +32,12 @@ — the only edited region in the entire file.
+- Lines with `-` prefix (4 lines): the legacy live-counts bullets (Vision, Current Wave,
+  Primary Personas, Backlog). All sit between the BEGIN marker (context, line 32 in HEAD~1)
+  and the END marker (context, line 41 in HEAD~1).
+- Lines with `+` prefix (6 lines): the static template intro sentence + four em-dash
+  reference bullets. All inserted between the same BEGIN and END markers.
+- BEGIN marker line `<!--# BEGIN ARC:product-context -->` and END marker line
+  `<!--# END ARC:product-context -->` appear in the diff with single-space prefix
+  (unchanged context), confirming the markers themselves were not rewritten.
+- Hunk header context lines outside the markers (`Every Arc skill SKILL.md...` above and
+  `<!--# BEGIN SKILLZ:installed-skills -->` below) are unchanged context.
+- No additional hunks: the diff has exactly one hunk, so nothing outside this region was modified.
+
+Result: PASS — All edits are strictly confined to the region between the
+BEGIN and END ARC:product-context markers, satisfying the "byte-identical
+outside markers" requirement of T04.2.
+
+Status: PASS
