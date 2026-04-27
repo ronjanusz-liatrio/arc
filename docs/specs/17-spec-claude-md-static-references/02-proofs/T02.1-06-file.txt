@@ -1,0 +1,39 @@
+Type: file
+Description: Frontmatter produces.files no longer lists CLAUDE.md; Critical Constraints no longer includes the three CLAUDE.md write/coexistence "NEVER" rules; Overview adds the /arc-sync redirect sentence.
+Command (A): Read frontmatter produces block (lines 12-21).
+Command (B): Read Critical Constraints block (lines 71-77).
+Command (C): grep -nE 'NEVER\*\* (modify TEMPER|nest ARC|create CLAUDE)' skills/arc-wave/SKILL.md
+Expected: produces.files lists only docs/ROADMAP.md, docs/BACKLOG.md, docs/skill/arc/wave-report.md; Critical Constraints contains 1 NEVER + 3 ALWAYS rules; zero matches for the three removed NEVER rules.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output (A): frontmatter produces block ---
+produces:
+  files:
+    - docs/ROADMAP.md
+    - docs/BACKLOG.md
+    - docs/skill/arc/wave-report.md
+  artifacts:
+    - ROADMAP
+    - BACKLOG
+    - wave-report
+  state-transition: "shaped -> spec-ready"
+
+--- Output (B): Critical Constraints block ---
+## Critical Constraints
+
+- **NEVER** shape or refine ideas — only select already-shaped ideas
+- **ALWAYS** begin your response with `**ARC-WAVE**`
+- **ALWAYS** respect Temper phase constraints when `docs/management-report.md` is present
+- **ALWAYS** generate a wave report after wave creation
+
+--- Output (C): removed NEVER constraints ---
+(no matches)
+Exit Status: 1
+
+--- Verification ---
+- (A) `CLAUDE.md` is no longer listed in produces.files. The list now contains only the three artifacts /arc-wave actually writes: ROADMAP.md, BACKLOG.md, and wave-report.md.
+- (B) The Critical Constraints block has been pruned: only the wave-specific shape-or-refine NEVER rule plus the three ALWAYS rules remain. The three CLAUDE.md-related NEVER rules ("modify TEMPER: or MM: managed sections", "nest ARC: markers inside other namespace blocks", "create CLAUDE.md if it doesn't exist") were removed because /arc-wave no longer touches CLAUDE.md.
+- (C) Grep confirms zero matches for the three removed NEVER rules.
+- (Overview) Lines 38-42 contain a closing sentence: "Run `/arc-sync` separately if the project's CLAUDE.md product-context block needs to be created or kept current — `/arc-wave` does not write to CLAUDE.md."
+
+Status: PASS

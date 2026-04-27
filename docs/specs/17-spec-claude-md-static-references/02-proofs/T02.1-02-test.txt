@@ -1,0 +1,31 @@
+Type: test
+Description: Step numbering in skills/arc-wave/SKILL.md is contiguous (1, 1.5, 2, 3, 4, 5, 6, 7, 8, 9, 10) with no gap; the previous Steps 10 and 11 are renumbered to 9 and 10.
+Command: grep -nE '^### Step [0-9]+' skills/arc-wave/SKILL.md
+Expected: 11 lines listing Steps 1, 1.5, 2, 3, 4, 5, 6, 7, 8, 9, 10 in strict ascending order with no gap (no Step 11).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output ---
+80:### Step 1: Read Context
+95:### Step 1.5: Engineering Readiness Assessment
+124:### Step 2: Assess Wave Scope
+163:### Step 3: Select Ideas for Wave
+201:### Step 4: Gather Wave Details
+220:### Step 5: Ensure ROADMAP Exists
+229:### Step 6: Update ROADMAP
+266:### Step 7: Update BACKLOG
+279:### Step 8: Ensure VISION and CUSTOMER Exist
+287:### Step 9: Generate Wave Report
+298:### Step 10: Offer Next Steps
+
+--- Exit Status ---
+0
+
+--- Verification ---
+- 11 step header lines present.
+- Sequence: 1 -> 1.5 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10. Strict ascending, no gap.
+- Previous Step 9 ("Inject ARC:product-context into CLAUDE.md") is gone.
+- Previous Step 10 ("Generate Wave Report") is now Step 9 at line 287.
+- Previous Step 11 ("Offer Next Steps") is now Step 10 at line 298.
+- No Step 11 header remains.
+
+Status: PASS

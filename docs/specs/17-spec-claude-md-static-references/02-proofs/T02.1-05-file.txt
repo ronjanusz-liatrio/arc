@@ -1,0 +1,48 @@
+Type: file
+Description: The Mermaid flowchart in skills/arc-wave/SKILL.md no longer renders the "Inject product context" node. The edges that previously connected to that node now connect the surrounding nodes directly (I -> J), the renamed write node "J[Write wave report]" replaces the prior J slot, and the class assignments are updated.
+Command (A): awk '/^```mermaid/,/^```$/' skills/arc-wave/SKILL.md (mermaid block extraction)
+Command (B): grep -c 'Inject' /tmp/wave-mermaid.txt
+Expected: Mermaid block contains no "Inject product context" node; chain is S -> A -> B -> C -> D -> E -> F -> G -> H -> I -> J -> K -> X; class lists reference only existing nodes.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output: mermaid block ---
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#11B5A4', 'primaryTextColor': '#FFFFFF', 'primaryBorderColor': '#0D8F82', 'secondaryColor': '#E8662F', 'secondaryTextColor': '#FFFFFF', 'secondaryBorderColor': '#C7502A', 'tertiaryColor': '#1B2A3D', 'tertiaryTextColor': '#FFFFFF', 'lineColor': '#1B2A3D', 'fontFamily': 'Inter, sans-serif'}}}%%
+flowchart LR
+    S([Start]) --> A[Read context]
+    A --> B[Assess readiness]
+    B --> C[Assess wave scope]
+    C --> D{Select shaped ideas}
+    D --> E[Gather theme]
+    E --> F[Ensure ROADMAP exists]
+    F --> G[Update ROADMAP]
+    G --> H[Update BACKLOG]
+    H --> I[Ensure VISION + CUSTOMER]
+    I --> J[Write wave report]
+    J --> K[Offer next steps]
+    K --> X([End])
+
+    classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
+    classDef action fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
+    classDef write fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+
+    class D,E user
+    class A,B,C,F,I,K action
+    class G,H,J write
+```
+
+--- Output: grep -c 'Inject' (in mermaid block) ---
+0
+Exit Status: 1
+
+--- Verification ---
+- The previous J node "Inject product context" is removed (zero "Inject" matches in the mermaid block).
+- The edge "I --> J[Inject product context]" is replaced by "I --> J[Write wave report]" — I now flows directly to the renamed write node J.
+- The previous K[Write wave report] is renamed to J[Write wave report] (its label) and the previous L[Offer next steps] becomes K[Offer next steps]. End-node X retained.
+- Class assignments use only existing node IDs:
+  - user: D, E (Select shaped ideas, Gather theme)
+  - action: A, B, C, F, I, K (Read context, Assess readiness, Assess wave scope, Ensure ROADMAP exists, Ensure VISION + CUSTOMER, Offer next steps)
+  - write: G, H, J (Update ROADMAP, Update BACKLOG, Write wave report)
+- Every node ID referenced in classes is defined elsewhere in the flowchart. No unresolved references.
+
+Status: PASS

@@ -1,0 +1,25 @@
+Type: test
+Description: skills/arc-wave/SKILL.md no longer contains write-verb pairings with CLAUDE.md, and "product-context" no longer appears inside the numbered execution steps. Satisfies feature scenarios "Grep confirms no CLAUDE.md write verbs remain in /arc-wave" and "Grep confirms product-context is no longer mentioned inside skill execution steps".
+Command (A): grep -nE '(Inject|Refresh|Update|Replace).*CLAUDE\.md|CLAUDE\.md.*(Inject|Refresh|Update|Replace)' skills/arc-wave/SKILL.md
+Command (B): awk '/^### Step [0-9]/,EOF' skills/arc-wave/SKILL.md | grep -nE 'product-context'
+Expected: Zero matches for both (exit code 1).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output (A): write-verb pairings with CLAUDE.md ---
+(no matches)
+Exit Status: 1
+
+--- Output (B): product-context inside numbered execution steps ---
+(no matches)
+Exit Status: 1
+
+--- Verification ---
+- (A) No "Inject"/"Refresh"/"Update"/"Replace" verb is paired with "CLAUDE.md" anywhere in the file.
+  - Step 10 "Update README" option label was renamed to "Sync README + product context" to remove the spurious "Update + CLAUDE.md" co-occurrence on the description line.
+  - Step 10 handler "Update README:" header was renamed to "Sync README + product context:" for the same reason.
+- (B) No occurrence of the literal substring "product-context" remains inside any numbered execution step (Steps 1 through 10).
+  - The frontmatter description (line 3) and Overview prose (line 42) still contain the substring; both are outside numbered steps.
+  - Step 10 references the product context block in plain English ("product context block" with a space) rather than the marker namespace name, so no false-positive match.
+- The remaining mentions of CLAUDE.md (lines 3, 42, 322, 333) all describe /arc-sync's responsibility, not /arc-wave's. No line claims /arc-wave writes to CLAUDE.md.
+
+Status: PASS

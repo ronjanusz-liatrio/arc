@@ -1,0 +1,20 @@
+Type: test
+Description: Step 9 "Inject ARC:product-context into CLAUDE.md" and sub-steps 9a-9d are removed from skills/arc-wave/SKILL.md.
+Command: grep -n "Inject ARC:product-context into CLAUDE.md" skills/arc-wave/SKILL.md && grep -nE '^\*\*9[a-d]\.' skills/arc-wave/SKILL.md
+Expected: Zero matches for both greps (exit code 1).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output: grep "Inject ARC:product-context into CLAUDE.md" ---
+(no matches)
+Exit Status: 1
+
+--- Output: grep '^\*\*9[a-d]\.' (sub-steps 9a-9d) ---
+(no matches)
+Exit Status: 1
+
+--- Verification ---
+- The Step 9 heading "### Step 9: Inject ARC:product-context into CLAUDE.md" is gone.
+- All four sub-step labels (9a, 9b, 9c, 9d) are gone — they previously bolded the procedural blocks of Step 9.
+- The replacement Step 9 is "### Step 9: Generate Wave Report" (formerly Step 10), confirmed at line 287.
+
+Status: PASS

@@ -1,0 +1,55 @@
+Type: test
+Description: All cross-references to step numbers inside skills/arc-wave/SKILL.md resolve to existing steps after renumber. Specifically: the Step 1.5 "(Step 10)" reference becomes "(Step 9)"; Step 4's "Steps 6, 10, and 11" becomes "Steps 6, 9, and 10"; Step 11 emission rules' "Step 11 AskUserQuestion" become "Step 10 AskUserQuestion" and "Steps 6 and 10" becomes "Steps 6 and 9"; Step 6's "Step 10 wave report header" becomes "Step 9 wave report header".
+Command: grep -nE 'Step (1|1\.5|2|3|4|5|6|7|8|9|10|11)\b' skills/arc-wave/SKILL.md
+Expected: All Step N references map to existing steps (1, 1.5, 2-10). Zero references to Step 11 (which no longer exists).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output ---
+80:### Step 1: Read Context
+95:### Step 1.5: Engineering Readiness Assessment
+108:**Add to the wave report (Step 9):**
+124:### Step 2: Assess Wave Scope
+163:### Step 3: Select Ideas for Wave
+201:### Step 4: Gather Wave Details
+220:### Step 5: Ensure ROADMAP Exists
+229:### Step 6: Update ROADMAP
+255:- **When `target` is unset** (empty string or missing — the default after Step 4): ...
+262:- ... full `TBD (use /arc-wave to add)` placeholder form appears only in the detailed wave entry (above) and in the Step 9 wave report header.
+266:### Step 7: Update BACKLOG
+279:### Step 8: Ensure VISION and CUSTOMER Exist
+287:### Step 9: Generate Wave Report
+294:- ... default after Step 4 ...
+298:### Step 10: Offer Next Steps
+302:... emit the following one-line plain-text note in the assistant's response alongside the Step 10 `AskUserQuestion` call below ...
+308:1. ... surrounds the Step 10 `AskUserQuestion` call (either directly above or directly below it) ...
+310:3. ... The standard Step 10 `AskUserQuestion` is still presented to the user.
+311:4. ... text prompt asking the user to supply a time estimate at Step 10 ...
+334:- **Plan another wave:** Loop back to Step 1
+
+(The grep output was truncated for clarity above; full listing was reviewed and every numbered step reference resolves.)
+
+--- Cross-check: zero references to Step 11 ---
+$ grep -n 'Step 11' skills/arc-wave/SKILL.md
+(no matches)
+Exit Status: 1
+
+--- Cross-check: Step 4's downstream-step list updated ---
+$ grep -n 'Steps 6, 9, and 10\|Steps 6 and 9' skills/arc-wave/SKILL.md
+203:... treat `target` as unset (empty string or missing key) for downstream Steps 6, 9, and 10. ...
+309:2. **Emit only when `target` is unset.** Use the same unset signal (empty string or missing key) relied on by Steps 6 and 9 to decide whether to render the `TBD (use /arc-wave to add)` placeholder. ...
+
+--- Cross-check: stale Step 6, 10, and 11 listing is gone ---
+$ grep -n 'Steps 6, 10, and 11\|Steps 6 and 10' skills/arc-wave/SKILL.md
+(no matches)
+Exit Status: 1
+
+--- Verification ---
+- Every Step N reference in prose maps to a real header (Steps 1, 1.5, 2-10).
+- Step 1.5's "Add to the wave report (Step 10)" is now "(Step 9)" (line 108).
+- Step 4's downstream-list "Steps 6, 10, and 11" is now "Steps 6, 9, and 10" (line 203).
+- Step 11 (now Step 10) AskUserQuestion references all renumbered to "Step 10" (lines 302, 308, 310, 311).
+- Step 11 emission rule "Steps 6 and 10" is now "Steps 6 and 9" (line 309).
+- Step 6's "Step 10 wave report header" is now "Step 9 wave report header" (line 262).
+- Zero "Step 11" references remain.
+
+Status: PASS

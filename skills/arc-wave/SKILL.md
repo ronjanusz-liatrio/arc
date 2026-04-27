@@ -1,6 +1,6 @@
 ---
 name: arc-wave
-description: "Delivery cycle management — organize spec-ready ideas into a themed wave with a clear goal and target, then hand off to /cw-spec. Invoke when you have shaped ideas ready to commit to in the next cycle — when the user says 'plan the next wave', 'let's start a sprint', 'organize these ideas into a release', or 'what should we build next'. Requires at least one shaped idea; promotes to spec-ready; updates ROADMAP and ARC:product-context. Not for checking status (use /arc-status) or capturing new ideas (use /arc-capture)."
+description: "Delivery cycle management — organize spec-ready ideas into a themed wave with a clear goal and target, then hand off to /cw-spec. Invoke when you have shaped ideas ready to commit to in the next cycle — when the user says 'plan the next wave', 'let's start a sprint', 'organize these ideas into a release', or 'what should we build next'. Requires at least one shaped idea; promotes to spec-ready; updates ROADMAP and BACKLOG (does not write to CLAUDE.md — run /arc-sync for the product-context block). Not for checking status (use /arc-status) or capturing new ideas (use /arc-capture)."
 user-invocable: true
 allowed-tools: Glob, Grep, Read, Write, Edit, AskUserQuestion
 requires:
@@ -14,7 +14,6 @@ produces:
     - docs/ROADMAP.md
     - docs/BACKLOG.md
     - docs/skill/arc/wave-report.md
-    - CLAUDE.md
   artifacts:
     - ROADMAP
     - BACKLOG
@@ -38,7 +37,9 @@ Always begin your response with: **ARC-WAVE**
 
 ## Overview
 
-You organize spec-ready ideas into themed delivery waves. This involves selecting shaped ideas from the BACKLOG, creating a wave in the ROADMAP, injecting the `ARC:product-context` managed section into the project CLAUDE.md, and generating a wave report with handoff instructions for `/cw-spec`. When all ideas in a wave are shipped via `/arc-ship`, the wave is archived to `docs/skill/arc/waves/` and removed from ROADMAP.
+You organize spec-ready ideas into themed delivery waves. This involves selecting shaped ideas from the BACKLOG, creating a wave in the ROADMAP, and generating a wave report with handoff instructions for `/cw-spec`. When all ideas in a wave are shipped via `/arc-ship`, the wave is archived to `docs/skill/arc/waves/` and removed from ROADMAP.
+
+Run `/arc-sync` separately if the project's CLAUDE.md product-context block needs to be created or kept current — `/arc-wave` does not write to CLAUDE.md.
 
 ## Walkthrough
 
@@ -54,26 +55,22 @@ flowchart LR
     F --> G[Update ROADMAP]
     G --> H[Update BACKLOG]
     H --> I[Ensure VISION + CUSTOMER]
-    I --> J[Inject product context]
-    J --> K[Write wave report]
-    K --> L[Offer next steps]
-    L --> X([End])
+    I --> J[Write wave report]
+    J --> K[Offer next steps]
+    K --> X([End])
 
     classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
     classDef action fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
     classDef write fill:#E8662F,stroke:#C7502A,color:#FFFFFF
 
     class D,E user
-    class A,B,C,F,I,L action
-    class G,H,J,K write
+    class A,B,C,F,I,K action
+    class G,H,J write
 ```
 
 ## Critical Constraints
 
 - **NEVER** shape or refine ideas — only select already-shaped ideas
-- **NEVER** modify TEMPER: or MM: managed sections in CLAUDE.md
-- **NEVER** nest ARC: markers inside other namespace blocks
-- **NEVER** create CLAUDE.md if it doesn't exist — warn the user instead
 - **ALWAYS** begin your response with `**ARC-WAVE**`
 - **ALWAYS** respect Temper phase constraints when `docs/management-report.md` is present
 - **ALWAYS** generate a wave report after wave creation
@@ -108,7 +105,7 @@ Before composing the wave, assess engineering readiness. All reads are condition
 | `docs/TESTING.md` | Test coverage and strategy |
 | `docs/DEPLOYMENT.md` | Deployment complexity |
 
-**Add to the wave report (Step 10):**
+**Add to the wave report (Step 9):**
 
 ```markdown
 ## Engineering Readiness
@@ -203,7 +200,7 @@ AskUserQuestion({
 
 ### Step 4: Gather Wave Details
 
-Ask only for the wave name/theme. The wave's `target` (time estimate) is intentionally not collected here — treat `target` as unset (empty string or missing key) for downstream Steps 6, 10, and 11. Do not reintroduce the Target question earlier in the flow or behind any flag/branch.
+Ask only for the wave name/theme. The wave's `target` (time estimate) is intentionally not collected here — treat `target` as unset (empty string or missing key) for downstream Steps 6, 9, and 10. Do not reintroduce the Target question earlier in the flow or behind any flag/branch.
 
 ```
 AskUserQuestion({
@@ -262,7 +259,7 @@ Update the wave summary table if one exists. If this is the first wave, create t
 **Rendering the summary table `Target` column cell for the new wave row:**
 
 - **When `target` is set:** render the cell as the captured `{timeframe}` value.
-- **When `target` is unset:** render the cell as the short literal `TBD`. Do not include the parenthetical `(use /arc-wave to add)` hint in the table cell — table cells must stay concise. The full `TBD (use /arc-wave to add)` placeholder form appears only in the detailed wave entry (above) and in the Step 10 wave report header.
+- **When `target` is unset:** render the cell as the short literal `TBD`. Do not include the parenthetical `(use /arc-wave to add)` hint in the table cell — table cells must stay concise. The full `TBD (use /arc-wave to add)` placeholder form appears only in the detailed wave entry (above) and in the Step 9 wave report header.
 
 Do not rewrite or reformat `Target:` values in any prior wave entries already present in `docs/ROADMAP.md` — the placeholder applies only to the newly appended wave.
 
@@ -287,47 +284,7 @@ Check for `docs/VISION.md` and `docs/CUSTOMER.md`:
 - Create from templates at stub level (Spike phase)
 - Add a note: `> This document was auto-created by /arc-wave. Fill in product-specific details.`
 
-### Step 9: Inject ARC:product-context into CLAUDE.md
-
-Read `skills/arc-wave/references/bootstrap-protocol.md` for the full injection protocol.
-
-**9a. Read CLAUDE.md**
-
-If CLAUDE.md does not exist in the project root:
-- Warn: "No CLAUDE.md found. Run `/temper-assess` to bootstrap the project, then re-run `/arc-wave` to inject product context."
-- Skip injection and proceed to Step 10
-
-**9b. Check for existing ARC:product-context section**
-
-Search for `<!--# BEGIN ARC:product-context -->`:
-- **If found:** Replace content between markers with updated values
-- **If not found:** Insert at the appropriate position per the insertion priority:
-  1. Before the first `<!--# BEGIN TEMPER:... -->` marker (ARC provides product context that TEMPER builds upon)
-  2. Before any Snyk-related section
-  3. At EOF
-
-**9c. Build managed section content**
-
-```markdown
-<!--# BEGIN ARC:product-context -->
-## Product Context
-
-- **Vision:** {first sentence of docs/VISION.md summary, or "Not yet defined"}
-- **Phase:** {Temper phase from management-report, or omit this line if unavailable}
-- **Current Wave:** {wave name just created}
-- **Primary Personas:** {persona names from docs/CUSTOMER.md, or "Not yet defined"}
-- **Backlog:** {N} captured, {N} shaped, {N} spec-ready, {N} shipped
-<!--# END ARC:product-context -->
-```
-
-**9d. Validate injection**
-
-After writing, verify:
-- The ARC section is not nested inside any TEMPER: or MM: block
-- No TEMPER: or MM: markers are inside the ARC block
-- The file is valid markdown
-
-### Step 10: Generate Wave Report
+### Step 9: Generate Wave Report
 
 Read `templates/wave-report.tmpl.md` for the report format. Render each `{SlotName}` placeholder with values derived from the wave planning session. Save the rendered report to `docs/skill/arc/wave-report.md`.
 
@@ -338,20 +295,20 @@ Read `templates/wave-report.tmpl.md` for the report format. Render each `{SlotNa
 
 Do not rewrite or normalize the `**Target:**` value in any pre-existing wave report file — the placeholder rule applies only to the wave report being generated for the newly created wave.
 
-### Step 11: Offer Next Steps
+### Step 10: Offer Next Steps
 
 **Post-creation reminder note (informational only):**
 
-When `target` is unset (the default after Step 4 — no time estimate was captured), emit the following one-line plain-text note in the assistant's response alongside the Step 11 `AskUserQuestion` call below:
+When `target` is unset (the default after Step 4 — no time estimate was captured), emit the following one-line plain-text note in the assistant's response alongside the Step 10 `AskUserQuestion` call below:
 
 > Tip: no time estimate was captured. Add one by editing docs/ROADMAP.md or rerunning /arc-wave.
 
 **Emission rules (verbatim):**
 
-1. **Emit as plain assistant text.** Print the note in the response body that surrounds the Step 11 `AskUserQuestion` call (either directly above or directly below it). Never embed the note as an option, label, description, or question inside the `AskUserQuestion` call itself.
-2. **Emit only when `target` is unset.** Use the same unset signal (empty string or missing key) relied on by Steps 6 and 10 to decide whether to render the `TBD (use /arc-wave to add)` placeholder. If the wave has no captured estimate, emit the note.
-3. **Do not emit when `target` has a value.** If the wave already has a captured `{timeframe}`, suppress the note entirely — no variation, no abbreviation, no alternative wording. The standard Step 11 `AskUserQuestion` is still presented to the user.
-4. **Never prompt for or collect an estimate during the post-creation summary.** The reminder is informational only. Do not add a follow-up question, `AskUserQuestion` option, or text prompt asking the user to supply a time estimate at Step 11. The only supported paths to add an estimate later are those named in the note text: editing `docs/ROADMAP.md` directly or rerunning `/arc-wave`.
+1. **Emit as plain assistant text.** Print the note in the response body that surrounds the Step 10 `AskUserQuestion` call (either directly above or directly below it). Never embed the note as an option, label, description, or question inside the `AskUserQuestion` call itself.
+2. **Emit only when `target` is unset.** Use the same unset signal (empty string or missing key) relied on by Steps 6 and 9 to decide whether to render the `TBD (use /arc-wave to add)` placeholder. If the wave has no captured estimate, emit the note.
+3. **Do not emit when `target` has a value.** If the wave already has a captured `{timeframe}`, suppress the note entirely — no variation, no abbreviation, no alternative wording. The standard Step 10 `AskUserQuestion` is still presented to the user.
+4. **Never prompt for or collect an estimate during the post-creation summary.** The reminder is informational only. Do not add a follow-up question, `AskUserQuestion` option, or text prompt asking the user to supply a time estimate at Step 10. The only supported paths to add an estimate later are those named in the note text: editing `docs/ROADMAP.md` directly or rerunning `/arc-wave`.
 
 The note text above is the single source of truth for the wording. Reproduce it verbatim — do not paraphrase, translate, reorder, or adjust punctuation.
 
@@ -362,7 +319,7 @@ AskUserQuestion({
     header: "Next",
     options: [
       { label: "Hand off to /cw-spec", description: "Start the SDD pipeline for the first spec-ready idea" },
-      { label: "Update README", description: "Run /arc-sync to sync the README with the new wave" },
+      { label: "Sync README + product context", description: "Run /arc-sync — syncs the README and manages the CLAUDE.md product context block" },
       { label: "Plan another wave", description: "Create another wave for remaining shaped ideas" },
       { label: "Done", description: "Finish wave planning" }
     ],
@@ -373,7 +330,7 @@ AskUserQuestion({
 
 **Handle selection:**
 - **Hand off to /cw-spec:** Present the handoff brief for the first spec-ready idea and suggest the user invoke `/cw-spec` with it
-- **Update README:** Inform the user to run `/arc-sync` to update the project README with the new wave context, roadmap changes, and backlog status
+- **Sync README + product context:** Inform the user to run `/arc-sync`, which syncs the project README with the new wave context, roadmap changes, and backlog status, and also manages the product context block in the project CLAUDE.md
 - **Plan another wave:** Loop back to Step 1
 - **Done:** Summarize what was created and exit
 
