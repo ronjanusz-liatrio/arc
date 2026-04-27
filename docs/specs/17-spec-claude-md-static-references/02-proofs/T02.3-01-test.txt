@@ -1,0 +1,11 @@
+Type: test (grep)
+Command: grep -nE '^- An `ARC:product-context` managed section' references/wave-planning.md
+Expected: zero matches (the bullet has been removed from the creates list)
+Timestamp: 2026-04-27T00:00:00Z
+
+--- Output ---
+(no matches)
+
+--- Result ---
+Status: PASS
+Notes: The previous bullet "An `ARC:product-context` managed section in the project CLAUDE.md" no longer appears in the file.

@@ -1,0 +1,20 @@
+Type: file (snapshot of creates list region)
+Command: awk 'NR>=9 && NR<=14' references/wave-planning.md
+Expected:
+  - "Each wave produces:" header line is preserved
+  - The 3 remaining bullets (ROADMAP.md, BACKLOG.md, wave-report.md) form a coherent list shape
+  - The CLAUDE.md ARC:product-context bullet is gone
+  - A follow-up paragraph below the list directs readers to /arc-sync
+Timestamp: 2026-04-27T00:00:00Z
+
+--- Output ---
+Each wave produces:
+- Updates to `docs/ROADMAP.md` with wave details
+- Status updates in `docs/BACKLOG.md` (shaped → spec-ready)
+- A wave report (`docs/wave-report.md`) with handoff instructions for `/cw-spec`
+
+Run `/arc-sync` to create or refresh the `ARC:product-context` managed section in the project CLAUDE.md — `/arc-wave` no longer writes this block.
+
+--- Result ---
+Status: PASS
+Notes: The "creates" list now contains only ROADMAP.md, BACKLOG.md, and wave-report.md outputs. The follow-up paragraph immediately below the list redirects readers to /arc-sync for CLAUDE.md product-context creation/refresh, with explicit clarification that /arc-wave no longer writes the block. List shape stays coherent.

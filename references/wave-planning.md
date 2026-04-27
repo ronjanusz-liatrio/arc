@@ -9,8 +9,9 @@ A wave is a batch of spec-ready ideas selected for concurrent delivery. Unlike s
 Each wave produces:
 - Updates to `docs/ROADMAP.md` with wave details
 - Status updates in `docs/BACKLOG.md` (shaped → spec-ready)
-- An `ARC:product-context` managed section in the project CLAUDE.md
 - A wave report (`docs/wave-report.md`) with handoff instructions for `/cw-spec`
+
+Run `/arc-sync` to create or refresh the `ARC:product-context` managed section in the project CLAUDE.md — `/arc-wave` no longer writes this block.
 
 ## Capacity Constraints
 
