@@ -1,0 +1,16 @@
+Type: test
+Description: Step 7 "Refresh ARC:product-context" section is removed from skills/arc-ship/SKILL.md.
+Command: grep -nE 'Refresh ARC:product-context' skills/arc-ship/SKILL.md
+Expected: Zero matches (exit code 1).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output: grep "Refresh ARC:product-context" ---
+(no matches)
+Exit Status: 1
+
+--- Verification ---
+- The Step 7 heading "### Step 7: Refresh ARC:product-context" is gone.
+- All sub-steps describing CLAUDE.md refresh logic (read bootstrap-protocol, recount backlog statuses, derive shipped count, apply injection, update Current Wave, validate injection) are removed.
+- The replacement Step 7 is "### Step 7: Confirm" (formerly Step 8), confirmed at line 349 of the updated file.
+
+Status: PASS

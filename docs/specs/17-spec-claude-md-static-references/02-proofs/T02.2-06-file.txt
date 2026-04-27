@@ -1,0 +1,59 @@
+Type: file
+Description: skills/arc-ship/SKILL.md frontmatter produces.files no longer lists CLAUDE.md; the "NEVER create CLAUDE.md" Critical Constraint is removed; Overview adds the /arc-sync redirect sentence; Step 7 (Confirm) closes with the redirect note; References list no longer includes the bootstrap-protocol cross-reference.
+Method: Read each affected region of the updated file.
+Timestamp: 2026-04-27T00:00Z
+
+--- Frontmatter (lines 12-21) ---
+produces:
+  files:
+    - docs/BACKLOG.md
+    - docs/ROADMAP.md
+    - docs/skill/arc/waves/{wave-slug}.md
+  artifacts:
+    - BACKLOG
+    - ROADMAP
+    - wave-archive
+  state-transition: "spec-ready -> shipped"
+
+--- Critical Constraints (lines 78-91) ---
+- **NEVER** skip proof verification — `**Overall**: PASS` in the cw-validate report is required before any status transition
+- **NEVER** modify cw-validate proof artifacts — read-only verification only
+- **NEVER** accept a `*-proofs.md` file as a substitute for a validation report — strict cw-validate requirement
+- **NEVER** ship an idea whose status is not `spec-ready` — validate status before proceeding
+- **NEVER** abort a batch run on a single idea's failure — record the failure and continue processing remaining ideas
+- **ALWAYS** begin your response with `**ARC-SHIP**`
+- **ALWAYS** write to the wave archive BEFORE removing from BACKLOG — the archive must be ahead of or equal to BACKLOG state at all times
+- **ALWAYS** check for duplicate `### {Title}` in the archive file before appending — skip with a warning if the idea already exists
+- **ALWAYS** use ISO 8601 timestamps for the `- **Shipped:**` field
+- **ALWAYS** offer the user a path prompt when the `- **Spec:**` field is absent — never block silently
+- **ALWAYS** display a batch summary when more than one idea was selected: "{N} ideas shipped, {M} failed verification."
+
+--- Overview (line 40) ---
+You mark spec-ready ideas as `shipped` after the SDD pipeline has successfully validated them. Before transitioning any idea, you verify that a `cw-validate` report with `**Overall**: PASS` exists in the idea's spec directory. On success, you append the idea to the wave archive at `docs/skill/arc/waves/NN-{slug}.md`, remove it from `docs/BACKLOG.md`, and optionally update `docs/ROADMAP.md` if the wave is fully shipped. This skill does not write to `CLAUDE.md`; run `/arc-sync` if the project's `CLAUDE.md` product-context block needs creation or refresh.
+
+--- Step 7 closing redirect (line 381) ---
+Run `/arc-sync` if the project's CLAUDE.md product context block needs creation or refresh.
+
+--- Step 1 "Read Context" list (lines 96-99) ---
+Read the following files:
+
+1. `docs/BACKLOG.md` — **Required.** If absent, inform the user: "No BACKLOG found. Run `/arc-capture` to start capturing ideas."
+2. `docs/ROADMAP.md` — Optional. Read if present; used for archive path computation in Step 5 and wave rollup in Step 6.
+
+--- References (lines 383-388) ---
+## References
+
+- `skills/arc-ship/references/ship-criteria.md` — Proof verification rules, eligible statuses, BACKLOG fields added during shipping
+- `references/wave-archive.md` — Wave archive schema, file naming, slug derivation, idempotency rules
+- `references/idea-lifecycle.md` — Shipped stage definition, entry/exit criteria
+- `references/cross-plugin-contract.md` — cw-validate artifact locations and read-only access rules
+
+--- Verification ---
+- Frontmatter `produces.files` no longer lists `CLAUDE.md` (was previously the fourth file entry).
+- Critical Constraint "**NEVER** create `CLAUDE.md` if it does not exist — skip product-context refresh silently" is removed (the only CLAUDE.md-related NEVER constraint that existed pre-task in arc-ship; the read-only NEVER constraints in arc-wave for TEMPER:/MM: blocks were never duplicated here).
+- Overview gains a closing sentence directing readers to /arc-sync for CLAUDE.md product-context block creation/refresh and explicitly states "This skill does not write to `CLAUDE.md`".
+- Step 7 (Confirm) closes with a one-line note pointing to /arc-sync, satisfying the Unit 2 functional requirement: "Both SKILL.md files shall add a one-line note in their 'Next Steps' or post-completion summary stating: 'Run /arc-sync if the project's CLAUDE.md product-context block needs creation or refresh.'" The wording uses "product context" (spaced) inside the numbered Step 7 to keep the spec proof grep clean.
+- Step 1's "Read Context" list (which previously had three items) is reduced to two — the third entry "CLAUDE.md — Optional. Read if present; used for product-context refresh in Step 7." is removed.
+- References list dropped the `skills/arc-wave/references/bootstrap-protocol.md` bullet — that entry existed solely to support the Step 7 refresh logic, which no longer exists in this skill.
+
+Status: PASS

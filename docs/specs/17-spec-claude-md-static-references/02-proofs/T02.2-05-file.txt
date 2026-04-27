@@ -1,0 +1,50 @@
+Type: file
+Description: Mermaid flowchart in skills/arc-ship/SKILL.md no longer contains the "Refresh CLAUDE.md product-context" node K; J ("Update ROADMAP if wave complete") connects directly to L ("Confirm / batch summary"); class assignments reference only existing nodes.
+Method: Read the updated flowchart block (lines 44-76).
+Expected: No K node defined; no edge involving K; class write line lists I, I2, J, L (no K).
+Timestamp: 2026-04-27T00:00Z
+
+--- Updated Mermaid block ---
+```mermaid
+%%{init: {'theme': 'base', ...}}%%
+flowchart LR
+    S([Start]) --> A[Read BACKLOG]
+    A --> B{Select ideas}
+    B -->|batch| B2[For each idea]
+    B -->|single| C[Resolve spec path]
+    B2 --> C
+    C --> D{Spec field\npresent?}
+    D -->|Yes| E[Find validation report]
+    D -->|No| F[Ask user for path]
+    F --> E
+    E --> G{Overall PASS?}
+    G -->|No| H[Record failure\ncontinue]
+    G -->|Yes| I[Write to\nwave archive]
+    I --> I2[Remove from\nBACKLOG]
+    H --> NX{More ideas?}
+    I2 --> NX
+    NX -->|Yes| B2
+    NX -->|No| J[Update ROADMAP\nif wave complete]
+    J --> L[Confirm / batch summary]
+    L --> X([End])
+
+    classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
+    classDef action fill:#11B5A4,stroke:#0D8F82,color:#FFFFFF
+    classDef write fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+    classDef fail fill:#E8662F,stroke:#C7502A,color:#FFFFFF
+
+    class B,D,G user
+    class A,C,E,F,B2,NX action
+    class I,I2,J,L write
+    class H fail
+```
+
+--- Verification ---
+- Removed: `J --> K[Refresh CLAUDE.md\nproduct-context]` and `K --> L[...]`.
+- Added: direct edge `J --> L[Confirm / batch summary]` (replaces the J->K->L chain).
+- `class ... write` line: previous `I,I2,J,K,L write` is now `I,I2,J,L write` — K dropped.
+- All node identifiers in class lines (B, D, G, A, C, E, F, B2, NX, I, I2, J, L, H) are defined in the flowchart body.
+- Flowchart parses cleanly with no unresolved node references.
+- Pre-existing Mermaid escape sequence `\n` (used for in-node line breaks like "Spec field\npresent?") is unchanged from the upstream template; this matches the convention preserved by T02.1 in skills/arc-wave/SKILL.md.
+
+Status: PASS

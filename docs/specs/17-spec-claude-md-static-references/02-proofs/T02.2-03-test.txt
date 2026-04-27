@@ -1,0 +1,43 @@
+Type: test
+Description: All cross-references to step numbers inside skills/arc-ship/SKILL.md resolve to existing steps; no stale "Step 7" (refresh sense) or "Step 8" references remain.
+Command: grep -nE 'Step [0-9]+|Steps [0-9]' skills/arc-ship/SKILL.md
+Expected: Every step-number cross-reference resolves to a step that exists in the new numbering (1, 1b, 2, 2b, 3, 4, 5, 6, 7).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output ---
+94:### Step 1: Read Context
+99:2. `docs/ROADMAP.md` — Optional. Read if present; used for archive path computation in Step 5 and wave rollup in Step 6.
+101:### Step 1b: Backfill Wave 0 (Offered Once on Detection)
+126:3. **If the user selects "No — skip for now":** proceed to Step 2 immediately.
+151:5. After processing all items (or skipping), continue to Step 2.
+153:**Constraint:** This step is offered at most once per `/arc-ship` invocation. Do not loop back to it after Step 2.
+155:### Step 2: Select Idea
+206:### Step 2b: Batch Loop
+208:For each selected idea (single or batch), execute Steps 3–5 independently:
+212:   a. Execute Step 3 (Resolve Spec Path).
+213:   b. Execute Step 4 (Verify Validation Report).
+214:   c. If Step 4 fails (no report or not PASS): record the failure message, append the idea title to `failed_ideas`, and **continue to the next idea** — do not abort the batch.
+215:   d. If Step 4 passes: execute Step 5 (Archive and Remove from BACKLOG), increment `shipped_count`.
+216:3. After all ideas are processed, proceed to Step 6.
+218:**Batch ordering:** Within each idea, Step 5 writes to the archive before modifying BACKLOG (archive-first consistency). Step 6 (ROADMAP pruning) runs only after all ideas are processed, so a single batch can complete a wave in one pass without redundant ROADMAP checks per idea.
+220:**Failure recording during batch:** When an idea fails Step 4, output the per-idea failure message inline (do not exit), e.g.:
+225:### Step 3: Resolve Spec Path
+253:### Step 4: Verify Validation Report
+259:   In **batch flow**: record the failure per Step 2b and continue to the next idea.
+264:   In **batch flow**: record the failure per Step 2b and continue to the next idea.
+266:### Step 5: Archive and Remove from BACKLOG
+336:### Step 6: Update ROADMAP (if applicable)
+349:### Step 7: Confirm
+
+--- Verification ---
+- Step 5 referenced from Step 1 (line 99) and Step 2b (lines 215, 218) — exists at line 266.
+- Step 6 referenced from Step 1 (line 99) and Step 2b (lines 216, 218) — exists at line 336.
+- Step 2 referenced from Step 1b (lines 126, 151, 153) — exists at line 155.
+- Step 2b referenced from Step 4 (lines 259, 264) — exists at line 206.
+- Step 3 referenced from Step 2b (line 212) — exists at line 225.
+- Step 4 referenced from Step 2b (lines 213, 214, 220) — exists at line 253.
+- Zero references to a now-non-existent Step 7 (refresh sense) or Step 8 remain.
+- The Step 2b "After all ideas are processed, proceed to Step 6" line (216) is consistent — Step 6 (Update ROADMAP) is the next step after the per-idea archive loop, identical to the pre-task semantics.
+- Step 2b "Step 6 (ROADMAP pruning) runs only after all ideas are processed" (line 218) remains accurate.
+
+Status: PASS

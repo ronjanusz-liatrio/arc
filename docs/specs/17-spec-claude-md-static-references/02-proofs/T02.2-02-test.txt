@@ -1,0 +1,23 @@
+Type: test
+Description: Step numbering in skills/arc-ship/SKILL.md is contiguous after Step 7 removal; previous Step 8 renumbered to Step 7; no Step 8 header remains.
+Command: grep -nE '^### Step ' skills/arc-ship/SKILL.md
+Expected: Steps appear in strict ascending order (1, 1b, 2, 2b, 3, 4, 5, 6, 7) with no gaps; no Step 8 header.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output ---
+94:### Step 1: Read Context
+101:### Step 1b: Backfill Wave 0 (Offered Once on Detection)
+155:### Step 2: Select Idea
+206:### Step 2b: Batch Loop
+225:### Step 3: Resolve Spec Path
+253:### Step 4: Verify Validation Report
+266:### Step 5: Archive and Remove from BACKLOG
+336:### Step 6: Update ROADMAP (if applicable)
+349:### Step 7: Confirm
+
+--- Verification ---
+- Sequence: 1, 1b, 2, 2b, 3, 4, 5, 6, 7. Contiguous ascending; intermediate "1b" and "2b" sub-steps were already present pre-task and are unchanged.
+- Step 7 "Confirm" replaces both the prior Step 7 (Refresh ARC:product-context, deleted) and Step 8 (Confirm, renumbered).
+- No "### Step 8" heading remains anywhere in the file.
+
+Status: PASS

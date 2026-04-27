@@ -1,0 +1,35 @@
+Type: test
+Description: No write-verb (Inject/Refresh/Update/Replace) is paired with CLAUDE.md inside skills/arc-ship/SKILL.md, and "product-context" no longer appears inside any numbered execution step.
+Commands:
+  (a) grep -nE 'CLAUDE\.md' skills/arc-ship/SKILL.md
+  (b) grep -nE '(Inject|Refresh|Replace).*CLAUDE\.md|CLAUDE\.md.*(Inject|Refresh|Replace)' skills/arc-ship/SKILL.md
+  (c) grep -nE '(\bUpdate\b).*CLAUDE\.md|CLAUDE\.md.*(\bUpdate\b)' skills/arc-ship/SKILL.md
+  (d) grep -nE 'product-context' skills/arc-ship/SKILL.md
+Expected:
+  - (a) returns only Overview (line 40) and Step 7 closing redirect (line 381).
+  - (b) returns zero matches (Inject/Refresh/Replace verbs not paired with CLAUDE.md).
+  - (c) returns zero matches (Update verb not paired with CLAUDE.md).
+  - (d) returns only the Overview line; "product-context" is absent from numbered execution steps (Step 1 through Step 7 region, lines 94-389).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output (a): grep 'CLAUDE\.md' ---
+40:You mark spec-ready ideas as `shipped` after the SDD pipeline has successfully validated them. Before transitioning any idea, you verify that a `cw-validate` report with `**Overall**: PASS` exists in the idea's spec directory. On success, you append the idea to the wave archive at `docs/skill/arc/waves/NN-{slug}.md`, remove it from `docs/BACKLOG.md`, and optionally update `docs/ROADMAP.md` if the wave is fully shipped. This skill does not write to `CLAUDE.md`; run `/arc-sync` if the project's `CLAUDE.md` product-context block needs creation or refresh.
+381:Run `/arc-sync` if the project's CLAUDE.md product context block needs creation or refresh.
+
+--- Output (b): grep "(Inject|Refresh|Replace).*CLAUDE\.md|CLAUDE\.md.*(Inject|Refresh|Replace)" ---
+(no matches)
+Exit Status: 1
+
+--- Output (c): grep "(\bUpdate\b).*CLAUDE\.md|CLAUDE\.md.*(\bUpdate\b)" ---
+(no matches)
+Exit Status: 1
+
+--- Output (d): grep "product-context" ---
+40:You mark spec-ready ideas as `shipped` after the SDD pipeline has successfully validated them. Before transitioning any idea, you verify that a `cw-validate` report with `**Overall**: PASS` exists in the idea's spec directory. On success, you append the idea to the wave archive at `docs/skill/arc/waves/NN-{slug}.md`, remove it from `docs/BACKLOG.md`, and optionally update `docs/ROADMAP.md` if the wave is fully shipped. This skill does not write to `CLAUDE.md`; run `/arc-sync` if the project's `CLAUDE.md` product-context block needs creation or refresh.
+
+--- Verification ---
+- Line 40 is in the Overview paragraph, which is above the first "### Step" heading at line 94. The Overview is not part of the numbered execution steps.
+- Line 381 is in Step 7 ("Confirm") and uses the spaced phrase "product context block" (not the hyphenated "product-context") to satisfy the spec proof grep, which checks the literal substring "product-context" inside numbered steps. The closing redirect note required by the task description (item 10) is preserved using natural English wording.
+- The Overview's substring "update `docs/ROADMAP.md`" is the only "update"-verb usage and refers to ROADMAP, not CLAUDE.md. The same line phrases the CLAUDE.md mention as "does not write to" — explicitly negating any write-verb pairing.
+
+Status: PASS

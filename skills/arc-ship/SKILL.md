@@ -14,7 +14,6 @@ produces:
     - docs/BACKLOG.md
     - docs/ROADMAP.md
     - docs/skill/arc/waves/{wave-slug}.md
-    - CLAUDE.md
   artifacts:
     - BACKLOG
     - ROADMAP
@@ -38,7 +37,7 @@ Always begin your response with: **ARC-SHIP**
 
 ## Overview
 
-You mark spec-ready ideas as `shipped` after the SDD pipeline has successfully validated them. Before transitioning any idea, you verify that a `cw-validate` report with `**Overall**: PASS` exists in the idea's spec directory. On success, you append the idea to the wave archive at `docs/skill/arc/waves/NN-{slug}.md`, remove it from `docs/BACKLOG.md`, optionally update `docs/ROADMAP.md` if the wave is fully shipped, and refresh the `ARC:product-context` managed section in `CLAUDE.md`.
+You mark spec-ready ideas as `shipped` after the SDD pipeline has successfully validated them. Before transitioning any idea, you verify that a `cw-validate` report with `**Overall**: PASS` exists in the idea's spec directory. On success, you append the idea to the wave archive at `docs/skill/arc/waves/NN-{slug}.md`, remove it from `docs/BACKLOG.md`, and optionally update `docs/ROADMAP.md` if the wave is fully shipped. This skill does not write to `CLAUDE.md`; run `/arc-sync` if the project's `CLAUDE.md` product-context block needs creation or refresh.
 
 ## Walkthrough
 
@@ -62,8 +61,7 @@ flowchart LR
     I2 --> NX
     NX -->|Yes| B2
     NX -->|No| J[Update ROADMAP\nif wave complete]
-    J --> K[Refresh CLAUDE.md\nproduct-context]
-    K --> L[Confirm / batch summary]
+    J --> L[Confirm / batch summary]
     L --> X([End])
 
     classDef user fill:#1B2A3D,stroke:#0F1D2B,color:#FFFFFF
@@ -73,7 +71,7 @@ flowchart LR
 
     class B,D,G user
     class A,C,E,F,B2,NX action
-    class I,I2,J,K,L write
+    class I,I2,J,L write
     class H fail
 ```
 
@@ -82,7 +80,6 @@ flowchart LR
 - **NEVER** skip proof verification — `**Overall**: PASS` in the cw-validate report is required before any status transition
 - **NEVER** modify cw-validate proof artifacts — read-only verification only
 - **NEVER** accept a `*-proofs.md` file as a substitute for a validation report — strict cw-validate requirement
-- **NEVER** create `CLAUDE.md` if it does not exist — skip product-context refresh silently
 - **NEVER** ship an idea whose status is not `spec-ready` — validate status before proceeding
 - **NEVER** abort a batch run on a single idea's failure — record the failure and continue processing remaining ideas
 - **ALWAYS** begin your response with `**ARC-SHIP**`
@@ -100,7 +97,6 @@ Read the following files:
 
 1. `docs/BACKLOG.md` — **Required.** If absent, inform the user: "No BACKLOG found. Run `/arc-capture` to start capturing ideas."
 2. `docs/ROADMAP.md` — Optional. Read if present; used for archive path computation in Step 5 and wave rollup in Step 6.
-3. `CLAUDE.md` — Optional. Read if present; used for product-context refresh in Step 7.
 
 ### Step 1b: Backfill Wave 0 (Offered Once on Detection)
 
@@ -350,23 +346,7 @@ If `docs/ROADMAP.md` exists:
    - Delete the `## Wave NN: {Name}` section from `docs/ROADMAP.md`.
 5. If the wave is still in progress, no ROADMAP change is needed.
 
-### Step 7: Refresh ARC:product-context
-
-If `CLAUDE.md` exists:
-
-1. Read `skills/arc-wave/references/bootstrap-protocol.md` for the injection algorithm.
-2. Recount backlog statuses from the BACKLOG summary table (captured, shaped, spec-ready counts).
-3. Derive the shipped count from the wave archive: count `### {Title}` subsections across all `docs/skill/arc/waves/*.md` files. If the directory is absent or empty, the shipped count is `0`.
-4. Apply the injection algorithm to update the `**Backlog:**` line inside the `ARC:product-context` managed section using the combined counts.
-5. If the wave was just completed in Step 6 (all ideas now archived), also update the `**Current Wave:**` line:
-   - Read `docs/ROADMAP.md` to find the next active or planned wave.
-   - If another wave exists with `Planned` or `Active` status, set `**Current Wave:**` to that wave's name.
-   - If no such wave exists, set `**Current Wave:**` to `No active wave`.
-6. Validate the injection: confirm the ARC section is not nested inside any TEMPER: or MM: block.
-
-If `CLAUDE.md` does not exist, skip this step silently.
-
-### Step 8: Confirm
+### Step 7: Confirm
 
 **Single-idea flow:**
 
@@ -398,10 +378,11 @@ Otherwise:
 Wave '{wave-name}': In Progress.
 ```
 
+Run `/arc-sync` if the project's CLAUDE.md product context block needs creation or refresh.
+
 ## References
 
 - `skills/arc-ship/references/ship-criteria.md` — Proof verification rules, eligible statuses, BACKLOG fields added during shipping
 - `references/wave-archive.md` — Wave archive schema, file naming, slug derivation, idempotency rules
 - `references/idea-lifecycle.md` — Shipped stage definition, entry/exit criteria
-- `skills/arc-wave/references/bootstrap-protocol.md` — ARC:product-context injection algorithm
 - `references/cross-plugin-contract.md` — cw-validate artifact locations and read-only access rules
