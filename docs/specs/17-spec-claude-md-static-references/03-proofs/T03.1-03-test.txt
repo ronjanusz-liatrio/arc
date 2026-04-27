@@ -1,0 +1,33 @@
+Type: test
+Description: The Critical Constraints list in skills/arc-sync/SKILL.md includes a new ALWAYS rule designating /arc-sync as the sole writer of the ARC:product-context block in CLAUDE.md, and explicitly excludes /arc-wave and /arc-ship as writers.
+Command: grep -nE "^- \*\*ALWAYS\*\* be the sole writer of the ARC:product-context block in CLAUDE.md" skills/arc-sync/SKILL.md
+Expected: Exactly one match with the literal constraint text including the "/arc-wave and /arc-ship do not write this block" clause.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output ---
+61:- **ALWAYS** be the sole writer of the ARC:product-context block in CLAUDE.md — /arc-wave and /arc-ship do not write this block
+
+--- Surrounding Critical Constraints (lines 50-61) ---
+## Critical Constraints
+
+- **NEVER** modify content outside `ARC:` managed sections in an existing README
+- **NEVER** modify `TEMPER:` or `MM:` managed sections
+- **NEVER** expose internal priority metadata (P0/P1/P2/P3) in the README
+- **NEVER** write to README.md without user approval via AskUserQuestion
+- **NEVER** run without a substantive VISION.md (>200 non-whitespace characters)
+- **ALWAYS** begin your response with `**ARC-SYNC**`
+- **ALWAYS** run trust-signal validation against the output before presenting for approval
+- **ALWAYS** guarantee all evaluable trust signals pass on scaffold output
+- **ALWAYS** use "Not yet defined" placeholders only when the source artifact is absent
+- **ALWAYS** be the sole writer of the ARC:product-context block in CLAUDE.md — /arc-wave and /arc-ship do not write this block
+
+Match Count: 1
+Exit Status: 0
+
+--- Verification ---
+- The new constraint is appended to the existing Critical Constraints list (last bullet, line 61).
+- Constraint follows the established formatting convention (bold `**ALWAYS**` prefix, lowercase imperative).
+- Both excluded skills (/arc-wave and /arc-ship) are named explicitly per the task description.
+- Constraint cross-references the bootstrap-protocol's writer-attribution sentence introduced in T01.3.
+
+Status: PASS

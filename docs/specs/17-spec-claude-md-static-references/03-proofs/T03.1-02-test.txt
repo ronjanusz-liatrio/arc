@@ -1,0 +1,31 @@
+Type: test
+Description: skills/arc-sync/SKILL.md describes the Step 14 decision logic for all three CLAUDE.md states (absent, existing block with markers, existing CLAUDE.md without markers) and labels the action class with one of injected, migrated, refreshed, skipped (no CLAUDE.md).
+Command (A): grep -nE "skipped \(no CLAUDE.md\)|injected|migrated|refreshed" skills/arc-sync/SKILL.md
+Command (B): grep -nE "^\| \*\*Absent\*\*|^\| \*\*Existing block\*\*|^\| \*\*Missing markers\*\*" skills/arc-sync/SKILL.md
+Expected: (A) returns matches in Step 14 enumerating all four action labels in the diagnostic line and decision-table rows; (B) returns the three table rows that classify CLAUDE.md state.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output: grep -nE "skipped \(no CLAUDE.md\)|injected|migrated|refreshed" skills/arc-sync/SKILL.md ---
+589:3. Run **Step 14: Manage CLAUDE.md ARC:product-context Block** to inject, migrate, refresh, or skip the block according to the bootstrap-protocol decision logic. Capture the action class (`injected`, `migrated`, `refreshed`, or `skipped (no CLAUDE.md)`) for the summary line below.
+598:CLAUDE.md product-context: {injected|migrated|refreshed|skipped (no CLAUDE.md)}
+865:After README writes complete, run **Step 14: Manage CLAUDE.md ARC:product-context Block** to inject, migrate, refresh, or skip the block according to the bootstrap-protocol decision logic. Capture the action class (`injected`, `migrated`, `refreshed`, or `skipped (no CLAUDE.md)`) for the summary line below.
+875:CLAUDE.md product-context: {injected|migrated|refreshed|skipped (no CLAUDE.md)}
+894:| **Absent** | `CLAUDE.md` does not exist at the project root | Skip silently; do **not** create the file. Record action = `skipped (no CLAUDE.md)`. |
+895:| **Existing block** | `CLAUDE.md` exists and contains `<!--# BEGIN ARC:product-context -->` | Replace content between BEGIN/END markers with the static template per bootstrap-protocol. Record action = `migrated` if the prior content matched legacy live-block patterns, otherwise `refreshed`. |
+896:| **Missing markers** | `CLAUDE.md` exists but contains no `<!--# BEGIN ARC:product-context -->` marker | Insert the static block at the priority-1 position per bootstrap-protocol (before first TEMPER: marker → before Snyk → at EOF). Record action = `injected`. |
+905:2. If the prior content contains any of the legacy live-block field names — `**Backlog:**`, `**Current Wave:**`, `**Phase:**`, `**Primary Personas:**`, or `**Vision:**` — record action = `migrated`.
+906:3. Otherwise (the block is already in the static format, blank, or contains hand-edited text without the legacy fields), record action = `refreshed`.
+931:CLAUDE.md product-context: {injected|migrated|refreshed|skipped (no CLAUDE.md)}
+938:- **Never** create CLAUDE.md if it does not exist (the `skipped (no CLAUDE.md)` action is correct).
+
+--- Output: grep -nE "^\| \*\*Absent\*\*|^\| \*\*Existing block\*\*|^\| \*\*Missing markers\*\*" skills/arc-sync/SKILL.md ---
+894:| **Absent** | `CLAUDE.md` does not exist at the project root | Skip silently; do **not** create the file. Record action = `skipped (no CLAUDE.md)`. |
+895:| **Existing block** | `CLAUDE.md` exists and contains `<!--# BEGIN ARC:product-context -->` | Replace content between BEGIN/END markers with the static template per bootstrap-protocol. Record action = `migrated` if the prior content matched legacy live-block patterns, otherwise `refreshed`. |
+896:| **Missing markers** | `CLAUDE.md` exists but contains no `<!--# BEGIN ARC:product-context -->` marker | Insert the static block at the priority-1 position per bootstrap-protocol (before first TEMPER: marker → before Snyk → at EOF). Record action = `injected`. |
+
+--- Verification ---
+- All four action labels (`injected`, `migrated`, `refreshed`, `skipped (no CLAUDE.md)`) appear in the diagnostic line, the Step 14 decision-table, and the migrated-vs-refreshed rule (14b).
+- The decision table has exactly three rows — one for each state (Absent, Existing block, Missing markers) — each with the prescribed action.
+- The summary diagnostic line appears in both Step 6 (scaffold mode, line 598) and Step 13d (update mode, line 875), and again in the Step 14d enumeration (line 931).
+
+Status: PASS

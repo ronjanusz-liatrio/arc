@@ -1,0 +1,27 @@
+Type: file
+Description: The static template literal from bootstrap-protocol.md is NOT duplicated inside skills/arc-sync/SKILL.md — only a reference link is present. The Step 14 body refers readers to bootstrap-protocol.md as the canonical source for the template bytes.
+Command (A): grep -cE "^## Product Context$" skills/arc-sync/SKILL.md
+Command (B): grep -E "current ideas with their lifecycle status|active and planned waves with goals and targets|product vision, north-star problem|primary personas and their jobs-to-be-done" skills/arc-sync/SKILL.md
+Command (C): grep -E "^- \[docs/(BACKLOG|ROADMAP|VISION|CUSTOMER)\.md\]\(docs/(BACKLOG|ROADMAP|VISION|CUSTOMER)\.md\)" skills/arc-sync/SKILL.md
+Expected: (A) returns 0 (no `## Product Context` H2 in SKILL.md); (B) returns 0 (none of the bullet hint phrases from the static template appear in SKILL.md); (C) returns 0 (no static-template bullet rows in SKILL.md).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output: grep -c "^## Product Context$" ---
+0
+Exit Status: 1
+
+--- Output: grep "current ideas... | active and planned... | north-star... | jobs-to-be-done" ---
+(no matches)
+Exit Status: 1
+
+--- Output: grep "^- [docs/X.md](docs/X.md)" ---
+(no matches)
+Exit Status: 1
+
+--- Verification ---
+- The "## Product Context" H2 heading from the static template does not appear inside skills/arc-sync/SKILL.md (zero matches). It exists only in skills/arc-wave/references/bootstrap-protocol.md as required.
+- None of the four bullet hint phrases ("current ideas with their lifecycle status", "active and planned waves with goals and targets", "product vision, north-star problem", "primary personas and their jobs-to-be-done") appear in SKILL.md. SKILL.md describes the contract abstractly ("intro sentence + four artifact-link bullets") and points readers to bootstrap-protocol.md for the literal bytes.
+- No standalone bulleted artifact links (e.g., `- [docs/BACKLOG.md](docs/BACKLOG.md) — ...`) appear in SKILL.md. The artifact links inside SKILL.md (e.g., line 894-896 inside the Step 14 decision table, and the References list at the bottom) are inline within prose or table cells, not free-standing bullets matching the template structure.
+- The bootstrap-protocol document remains the single source of truth for the template bytes — confirmed by the explicit instruction at line 886: "Do not duplicate the template literal here — the bootstrap-protocol document is authoritative".
+
+Status: PASS

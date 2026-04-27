@@ -1,0 +1,25 @@
+Type: test
+Description: skills/arc-sync/SKILL.md contains a Step 14 heading describing CLAUDE.md product-context management, and that step references the bootstrap-protocol document for the static template.
+Command (A): grep -nE "^### Step 14: Manage CLAUDE.md ARC:product-context Block" skills/arc-sync/SKILL.md
+Command (B): grep -n "skills/arc-wave/references/bootstrap-protocol.md" skills/arc-sync/SKILL.md
+Expected: (A) returns exactly one match with the literal heading; (B) returns at least one match inside the Step 14 region pointing readers to the bootstrap-protocol for the canonical template.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output: grep "^### Step 14: Manage CLAUDE.md ARC:product-context Block" ---
+880:### Step 14: Manage CLAUDE.md ARC:product-context Block
+Exit Status: 0
+Match Count: 1
+
+--- Output: grep "skills/arc-wave/references/bootstrap-protocol.md" ---
+886:Read `skills/arc-wave/references/bootstrap-protocol.md` for the canonical static template content (BEGIN/END markers, intro sentence, four artifact-link bullets) and the insertion algorithm. Do not duplicate the template literal here — the bootstrap-protocol document is authoritative and must remain the single source of truth for the block bytes.
+912:Apply the algorithm exactly as defined in `skills/arc-wave/references/bootstrap-protocol.md`:
+948:- [`skills/arc-wave/references/bootstrap-protocol.md`](../arc-wave/references/bootstrap-protocol.md) — Marker format and coexistence rules for ARC: namespace in project files
+Exit Status: 0
+Match Count: 3
+
+--- Verification ---
+- Step 14 heading appears exactly once with the expected literal name "Manage CLAUDE.md ARC:product-context Block".
+- The Step 14 body (lines 880-941) references the bootstrap-protocol three times: once for canonical template content (line 886), once for the insertion algorithm (line 912), and once in the References list (line 948).
+- The instruction "Do not duplicate the template literal here" is present (line 886), keeping the bootstrap-protocol as the single source of truth.
+
+Status: PASS

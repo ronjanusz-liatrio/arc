@@ -40,12 +40,12 @@ Always begin your response with: **ARC-SYNC**
 
 ## Overview
 
-You keep `README.md` in sync with Arc product-direction artifacts (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) and the wave archive (`docs/skill/arc/waves/`). The skill also runs a migration sweep on each invocation to move shipped ideas and completed waves from BACKLOG/ROADMAP into the wave archive. The skill operates in two modes:
+You keep `README.md` in sync with Arc product-direction artifacts (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) and the wave archive (`docs/skill/arc/waves/`). The skill also runs a migration sweep on each invocation to move shipped ideas and completed waves from BACKLOG/ROADMAP into the wave archive. The skill is additionally the sole writer of the `ARC:product-context` managed section in the project's `CLAUDE.md` — `/arc-wave` and `/arc-ship` no longer touch CLAUDE.md, so every greenfield injection, legacy-block migration, and idempotent refresh of that block flows through `/arc-sync`. The skill operates in two modes:
 
 - **Scaffold mode** — generates a full README from scratch for projects that don't have one, establishing `ARC:` managed section markers for future updates
 - **Update mode** — selectively refreshes `ARC:` managed sections in an existing README, syncing features, roadmap, audience, and diagrams with current artifact state
 
-Managed sections use the marker format `<!--# BEGIN ARC:{section-name} -->` / `<!--# END ARC:{section-name} -->`. Content outside managed sections is never touched.
+Managed sections use the marker format `<!--# BEGIN ARC:{section-name} -->` / `<!--# END ARC:{section-name} -->`. Content outside managed sections is never touched. The CLAUDE.md product-context step (Step 14) runs after the README sync writes complete in both modes, so the same set of artifacts that drives README sync also drives the diagnostic line for the CLAUDE.md block.
 
 ## Critical Constraints
 
@@ -58,6 +58,7 @@ Managed sections use the marker format `<!--# BEGIN ARC:{section-name} -->` / `<
 - **ALWAYS** run trust-signal validation against the output before presenting for approval
 - **ALWAYS** guarantee all evaluable trust signals pass on scaffold output
 - **ALWAYS** use "Not yet defined" placeholders only when the source artifact is absent
+- **ALWAYS** be the sole writer of the ARC:product-context block in CLAUDE.md — /arc-wave and /arc-ship do not write this block
 
 ## Process
 
@@ -585,7 +586,8 @@ Write the approved README.md to the project root:
 
 1. Write the scaffolded content to `README.md` using the Write tool.
 2. Confirm the write by reading back the file and verifying the `ARC:` markers are present.
-3. Report a summary:
+3. Run **Step 14: Manage CLAUDE.md ARC:product-context Block** to inject, migrate, refresh, or skip the block according to the bootstrap-protocol decision logic. Capture the action class (`injected`, `migrated`, `refreshed`, or `skipped (no CLAUDE.md)`) for the summary line below.
+4. Report a summary:
 
 ```
 README.md scaffolded successfully.
@@ -593,6 +595,7 @@ README.md scaffolded successfully.
 Managed sections: {count} ARC: sections created
 Total lines: {line_count}
 Trust signals: {N}/{M} evaluable passing
+CLAUDE.md product-context: {injected|migrated|refreshed|skipped (no CLAUDE.md)}
 
 Run /arc-sync again after shipping features or planning waves to update managed sections.
 ```
@@ -859,6 +862,8 @@ Read back `README.md` and verify:
 
 **13d. Report summary**
 
+After README writes complete, run **Step 14: Manage CLAUDE.md ARC:product-context Block** to inject, migrate, refresh, or skip the block according to the bootstrap-protocol decision logic. Capture the action class (`injected`, `migrated`, `refreshed`, or `skipped (no CLAUDE.md)`) for the summary line below.
+
 ```
 README.md updated successfully.
 
@@ -867,9 +872,73 @@ Diagrams updated: {readme_diagram_count} (README) + {docs_diagram_count} (docs/)
 Line count delta: {delta} ({before_total} → {after_total})
 Trust signals: {N}/{M} evaluable passing
 Regressions: {count}
+CLAUDE.md product-context: {injected|migrated|refreshed|skipped (no CLAUDE.md)}
 
 Run /arc-sync again after shipping features or planning waves to keep managed sections current.
 ```
+
+### Step 14: Manage CLAUDE.md ARC:product-context Block
+
+This step runs unconditionally on every `/arc-sync` invocation, after the README sync writes complete (Step 6 in scaffold mode, Step 13 in update mode). It does **not** run for the injection-mode early-exit branch in Step 2a if the user cancels marker injection — in that case, no `/arc-sync` write occurred, so this step is also skipped.
+
+`/arc-sync` is the **sole writer** of the `ARC:product-context` block. `/arc-wave` and `/arc-ship` no longer write this block; any project relying on that managed section refresh now depends on `/arc-sync` running.
+
+Read `skills/arc-wave/references/bootstrap-protocol.md` for the canonical static template content (BEGIN/END markers, intro sentence, four artifact-link bullets) and the insertion algorithm. Do not duplicate the template literal here — the bootstrap-protocol document is authoritative and must remain the single source of truth for the block bytes.
+
+#### 14a. Detect CLAUDE.md State
+
+Check the project root for `CLAUDE.md` and classify it into one of three states:
+
+| State | Detection Rule | Action |
+|-------|----------------|--------|
+| **Absent** | `CLAUDE.md` does not exist at the project root | Skip silently; do **not** create the file. Record action = `skipped (no CLAUDE.md)`. |
+| **Existing block** | `CLAUDE.md` exists and contains `<!--# BEGIN ARC:product-context -->` | Replace content between BEGIN/END markers with the static template per bootstrap-protocol. Record action = `migrated` if the prior content matched legacy live-block patterns, otherwise `refreshed`. |
+| **Missing markers** | `CLAUDE.md` exists but contains no `<!--# BEGIN ARC:product-context -->` marker | Insert the static block at the priority-1 position per bootstrap-protocol (before first TEMPER: marker → before Snyk → at EOF). Record action = `injected`. |
+
+#### 14b. Distinguish `migrated` from `refreshed`
+
+When `CLAUDE.md` already contains the markers, both legacy live blocks and prior static blocks take the same code path: overwrite the marker-bounded region with the bootstrap-protocol template bytes. The action label, however, differs so the summary diagnostic can communicate whether the run reclaimed a stale live block versus simply re-applying an already-current template.
+
+Decision rule for the label only (the bytes written are identical either way):
+
+1. Read the current content between `<!--# BEGIN ARC:product-context -->` and `<!--# END ARC:product-context -->` (exclusive of the markers themselves).
+2. If the prior content contains any of the legacy live-block field names — `**Backlog:**`, `**Current Wave:**`, `**Phase:**`, `**Primary Personas:**`, or `**Vision:**` — record action = `migrated`.
+3. Otherwise (the block is already in the static format, blank, or contains hand-edited text without the legacy fields), record action = `refreshed`.
+
+Both branches write identical bytes; the bootstrap-protocol guarantees byte-idempotency on the second run.
+
+#### 14c. Apply the Bootstrap-Protocol Insertion Algorithm
+
+Apply the algorithm exactly as defined in `skills/arc-wave/references/bootstrap-protocol.md`:
+
+1. **Replace path (existing markers):** Use the Edit tool to replace content between `<!--# BEGIN ARC:product-context -->` and `<!--# END ARC:product-context -->` with the static template body. Do not move the marker positions.
+2. **Insert path (no markers):** Use the Edit tool (or Write for fully new content blocks) to insert the full static block — markers and content — at the first matching priority position:
+   - Before the first `<!--# BEGIN TEMPER:... -->` marker, if any TEMPER markers exist (one blank line separator).
+   - Before the Snyk block, if a Snyk-related section exists (one blank line separator).
+   - At EOF (one blank line separator).
+3. **Skip path (no CLAUDE.md):** No file writes. Do not create CLAUDE.md.
+
+After any write, verify:
+- Marker pairs are properly matched.
+- The new section is not nested inside any other namespace's managed section.
+- TEMPER: and MM: managed sections elsewhere in the file are byte-unchanged.
+
+#### 14d. Emit Diagnostic Line
+
+Add exactly one line to the `/arc-sync` summary output (Step 6 for scaffold mode, Step 13d for update mode) reporting the action taken:
+
+```
+CLAUDE.md product-context: {injected|migrated|refreshed|skipped (no CLAUDE.md)}
+```
+
+The reported value must be one of the four enumerated strings. The diagnostic line must appear in the summary regardless of which mode invoked Step 14.
+
+#### 14e. Constraints
+
+- **Never** create CLAUDE.md if it does not exist (the `skipped (no CLAUDE.md)` action is correct).
+- **Never** modify content inside `TEMPER:` or `MM:` managed sections, even when adjacent to the ARC:product-context block.
+- **Never** move existing `<!--# BEGIN ARC:product-context -->` / `<!--# END ARC:product-context -->` marker positions on a refresh or migration; only the bytes between them change.
+- **Never** duplicate the static template inline in this SKILL.md — the bootstrap-protocol document owns the canonical bytes.
 
 ## References
 

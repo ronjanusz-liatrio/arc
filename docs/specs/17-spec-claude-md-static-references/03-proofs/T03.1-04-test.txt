@@ -1,0 +1,25 @@
+Type: test
+Description: The Overview paragraph in skills/arc-sync/SKILL.md mentions CLAUDE.md product-context management as a /arc-sync responsibility, and the summary diagnostic line appears in both Step 6 (scaffold mode) and Step 13d (update mode).
+Command (A): grep -nE "sole writer of the .ARC:product-context. managed section in the project's .CLAUDE.md." skills/arc-sync/SKILL.md
+Command (B): awk '/^### Step 6: Write to Disk/,/^### Step 7:/' skills/arc-sync/SKILL.md | grep -n "CLAUDE.md product-context: {injected"
+Command (C): awk '/\*\*13d\. Report summary\*\*/,/^### Step 14:/' skills/arc-sync/SKILL.md | grep -n "CLAUDE.md product-context: {injected"
+Expected: (A) returns one match in the Overview paragraph naming /arc-sync as sole writer; (B) returns the diagnostic line within the Step 6 block; (C) returns the diagnostic line within the Step 13d block.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output: grep "sole writer ... ARC:product-context ... CLAUDE.md" ---
+43:You keep `README.md` in sync with Arc product-direction artifacts (VISION.md, CUSTOMER.md, BACKLOG.md, ROADMAP.md) and the wave archive (`docs/skill/arc/waves/`). The skill also runs a migration sweep on each invocation to move shipped ideas and completed waves from BACKLOG/ROADMAP into the wave archive. The skill is additionally the sole writer of the `ARC:product-context` managed section in the project's `CLAUDE.md` — `/arc-wave` and `/arc-ship` no longer touch CLAUDE.md, so every greenfield injection, legacy-block migration, and idempotent refresh of that block flows through `/arc-sync`. The skill operates in two modes:
+
+--- Output: Step 6 diagnostic line ---
+16:CLAUDE.md product-context: {injected|migrated|refreshed|skipped (no CLAUDE.md)}
+
+--- Output: Step 13d diagnostic line ---
+13:CLAUDE.md product-context: {injected|migrated|refreshed|skipped (no CLAUDE.md)}
+
+--- Verification ---
+- The Overview paragraph (line 43) is updated to call out CLAUDE.md product-context management as part of the /arc-sync responsibility set.
+- The Overview also closes by noting Step 14 runs after README sync writes complete in both modes (matches the Step 6/13d invocation pattern below).
+- Step 6 (scaffold mode) summary block now includes the CLAUDE.md product-context diagnostic line as the second-to-last line of the summary.
+- Step 13d (update mode) summary block now includes the same diagnostic line.
+- Both summary blocks use identical placeholder syntax `{injected|migrated|refreshed|skipped (no CLAUDE.md)}` for consistency.
+
+Status: PASS
