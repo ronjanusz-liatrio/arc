@@ -1,0 +1,11 @@
+Type: test
+Description: Spec proof artifact — grep for legacy live-field labels must return zero matches
+Command: grep -nE 'Backlog:|Current Wave:|Phase:|Primary Personas:|Vision:' skills/arc-wave/references/bootstrap-protocol.md
+Expected: zero matches (exit code 1)
+Timestamp: 2026-04-27T18:24:26Z
+
+--- BEGIN OUTPUT ---
+--- END OUTPUT ---
+Exit code: 1
+
+Status: PASS

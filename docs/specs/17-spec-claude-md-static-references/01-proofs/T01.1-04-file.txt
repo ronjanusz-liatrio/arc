@@ -1,0 +1,15 @@
+Type: file
+Description: Verify ### Markers and ## Insertion Algorithm sections are preserved unchanged
+Command: grep -nE '^### Markers$|^## Insertion Algorithm$|^### 1\. Check for Existing Section$|^### 2\. Insertion Priority$|^### 3\. Validate Insertion$' skills/arc-wave/references/bootstrap-protocol.md
+Expected: 5 matches — all preserved structural section headings
+Timestamp: 2026-04-27T18:24:34Z
+
+--- BEGIN OUTPUT ---
+7:### Markers
+37:## Insertion Algorithm
+41:### 1. Check for Existing Section
+49:### 2. Insertion Priority
+57:### 3. Validate Insertion
+--- END OUTPUT ---
+
+Status: PASS

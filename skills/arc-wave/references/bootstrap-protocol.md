@@ -19,19 +19,20 @@ Rules for injecting and maintaining `ARC:` managed sections in the project CLAUD
 
 ### ARC:product-context Content
 
+The block content is **static** — a fixed navigation aid pointing to the live source artifacts. It contains no counts, statuses, names, phase, or vision summary. The exact bytes between the BEGIN/END markers are:
+
 ```markdown
 <!--# BEGIN ARC:product-context -->
 ## Product Context
 
-- **Vision:** {one-line vision summary from docs/VISION.md, or "Not yet defined"}
-- **Phase:** {Temper phase from docs/skill/temper/management-report.md, or omit if unavailable}
-- **Current Wave:** {wave name from docs/ROADMAP.md, or "No active wave"}
-- **Primary Personas:** {comma-separated persona names from docs/CUSTOMER.md, or "Not yet defined"}
-- **Backlog:** {N} captured, {N} shaped, {N} spec-ready, {N} shipped
+For live product status, see the source artifacts. This section intentionally contains no counts, statuses, or names — those drift; the linked files are authoritative.
+
+- [docs/BACKLOG.md](docs/BACKLOG.md) — current ideas with their lifecycle status (captured, shaped, spec-ready, shipped). Read before suggesting new ideas or proposing scope changes.
+- [docs/ROADMAP.md](docs/ROADMAP.md) — active and planned waves with goals and targets. Read when deciding what to work on next or to understand the current delivery cycle.
+- [docs/VISION.md](docs/VISION.md) — product vision, north-star problem, and strategic boundaries. Read when shaping new ideas or evaluating fit.
+- [docs/CUSTOMER.md](docs/CUSTOMER.md) — primary personas and their jobs-to-be-done. Read when scoping a feature or assessing customer fit.
 <!--# END ARC:product-context -->
 ```
-
-> **Note:** The captured, shaped, and spec-ready counts are derived from `docs/BACKLOG.md`. The shipped count is derived from counting `### {Title}` subsections across all `docs/skill/arc/waves/*.md` archive files (see `references/wave-archive.md`).
 
 ## Insertion Algorithm
 

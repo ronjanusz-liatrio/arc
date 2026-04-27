@@ -1,0 +1,11 @@
+Type: file
+Description: Verify the explanatory '> **Note:**' paragraph about derived counts has been deleted
+Command: grep -nE 'captured, shaped, and spec-ready counts are derived|shipped count is derived' skills/arc-wave/references/bootstrap-protocol.md
+Expected: zero matches (paragraph removed)
+Timestamp: 2026-04-27T18:24:29Z
+
+--- BEGIN OUTPUT ---
+--- END OUTPUT ---
+Exit code: 1
+
+Status: PASS
