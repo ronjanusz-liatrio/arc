@@ -32,10 +32,12 @@ Every Arc skill SKILL.md file opens with a context marker in the format `**ARC-{
 <!--# BEGIN ARC:product-context -->
 ## Product Context
 
-- **Vision:** Lightweight product direction for spec-driven development — inspired by Linear's fast capture and clean triage, arc is the upstream companion to temper.
-- **Current Wave:** No active wave
-- **Primary Personas:** Product Owner, Developer, Tech Lead, Project Stakeholder, Reader, New Arc User
-- **Backlog:** 20 captured, 0 shaped, 0 spec-ready, 11 shipped
+For live product status, see the source artifacts. This section intentionally contains no counts, statuses, or names — those drift; the linked files are authoritative.
+
+- [docs/BACKLOG.md](docs/BACKLOG.md) — current ideas with their lifecycle status (captured, shaped, spec-ready, shipped). Read before suggesting new ideas or proposing scope changes.
+- [docs/ROADMAP.md](docs/ROADMAP.md) — active and planned waves with goals and targets. Read when deciding what to work on next or to understand the current delivery cycle.
+- [docs/VISION.md](docs/VISION.md) — product vision, north-star problem, and strategic boundaries. Read when shaping new ideas or evaluating fit.
+- [docs/CUSTOMER.md](docs/CUSTOMER.md) — primary personas and their jobs-to-be-done. Read when scoping a feature or assessing customer fit.
 <!--# END ARC:product-context -->
 
 <!--# BEGIN SKILLZ:installed-skills -->

@@ -1,0 +1,18 @@
+Type: cli
+Command: git show HEAD:CLAUDE.md | grep -n '<!--# BEGIN ARC:product-context -->' && grep -n '<!--# BEGIN ARC:product-context -->' /home/ron.linux/arc/CLAUDE.md
+Expected: BEGIN marker on the same line number (32) before and after migration; preceding line unchanged
+Timestamp: 2026-04-27T12:03:30Z
+
+--- Output ---
+Pre-migration BEGIN marker line number:
+32:<!--# BEGIN ARC:product-context -->
+
+Post-migration BEGIN marker line number:
+32:<!--# BEGIN ARC:product-context -->
+
+Pre-migration line preceding ARC block (line 31): (blank)
+Post-migration line preceding ARC block (line 31): (blank)
+
+--- Result ---
+Status: PASS
+Notes: Confirms feature scenario "Block is not relocated within the file during migration". The BEGIN marker stayed at line 32; the line immediately preceding it (line 31, a blank line after the Skill Context Markers section) is unchanged. Order of top-level sections in CLAUDE.md is unchanged (What This Is, Development, Structure, Skill Orchestration, Skill Context Markers, Product Context, Installed Skills).

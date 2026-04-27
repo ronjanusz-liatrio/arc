@@ -1,0 +1,16 @@
+Type: cli
+Command: (1) diff <(git show HEAD:CLAUDE.md | sed -n '1,31p') <(sed -n '1,31p' /home/ron.linux/arc/CLAUDE.md)
+         (2) diff <(git show HEAD:CLAUDE.md | awk '/<!--# BEGIN SKILLZ:installed-skills -->/,/<!--# END SKILLZ:installed-skills -->/') <(awk '/<!--# BEGIN SKILLZ:installed-skills -->/,/<!--# END SKILLZ:installed-skills -->/' /home/ron.linux/arc/CLAUDE.md)
+Expected: zero differences for both — content above the ARC block (lines 1-31) and the SKILLZ:installed-skills block must be byte-identical to the pre-migration HEAD version
+Timestamp: 2026-04-27T12:03:00Z
+
+--- Output ---
+--- Lines 1-31 (above ARC block): pre vs post ---
+ABOVE: byte-identical
+
+--- SKILLZ:installed-skills block: pre vs post ---
+SKILLZ: byte-identical
+
+--- Result ---
+Status: PASS
+Notes: Confirms feature scenario "Non-ARC content in CLAUDE.md is preserved byte-for-byte". The unmanaged narrative above the ARC block (lines 1-31) and the SKILLZ:installed-skills block both match HEAD exactly. Migration touched only bytes inside the ARC marker boundaries.

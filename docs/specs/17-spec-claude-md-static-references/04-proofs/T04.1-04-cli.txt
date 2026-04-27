@@ -1,0 +1,12 @@
+Type: cli
+Command: diff <(awk '/<!--# BEGIN ARC:product-context -->/,/<!--# END ARC:product-context -->/' /home/ron.linux/arc/CLAUDE.md) <(awk '/^```markdown$/{flag=1; next} flag && /^```$/{flag=0; exit} flag' /home/ron.linux/arc/skills/arc-wave/references/bootstrap-protocol.md)
+Expected: zero differences (CLAUDE.md ARC block is byte-identical to the canonical template fenced block in bootstrap-protocol.md)
+Timestamp: 2026-04-27T12:02:30Z
+
+--- Output ---
+--- diff CLAUDE.md ARC block vs canonical template ---
+BYTE-IDENTICAL
+
+--- Result ---
+Status: PASS
+Notes: The migrated ARC:product-context block in /home/ron.linux/arc/CLAUDE.md (markers + content, inclusive) matches the canonical static-template fenced markdown block in skills/arc-wave/references/bootstrap-protocol.md byte-for-byte. This proves the migration produced the expected static template.

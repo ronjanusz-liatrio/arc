@@ -1,0 +1,11 @@
+Type: cli
+Command: awk '/<!--# BEGIN ARC:product-context -->/{flag=1; next} /<!--# END ARC:product-context -->/{flag=0} flag' /home/ron.linux/arc/CLAUDE.md | grep -nE '\*\*Backlog:\*\*|\*\*Current Wave:\*\*|\*\*Phase:\*\*|\*\*Primary Personas:\*\*|\*\*Vision:\*\*'
+Expected: No matches (live status fields removed from migrated block)
+Timestamp: 2026-04-27T12:01:30Z
+
+--- Output ---
+NO MATCHES (expected)
+
+--- Result ---
+Status: PASS
+Notes: Confirms spec proof artifact "between the ARC markers contains no **Backlog:**, **Current Wave:**, **Phase:**, **Primary Personas:**, or **Vision:** lines". The legacy live-counts block has been fully replaced.

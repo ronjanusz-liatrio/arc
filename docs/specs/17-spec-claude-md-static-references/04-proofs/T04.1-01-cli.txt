@@ -1,0 +1,12 @@
+Type: cli
+Command: grep -c '<!--# BEGIN ARC:product-context -->' CLAUDE.md && grep -c '<!--# END ARC:product-context -->' CLAUDE.md
+Expected: Both counts equal 1
+Timestamp: 2026-04-27T12:01:00Z
+
+--- Output ---
+BEGIN markers: 1
+END markers: 1
+
+--- Result ---
+Status: PASS
+Notes: Exactly one BEGIN and one END marker present in /home/ron.linux/arc/CLAUDE.md, satisfying the dogfood-migration scenario "the resulting /home/ron.linux/arc/CLAUDE.md contains exactly one '<!--# BEGIN ARC:product-context -->' marker".
