@@ -1,0 +1,14 @@
+Type: file (link integrity check)
+Command: resolve relative link `../../arc-wave/references/bootstrap-protocol.md` from skills/arc-sync/references/
+Expected: Target file exists and the relative path used in the new scope note resolves
+Timestamp: 2026-04-27T18:51:53Z
+
+--- Output ---
+RESOLVED: ../../arc-wave/references/bootstrap-protocol.md
+-rw-rw-r-- 1 ron ron 5577 Apr 27 11:31 /home/ron.linux/arc/skills/arc-wave/references/bootstrap-protocol.md
+
+--- Assertion ---
+- The relative path used in the markdown link from readme-mapping.md resolves to an existing file
+- Target file size 5577 bytes (non-empty), confirming valid cross-reference
+
+Status: PASS

@@ -1,0 +1,15 @@
+Type: test (grep assertion)
+Command: grep -n "product-context" skills/arc-sync/references/readme-mapping.md
+Expected: At least one match referencing ARC:product-context in CLAUDE.md and crediting /arc-sync as sole writer
+Timestamp: 2026-04-27T18:51:53Z
+
+--- Output ---
+7:> **Scope note:** This document covers README sections only. `/arc-sync` is also the sole writer of the `ARC:product-context` managed block in the project `CLAUDE.md`, but the content schema and write algorithm for that block are defined in [`skills/arc-wave/references/bootstrap-protocol.md`](../../arc-wave/references/bootstrap-protocol.md) — not duplicated here.
+324:- `skills/arc-wave/references/bootstrap-protocol.md` — Marker format and coexistence rules (ARC: namespace), and the canonical schema and write algorithm for the `ARC:product-context` block in `CLAUDE.md`. `/arc-sync` is the sole writer of that block; this document does not redefine its content here.
+
+--- Assertion ---
+- Two distinct mentions found: one in introduction (line 7), one in Cross-References (line 324)
+- Both mentions credit /arc-sync as sole writer of ARC:product-context in CLAUDE.md
+- Both mentions cross-reference bootstrap-protocol.md (no duplication of schema)
+
+Status: PASS

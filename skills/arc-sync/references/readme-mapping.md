@@ -4,6 +4,8 @@
 
 Both scaffold mode and update mode follow these rules identically.
 
+> **Scope note:** This document covers README sections only. `/arc-sync` is also the sole writer of the `ARC:product-context` managed block in the project `CLAUDE.md`, but the content schema and write algorithm for that block are defined in [`skills/arc-wave/references/bootstrap-protocol.md`](../../arc-wave/references/bootstrap-protocol.md) — not duplicated here.
+
 ---
 
 ## Section-to-Artifact Map
@@ -319,7 +321,7 @@ After insertion, verify:
 
 - `skills/arc-sync/references/trust-signals.md` — Signal definitions that validate the output of these mapping rules
 - `skills/arc-sync/references/readme-quality-rules.md` — Quality gates for README length, structure, and readability
-- `skills/arc-wave/references/bootstrap-protocol.md` — Marker format and coexistence rules (ARC: namespace in CLAUDE.md)
+- `skills/arc-wave/references/bootstrap-protocol.md` — Marker format and coexistence rules (ARC: namespace), and the canonical schema and write algorithm for the `ARC:product-context` block in `CLAUDE.md`. `/arc-sync` is the sole writer of that block; this document does not redefine its content here.
 - `references/idea-lifecycle.md` — Status values used by ARC:features and ARC:lifecycle-diagram extraction
 - `templates/VISION.tmpl.md` — VISION.md structure that ARC:overview extraction depends on
 - `templates/CUSTOMER.tmpl.md` — CUSTOMER.md structure that ARC:audience extraction depends on

@@ -1,0 +1,23 @@
+Type: test (Gherkin scenario verification)
+Source: docs/specs/17-spec-claude-md-static-references/implement-static-block-management-in-arc-sync.feature lines 67-71
+Scenario: readme-mapping reference cross-links to the new responsibility
+Timestamp: 2026-04-27T18:51:53Z
+
+--- Scenario Assertions ---
+
+Given: a developer opens skills/arc-sync/references/readme-mapping.md
+  -> File exists at expected path: PASS
+
+When: the developer reads the cross-references section
+  -> File contains a "## Cross-References" section: PASS (line 320)
+
+Then: the document notes that /arc-sync also manages the ARC:product-context section in CLAUDE.md
+  -> grep for "/arc-sync.*ARC:product-context.*CLAUDE" or "ARC:product-context.*CLAUDE.md"
+  -> Match count: 2 (intro scope note line 7, cross-reference line 324): PASS
+
+And: the note appears alongside or near the existing README mapping references
+  -> The Cross-References bullet at line 324 modifies the existing bootstrap-protocol.md
+     entry to credit /arc-sync as sole writer of ARC:product-context — exactly alongside
+     the existing README mapping cross-references (templates, idea-lifecycle, etc.): PASS
+
+Status: PASS
