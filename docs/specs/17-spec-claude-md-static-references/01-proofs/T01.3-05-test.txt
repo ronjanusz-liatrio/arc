@@ -1,0 +1,17 @@
+Type: test
+Description: Unit 1's headline grep — `grep -nE 'Backlog:|Current Wave:|Phase:|Primary Personas:|Vision:' skills/arc-wave/references/bootstrap-protocol.md` — continues to return zero matches after T01.3 edits. This is a regression check: T01.3 only edits prose narrative around the writer-attribution, the CLAUDE.md Creation rule, the Coexistence Rules table, and the Cross-References list — none of those edits should reintroduce any live-field labels.
+Command: grep -nE 'Backlog:|Current Wave:|Phase:|Primary Personas:|Vision:' skills/arc-wave/references/bootstrap-protocol.md
+Expected: Zero matches (exit 1).
+Timestamp: 2026-04-27T00:00Z
+
+--- Output ---
+
+--- Exit Status ---
+1
+
+--- Verification ---
+- Zero matches across the entire file.
+- Confirms T01.3's prose changes did not reintroduce any of the legacy live-field labels (Backlog:, Current Wave:, Phase:, Primary Personas:, Vision:).
+- Combined with T01.1 and T01.2, Unit 1's headline acceptance criterion is fully satisfied at the close of T01.3.
+
+Status: PASS

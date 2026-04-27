@@ -1,0 +1,27 @@
+Type: test
+Description: The "## Coexistence Rules" "Own namespace only" table row now references /arc-sync instead of /arc-wave.
+Commands:
+  (A) grep -n "/arc-wave\` only manages" skills/arc-wave/references/bootstrap-protocol.md
+  (B) grep -nE "^\| \*\*Own namespace only\*\*" skills/arc-wave/references/bootstrap-protocol.md
+Expected:
+  (A) Zero matches (exit 1) — stale "/arc-wave only manages" wording removed.
+  (B) Exactly one matching row, and it references /arc-sync.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output (A) ---
+
+--- Exit Status (A) ---
+1
+
+--- Output (B) ---
+75:| **Own namespace only** | `/arc-sync` only manages `ARC:` sections — it does not create, modify, or remove sections in other namespaces |
+
+--- Exit Status (B) ---
+0
+
+--- Verification ---
+- (A) The legacy "/arc-wave only manages" attribution is removed (zero matches).
+- (B) The "Own namespace only" row at line 75 now reads "`/arc-sync` only manages `ARC:` sections — it does not create, modify, or remove sections in other namespaces", correctly transferring writer attribution from /arc-wave to /arc-sync.
+- The row remains in the same table and same position relative to other rows (Never modify, Never nest, Interleave freely) — only the writer name changed.
+
+Status: PASS

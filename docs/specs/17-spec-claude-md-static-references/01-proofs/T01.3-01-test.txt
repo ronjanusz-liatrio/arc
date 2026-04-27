@@ -1,0 +1,20 @@
+Type: test
+Description: The bootstrap-protocol contains the writer-attribution sentence naming /arc-sync as sole writer and explicitly noting that /arc-wave and /arc-ship no longer write the block.
+Command: grep -n "sole writer of the \`ARC:product-context\` block" skills/arc-wave/references/bootstrap-protocol.md
+Expected: Exactly one matching line that names /arc-sync as the sole writer and references /arc-wave and /arc-ship.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output ---
+5:`/arc-sync` is the sole writer of the `ARC:product-context` block. `/arc-wave` and `/arc-ship` no longer write this block.
+
+--- Exit Status ---
+0
+
+--- Verification ---
+- Exactly 1 match (line 5).
+- Line names "/arc-sync" as sole writer.
+- Line explicitly notes "/arc-wave" no longer writes the block.
+- Line explicitly notes "/arc-ship" no longer writes the block.
+- Sentence is placed in the document intro (after the opening paragraph at line 3, before "## Managed Section Format" at line 7), so it is "early in the document" per task description.
+
+Status: PASS

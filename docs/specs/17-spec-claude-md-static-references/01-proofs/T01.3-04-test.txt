@@ -1,0 +1,35 @@
+Type: test
+Description: The "## Cross-References" list no longer claims that wave-planning.md / wave creation triggers the CLAUDE.md injection; the bullet has been replaced with a pointer to /arc-sync for CLAUDE.md updates.
+Commands:
+  (A) grep -n "Wave creation triggers the CLAUDE.md injection" skills/arc-wave/references/bootstrap-protocol.md
+  (B) grep -n "wave-planning.md" skills/arc-wave/references/bootstrap-protocol.md
+  (C) grep -n "skills/arc-sync/SKILL.md" skills/arc-wave/references/bootstrap-protocol.md
+Expected:
+  (A) Zero matches (exit 1) — stale claim removed.
+  (B) Zero matches (exit 1) — wave-planning.md cross-ref bullet is fully removed (no longer relevant since /arc-wave does not write the block).
+  (C) Exactly one match — replacement bullet points to /arc-sync as the sole writer.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output (A) ---
+
+--- Exit Status (A) ---
+1
+
+--- Output (B) ---
+
+--- Exit Status (B) ---
+1
+
+--- Output (C) ---
+100:- `skills/arc-sync/SKILL.md` — `/arc-sync` is the sole writer of `ARC:product-context`; run it to create or refresh the block in a project's CLAUDE.md
+
+--- Exit Status (C) ---
+0
+
+--- Verification ---
+- (A) The stale "Wave creation triggers the CLAUDE.md injection" wording is gone.
+- (B) The wave-planning.md bullet is removed entirely. This satisfies the task description's "remove or rewrite the bullet" — the chosen approach is removal because /arc-wave no longer triggers injection at all (T02 will remove Step 9 from /arc-wave), so a wave-planning.md cross-reference would be misleading.
+- (C) A new bullet points to skills/arc-sync/SKILL.md as the sole writer, providing a clear next-step pointer for readers asking "who manages CLAUDE.md updates?".
+- The remaining cross-reference list still includes Temper's bootstrap-protocol.md and references/idea-lifecycle.md (rewritten to no longer imply counts live in the managed section).
+
+Status: PASS

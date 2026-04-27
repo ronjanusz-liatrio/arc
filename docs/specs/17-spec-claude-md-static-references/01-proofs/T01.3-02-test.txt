@@ -1,0 +1,35 @@
+Type: test
+Description: The "### CLAUDE.md Creation" warning text no longer instructs the user to "re-run /arc-wave" and now directs them to run /arc-sync (with /temper-assess or manual CLAUDE.md creation as the bootstrap path).
+Commands:
+  (A) grep -n "re-run \`/arc-wave\`" skills/arc-wave/references/bootstrap-protocol.md
+  (B) grep -n "run \`/arc-sync\` to inject product context" skills/arc-wave/references/bootstrap-protocol.md
+  (C) grep -n "(or create CLAUDE.md manually)" skills/arc-wave/references/bootstrap-protocol.md
+Expected:
+  (A) Zero matches (exit 1) — stale wording removed.
+  (B) Exactly one match — new warning points the user to /arc-sync.
+  (C) Exactly one match — manual-creation alternative documented.
+Timestamp: 2026-04-27T00:00Z
+
+--- Output (A) ---
+
+--- Exit Status (A) ---
+1
+
+--- Output (B) ---
+88:- Warn the user: "No CLAUDE.md found. Run `/temper-assess` (or create CLAUDE.md manually) to bootstrap the project, then run `/arc-sync` to inject product context."
+
+--- Exit Status (B) ---
+0
+
+--- Output (C) ---
+88:- Warn the user: "No CLAUDE.md found. Run `/temper-assess` (or create CLAUDE.md manually) to bootstrap the project, then run `/arc-sync` to inject product context."
+
+--- Exit Status (C) ---
+0
+
+--- Verification ---
+- (A) The stale "re-run `/arc-wave`" instruction is gone (zero matches).
+- (B) The replacement warning text directs the user to "run `/arc-sync` to inject product context".
+- (C) The warning offers "/temper-assess (or create CLAUDE.md manually)" as the bootstrap path, satisfying the task description's "/temper-assess (or create CLAUDE.md manually)" wording.
+
+Status: PASS

@@ -2,6 +2,8 @@
 
 Rules for injecting and maintaining `ARC:` managed sections in the project CLAUDE.md. This protocol ensures coexistence with Temper's `TEMPER:` namespace and any other managed section namespaces.
 
+`/arc-sync` is the sole writer of the `ARC:product-context` block. `/arc-wave` and `/arc-ship` no longer write this block.
+
 ## Managed Section Format
 
 ### Markers
@@ -70,7 +72,7 @@ After insertion, verify:
 | **Never modify** | Do not read, write, or delete content inside `TEMPER:` or `MM:` managed sections |
 | **Never nest** | ARC markers must not appear inside TEMPER/MM blocks, and vice versa |
 | **Interleave freely** | Independent namespaces can appear in any order in the file |
-| **Own namespace only** | `/arc-wave` only manages `ARC:` sections — it does not create, modify, or remove sections in other namespaces |
+| **Own namespace only** | `/arc-sync` only manages `ARC:` sections — it does not create, modify, or remove sections in other namespaces |
 
 ### Conflict Resolution
 
@@ -83,8 +85,8 @@ If the insertion algorithm detects that the insertion point would place the ARC 
 
 If no CLAUDE.md exists in the project root:
 - Do **not** create one solely for ARC sections
-- Warn the user: "No CLAUDE.md found. Run `/temper-assess` to bootstrap the project, then re-run `/arc-wave` to inject product context."
-- Continue wave creation without CLAUDE.md injection
+- Warn the user: "No CLAUDE.md found. Run `/temper-assess` (or create CLAUDE.md manually) to bootstrap the project, then run `/arc-sync` to inject product context."
+- Continue without CLAUDE.md injection
 
 ## Migration and Idempotency
 
@@ -95,5 +97,5 @@ The protocol is idempotent. Because the template is fixed (no derived values, no
 ## Cross-References
 
 - Temper's bootstrap-protocol.md — The original managed section protocol that this document extends
-- `references/wave-planning.md` — Wave creation triggers the CLAUDE.md injection
-- `references/idea-lifecycle.md` — Status counts in the managed section reflect lifecycle stages
+- `skills/arc-sync/SKILL.md` — `/arc-sync` is the sole writer of `ARC:product-context`; run it to create or refresh the block in a project's CLAUDE.md
+- `references/idea-lifecycle.md` — Lifecycle stages tracked in the linked source artifacts (not in the managed section)
