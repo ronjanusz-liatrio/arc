@@ -1,0 +1,27 @@
+Type: test (cli grep, case-insensitive secondary check)
+Task: T02.4 - Audit ship-criteria.md for CLAUDE.md refresh references and remove if present
+Command: grep -niE 'refresh|inject|product.context' skills/arc-ship/references/ship-criteria.md
+Expected: Zero matches (no case-insensitive references to refresh/inject/product-context)
+Timestamp: 2026-04-27T00:00:00Z
+
+--- Output ---
+(no output)
+
+--- Exit Code ---
+1 (grep exit 1 = no matches found)
+
+--- Result ---
+PASS
+
+--- Interpretation ---
+A case-insensitive secondary audit was run to ensure no missed references
+in alternate casing (e.g., "refresh", "REFRESH", "Product-Context"). Zero
+matches confirms the file is fully clean of CLAUDE.md product-context refresh
+language at any casing.
+
+A separate case-insensitive scan for the literal substring "claude" returned
+exactly one match on line 177:
+  "- `references/cross-plugin-contract.md` — Claude-Workflow artifacts that Arc reads"
+This match is unrelated to CLAUDE.md (it refers to the Claude-Workflow plugin
+that Arc integrates with, not the CLAUDE.md project file). It is not a
+CLAUDE.md refresh reference and does not need removal.

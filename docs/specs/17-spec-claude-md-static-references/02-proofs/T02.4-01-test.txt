@@ -1,0 +1,28 @@
+Type: test (cli grep)
+Task: T02.4 - Audit ship-criteria.md for CLAUDE.md refresh references and remove if present
+Command: grep -nE 'CLAUDE\.md|product-context|ARC:product-context|Refresh|Inject' skills/arc-ship/references/ship-criteria.md
+Expected: Zero matches (file does not reference CLAUDE.md refresh step)
+Timestamp: 2026-04-27T00:00:00Z
+
+--- Output ---
+(no output)
+
+--- Exit Code ---
+1 (grep exit 1 = no matches found)
+
+--- Result ---
+PASS
+
+--- Interpretation ---
+The file skills/arc-ship/references/ship-criteria.md contains zero matches for any of:
+  - CLAUDE.md
+  - product-context
+  - ARC:product-context
+  - Refresh (case-sensitive)
+  - Inject (case-sensitive)
+
+This confirms the audit finding: ship-criteria.md does not reference the
+CLAUDE.md refresh step, and therefore no edits to the file are required for
+T02.4. This satisfies the spec scenario "ship-criteria reference is cleaned of
+CLAUDE.md refresh language" by virtue of the language never having been
+present in this file.

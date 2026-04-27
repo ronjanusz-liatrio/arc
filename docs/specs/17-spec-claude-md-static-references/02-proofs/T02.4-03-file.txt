@@ -1,0 +1,36 @@
+Type: file (no-op verification)
+Task: T02.4 - Audit ship-criteria.md for CLAUDE.md refresh references and remove if present
+Command: git diff --stat skills/arc-ship/references/ship-criteria.md
+Expected: No changes to the file (no-op task)
+Timestamp: 2026-04-27T00:00:00Z
+
+--- Output ---
+(no output - file is unchanged)
+
+--- Result ---
+PASS
+
+--- Interpretation ---
+This task was scoped as conditional: "if it references the CLAUDE.md refresh
+step." The audit (proof T02.4-01-test.txt and T02.4-02-test.txt) confirmed
+zero references exist in skills/arc-ship/references/ship-criteria.md.
+
+Per the task description: "If the file contains no such references, leave it
+unchanged (no-op) and document that finding in the proof results."
+
+Outcome: NO_OP. The file is intentionally unmodified. The proof artifacts in
+this directory document the audit finding so cw-validate can verify the
+spec scenario "ship-criteria reference is cleaned of CLAUDE.md refresh
+language" is satisfied by the absence of such language in ship-criteria.md.
+
+--- Spec scenario coverage ---
+Scenario: "ship-criteria reference is cleaned of CLAUDE.md refresh language"
+  Given skills/arc-ship/references/ship-criteria.md previously referenced the CLAUDE.md refresh step
+  When a developer reads the updated ship-criteria.md
+  Then no instructions in ship-criteria require refreshing CLAUDE.md as a ship gate
+  And no proof artifact in ship-criteria depends on /arc-ship writing to CLAUDE.md
+
+Result: Both Then-clauses are satisfied because the language was never
+present. The Given-clause's premise is technically false for this codebase
+(the file did not previously reference the refresh step), which is exactly
+why the parent task's planning marked the sub-task as conditional.
