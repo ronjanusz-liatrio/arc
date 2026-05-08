@@ -1,0 +1,9 @@
+Type: test
+Description: Confirm the precedence table (lines ~318-333) is byte-identical between HEAD and working tree — T01.4 must not touch it (T01.3 owns it)
+Command: git diff HEAD -- skills/arc-status/SKILL.md | grep -E '^[+-]\| [0-9]+ \|'
+Expected: No output — no rows of the form '| N | ...' in the diff (those are precedence table rows)
+Timestamp: 2026-05-08T22:44:11Z
+---
+Diff output: (empty — precedence table unchanged)
+
+Status: PASS

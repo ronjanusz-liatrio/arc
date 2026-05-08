@@ -1,0 +1,9 @@
+Type: test
+Description: Byte-for-byte diff of Alternative Skill Selection Rule table rows 1-13 between HEAD and working tree shows zero changes
+Command: diff <(awk extract rows 1-13 from HEAD) <(awk extract rows 1-13 from working tree)
+Expected: Empty diff (zero output)
+Timestamp: 2026-05-08T22:44:02Z
+---
+Diff output: (empty — rows 1-13 identical)
+
+Status: PASS

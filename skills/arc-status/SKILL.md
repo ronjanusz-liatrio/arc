@@ -361,7 +361,8 @@ Select the **alternative skill** per the matched priority:
 | 11 (no-wave LG-3) | Next-lower-priority no-wave gap skill that also matched among Priorities 12–13 (in order: `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
 | 12 (no-wave LG-2) | The no-wave P0/P1 LG-1 skill (`/arc-shape`) if Priority 13 also matched. Otherwise `/arc-audit`. |
 | 13 (no-wave LG-1 P0/P1) | `/arc-audit` (no lower-priority no-wave gap exists). |
-| 14 (no wave, no gaps) | `/arc-audit` |
+| 14 (no-wave LG-6) | `/arc-audit` (no lower-priority no-wave gap exists). |
+| 15 (no wave, no gaps) | `/arc-audit` |
 
 **Never offer the recommended skill as its own alternative.** If the fall-through rule would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 14 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
 
