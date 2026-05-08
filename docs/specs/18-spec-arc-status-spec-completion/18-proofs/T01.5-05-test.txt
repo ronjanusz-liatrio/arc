@@ -1,0 +1,22 @@
+Type: test
+Description: Verify Step 7's precedence table, the Step 6.6 numbered list, and the LG-6 detection subsection are byte-identical between HEAD and the working tree (T01.5 must not touch them - they are owned by T01.3, T01.2, and T01.1 respectively).
+Commands:
+  - diff <(sed -n '/#### Precedence List/,/^### Step 8/p' /tmp/skill_head.md) <(sed -n '/#### Precedence List/,/^### Step 8/p' skills/arc-status/SKILL.md)
+  - diff <(sed -n '/^#### LG-6: Orphan Spec/,/^#### Step 6.6/p' /tmp/skill_head.md) <(sed -n '/^#### LG-6: Orphan Spec/,/^#### Step 6.6/p' skills/arc-status/SKILL.md)
+  - diff <(sed -n '/^#### Step 6.6/,/^#### Emit Lifecycle Gaps/p' /tmp/skill_head.md) <(sed -n '/^#### Step 6.6/,/^#### Emit Lifecycle Gaps/p' skills/arc-status/SKILL.md)
+Expected: every diff returns empty (no changes)
+Timestamp: 2026-05-08T15:52:00Z
+
+=== Test 1: Step 7 precedence + alt-skill tables (lines from "#### Precedence List" through "### Step 8") ===
+Result: empty diff -> PASS
+Notes: Confirms T01.5 did not modify any precedence row (1-15) or any alternative-skill row (1-15). T01.3 and T01.4 own those tables.
+
+=== Test 2: LG-6 detection subsection (T01.1 owns this block) ===
+Result: empty diff -> PASS
+Notes: Confirms T01.5 left the "#### LG-6: Orphan Spec" section (added by T01.1) unchanged.
+
+=== Test 3: Step 6.6 numbered list (T01.2 owns this block) ===
+Result: empty diff -> PASS
+Notes: Confirms T01.5 left the Step 6.6 scope-tagging numbered list (extended by T01.2 to include item 6 for LG-6 -> backlog-only) unchanged.
+
+Status: PASS

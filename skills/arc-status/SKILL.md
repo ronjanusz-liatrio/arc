@@ -290,6 +290,7 @@ After running all five gap checks (and the Step 6.6 postamble), emit the results
   | Spec → Plan | {NN}-spec-{name} | Run /cw-plan |
   | Plan → Validation | {NN}-spec-{name} | Run /cw-validate |
   | Validation → Shipped | {Idea Title} | Run /arc-ship |
+  | Orphan Spec | {NN}-spec-{name} | Run /arc-capture |
   ```
   In this no-wave branch, the `scope` field tagged in Step 6.6 is ignored — no Scope column header, no Scope cells. A skipped-check row renders as `| {Gap Name} | (skipped — {reason}) | -- |` (three columns, unchanged from pre-change behavior).
 
@@ -304,10 +305,12 @@ After running all five gap checks (and the Step 6.6 postamble), emit the results
   | Spec → Plan | {NN}-spec-{name} | Run /cw-plan | {Scope Cell} |
   | Plan → Validation | {NN}-spec-{name} | Run /cw-validate | {Scope Cell} |
   | Validation → Shipped | {Idea Title} | Run /arc-ship | {Scope Cell} |
+  | Orphan Spec | {NN}-spec-{name} | Run /arc-capture | {Scope Cell} |
   ```
   The `{Scope Cell}` value is derived from the `scope` field that Step 6.6 tagged onto each row:
   - For a gap tagged `scope = wave-linked`: the Scope cell is the literal string `Wave: {wave_name}` where `{wave_name}` is the **verbatim active wave name** from Step 2 — no escaping, no trimming, no case folding. Special characters (em dashes, colons, etc.) pass through unchanged (e.g., `Wave: Wave 4 — Foo`).
   - For a gap tagged `scope = backlog-only`: the Scope cell is the literal string `Backlog (outside wave)`.
+  - For an LG-6 (Orphan Spec) row: the Scope cell is always the literal string `Backlog (outside wave)` because Step 6.6 rule 6 unconditionally tags LG-6 gaps as `scope = backlog-only` (no linked backlog idea exists by construction). LG-6 rows therefore never render `Wave: {wave_name}` even when an active wave is present.
   - For a skipped-check row (scope `--`): the Scope cell is the literal string `--`. The full skipped row renders as `| {Gap Name} | (skipped — {reason}) | -- | -- |` (four columns — the Remediation cell retains its existing `--` placeholder and the Scope cell is also `--`).
 
 - The `No lifecycle gaps detected.` message is **not** augmented with a Scope column or any wave indicator in either branch — it is rendered byte-for-byte unchanged.

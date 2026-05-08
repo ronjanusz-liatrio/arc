@@ -1,0 +1,31 @@
+Type: test
+Description: Verify the no-gaps message, the wave-name interpolation paragraph, and both skipped-check rendering rules are byte-identical between HEAD and the working tree (T01.5 must not modify them).
+Commands:
+  - diff <(sed -n '275,281p' /tmp/skill_head.md) <(sed -n '275,281p' skills/arc-status/SKILL.md)  # No-gaps block
+  - diff <(grep -F "the verbatim active wave name" /tmp/skill_head.md) <(grep -F "the verbatim active wave name" skills/arc-status/SKILL.md)  # Wave-name interpolation
+  - diff <(grep -F "(skipped" /tmp/skill_head.md | grep -F "three columns") <(grep -F "(skipped" skills/arc-status/SKILL.md | grep -F "three columns")  # 3-col skipped rule
+  - diff <(grep -F "(skipped" /tmp/skill_head.md | grep -F "four columns") <(grep -F "(skipped" skills/arc-status/SKILL.md | grep -F "four columns")  # 4-col skipped rule
+Expected: every diff command exits 0 with no output
+Timestamp: 2026-05-08T15:51:00Z
+
+=== Test 1: No-gaps block (lines 275-281) ===
+Result: empty diff -> PASS
+
+=== Test 2: Wave-name interpolation paragraph ===
+Result: empty diff -> PASS
+HEAD line:
+  - For a gap tagged `scope = wave-linked`: the Scope cell is the literal string `Wave: {wave_name}` where `{wave_name}` is the **verbatim active wave name** from Step 2 - no escaping, no trimming, no case folding. Special characters (em dashes, colons, etc.) pass through unchanged (e.g., `Wave: Wave 4 - Foo`).
+
+=== Test 3: 3-col skipped-check rendering rule ===
+Result: empty diff -> PASS
+HEAD line:
+  In this no-wave branch, the `scope` field tagged in Step 6.6 is ignored - no Scope column header, no Scope cells. A skipped-check row renders as `| {Gap Name} | (skipped - {reason}) | -- |` (three columns, unchanged from pre-change behavior).
+
+=== Test 4: 4-col skipped-check rendering rule ===
+Result: empty diff -> PASS
+HEAD line:
+  - For a skipped-check row (scope `--`): the Scope cell is the literal string `--`. The full skipped row renders as `| {Gap Name} | (skipped - {reason}) | -- | -- |` (four columns - the Remediation cell retains its existing `--` placeholder and the Scope cell is also `--`).
+
+(em-dashes shown as - in this proof for ASCII safety; actual file uses U+2014 EM DASH)
+
+Status: PASS

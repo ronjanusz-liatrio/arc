@@ -1,0 +1,42 @@
+Type: test
+Description: Byte-for-byte equality check of LG-1..LG-5 rows in both the three-column and four-column Lifecycle Gaps tables between HEAD and the working tree.
+Command: diff <(grep -E "^\s*\| (Captured|Shaped|Spec|Plan|Validation) " /tmp/skill_head.md) <(grep -E "^\s*\| (Captured|Shaped|Spec|Plan|Validation) " skills/arc-status/SKILL.md)
+Expected: empty diff (zero changes to LG-1..LG-5 rows in either table)
+Timestamp: 2026-05-08T15:50:30Z
+
+=== HEAD: LG-1..LG-5 rows (both tables) ===
+   | Captured | {N} |
+   | Shaped | {N} |
+   | Spec | Spec File | Plan | Validation |
+  | Captured -> Shaped | {Idea Title} | Run /arc-shape |
+  | Shaped -> Spec | {Idea Title} | Run /cw-spec |
+  | Spec -> Plan | {NN}-spec-{name} | Run /cw-plan |
+  | Plan -> Validation | {NN}-spec-{name} | Run /cw-validate |
+  | Validation -> Shipped | {Idea Title} | Run /arc-ship |
+  | Captured -> Shaped | {Idea Title} | Run /arc-shape | {Scope Cell} |
+  | Shaped -> Spec | {Idea Title} | Run /cw-spec | {Scope Cell} |
+  | Spec -> Plan | {NN}-spec-{name} | Run /cw-plan | {Scope Cell} |
+  | Plan -> Validation | {NN}-spec-{name} | Run /cw-validate | {Scope Cell} |
+  | Validation -> Shipped | {Idea Title} | Run /arc-ship | {Scope Cell} |
+
+=== WORKING: LG-1..LG-5 rows (both tables) ===
+   | Captured | {N} |
+   | Shaped | {N} |
+   | Spec | Spec File | Plan | Validation |
+  | Captured -> Shaped | {Idea Title} | Run /arc-shape |
+  | Shaped -> Spec | {Idea Title} | Run /cw-spec |
+  | Spec -> Plan | {NN}-spec-{name} | Run /cw-plan |
+  | Plan -> Validation | {NN}-spec-{name} | Run /cw-validate |
+  | Validation -> Shipped | {Idea Title} | Run /arc-ship |
+  | Captured -> Shaped | {Idea Title} | Run /arc-shape | {Scope Cell} |
+  | Shaped -> Spec | {Idea Title} | Run /cw-spec | {Scope Cell} |
+  | Spec -> Plan | {NN}-spec-{name} | Run /cw-plan | {Scope Cell} |
+  | Plan -> Validation | {NN}-spec-{name} | Run /cw-validate | {Scope Cell} |
+  | Validation -> Shipped | {Idea Title} | Run /arc-ship | {Scope Cell} |
+
+(em-dashes shown as -> in this proof file for ASCII safety; actual file uses U+2014 EM DASH)
+
+=== DIFF (should be empty) ===
+(no output)
+
+Status: PASS
