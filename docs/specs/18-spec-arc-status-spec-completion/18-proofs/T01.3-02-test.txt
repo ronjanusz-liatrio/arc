@@ -1,0 +1,15 @@
+Type: test (byte-for-byte invariance check)
+Command: diff <(git show HEAD:skills/arc-status/SKILL.md | sed -n '317,331p') <(sed -n '317,331p' skills/arc-status/SKILL.md)
+Expected: Empty output — Priorities 1-13 (table rows for current Priority 1 through Priority 13) plus the table header and separator rows must be byte-for-byte identical to HEAD.
+Timestamp: 2026-05-08T00:00Z
+Status: PASS
+
+Lines 317-331 (table header + separator + Priority rows 1-13) compared against HEAD:
+
+(empty diff)
+
+Result: PASS — header, separator, and all 13 pre-existing priority rows are byte-identical to HEAD. The only authorized change in this sub-task is below this range (renumbered Priority 14 row + new Priority 15 row at lines 332-333).
+
+Spec invariant satisfied:
+> "Priorities 1–13 must remain byte-for-byte identical." (T01.3 task description)
+> "The system shall keep all existing precedence priorities 1–13 byte-for-byte unchanged — no edits to existing rows except inserting the new no-wave LG-6 row between rows 13 and 14, renumbering only the previous Priority 14 row to Priority 15." (Unit 1, FR9)

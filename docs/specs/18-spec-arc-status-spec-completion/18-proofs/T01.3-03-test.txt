@@ -1,0 +1,58 @@
+Type: test (scope-boundary check — sibling-task fences respected)
+Command: diff against HEAD for each scope boundary defined in the T01.3 task description.
+Expected: All four named out-of-scope regions byte-identical to HEAD; the only diff is the precedence-table edit at lines 332-333.
+Timestamp: 2026-05-08T00:00Z
+Status: PASS
+
+The T01.3 task description names four explicit out-of-scope fences:
+1. The alternative-skill table (T01.4 owns it).
+2. The wave-state-aware narrative paragraph above the precedence table (line 303 in the stale spec view; line 313 in current file).
+3. The P0/P1 filter / wave-scope / wave-name-interpolation paragraphs below the precedence table (lines 324–328 in the stale spec view; lines 335+ after the +1 insertion offset).
+4. Priorities 1–13 inside the precedence table (covered separately by T01.3-02-test.txt).
+
+----------------------------------------------------------------
+Fence 1: Alternative Skill Selection table
+----------------------------------------------------------------
+Compared HEAD lines 347-369 against working-tree lines 348-370 (offset by +1 due to the precedence-table insertion):
+
+(empty diff) → BYTE-IDENTICAL
+
+Notable: the alternative-skill table still contains the row `| 14 (no wave, no gaps) | /arc-audit |`. This is the *expected* state after T01.3 — T01.4 owns the renumber-and-insert for that table. T01.3 must NOT touch it.
+
+----------------------------------------------------------------
+Fence 2: Wave-state-aware narrative paragraph (above precedence table)
+----------------------------------------------------------------
+Compared HEAD lines 313-316 against working-tree lines 313-316:
+
+(empty diff) → BYTE-IDENTICAL
+
+This paragraph still says "Priorities 9–14 apply when the active wave name is null". Updating the upper bound to 15 is intentionally NOT in T01.3's scope; that narrative-prose update either rides along with T01.4/T01.5 or is a separate edit deferred to T01.8 verification — the T01.3 task description explicitly reserves this paragraph as out-of-scope.
+
+----------------------------------------------------------------
+Fence 3: Below-table paragraphs (P0/P1 filter, wave-scope, wave-name-interpolation)
+----------------------------------------------------------------
+Compared HEAD lines 333-400 against working-tree lines 334-401 (offset by +1 due to the precedence-table insertion):
+
+(empty diff) → BYTE-IDENTICAL
+
+The "Priority 6 / Priority 13 P0/P1 filter" paragraph, the wave-scope paragraph, and the wave-name-interpolation paragraph are all unmodified.
+
+----------------------------------------------------------------
+Fence 4: Priorities 1–13 inside the precedence table
+----------------------------------------------------------------
+See T01.3-02-test.txt for the dedicated byte-for-byte check. Result: BYTE-IDENTICAL.
+
+----------------------------------------------------------------
+Whole-file diff summary
+----------------------------------------------------------------
+$ diff <(git show HEAD:skills/arc-status/SKILL.md) skills/arc-status/SKILL.md
+
+332c332,333
+< | 14 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+---
+> | 14 | No active wave AND an LG-6 (Orphan Spec) gap exists | `/arc-capture` | "{NN}-spec-{name} has a PASS validation report but no BACKLOG idea — capture it?" |
+> | 15 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+
+Total hunks: 1. Total lines added: 2. Total lines removed: 1. All edits live within the precedence table at lines 332-333. Every named scope fence holds.
+
+Result: PASS.

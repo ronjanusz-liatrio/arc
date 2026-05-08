@@ -1,0 +1,22 @@
+Type: file (diff)
+Command: git diff HEAD -- skills/arc-status/SKILL.md
+Expected: Pure additive change to Step 7 precedence table — one new no-wave LG-6 row inserted as Priority 14, previous Priority 14 row renumbered to Priority 15. Numstat: 2 added / 1 removed.
+Timestamp: 2026-05-08T00:00Z
+Status: PASS
+
+diff --git a/skills/arc-status/SKILL.md b/skills/arc-status/SKILL.md
+index 4b20db1..e5c105a 100644
+--- a/skills/arc-status/SKILL.md
++++ b/skills/arc-status/SKILL.md
+@@ -329,7 +329,8 @@ After emitting all summary sections, recommend the single most relevant next ski
+ | 11 | No active wave AND an LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
+ | 12 | No active wave AND an LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
+ | 13 | No active wave AND an LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
+-| 14 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
++| 14 | No active wave AND an LG-6 (Orphan Spec) gap exists | `/arc-capture` | "{NN}-spec-{name} has a PASS validation report but no BACKLOG idea — capture it?" |
++| 15 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+
+ **Priority 6 / Priority 13 P0/P1 filter.** Only LG-1 (Captured → Shaped) gaps on ideas whose `Priority:` field in the idea's metadata block in `docs/BACKLOG.md` is `P0` or `P1` qualify. Ideas with `Priority: P2`, `P3`, or an unset priority do not trigger Priority 6 or Priority 13 — this matches the pre-change Priority-5 filter behavior.
+
+Numstat: 2 lines added, 1 line removed.
+Result: PASS — diff is purely additive (1 new Priority 14 row inserting the no-wave LG-6 case) plus 1 line renumber edit (previous Priority 14 → Priority 15). No edits to Priorities 1-13, no edits to the surrounding prose (table header, wave-state-aware narrative paragraph above the table, P0/P1 filter paragraph below the table).

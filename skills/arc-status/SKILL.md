@@ -329,7 +329,8 @@ After emitting all summary sections, recommend the single most relevant next ski
 | 11 | No active wave AND an LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
 | 12 | No active wave AND an LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
 | 13 | No active wave AND an LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
-| 14 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+| 14 | No active wave AND an LG-6 (Orphan Spec) gap exists | `/arc-capture` | "{NN}-spec-{name} has a PASS validation report but no BACKLOG idea — capture it?" |
+| 15 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
 
 **Priority 6 / Priority 13 P0/P1 filter.** Only LG-1 (Captured → Shaped) gaps on ideas whose `Priority:` field in the idea's metadata block in `docs/BACKLOG.md` is `P0` or `P1` qualify. Ideas with `Priority: P2`, `P3`, or an unset priority do not trigger Priority 6 or Priority 13 — this matches the pre-change Priority-5 filter behavior.
 
