@@ -1,0 +1,35 @@
+Type: cli (manual /arc-status walkthrough — orphan specs still in-flight)
+Description: Confirm that PASS-validated orphan specs (those with no BACKLOG
+             `Spec:` link) remain present in the In-Flight Specs table after
+             the wave-archive exclusion pass. The completed-spec set is a
+             distinct concept from "linked-to-backlog" — orphans are not in the
+             wave archive, so they survive Step 4 filtering.
+Command: (per Step 4 / SD-3 logic)
+         - in-flight set computed in T02.3-02-cli.txt
+         - check that 17-spec-claude-md-static-references is in the in-flight set
+         - confirm spec 17 has a passing validation report and no BACKLOG Spec link
+Expected: 17-spec-claude-md-static-references appears as a row in the
+          rendered In-Flight Specs table.
+Timestamp: 2026-05-08T00:00:00Z
+
+----- 17-spec-claude-md-static-references inspection -----
+
+Validation report present:
+  docs/specs/17-spec-claude-md-static-references/17-validation-claude-md-static-references.md
+
+PASS check (literal "**Overall**: PASS"):
+  matched in 17-validation-claude-md-static-references.md → PASS
+
+BACKLOG `Spec:` link check (grep '17-spec-claude-md-static-references' docs/BACKLOG.md):
+  no match — confirms the spec is orphan (no backlog idea references it)
+
+In-flight set membership (from T02.3-02-cli.txt):
+  17-spec-claude-md-static-references → PRESENT in in-flight set
+
+----- Asserted orphan presence -----
+PASS: 17-spec-claude-md-static-references is present in the In-Flight Specs table
+PASS: orphan-spec invariant satisfied — wave-archive filter does not remove
+      specs that are merely PASS-validated; only specs explicitly listed in the
+      wave archive are excluded.
+
+Status: PASS

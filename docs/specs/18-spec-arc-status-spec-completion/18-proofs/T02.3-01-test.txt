@@ -1,0 +1,40 @@
+Type: test (byte-for-byte invariant diff)
+Description: Detection-prose invariant — Step 4 per-row artifact detection prose
+             (Spec File / Plan / Validation logic) must be byte-identical between
+             the working tree and the pre-T02 parent commit.
+Command: git show dc7cb75:skills/arc-status/SKILL.md > /tmp/parent.md
+         awk '/\*\*a\. Spec file:/{flag=1} flag{print} /\*\*c\. Validation report:/{getline; print; flag=0}' \
+             skills/arc-status/SKILL.md > /tmp/working.txt
+         awk ... /tmp/parent.md > /tmp/parent.txt
+         diff /tmp/working.txt /tmp/parent.txt; cmp /tmp/working.txt /tmp/parent.txt
+Parent commit: dc7cb7507f72156f6d154d2a218cd0a18c774a5b (T01.4, immediate
+               parent of T02.1 = bb9f6fa9...)
+Expected: zero changed bytes between the two extracts
+Timestamp: 2026-05-08T00:00:00Z
+
+----- working tree extract -----
+
+   **a. Spec file:** Glob for `{dir}/NN-spec-*.md`. Report `yes` if at least one match exists, `no` otherwise.
+
+   **b. Plan evidence:** Glob for `{dir}/plan-*` files. If none found, check recent commits: run `git log --oneline -30` and search for commit messages containing `(T0` referencing this spec's NN prefix. Report `yes` if plan files exist or a matching commit is found, `no` otherwise.
+
+   **c. Validation report:** Glob for `{dir}/NN-validation-*.md`. Report `yes` if at least one match exists, `no` otherwise.
+
+
+----- parent (dc7cb75) extract -----
+
+   **a. Spec file:** Glob for `{dir}/NN-spec-*.md`. Report `yes` if at least one match exists, `no` otherwise.
+
+   **b. Plan evidence:** Glob for `{dir}/plan-*` files. If none found, check recent commits: run `git log --oneline -30` and search for commit messages containing `(T0` referencing this spec's NN prefix. Report `yes` if plan files exist or a matching commit is found, `no` otherwise.
+
+   **c. Validation report:** Glob for `{dir}/NN-validation-*.md`. Report `yes` if at least one match exists, `no` otherwise.
+
+
+----- diff result -----
+
+diff exit code: 0 (no differences)
+cmp result:    BYTE-IDENTICAL
+working bytes: 523
+parent bytes:  523
+
+Status: PASS

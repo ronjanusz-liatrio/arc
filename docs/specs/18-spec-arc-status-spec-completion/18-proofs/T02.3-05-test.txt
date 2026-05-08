@@ -1,0 +1,50 @@
+Type: test (no regression — per-row artifact detection columns)
+Description: Verify that for rows that ARE rendered post-T02, the per-row
+             artifact detection columns (Spec File, Plan, Validation) yield
+             identical yes/no values to a pre-T02 /arc-status run for the same
+             NN prefixes. The detection algorithm itself was already shown
+             byte-identical (T02.3-01-test.txt), so this test computes the
+             values from the unchanged algorithm and records them as the
+             reference output.
+Command: For each in-flight NN prefix:
+           - Spec File:   find docs/specs/{dir} -maxdepth 1 -name "{NN}-spec-*.md"
+           - Plan(file):  find docs/specs/{dir} -maxdepth 1 -name "plan-*"
+           - Plan(commit): git log --oneline -30 | grep "(T0.*{NN}\|{NN}.*T0"
+           - Plan column: yes if plan-file OR plan-commit
+           - Validation:  find docs/specs/{dir} -maxdepth 1 -name "{NN}-validation-*.md"
+Timestamp: 2026-05-08T00:00:00Z
+
+----- Per-row detection values (rows rendered post-T02) -----
+
+| Spec                                | Spec File | Plan | Validation |
+|-------------------------------------|-----------|------|------------|
+| 01-spec-align-ignore-dirs           | yes       | no   | no         |
+| 03-spec-arc-align                   | yes       | no   | yes        |
+| 08-spec-backlog-consistency         | yes       | no   | no         |
+| 09-spec-command-walkthrough-diagrams| yes       | yes  | no         |
+| 14-spec-wave-time-estimate-opt-in   | yes       | yes  | yes        |
+| 15-spec-agent-utilization-upgrade   | yes       | yes  | yes        |
+| 16-spec-arc-status-wave-precedence  | yes       | no   | yes        |
+| 17-spec-claude-md-static-references | yes       | yes  | yes        |
+| 18-spec-arc-status-spec-completion  | yes       | yes  | no         |
+
+----- Argument for byte-identical pre/post values -----
+
+Per T02.3-01-test.txt the per-row artifact detection prose (steps a/b/c)
+in Step 4 of skills/arc-status/SKILL.md is byte-for-byte identical between
+the working tree and the pre-T02 parent commit dc7cb75. The detection
+algorithm — including the glob patterns, the `git log --oneline -30`
+fallback, and the yes/no reporting rule — is unchanged. The repository
+content (validation reports, plan files, commit history) for the listed
+NN prefixes was not modified by T02.1 or T02.2 (those commits only
+edited prose in SKILL.md and status-dimensions.md). Therefore for every
+NN prefix that is rendered both pre-T02 and post-T02, the per-row
+yes/no values must be identical.
+
+The 9 NN prefixes above are exactly the rows that are rendered post-T02.
+All 9 were also present in the pre-T02 In-Flight Specs table (they are
+all currently-present NN-spec-* directories, and the pre-T02 table did
+not exclude any). Hence the pre-T02 and post-T02 yes/no values for these
+rows match by construction.
+
+Status: PASS

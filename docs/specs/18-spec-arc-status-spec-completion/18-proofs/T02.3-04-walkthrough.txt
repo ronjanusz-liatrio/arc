@@ -1,0 +1,63 @@
+Type: walkthrough (manual scenario — empty-after-filter fallback)
+Description: The live repo currently has 9 in-flight specs after exclusion, so
+             the empty-after-filter case is not reachable as a live test. Per
+             the task description point 4, the scenario is documented as a
+             manual walkthrough.
+Command: n/a — repo cannot reach empty-in-flight state without modification.
+Expected: When every globbed spec directory is in the completed-spec set (or
+          when no spec directories are globbed at all), Step 4 emits the
+          existing fallback notice:
+              **In-Flight Specs**
+
+              No specs found — run /cw-spec to create a specification.
+Timestamp: 2026-05-08T00:00:00Z
+
+----- Live repo state (cannot reach empty after filter) -----
+
+All NN-spec-* directories: 19
+Completed-spec set:        10
+In-flight (residual):       9 (≠ 0 → empty-after-filter not reachable live)
+
+----- Manual walkthrough of the empty-after-filter branch -----
+
+Step 4 of SKILL.md, line 126–131 (working tree):
+
+  4. If no spec directories remain after exclusion (either because none
+     were found in step 1, or because every spec directory is in the
+     completed-spec set), emit the fallback and move to Step 5:
+        **In-Flight Specs**
+
+        No specs found — run /cw-spec to create a specification.
+
+Pre-T02 parent (dc7cb75) Step 4, line 120–125:
+
+  2. If no spec directories are found, emit the fallback and move to Step 5:
+        **In-Flight Specs**
+
+        No specs found — run /cw-spec to create a specification.
+
+The fallback string is byte-identical:
+  "No specs found — run /cw-spec to create a specification."
+
+The post-T02 prose explicitly extends the trigger condition to include
+"every spec directory is in the completed-spec set" while preserving the
+fallback text verbatim. SD-3 in status-dimensions.md mirrors this rule
+(per T02.2). Therefore the empty-after-filter scenario shares the exact
+fallback emitted by the empty-glob scenario.
+
+----- Synthetic dry-run -----
+
+Hypothetical state: completed-spec set = {01-spec-align-ignore-dirs,
+03-spec-arc-align, 08-spec-backlog-consistency,
+09-spec-command-walkthrough-diagrams, 14-spec-wave-time-estimate-opt-in,
+15-spec-agent-utilization-upgrade, 16-spec-arc-status-wave-precedence,
+17-spec-claude-md-static-references, 18-spec-arc-status-spec-completion}
+plus the existing 10 — i.e., every directory is present in some wave
+archive.
+
+  in-flight = all-specs minus completed-spec set = {} (empty)
+  → Step 4 step 4 fires → fallback emitted byte-identical to empty-glob branch.
+
+Status: PASS (manual walkthrough — fallback prose verified to be the same
+        literal string in both the empty-glob and empty-after-filter
+        branches; live test not feasible without mutating wave archives)

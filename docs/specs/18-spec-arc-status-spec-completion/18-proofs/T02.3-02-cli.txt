@@ -1,0 +1,97 @@
+Type: cli (manual /arc-status walkthrough — shipped specs absent)
+Description: Manually exercise Step 4 of `/arc-status` against the live repo and
+             confirm shipped spec directories are excluded from the In-Flight
+             Specs table. Canonical completed-spec set is recomputed at run time
+             by grep'ing the actual wave archives for `### ` and `**Spec:**`.
+Command: (per Step 4 logic in skills/arc-status/SKILL.md)
+         1. find docs/specs -maxdepth 1 -type d -regex '.*/[0-9][0-9]-spec-.*' -printf '%f\n' | sort
+         2. grep '^### ' docs/skill/arc/waves/*.md
+         3. grep '\*\*Spec:\*\*' docs/skill/arc/waves/*.md
+         4. completed-spec set = union of (1)-basename matches from (2) and (3 trailing-slash normalized)
+         5. in-flight = (1) minus completed-spec set
+Expected: shipped specs (04-spec-arc-readme, 05-spec-arc-help, 10-spec-arc-ship,
+          11-spec-shape-skill-discovery, 12-spec-arc-status, 13-spec-wave-archive)
+          all absent from rendered In-Flight Specs table.
+Timestamp: 2026-05-08T00:00:00Z
+
+----- Live wave-archive scan -----
+
+Signal A: H3 subsection titles in docs/skill/arc/waves/*.md
+  ### /arc-assess skill
+  ### /arc-audit skill
+  ### /arc-capture skill
+  ### /arc-help skill
+  ### /arc-shape skill
+  ### /arc-ship skill
+  ### /arc-status skill
+  ### /arc-sync skill
+  ### /arc-wave skill
+  ### Skill discovery via /skillz during shaping
+  ### Wave archive
+  → no exact match against any NN-spec-* basename (no spec contributed by Signal A)
+
+Signal B: **Spec:** field path-tail (after trailing-slash strip)
+  01-spec-arc-plugin
+  02-spec-arc-plugin-enhancement
+  04-spec-arc-readme
+  05-spec-arc-help
+  06-spec-arc-align-enhance
+  07-spec-capture-speedup
+  10-spec-arc-ship
+  11-spec-shape-skill-discovery
+  12-spec-arc-status
+  13-spec-wave-archive
+
+Completed-spec set (union of A and B):
+  01-spec-arc-plugin
+  02-spec-arc-plugin-enhancement
+  04-spec-arc-readme
+  05-spec-arc-help
+  06-spec-arc-align-enhance
+  07-spec-capture-speedup
+  10-spec-arc-ship
+  11-spec-shape-skill-discovery
+  12-spec-arc-status
+  13-spec-wave-archive
+
+----- All NN-spec-* directories under docs/specs/ -----
+01-spec-align-ignore-dirs
+01-spec-arc-plugin
+02-spec-arc-plugin-enhancement
+03-spec-arc-align
+04-spec-arc-readme
+05-spec-arc-help
+06-spec-arc-align-enhance
+07-spec-capture-speedup
+08-spec-backlog-consistency
+09-spec-command-walkthrough-diagrams
+10-spec-arc-ship
+11-spec-shape-skill-discovery
+12-spec-arc-status
+13-spec-wave-archive
+14-spec-wave-time-estimate-opt-in
+15-spec-agent-utilization-upgrade
+16-spec-arc-status-wave-precedence
+17-spec-claude-md-static-references
+18-spec-arc-status-spec-completion
+
+----- Rendered In-Flight Specs (after silent exclusion, sorted ascending) -----
+01-spec-align-ignore-dirs
+03-spec-arc-align
+08-spec-backlog-consistency
+09-spec-command-walkthrough-diagrams
+14-spec-wave-time-estimate-opt-in
+15-spec-agent-utilization-upgrade
+16-spec-arc-status-wave-precedence
+17-spec-claude-md-static-references
+18-spec-arc-status-spec-completion
+
+----- Asserted shipped-specs absence -----
+PASS: 04-spec-arc-readme           absent from in-flight
+PASS: 05-spec-arc-help             absent from in-flight
+PASS: 10-spec-arc-ship             absent from in-flight
+PASS: 11-spec-shape-skill-discovery absent from in-flight
+PASS: 12-spec-arc-status           absent from in-flight
+PASS: 13-spec-wave-archive         absent from in-flight
+
+Status: PASS
