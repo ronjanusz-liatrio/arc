@@ -1,0 +1,25 @@
+Type: test
+Description: SD-3 narrative style mirrors WL-2/WL-3 — uses Detection Logic numbered list with lettered sub-bullets, includes a Match Rules subsection, and uses the same wording conventions (Case-sensitive, Whitespace-trimmed, No partial or substring matching)
+Command: structural and lexical comparison between SD-3 and WL-2
+Expected: Match Rules section present in both; Case-sensitive/Whitespace-trimmed/No partial labels reused verbatim
+Timestamp: 2026-05-08T22:39:33Z
+
+=== Style check 1: WL-2 has Match Rules subsection ===
+  PASS: WL-2 reference 'Match Rules:' subsection present
+
+=== Style check 2: SD-3 mirrors WL-2 with its own Match Rules subsection ===
+  PASS: SD-3 'Match Rules (completed-spec set):' subsection present
+
+=== Style check 3: WL-2 vocabulary reused verbatim in SD-3 Match Rules ===
+  PASS: 'Case-sensitive' used in both WL-2 and SD-3 (count=2)
+  PASS: 'Whitespace-trimmed' used in both WL-2 and SD-3 (count=2)
+  PASS: 'No partial or substring matching' used in both WL-2 and SD-3 (count=2)
+
+=== Style check 4: SD-3 Detection Logic uses numbered + lettered structure (mirrors WL-2 step 3.a-3.e) ===
+  PASS: SD-3 step 2 uses lettered sub-bullets (a, b, c, d) with completed-spec content
+
+=== Style check 5: Trailing-slash normalization cross-references WL-3 (consistent with LG-3/LG-4 rule) ===
+  PASS: SD-3 cross-references WL-3 trailing-slash rule
+
+--- Status ---
+PASS: SD-3 narrative style mirrors WL-2 / WL-3 conventions

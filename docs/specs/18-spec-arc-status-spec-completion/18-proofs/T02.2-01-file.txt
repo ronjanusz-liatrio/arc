@@ -1,0 +1,88 @@
+Type: file
+Description: SD-3 contains completed-spec set definition, union signal, silent-exclusion, Match Rules, updated Inputs, and updated Fallback heading
+Command: grep -nE for each required anchor string in skills/arc-status/references/status-dimensions.md
+Expected: All required anchor strings present in SD-3 region (lines 97-158)
+Timestamp: 2026-05-08T22:38:45Z
+
+--- SD-3 region (lines 97-158) ---
+## SD-3: In-Flight Specs
+
+**Purpose:** List all spec directories under `docs/specs/` and for each report whether a spec file, plan evidence, and validation report are present — so the user can see SDD pipeline progress at a glance. Spec directories whose work is already shipped — i.e., already represented in the wave archive — are silently excluded so the table reflects work actively in progress, not every spec ever created.
+
+**Detection Logic:**
+
+1. Glob `docs/specs/NN-spec-*/` directories (where NN is a two-digit number)
+2. Compute the **completed-spec set** from the wave archive — the set of spec directory basenames whose work is already represented in `docs/skill/arc/waves/*.md`:
+   a. Glob `docs/skill/arc/waves/*.md`. If the directory is absent or contains no `.md` files, the completed-spec set is empty and step 3 is a no-op.
+   b. **Subsection-title signal.** In each archive file, scan every `### {Title}` H3 subsection. Trim surrounding whitespace from the title. Add the trimmed title to the completed-spec set if it exactly matches the basename of a spec directory from step 1 (case-sensitive comparison, no normalization beyond trim).
+   c. **Spec-field signal.** In each archive file, scan every `**Spec:** {path}` field. Trim surrounding whitespace from the path, strip a single trailing slash if present (the same trailing-slash normalization used by WL-3 for `Spec:`-field comparisons), and take the final path component. Add that basename to the completed-spec set if it matches a spec directory basename from step 1.
+   d. The completed-spec set is the **union** of (b) and (c). Either signal alone is sufficient; both signals matching the same spec contribute one entry, not two.
+3. **Exclude** any spec directory whose basename is in the completed-spec set from the rendering pass. Exclusion is **silent** — no count footer, no parenthetical, no separate "Completed Specs" table. The output shape is unchanged from its prior form; only the row set is reduced.
+4. For each spec directory, detect three artifacts:
+
+   **a. Spec file present:**
+   - Glob for `{dir}/NN-spec-*.md` (the spec document itself)
+   - Status: `yes` if at least one matching file exists, `no` otherwise
+
+   **b. Plan evidence:**
+   - Check for plan files: glob `{dir}/plan-*` for any plan artifact
+   - If no plan files found, check recent commits: run `git log --oneline -30` and search for commit messages containing `(T0` referencing this spec's NN prefix
+   - Status: `yes` if plan files exist OR a matching commit is found, `no` otherwise
+
+   **c. Validation report:**
+   - Glob for `{dir}/NN-validation-*.md`
+   - Status: `yes` if at least one matching file exists, `no` otherwise
+
+5. Sort spec directories by NN prefix (ascending)
+
+**Match Rules (completed-spec set):**
+
+- **Case-sensitive**: `17-spec-claude-md-static-references` matches `17-spec-claude-md-static-references` but not `17-Spec-Claude-MD-Static-References`.
+- **Whitespace-trimmed**: leading and trailing whitespace on either side is removed before comparison.
+- **Trailing-slash normalization on `Spec:` field values only**: `docs/specs/12-spec-arc-status/` and `docs/specs/12-spec-arc-status` both resolve to basename `12-spec-arc-status`. No other normalization is applied.
+- **Final-path-component for `Spec:` field**: only the last path segment is compared against spec directory basenames. The leading `docs/specs/` prefix is not required to match exactly — any path whose final segment matches a spec basename qualifies.
+- **No partial or substring matching**: an H3 subsection title that contains a spec basename as a substring (e.g., `12-spec-arc-status — addendum`) does not match. Comparisons are exact after trim.
+
+**Inputs:**
+
+- `docs/specs/` directory — subdirectories matching `NN-spec-*`
+- Each spec directory — contents (spec file, plan files, validation report)
+- `docs/skill/arc/waves/*.md` — wave archive files (for completed-spec set computation)
+- `git log --oneline -30` — recent commit messages (for plan evidence fallback)
+
+**Output Format:**
+
+```markdown
+**In-Flight Specs**
+
+| Spec | Spec File | Plan | Validation |
+|------|-----------|------|------------|
+| {NN}-spec-{name} | yes/no | yes/no | yes/no |
+```
+
+**Fallback (no specs directory, no spec subdirectories, or all spec subdirectories are in the completed-spec set):**
+
+```markdown
+**In-Flight Specs**
+
+No specs found — run /cw-spec to create a specification.
+```
+
+--- Anchor checks ---
+  PASS: '## SD-3: In-Flight Specs'
+  PASS: 'Compute the **completed-spec set** from the wave archive'
+  PASS: 'Subsection-title signal'
+  PASS: 'Spec-field signal'
+  PASS: '**union** of (b) and (c)'
+  PASS: 'Exclusion is **silent**'
+  PASS: 'Match Rules (completed-spec set)'
+  PASS: 'Case-sensitive'
+  PASS: 'Whitespace-trimmed'
+  PASS: 'Trailing-slash normalization on `Spec:` field values only'
+  PASS: 'Final-path-component for `Spec:` field'
+  PASS: 'No partial or substring matching'
+  PASS: 'docs/skill/arc/waves/*.md` — wave archive files (for completed-spec set computation)'
+  PASS: 'Fallback (no specs directory, no spec subdirectories, or all spec subdirectories are in the completed-spec set)'
+
+--- Status ---
+PASS: All required anchor strings present in SD-3

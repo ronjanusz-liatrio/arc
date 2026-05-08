@@ -1,0 +1,23 @@
+Type: test
+Description: Byte-for-byte invariants — SD-1, SD-2, SD-3 per-row artifact detection prose, SD-3 Output Format block, SD-4, Lifecycle Gap Detection, WL sections, and Next-Step Suggestion Precedence are all unchanged from HEAD
+Command: diff -u between HEAD and working tree for each preserved region
+Expected: All regions exit code 0 (identical)
+Timestamp: 2026-05-08T22:39:07Z
+
+=== Invariant 1: SD-1 + SD-2 (HEAD 1-95, WT 1-95) ===
+  PASS: SD-1+SD-2 byte-for-byte identical (HEAD=3066 WT=3066)
+
+=== Invariant 2: SD-3 per-row artifact detection prose (a/b/c sub-bullets) ===
+  HEAD lines 106-117, WT lines 112-123
+  PASS: per-row artifact detection prose byte-for-byte identical (HEAD=647 WT=647)
+
+=== Invariant 3: SD-3 Output Format block ===
+  HEAD lines 127-135, WT lines 142-150
+  PASS: Output Format block byte-for-byte identical (HEAD=187 WT=187)
+
+=== Invariant 4: SD-4 + Lifecycle Gap Detection + WL + Next-Step Suggestion ===
+  HEAD lines 145-663, WT lines 160-678
+  PASS: SD-4 + Lifecycle Gap Detection + WL + Next-Step Suggestion byte-for-byte identical (HEAD=27198 WT=27198)
+
+--- Status ---
+PASS: All four byte-for-byte invariants hold
