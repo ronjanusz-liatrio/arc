@@ -1,0 +1,15 @@
+Type: file
+Command: grep -n '^### LG-6: Orphan Spec' skills/arc-status/references/status-dimensions.md
+Expected: A line containing '### LG-6: Orphan Spec' exists in status-dimensions.md, located after LG-5 and before No Gaps Detected
+Timestamp: 2026-05-08T22:28:03Z
+
+--- Output ---
+341:### LG-6: Orphan Spec
+
+--- Surrounding headings (LG-5 + LG-6 + No Gaps) ---
+306:### LG-5: Validation → Shipped
+341:### LG-6: Orphan Spec
+373:### No Gaps Detected
+385:### Error Handling
+
+Status: PASS

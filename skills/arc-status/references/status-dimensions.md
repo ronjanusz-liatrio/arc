@@ -338,6 +338,38 @@ No git history found.
 
 ---
 
+### LG-6: Orphan Spec
+
+**Purpose:** Identify PASS-validated spec directories that have no linked backlog idea, indicating the spec bypassed the `/arc-capture → /arc-shape → /arc-wave` lifecycle and shipped (or is shipping) without lifecycle bookkeeping.
+
+**Detection Logic:**
+
+1. Glob `docs/specs/NN-spec-*/` directories
+2. For each spec directory, glob `{dir}/*-validation-*.md` for validation reports
+3. If no validation report exists, skip this directory
+4. Read the validation report and search for the literal string `**Overall**: PASS`
+5. If the report does not contain `**Overall**: PASS`, skip (validation did not pass)
+6. Scan `docs/BACKLOG.md` idea entries for any `Spec:` field whose value (after whitespace trim and trailing-slash normalization) equals the spec directory path
+7. If no matching backlog idea is found → flag the spec directory as a gap
+
+**Inputs:**
+
+- `docs/specs/` directory — subdirectories with validation reports
+- Each validation report — presence of `**Overall**: PASS`
+- `docs/BACKLOG.md` — idea entries with `Spec:` field for linkage check (trailing-slash normalized, matching the LG-3/LG-4 rule)
+
+**Output Format:**
+
+```markdown
+| Gap | Item | Remediation |
+|-----|------|-------------|
+| Orphan Spec | {NN}-spec-{name} | Run /arc-capture |
+```
+
+**Remediation Hint:** `/arc-capture`
+
+---
+
 ### No Gaps Detected
 
 When all five gap checks complete and no gaps are found, the Lifecycle Gaps section displays a single line:

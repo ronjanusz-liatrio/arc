@@ -1,0 +1,14 @@
+Type: test
+Command: diff -u <HEAD LG-1..LG-5> <working LG-1..LG-5>
+Expected: zero-byte diff (LG-1..LG-5 subsections unchanged)
+Timestamp: 2026-05-08T22:28:16Z
+
+--- HEAD LG-1..LG-5 byte count ---
+5313 /tmp/lg1-5-head.txt
+--- Working tree LG-1..LG-5 byte count ---
+5313 /tmp/lg1-5-working.txt
+
+--- diff output (empty means identical) ---
+
+Diff exit code: 0
+Status: PASS
