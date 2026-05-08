@@ -1,0 +1,51 @@
+Type: test (byte-identical region invariants)
+Command:
+  (a) git show HEAD:skills/arc-status/SKILL.md | sed -n '173,241p' > /tmp/lg-pre.txt
+      sed -n '173,241p' skills/arc-status/SKILL.md > /tmp/lg-post.txt
+      diff /tmp/lg-pre.txt /tmp/lg-post.txt
+  (b) git show HEAD:skills/arc-status/SKILL.md | sed -n '243,256p' > /tmp/post-pre.txt
+      sed -n '243,256p' skills/arc-status/SKILL.md > /tmp/post-post.txt
+      diff /tmp/post-pre.txt /tmp/post-post.txt
+  (c) git show HEAD:skills/arc-status/SKILL.md | sed -n '259,263p' > /tmp/tail-pre.txt
+      sed -n '260,264p' skills/arc-status/SKILL.md > /tmp/tail-post.txt
+      diff /tmp/tail-pre.txt /tmp/tail-post.txt
+  (d) git diff HEAD -- skills/arc-status/SKILL.md | grep -E "^@@"
+Expected:
+  (a) LG-1..LG-6 detection prose (lines 173-241) byte-identical to parent commit (HEAD = T01.1).
+      No regressions to LG-1..LG-5 — and LG-6 itself, just added by T01.1, is also unchanged.
+  (b) Step 6.6 prose preceding the numbered list (lines 243-256: heading, intro paragraph
+      "After all five gap checks…", "For each gap produced by…", and items 1-5) byte-identical to HEAD.
+  (c) Step 6.6 prose following the numbered list (the "Retain the `scope`…" paragraph and
+      the "See `skills/arc-status/references/status-dimensions.md`…" paragraph) byte-identical
+      to HEAD, accounting for the +1 line offset introduced by inserting one new numbered item.
+  (d) Exactly one diff hunk; only the items-6/7/8 region of Step 6.6's numbered list is changed.
+Timestamp: 2026-05-08T00:00Z
+Status: PASS
+
+Output (a) — LG-1..LG-6 detection prose:
+  exit code: 0 (no diff)
+
+Output (b) — Step 6.6 prose preceding the numbered list + items 1-5:
+  exit code: 0 (no diff)
+
+Output (c) — Step 6.6 prose following the numbered list (with offset):
+  exit code: 0 (no diff)
+
+Output (d) — diff hunk header:
+  @@ -254,8 +254,9 @@ For each gap produced by the LG-* detections above, resolve its **subject idea t
+
+Assertions:
+- LG-1..LG-5 detection prose byte-identical to HEAD ........................ PASS (a)
+- LG-6 detection prose byte-identical to HEAD .............................. PASS (a)
+- Step 6.6 heading and intro paragraphs byte-identical to HEAD ............. PASS (b)
+- Items 1-5 byte-identical to HEAD ......................................... PASS (b)
+- Postamble trailing paragraphs byte-identical to HEAD ..................... PASS (c)
+- Only one diff hunk, scoped to items 6/7/8 of the numbered list ........... PASS (d)
+- No edits to any other numbered list, table, or prose in the file ......... PASS (a)+(b)+(c)+(d)
+
+Result: PASS — the only change in skills/arc-status/SKILL.md is the insertion of one new item 6
+(LG-6 backlog-only rule) and the renumbering of two existing items (6→7, 7→8) inside Step 6.6's
+single numbered list. All other prose, tables, and lists in the file remain byte-identical.
+This satisfies the spec's invariant that LG-1..LG-5 detection text and existing precedence
+priorities 1-13 remain byte-for-byte unchanged (Goal 3 of 18-spec-arc-status-spec-completion.md;
+FR8/FR9 of Unit 1).
