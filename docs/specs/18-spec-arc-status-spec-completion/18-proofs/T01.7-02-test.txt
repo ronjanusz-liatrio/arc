@@ -1,0 +1,38 @@
+Type: test
+Command: diff -u <HEAD WL-3 items 1-3 (LG-1..LG-5 entries)> <working WL-3 items 1-3>
+Expected: zero-byte diff (LG-1..LG-5 entries within WL-3 unchanged)
+Timestamp: 2026-05-08T22:35:00Z
+
+--- HEAD WL-3 LG-1..LG-5 entries (lines 481-490 at HEAD) ---
+1. **LG-1 (Captured → Shaped) and LG-2 (Shaped → Spec)** — the subject is the backlog idea title identified during gap detection.
+   - If the subject title is in `wave_linked_ideas` → `scope = wave-linked`.
+   - Otherwise → `scope = backlog-only`.
+2. **LG-3 (Spec → Plan) and LG-4 (Plan → Validation)** — the subject is a spec directory (e.g., `docs/specs/07-spec-thing/`). Resolve the spec's linked backlog idea via the `Spec:` field:
+   a. Scan `docs/BACKLOG.md` idea entries for a `Spec:` field whose value equals the spec directory path (e.g., `docs/specs/07-spec-thing/`).
+   b. If a matching backlog idea is found and its title is in `wave_linked_ideas` → `scope = wave-linked`.
+   c. If no matching backlog idea is found, or the matched idea's title is not in `wave_linked_ideas` → `scope = backlog-only`.
+3. **LG-5 (Validation → Shipped)** — the subject is the backlog idea identified in LG-5's detection logic (the idea whose `Spec:` field matches the spec directory with a passing validation report).
+   - If the subject's title is in `wave_linked_ideas` → `scope = wave-linked`.
+   - Otherwise → `scope = backlog-only`.
+
+--- HEAD byte count ---
+1159 /tmp/wl3-lg1-5-head.txt
+
+--- Working tree byte count (same lines 481-490) ---
+1159 /tmp/wl3-lg1-5-working.txt
+
+--- diff output (empty means identical) ---
+
+Diff exit code: 0
+
+--- Additional invariant: WL-1, WL-2 unchanged (lines 395-471 at HEAD vs working) ---
+WL-1+WL-2 diff exit: 0
+
+--- Additional invariant: WL-4 + Worked Example unchanged (HEAD lines 500-547 vs working 502-549, offset by +2 from LG-6 insertion) ---
+WL-4 diff exit: 0
+
+Status: PASS
+- LG-1..LG-5 entries within WL-3 byte-for-byte unchanged (1159/1159)
+- WL-1 and WL-2 sections unchanged
+- WL-4 section and Worked Example unchanged
+- Only modification: LG-6 entry inserted; items 4 and 5 renumbered to 5 and 6

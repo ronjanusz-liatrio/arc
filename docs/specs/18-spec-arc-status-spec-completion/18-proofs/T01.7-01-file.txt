@@ -1,0 +1,23 @@
+Type: file
+Command: grep -n "LG-6" skills/arc-status/references/status-dimensions.md
+Expected: WL-3 numbered list contains a new "LG-6 (Orphan Spec)" item with always-backlog-only rule
+Timestamp: 2026-05-08T22:35:00Z
+
+--- grep output ---
+341:### LG-6: Orphan Spec
+491:4. **LG-6 (Orphan Spec)** — the subject is the spec directory (e.g., `docs/specs/17-spec-claude-md-static-references/`). No spec-to-idea lookup is performed: by construction LG-6 fires only when no backlog idea has a `Spec:` field matching the spec directory path.
+
+--- WL-3 LG-6 entry context (lines 491-492) ---
+4. **LG-6 (Orphan Spec)** — the subject is the spec directory (e.g., `docs/specs/17-spec-claude-md-static-references/`). No spec-to-idea lookup is performed: by construction LG-6 fires only when no backlog idea has a `Spec:` field matching the spec directory path.
+   - Always → `scope = backlog-only`.
+
+--- Renumbering verification (items 5 and 6 below LG-6) ---
+5. **Skipped checks** — when a lifecycle check could not execute (see Error Handling), the resulting row has no resolvable subject. Its scope is `--` (a placeholder, not `wave-linked` or `backlog-only`).
+6. **No active wave (WL-1 returned `null`)** — scope tagging is functionally unused. The scope field may be computed as `backlog-only` for all gaps but is ignored by both the table renderer (no Scope column is emitted) and Step 7 (no-wave branch of the precedence).
+
+Status: PASS
+- LG-6 entry inserted as item 4 in WL-3 numbered list
+- Subject = spec directory (mirrors LG-3/LG-4 subject style)
+- "No spec-to-idea lookup is performed" wording present
+- Always-backlog-only rule present
+- Items 4 (Skipped checks) and 5 (No active wave) renumbered to 5 and 6

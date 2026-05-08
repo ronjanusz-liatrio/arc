@@ -488,8 +488,10 @@ For each detected gap, determine its subject idea and consult the wave-linked se
 3. **LG-5 (Validation → Shipped)** — the subject is the backlog idea identified in LG-5's detection logic (the idea whose `Spec:` field matches the spec directory with a passing validation report).
    - If the subject's title is in `wave_linked_ideas` → `scope = wave-linked`.
    - Otherwise → `scope = backlog-only`.
-4. **Skipped checks** — when a lifecycle check could not execute (see Error Handling), the resulting row has no resolvable subject. Its scope is `--` (a placeholder, not `wave-linked` or `backlog-only`).
-5. **No active wave (WL-1 returned `null`)** — scope tagging is functionally unused. The scope field may be computed as `backlog-only` for all gaps but is ignored by both the table renderer (no Scope column is emitted) and Step 7 (no-wave branch of the precedence).
+4. **LG-6 (Orphan Spec)** — the subject is the spec directory (e.g., `docs/specs/17-spec-claude-md-static-references/`). No spec-to-idea lookup is performed: by construction LG-6 fires only when no backlog idea has a `Spec:` field matching the spec directory path.
+   - Always → `scope = backlog-only`.
+5. **Skipped checks** — when a lifecycle check could not execute (see Error Handling), the resulting row has no resolvable subject. Its scope is `--` (a placeholder, not `wave-linked` or `backlog-only`).
+6. **No active wave (WL-1 returned `null`)** — scope tagging is functionally unused. The scope field may be computed as `backlog-only` for all gaps but is ignored by both the table renderer (no Scope column is emitted) and Step 7 (no-wave branch of the precedence).
 
 **Outputs:**
 
