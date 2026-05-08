@@ -1,0 +1,19 @@
+Type: test
+Description: The LG-1, LG-2, LG-3, LG-4, and LG-5 subsections in skills/arc-status/SKILL.md are byte-identical to the parent commit (HEAD prior to T01.1 staging). T01.1 is a pure-insertion sub-task; LG-1..LG-5 prose must remain unchanged.
+Command: git show HEAD:skills/arc-status/SKILL.md | sed -n '/^#### LG-1:/,/^#### Step 6\.6:/p' | head -n -1 > /tmp/lg1-5-before.txt
+         sed -n '/^#### LG-1:/,/^#### LG-6:/p' skills/arc-status/SKILL.md | head -n -1 > /tmp/lg1-5-after.txt
+         diff /tmp/lg1-5-before.txt /tmp/lg1-5-after.txt
+Expected: diff produces no output (zero changed bytes inside LG-1..LG-5).
+Timestamp: 2026-05-08T00:00Z
+
+--- Output: diff /tmp/lg1-5-before.txt /tmp/lg1-5-after.txt ---
+(no output)
+Exit Status: 0
+
+--- Verification ---
+- The LG-1..LG-5 region (from `#### LG-1: Captured Shaped` through the line preceding `#### LG-6:` in the working tree, vs. the line preceding `#### Step 6.6:` in HEAD) is byte-identical between HEAD and the working tree.
+- This confirms T01.1 made no edits to existing LG-1..LG-5 prose, only an additive insertion of LG-6 between LG-5 and Step 6.6.
+- Satisfies spec-18 functional requirement: "keep all existing LG-1..LG-5 detection text byte-for-byte unchanged - no edits to those subsections beyond the addition of a new sibling subsection after them."
+- Also satisfies feature scenario "LG-1 through LG-5 detection text remains byte-identical after the LG-6 addition."
+
+Status: PASS

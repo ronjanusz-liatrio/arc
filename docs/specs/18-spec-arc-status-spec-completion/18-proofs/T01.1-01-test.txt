@@ -1,0 +1,22 @@
+Type: test
+Description: skills/arc-status/SKILL.md contains a `#### LG-6: Orphan Spec` heading positioned strictly between the LG-5 heading and the Step 6.6 (Tag Each Gap with Scope) heading.
+Command (A): grep -nE "^#### (LG-[0-9]+:|Step 6\.[0-9]+:)" skills/arc-status/SKILL.md
+Expected: LG-1, LG-2, LG-3, LG-4, LG-5, LG-6 appear in order; Step 6.0 precedes LG-1; Step 6.6 follows LG-6. The LG-6 line number is greater than LG-5's and less than Step 6.6's.
+Timestamp: 2026-05-08T00:00Z
+
+--- Output: grep "^#### (LG-N:|Step 6.N:)" skills/arc-status/SKILL.md ---
+173:#### Step 6.0: Compute Wave-Linked Idea Set (Preamble)
+192:#### LG-1: Captured Shaped
+199:#### LG-2: Shaped Spec
+208:#### LG-3: Spec Plan
+217:#### LG-4: Plan Validation
+225:#### LG-5: Validation Shipped
+234:#### LG-6: Orphan Spec
+243:#### Step 6.6: Tag Each Gap with Scope (Postamble)
+
+--- Verification ---
+- LG-6: Orphan Spec heading exists at line 234 (exactly one match).
+- Line ordering: 173 (Step 6.0) < 192 (LG-1) < 199 (LG-2) < 208 (LG-3) < 217 (LG-4) < 225 (LG-5) < 234 (LG-6) < 243 (Step 6.6).
+- LG-6 is positioned strictly between LG-5 (225) and Step 6.6 (243), satisfying the spec-18 functional requirement that LG-6 appear "after the existing LG-5: Validation -> Shipped section and before Step 6.6: Tag Each Gap with Scope (Postamble)".
+
+Status: PASS

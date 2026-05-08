@@ -1,0 +1,39 @@
+Type: file
+Description: The git diff against HEAD for skills/arc-status/SKILL.md is purely additive (zero deleted lines). The only change is the insertion of the LG-6: Orphan Spec subsection (heading + blank line + 6 numbered list items + trailing blank line = 9 added lines).
+Command (A): git diff --numstat skills/arc-status/SKILL.md
+Command (B): git diff skills/arc-status/SKILL.md
+Expected: numstat reports `9 0`; the diff body shows only `+` lines for the LG-6 block, no `-` lines.
+Timestamp: 2026-05-08T00:00Z
+
+--- Output: git diff --numstat skills/arc-status/SKILL.md ---
+9	0	skills/arc-status/SKILL.md
+
+--- Output: git diff skills/arc-status/SKILL.md ---
+diff --git a/skills/arc-status/SKILL.md b/skills/arc-status/SKILL.md
+index cb79e2c..333b559 100644
+--- a/skills/arc-status/SKILL.md
++++ b/skills/arc-status/SKILL.md
+@@ -231,6 +231,15 @@ See `skills/arc-status/references/status-dimensions.md` (WL-2 Wave-Linked Idea S
+ 5. If no matching idea is found, skip.
+ 6. Check the matched idea's `Status:` field. If `Status:` is `spec-ready` (not `shipped`), flag as gap.
+
++#### LG-6: Orphan Spec
++
++1. Glob `docs/specs/NN-spec-*/` directories.
++2. For each spec directory, glob `{dir}/*-validation-*.md` for validation reports. If none exist, skip.
++3. Read each validation report and search for the literal string `**Overall**: PASS`. If no validation report contains that string, skip.
++4. Scan `docs/BACKLOG.md` idea entries for any `Spec:` field whose value, after whitespace trim and trailing-slash normalization, equals the spec directory path (e.g., `docs/specs/NN-spec-name`).
++5. If a matching idea is found, skip - this spec is already linked to a backlog entry and is handled by LG-3, LG-4, or LG-5 as appropriate.
++6. If no matching idea is found, flag the spec directory as an LG-6 gap.
++
+ #### Step 6.6: Tag Each Gap with Scope (Postamble)
+
+ After all five gap checks (LG-1 through LG-5) have run, but **before** the Lifecycle Gaps table is emitted, tag each detected gap (and each skipped-check row) with a `scope` field. The scope field is consumed by the table renderer (Scope column - see `references/status-dimensions.md` WL-4) and by Step 7 (to filter which gaps drive the next-step recommendation - see the "Wave scope and backlog-only gaps" note in Step 7).
+
+--- Verification ---
+- numstat: 9 lines added, 0 lines removed in skills/arc-status/SKILL.md.
+- The 9 added lines are exactly the LG-6: Orphan Spec subsection: 1 heading line + 1 blank line + 6 numbered list items + 1 trailing blank line.
+- The diff hunk shows the insertion at line 231 (after LG-5 step 6, "Check the matched idea's Status field...") and immediately before the unchanged "Step 6.6: Tag Each Gap with Scope (Postamble)" heading.
+- No deletions, no modifications to surrounding lines, no whitespace changes in pre-existing text.
+
+Status: PASS

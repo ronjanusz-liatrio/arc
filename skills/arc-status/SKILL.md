@@ -231,6 +231,15 @@ See `skills/arc-status/references/status-dimensions.md` (WL-2 Wave-Linked Idea S
 5. If no matching idea is found, skip.
 6. Check the matched idea's `Status:` field. If `Status:` is `spec-ready` (not `shipped`), flag as gap.
 
+#### LG-6: Orphan Spec
+
+1. Glob `docs/specs/NN-spec-*/` directories.
+2. For each spec directory, glob `{dir}/*-validation-*.md` for validation reports. If none exist, skip.
+3. Read each validation report and search for the literal string `**Overall**: PASS`. If no validation report contains that string, skip.
+4. Scan `docs/BACKLOG.md` idea entries for any `Spec:` field whose value, after whitespace trim and trailing-slash normalization, equals the spec directory path (e.g., `docs/specs/NN-spec-name`).
+5. If a matching idea is found, skip — this spec is already linked to a backlog entry and is handled by LG-3, LG-4, or LG-5 as appropriate.
+6. If no matching idea is found, flag the spec directory as an LG-6 gap.
+
 #### Step 6.6: Tag Each Gap with Scope (Postamble)
 
 After all five gap checks (LG-1 through LG-5) have run, but **before** the Lifecycle Gaps table is emitted, tag each detected gap (and each skipped-check row) with a `scope` field. The scope field is consumed by the table renderer (Scope column — see `references/status-dimensions.md` WL-4) and by Step 7 (to filter which gaps drive the next-step recommendation — see the "Wave scope and backlog-only gaps" note in Step 7).

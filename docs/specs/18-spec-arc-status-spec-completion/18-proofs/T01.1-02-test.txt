@@ -1,0 +1,26 @@
+Type: test
+Description: The new LG-6: Orphan Spec subsection contains the six required predicates: (a) glob NN-spec-* directories, (b) glob *-validation-*.md per dir, (c) match the literal `**Overall**: PASS` string, (d) scan BACKLOG.md Spec: fields with whitespace-trim and trailing-slash normalization, (e) skip when a matching idea is found, (f) flag the spec dir as an LG-6 gap when none is found.
+Command: sed -n '/^#### LG-6: Orphan Spec/,/^#### Step 6\.6:/p' skills/arc-status/SKILL.md | head -n -1
+Expected: All six predicate lines present and ordered as numbered list items 1-6.
+Timestamp: 2026-05-08T00:00Z
+
+--- Output: sed -n '/^#### LG-6: Orphan Spec/,/^#### Step 6\.6:/p' skills/arc-status/SKILL.md ---
+#### LG-6: Orphan Spec
+
+1. Glob `docs/specs/NN-spec-*/` directories.
+2. For each spec directory, glob `{dir}/*-validation-*.md` for validation reports. If none exist, skip.
+3. Read each validation report and search for the literal string `**Overall**: PASS`. If no validation report contains that string, skip.
+4. Scan `docs/BACKLOG.md` idea entries for any `Spec:` field whose value, after whitespace trim and trailing-slash normalization, equals the spec directory path (e.g., `docs/specs/NN-spec-name`).
+5. If a matching idea is found, skip - this spec is already linked to a backlog entry and is handled by LG-3, LG-4, or LG-5 as appropriate.
+6. If no matching idea is found, flag the spec directory as an LG-6 gap.
+
+--- Verification ---
+- Predicate 1 (glob spec dirs): line 236, "Glob `docs/specs/NN-spec-*/` directories." -- PRESENT
+- Predicate 2 (per-dir validation glob): line 237, "glob `{dir}/*-validation-*.md` for validation reports. If none exist, skip." -- PRESENT
+- Predicate 3 (PASS literal): line 238, "search for the literal string `**Overall**: PASS`. If no validation report contains that string, skip." -- PRESENT
+- Predicate 4 (BACKLOG Spec: scan with normalization): line 239, "Scan `docs/BACKLOG.md` idea entries for any `Spec:` field whose value, after whitespace trim and trailing-slash normalization, equals the spec directory path" -- PRESENT
+- Predicate 5 (skip if matched): line 240, "If a matching idea is found, skip" -- PRESENT
+- Predicate 6 (flag if unmatched): line 241, "If no matching idea is found, flag the spec directory as an LG-6 gap." -- PRESENT
+- All six predicates appear as a numbered list (items 1-6) mirroring the LG-1..LG-5 detection format.
+
+Status: PASS
