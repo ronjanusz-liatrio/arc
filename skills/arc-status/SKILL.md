@@ -319,7 +319,7 @@ See `skills/arc-status/references/status-dimensions.md` (Lifecycle Gap Detection
 
 ### Step 7: Next-Step Suggestion
 
-After emitting all summary sections, recommend the single most relevant next skill based on the pulse findings. The recommendation uses a **first-match-wins precedence list** — evaluate from Priority 1 downward and stop at the first matching condition. The list is **wave-state-aware**: Priorities 1–8 apply when an active wave exists (the **active wave name** resolved in Step 2 is non-null), and Priorities 9–14 apply when the active wave name is null (no ROADMAP, empty table, or all rows Completed).
+After emitting all summary sections, recommend the single most relevant next skill based on the pulse findings. The recommendation uses a **first-match-wins precedence list** — evaluate from Priority 1 downward and stop at the first matching condition. The list is **wave-state-aware**: Priorities 1–8 apply when an active wave exists (the **active wave name** resolved in Step 2 is non-null), and Priorities 9–15 apply when the active wave name is null (no ROADMAP, empty table, or all rows Completed).
 
 #### Precedence List
 
@@ -373,7 +373,7 @@ Select the **alternative skill** per the matched priority:
 | 14 (no-wave LG-6) | `/arc-audit` (no lower-priority no-wave gap exists). |
 | 15 (no wave, no gaps) | `/arc-audit` |
 
-**Never offer the recommended skill as its own alternative.** If the fall-through rule would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 14 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
+**Never offer the recommended skill as its own alternative.** If the fall-through rule would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 15 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
 
 **Prompt format:**
 

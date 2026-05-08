@@ -1,0 +1,94 @@
+**ARC-STATUS**
+
+**Current Wave**
+
+Wave 4 — Status Visibility: Make /arc-status and /arc-assess accurately reflect lifecycle state
+Status: planned | Ideas: 2
+
+**Backlog Snapshot**
+
+| Status | Count |
+|--------|-------|
+| Captured | 19 |
+| Shaped | 0 |
+| Spec-Ready | 2 |
+| Shipped | 11 |
+| **Total** | **32** |
+
+**In-Flight Specs**
+
+| Spec | Spec File | Plan | Validation |
+|------|-----------|------|------------|
+| 01-spec-align-ignore-dirs | yes | no | no |
+| 01-spec-arc-plugin | yes | no | no |
+| 02-spec-arc-plugin-enhancement | yes | no | no |
+| 03-spec-arc-align | yes | no | yes |
+| 04-spec-arc-readme | yes | no | no |
+| 05-spec-arc-help | yes | no | no |
+| 06-spec-arc-align-enhance | yes | no | no |
+| 07-spec-capture-speedup | yes | no | no |
+| 08-spec-backlog-consistency | yes | no | no |
+| 09-spec-command-walkthrough-diagrams | yes | no | no |
+| 10-spec-arc-ship | yes | no | yes |
+| 11-spec-shape-skill-discovery | yes | no | yes |
+| 12-spec-arc-status | yes | no | yes |
+| 13-spec-wave-archive | yes | no | yes |
+| 14-spec-wave-time-estimate-opt-in | yes | no | yes |
+| 15-spec-agent-utilization-upgrade | yes | no | yes |
+| 16-spec-arc-status-wave-precedence | yes | no | yes |
+| 17-spec-claude-md-static-references | yes | no | yes |
+| 18-spec-arc-status-spec-completion | yes | no | no |
+
+**Recent Activity**
+
+```
+a77994a test(arc-status): verify In-Flight filter invariants and detection-prose byte-equality (T02.3)
+0aa7473 feat(arc-status): render LG-6 (Orphan Spec) rows in Lifecycle Gaps tables (T01.5)
+bb9f6fa feat(arc-status): filter In-Flight Specs by wave-archive completed-spec set (T02.1)
+dc7cb75 feat(arc-status): align Step 7 alt-skill table with no-wave LG-6 priority (T01.4)
+a4f45af docs(arc-status-ref): document completed-spec exclusion rule in SD-3 (T02.2)
+7256556 feat(arc-status): insert no-wave LG-6 priority into Step 7 precedence table (T01.3)
+a6d0946 feat(arc-status): tag LG-6 Orphan Spec gaps as backlog-only in Step 6.6 (T01.2)
+f6d3d1f docs(arc-status-ref): extend WL-3 with LG-6 always-backlog-only rule (T01.7)
+cb6d029 feat(arc-status): add LG-6 Orphan Spec detection subsection (T01.1)
+d0e021c docs(arc-status-ref): add LG-6 Orphan Spec subsection to status-dimensions.md (T01.6)
+```
+
+**Lifecycle Gaps**
+
+| Gap | Item | Remediation | Scope |
+|-----|------|-------------|-------|
+| Captured → Shaped | Remove time estimates from arc-wave | Run /arc-shape | Backlog (outside wave) |
+| Captured → Shaped | Add rewrite mode to arc-sync injection prompt | Run /arc-shape | Backlog (outside wave) |
+| Spec → Plan | 01-spec-align-ignore-dirs | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 01-spec-arc-plugin | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 02-spec-arc-plugin-enhancement | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 03-spec-arc-align | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 04-spec-arc-readme | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 05-spec-arc-help | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 06-spec-arc-align-enhance | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 07-spec-capture-speedup | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 08-spec-backlog-consistency | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 09-spec-command-walkthrough-diagrams | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 10-spec-arc-ship | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 11-spec-shape-skill-discovery | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 12-spec-arc-status | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 13-spec-wave-archive | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 14-spec-wave-time-estimate-opt-in | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 15-spec-agent-utilization-upgrade | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 16-spec-arc-status-wave-precedence | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 17-spec-claude-md-static-references | Run /cw-plan | Backlog (outside wave) |
+| Spec → Plan | 18-spec-arc-status-spec-completion | Run /cw-plan | Wave: Wave 4 — Status Visibility |
+| Orphan Spec | 03-spec-arc-align | Run /arc-capture | Backlog (outside wave) |
+| Orphan Spec | 10-spec-arc-ship | Run /arc-capture | Backlog (outside wave) |
+| Orphan Spec | 11-spec-shape-skill-discovery | Run /arc-capture | Backlog (outside wave) |
+| Orphan Spec | 12-spec-arc-status | Run /arc-capture | Backlog (outside wave) |
+| Orphan Spec | 13-spec-wave-archive | Run /arc-capture | Backlog (outside wave) |
+| Orphan Spec | 14-spec-wave-time-estimate-opt-in | Run /arc-capture | Backlog (outside wave) |
+| Orphan Spec | 16-spec-arc-status-wave-precedence | Run /arc-capture | Backlog (outside wave) |
+| Orphan Spec | 17-spec-claude-md-static-references | Run /arc-capture | Backlog (outside wave) |
+
+**Next-Step Suggestion**
+
+Matched Priority: 4
+Recommended Skill: /cw-plan

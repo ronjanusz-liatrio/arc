@@ -1,0 +1,18 @@
+Type: test (byte-for-byte invariant)
+Description: Invariant 2 — Precedence-table rows 1–13 in Step 7 of skills/arc-status/SKILL.md are byte-for-byte unchanged vs. parent commit 995f82a.
+Command: diff parent-prec-1-13.txt current-prec-1-13.txt
+Expected: empty diff (exit 0)
+Timestamp: 2026-05-08T00:00:00Z
+
+--- DIFF OUTPUT ---
+(empty — diff exit 0)
+
+Parent slice: skills/arc-status/SKILL.md@995f82a, lines 309–321 (Priorities 1–13).
+Current slice: skills/arc-status/SKILL.md@working-tree, lines 328–340 (Priorities 1–13).
+
+Additive-only behaviour confirmed:
+- Parent table had 14 rows (priorities 1–14). Current table has 15 rows (priorities 1–15).
+- Net change: exactly one row inserted (the new no-wave LG-6 row at Priority 14) and exactly one renumber (parent Priority 14 → current Priority 15). Verified by `diff <(sed 's/^| 14 /| 15 /' parent row 14) <(current row 15)` which is empty.
+- Priorities 1–13 are byte-identical between parent and current.
+
+Status: PASS

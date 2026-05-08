@@ -1,0 +1,33 @@
+Type: file (surgical narrative fix verification)
+Description: Stale-reference cleanup — two narrative references in skills/arc-status/SKILL.md Step 7 introduced by the T01.3 / T01.4 renumbers were corrected by this task.
+Command: grep -n "Priorities 9–14\|Priority 14 recommend" skills/arc-status/SKILL.md
+Expected: matches limited to non-Step-7 contexts (Step 6.6 retains its own internal "Priorities 9–14" reference, which is out-of-scope for T01.8 per its constraints).
+Timestamp: 2026-05-08T00:00:00Z
+
+--- FIX 1: Wave-state-aware narrative paragraph (top of Step 7) ---
+File: skills/arc-status/SKILL.md
+Before: "...Priorities 1–8 apply when an active wave exists ... and Priorities 9–14 apply when the active wave name is null..."
+After:  "...Priorities 1–8 apply when an active wave exists ... and Priorities 9–15 apply when the active wave name is null..."
+Rationale: T01.3 inserted a new no-wave LG-6 row at Priority 14 and renumbered the prior Priority 14 (no-wave / no-gaps → /arc-wave) to Priority 15. The narrative now correctly spans Priorities 9–15.
+
+--- FIX 2: "Never offer the recommended skill as its own alternative" parenthetical ---
+File: skills/arc-status/SKILL.md
+Before: "...e.g., both Priority 7 and Priority 14 recommend `/arc-wave`, but their alternatives differ..."
+After:  "...e.g., both Priority 7 and Priority 15 recommend `/arc-wave`, but their alternatives differ..."
+Rationale: After T01.3's renumber, current Priority 14 is the no-wave LG-6 row recommending `/arc-capture` — not `/arc-wave`. Priority 15 (no wave, no gaps) is the row that still recommends `/arc-wave`, so the new live example pair is Priority 7 and Priority 15. Both recommend `/arc-wave`; their alternatives are `/arc-audit` (Priority 7) and `/arc-audit` (Priority 15) — same alternative skill but selected by different fall-through paths, which is exactly the case the parenthetical illustrates.
+
+--- VERIFICATION ---
+Post-fix grep for "Priorities 9–14" in skills/arc-status/SKILL.md:
+$ grep -n "Priorities 9–14" skills/arc-status/SKILL.md
+265:8. **No active wave** — when the **active wave name** from Step 2 is null, the wave-linked idea set from Step 6.0 is empty. Every detected gap therefore evaluates to `scope = backlog-only` by the rules above. In this branch the scope field is functionally unused — the table renderer (T01.4) omits the Scope column, and Step 7's no-wave precedence (Priorities 9–14) ignores the scope field entirely.
+
+The single remaining match is in Step 6.6 (line 265), an internal cross-reference that is also a stale reference but is OUT OF SCOPE for T01.8 per the task constraints ("Apply only the two narrative fixes named in the task description"). It should be addressed in a follow-up fix task.
+
+Post-fix grep for the Step 7 parenthetical:
+$ grep -n "Priority 7 and Priority" skills/arc-status/SKILL.md
+376:**Never offer the recommended skill as its own alternative.** If the fall-through rule would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 15 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
+
+Status: PASS
+
+--- FOLLOW-UP NOTE ---
+A third stale "Priorities 9–14" cross-reference exists at line 265 in Step 6.6. It is out-of-scope for T01.8. A follow-up fix task should be filed to update this reference once T01 is closed. (Filed via this proof artifact rather than as a separate task per the cw-execute "do not fan out work outside scope" guidance.)

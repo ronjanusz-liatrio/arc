@@ -1,0 +1,28 @@
+Type: cli (idempotency check)
+Description: Two consecutive simulated /arc-status runs must produce byte-identical inline output.
+Command: bash run-arc-status-sim.sh > run1.txt; bash run-arc-status-sim.sh > run2.txt; diff run1.txt run2.txt
+Expected: empty diff (exit 0)
+Timestamp: 2026-05-08T00:00:00Z
+
+--- IDEMPOTENCY DIFF ---
+$ diff T01.8-06-cli-run1.txt T01.8-07-cli-run2.txt
+(empty — exit 0)
+
+The simulator (run-arc-status-sim.sh) is a deterministic transcription of skills/arc-status/SKILL.md prose into shell. It reads the same inputs as a live /arc-status run:
+- docs/ROADMAP.md (wave summary table for Step 2)
+- docs/BACKLOG.md (summary table for Step 3 and Step 6.0; idea sections for LG-1, LG-2, LG-5)
+- docs/skill/arc/waves/*.md (Shipped count, completed-spec set, Spec: fields)
+- docs/specs/NN-spec-*/ (per-spec artifact detection for Step 4 and LG-3..LG-6)
+- git log --oneline -10 (Step 5) and -30 (LG-3, LG-4 plan-evidence signal)
+
+Both runs were executed back-to-back with no intervening filesystem mutations. The diff is empty, confirming the inline-output stage of /arc-status is idempotent on this repo state.
+
+LG-6 (Orphan Spec) verification — task description (a):
+$ grep "Orphan Spec.*17-spec-claude-md-static-references" T01.8-06-cli-run1.txt
+| Orphan Spec | 17-spec-claude-md-static-references | Run /arc-capture | Backlog (outside wave) |
+
+17-spec-claude-md-static-references appears as an LG-6 (Orphan Spec) row in the Lifecycle Gaps table — its validation report `**Overall**: PASS`-matches and no BACKLOG idea has a Spec: field linking to it.
+
+Other PASS-validated orphan specs surfaced (also LG-6 rows): 03-spec-arc-align, 10-spec-arc-ship, 11-spec-shape-skill-discovery, 12-spec-arc-status, 13-spec-wave-archive, 14-spec-wave-time-estimate-opt-in, 16-spec-arc-status-wave-precedence — none of which are referenced from BACKLOG.md.
+
+Status: PASS
