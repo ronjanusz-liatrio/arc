@@ -565,7 +565,7 @@ Given a ROADMAP where the first non-Completed row has Wave `Wave 4 — Foo` and 
 
 ## Next-Step Suggestion Precedence
 
-After emitting all summary sections, `/arc-status` recommends the single most relevant next skill. The recommendation uses a **first-match-wins precedence list** — evaluate conditions from Priority 1 downward and stop at the first match. The list is **wave-state-aware**: Priorities 1–8 apply when an active wave exists (the **active wave name** resolved in Step 2 is non-null), and Priorities 9–14 apply when the active wave name is null (no ROADMAP, empty table, or all rows Completed).
+After emitting all summary sections, `/arc-status` recommends the single most relevant next skill. The recommendation uses a **first-match-wins precedence list** — evaluate conditions from Priority 1 downward and stop at the first match. The list is **wave-state-aware**: Priorities 1–8 apply when an active wave exists (the **active wave name** resolved in Step 2 is non-null), and Priorities 9–15 apply when the active wave name is null (no ROADMAP, empty table, or all rows Completed).
 
 This section depends on the algorithm defined in [Wave Linkage Detection](#wave-linkage-detection) above — specifically WL-1 (active wave resolution), WL-2 (wave-linked idea set), and WL-3 (gap scope tagging). The precedence rows refer to "wave-linked" and "backlog-only" gaps exactly as those terms are defined by WL-3.
 
@@ -588,7 +588,8 @@ This section depends on the algorithm defined in [Wave Linkage Detection](#wave-
 | 11 | No active wave AND an LG-3 (Spec → Plan) gap exists | `/cw-plan` | "{NN}-spec-{name} has a spec but no plan — plan it?" |
 | 12 | No active wave AND an LG-2 (Shaped → Spec) gap exists | `/cw-spec` | "{Idea Title} is shaped but has no spec — write a spec?" |
 | 13 | No active wave AND an LG-1 (Captured → Shaped) gap on a P0 or P1 idea | `/arc-shape` | "{Idea Title} is captured at {Priority} but unshaped — shape it?" |
-| 14 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
+| 14 | No active wave AND an LG-6 (Orphan Spec) gap exists | `/arc-capture` | "{NN}-spec-{name} has a PASS validation report but no BACKLOG idea — capture it?" |
+| 15 | No active wave AND no gaps | `/arc-wave` | "No gaps and no active wave — plan the next delivery wave?" |
 
 ---
 
@@ -597,7 +598,7 @@ This section depends on the algorithm defined in [Wave Linkage Detection](#wave-
 1. Resolve the **active wave name** and **active wave status** from Step 2 (WL-1). Compute the **wave-linked idea set** per WL-2 and tag each lifecycle gap detected in Step 6 with a scope field of `wave-linked` or `backlog-only` per WL-3.
 2. Select the applicable branch:
    - **Active-wave branch (Priorities 1–8)** — taken when the active wave name is non-null. Only gaps tagged `wave-linked` by WL-3 can satisfy Priorities 2–6. Backlog-only gaps remain visible in the Lifecycle Gaps table (with `Backlog (outside wave)` in the Scope column) but never drive the recommendation in this branch, and they are not considered by Priorities 7 and 8.
-   - **No-wave branch (Priorities 9–14)** — taken when the active wave name is null. All detected gaps are eligible (the scope field is functionally unused in this branch because WL-3 tags every gap as `backlog-only` when there is no active wave). This branch preserves the pre-change gap-first recommendation behavior.
+   - **No-wave branch (Priorities 9–15)** — taken when the active wave name is null. All detected gaps are eligible (the scope field is functionally unused in this branch because WL-3 tags every gap as `backlog-only` when there is no active wave). This branch preserves the pre-change gap-first recommendation behavior.
 3. Walk the precedence rows of the selected branch top-to-bottom. At the first row whose condition matches, stop and use that row's recommended skill and reason template.
 4. Substitute `{Name}`, `{status}`, `{Idea Title}`, `{Priority}`, and `{NN}-spec-{name}` into the reason template from the matched row. See "Wave-name interpolation" below for the `{Name}` substitution rule.
 5. Select the **alternative skill** for the `AskUserQuestion` prompt using the rules in the next subsection.
@@ -635,9 +636,10 @@ Select the alternative skill per the matched priority:
 | 11 (no-wave LG-3) | Next-lower-priority no-wave gap skill that also matched among Priorities 12–13 (in order: `/cw-spec`, `/arc-shape`). If none matched, `/arc-audit`. |
 | 12 (no-wave LG-2) | The no-wave P0/P1 LG-1 skill (`/arc-shape`) if Priority 13 also matched. Otherwise `/arc-audit`. |
 | 13 (no-wave LG-1 P0/P1) | `/arc-audit` (no lower-priority no-wave gap exists). |
-| 14 (no wave, no gaps) | `/arc-audit` |
+| 14 (no-wave LG-6) | `/arc-audit` (no lower-priority no-wave gap exists). |
+| 15 (no wave, no gaps) | `/arc-audit` |
 
-**Never offer the recommended skill as its own alternative.** If a fall-through would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 14 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
+**Never offer the recommended skill as its own alternative.** If a fall-through would yield the same skill as the recommendation (e.g., both Priority 7 and Priority 15 recommend `/arc-wave`, but their alternatives differ), use the alternative listed in the table above.
 
 #### Prompt Shape
 
