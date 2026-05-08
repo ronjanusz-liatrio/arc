@@ -1,0 +1,31 @@
+Type: test
+Description: Verify the per-row artifact detection prose (Spec File / Plan / Validation sub-bullets) is byte-identical between the parent commit (HEAD before this T02.1 implementation) and the working tree. This corresponds to the Gherkin scenario "Step 4 per-row artifact detection prose remains byte-identical after the filter is added".
+Command: |
+  git show HEAD:skills/arc-status/SKILL.md | sed -n '/^### Step 4: In-Flight Specs/,/^### Step 5:/p' > /tmp/step4-parent.txt
+  sed -n '/^### Step 4: In-Flight Specs/,/^### Step 5:/p' skills/arc-status/SKILL.md > /tmp/step4-working.txt
+  grep "^   \*\*[abc]\." /tmp/step4-parent.txt > /tmp/abc-parent.txt
+  grep "^   \*\*[abc]\." /tmp/step4-working.txt > /tmp/abc-working.txt
+  diff /tmp/abc-parent.txt /tmp/abc-working.txt
+  md5sum /tmp/abc-parent.txt /tmp/abc-working.txt
+Expected: diff produces no output (byte-identical); md5sums match.
+Timestamp: 2026-05-08T16:06:00Z
+Status: PASS
+
+Output:
+---
+diff /tmp/abc-parent.txt /tmp/abc-working.txt
+(no output — files identical)
+
+wc -cl:
+  3 520 /tmp/abc-parent.txt
+  3 520 /tmp/abc-working.txt
+
+md5sum:
+91714aa83cb574dc044def6d55d0f48a  /tmp/abc-parent.txt
+91714aa83cb574dc044def6d55d0f48a  /tmp/abc-working.txt
+---
+
+Verification:
+- [PASS] Per-row artifact detection prose (sub-bullets a, b, c for Spec file, Plan evidence, Validation report) is byte-identical: 520 bytes, 3 lines, identical md5.
+- [PASS] Detection-prose invariant from filter-in-flight-specs-by-wave-archive.feature scenario "Step 4 per-row artifact detection prose remains byte-identical after the filter is added" is satisfied.
+- Note: The leading list numeral changed from "3." (parent) to "5." (working tree) because two new items were inserted ahead. Per the task description ("Do NOT touch the per-row artifact detection prose ... Spec File / Plan / Validation logic"), the *prose* — the sub-bullet text describing the detection logic — must remain identical, and it does.

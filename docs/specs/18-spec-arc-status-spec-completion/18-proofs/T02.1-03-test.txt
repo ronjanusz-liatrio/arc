@@ -1,0 +1,41 @@
+Type: test
+Description: Verify that the table emit format and the fallback notice text are byte-identical between parent commit and working tree (only the surrounding step ordering changed). Also verify SD-3 cross-reference is preserved (and extended).
+Command: |
+  git show HEAD:skills/arc-status/SKILL.md | sed -n '/^### Step 4: In-Flight Specs/,/^### Step 5:/p' > /tmp/step4-parent.txt
+  sed -n '/^### Step 4: In-Flight Specs/,/^### Step 5:/p' skills/arc-status/SKILL.md > /tmp/step4-working.txt
+  grep "^   | " /tmp/step4-parent.txt > /tmp/table-parent.txt
+  grep "^   | " /tmp/step4-working.txt > /tmp/table-working.txt
+  diff /tmp/table-parent.txt /tmp/table-working.txt
+  md5sum /tmp/table-parent.txt /tmp/table-working.txt
+  grep -c "No specs found — run /cw-spec to create a specification\." skills/arc-status/SKILL.md
+  grep -c "skills/arc-status/references/status-dimensions.md\` (SD-3)" skills/arc-status/SKILL.md
+Expected:
+  - Table block diff: empty (byte-identical).
+  - Table block md5: identical between parent and working tree.
+  - Fallback notice text count: 1 (single occurrence of literal "No specs found ...").
+  - SD-3 cross-reference count: 1 (single ref pointer present in Step 4).
+Timestamp: 2026-05-08T16:08:00Z
+Status: PASS
+
+Output:
+---
+Table block diff: empty.
+md5sum:
+  a16c7cf4274dd907f73d183aa3bddf2b  /tmp/table-parent.txt
+  a16c7cf4274dd907f73d183aa3bddf2b  /tmp/table-working.txt
+
+Fallback notice grep:
+  Parent: "   No specs found — run /cw-spec to create a specification."
+  Working: "   No specs found — run /cw-spec to create a specification."
+
+Fallback notice occurrence count in working tree (Step 4 only): 1
+SD-3 cross-reference occurrence count: 1
+---
+
+Verification:
+- [PASS] Specs table emit block (header + separator + sample row) is byte-identical to parent commit (md5 match).
+- [PASS] Fallback notice literal text "No specs found — run /cw-spec to create a specification." appears verbatim in the working tree.
+- [PASS] SD-3 cross-reference pointer present (line 149 of working tree). Reference text extended to "for the full detection logic, including the completed-spec set match rules" — still points to same SD-3 anchor.
+- [PASS] No new "Completed Specs" sidebar / second table appears in Step 4 prose (silent exclusion satisfied).
+- [PASS] Step 4 H3 heading "### Step 4: In-Flight Specs" unchanged.
+- [PASS] Sub-header prose "List all spec directories and report pipeline artifact presence for each." unchanged.

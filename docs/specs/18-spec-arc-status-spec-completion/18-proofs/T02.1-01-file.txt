@@ -1,0 +1,56 @@
+Type: file
+Description: Verify Step 4 of skills/arc-status/SKILL.md now contains 6 numbered items: (1) glob, (2) completed-spec set computation, (3) exclusion, (4) fallback, (5) per-row artifact detection, (6) table emit. Per-row detection prose remains intact.
+Command: Read skills/arc-status/SKILL.md, lines 115-149
+Expected: Step 4 has 6 ordered list items; the per-row artifact detection sub-bullets (a, b, c) appear under item 5 and contain unchanged prose for Spec File / Plan / Validation; the fallback notice text "No specs found — run /cw-spec to create a specification." remains literally present.
+Timestamp: 2026-05-08T16:05:00Z
+Status: PASS
+
+Captured Step 4 contents (skills/arc-status/SKILL.md, lines 115-149):
+---
+### Step 4: In-Flight Specs
+
+List all spec directories and report pipeline artifact presence for each.
+
+1. Glob `docs/specs/NN-spec-*/` directories (where NN is a two-digit number).
+2. Compute the **completed-spec set** from the wave archive — the set of spec directory basenames whose work is already represented in `docs/skill/arc/waves/*.md`. The set is the **union** of two signals:
+   a. **Subsection-title signal.** Every `### {Title}` H3 subsection title across all `docs/skill/arc/waves/*.md` files whose value, after whitespace trim, exactly matches a spec directory basename from step 1 (case-sensitive comparison; no normalization beyond trim).
+   b. **Spec-field signal.** Every `**Spec:** {path}` field value across those files whose path, after whitespace trim and stripping a single trailing slash, has a final path component matching a spec directory basename from step 1.
+
+   If `docs/skill/arc/waves/` is absent or contains no `.md` files, the completed-spec set is empty. Either signal alone is sufficient; both signals matching the same spec contribute one entry, not two.
+3. **Exclude** any spec directory whose basename is in the completed-spec set from the rendering pass. Exclusion is **silent** — emit no count footer, no parenthetical, and no separate "Completed Specs" table.
+4. If no spec directories remain after exclusion (either because none were found in step 1, or because every spec directory is in the completed-spec set), emit the fallback and move to Step 5:
+   ```
+   **In-Flight Specs**
+
+   No specs found — run /cw-spec to create a specification.
+   ```
+5. For each spec directory (sorted by NN prefix ascending), detect three artifacts:
+
+   **a. Spec file:** Glob for `{dir}/NN-spec-*.md`. Report `yes` if at least one match exists, `no` otherwise.
+
+   **b. Plan evidence:** Glob for `{dir}/plan-*` files. If none found, check recent commits: run `git log --oneline -30` and search for commit messages containing `(T0` referencing this spec's NN prefix. Report `yes` if plan files exist or a matching commit is found, `no` otherwise.
+
+   **c. Validation report:** Glob for `{dir}/NN-validation-*.md`. Report `yes` if at least one match exists, `no` otherwise.
+
+6. Emit the specs table:
+   ```
+   **In-Flight Specs**
+
+   | Spec | Spec File | Plan | Validation |
+   |------|-----------|------|------------|
+   | {NN}-spec-{name} | yes/no | yes/no | yes/no |
+   ```
+
+See `skills/arc-status/references/status-dimensions.md` (SD-3) for the full detection logic, including the completed-spec set match rules.
+---
+
+Verification checks:
+- [PASS] Six numbered list items present (1-6).
+- [PASS] Item 2 introduces the completed-spec set with both H3 subsection-title and **Spec:** field signals.
+- [PASS] Item 2 specifies whitespace trim, case-sensitive comparison, trailing-slash normalization for the Spec field, final-path-component comparison, and union semantics.
+- [PASS] Item 3 documents silent exclusion (no count footer, no parenthetical, no separate Completed Specs table).
+- [PASS] Item 4 fallback prose covers BOTH the empty-glob case ("none were found in step 1") AND the empty-after-filter case ("every spec directory is in the completed-spec set"). Notice text "No specs found — run /cw-spec to create a specification." is unchanged.
+- [PASS] Item 5 per-row artifact detection sub-bullets (a, b, c) for Spec file / Plan evidence / Validation report are byte-identical to the prior text.
+- [PASS] Item 6 specs table emit format is byte-identical to the prior text.
+- [PASS] Sort rule "sorted by NN prefix ascending" preserved verbatim in item 5.
+- [PASS] SD-3 cross-reference pointer present (extended to mention "completed-spec set match rules").

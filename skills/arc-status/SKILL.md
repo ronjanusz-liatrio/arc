@@ -117,13 +117,19 @@ See `skills/arc-status/references/status-dimensions.md` (SD-2) for the full dete
 List all spec directories and report pipeline artifact presence for each.
 
 1. Glob `docs/specs/NN-spec-*/` directories (where NN is a two-digit number).
-2. If no spec directories are found, emit the fallback and move to Step 5:
+2. Compute the **completed-spec set** from the wave archive — the set of spec directory basenames whose work is already represented in `docs/skill/arc/waves/*.md`. The set is the **union** of two signals:
+   a. **Subsection-title signal.** Every `### {Title}` H3 subsection title across all `docs/skill/arc/waves/*.md` files whose value, after whitespace trim, exactly matches a spec directory basename from step 1 (case-sensitive comparison; no normalization beyond trim).
+   b. **Spec-field signal.** Every `**Spec:** {path}` field value across those files whose path, after whitespace trim and stripping a single trailing slash, has a final path component matching a spec directory basename from step 1.
+
+   If `docs/skill/arc/waves/` is absent or contains no `.md` files, the completed-spec set is empty. Either signal alone is sufficient; both signals matching the same spec contribute one entry, not two.
+3. **Exclude** any spec directory whose basename is in the completed-spec set from the rendering pass. Exclusion is **silent** — emit no count footer, no parenthetical, and no separate "Completed Specs" table.
+4. If no spec directories remain after exclusion (either because none were found in step 1, or because every spec directory is in the completed-spec set), emit the fallback and move to Step 5:
    ```
    **In-Flight Specs**
 
    No specs found — run /cw-spec to create a specification.
    ```
-3. For each spec directory (sorted by NN prefix ascending), detect three artifacts:
+5. For each spec directory (sorted by NN prefix ascending), detect three artifacts:
 
    **a. Spec file:** Glob for `{dir}/NN-spec-*.md`. Report `yes` if at least one match exists, `no` otherwise.
 
@@ -131,7 +137,7 @@ List all spec directories and report pipeline artifact presence for each.
 
    **c. Validation report:** Glob for `{dir}/NN-validation-*.md`. Report `yes` if at least one match exists, `no` otherwise.
 
-4. Emit the specs table:
+6. Emit the specs table:
    ```
    **In-Flight Specs**
 
@@ -140,7 +146,7 @@ List all spec directories and report pipeline artifact presence for each.
    | {NN}-spec-{name} | yes/no | yes/no | yes/no |
    ```
 
-See `skills/arc-status/references/status-dimensions.md` (SD-3) for the full detection logic.
+See `skills/arc-status/references/status-dimensions.md` (SD-3) for the full detection logic, including the completed-spec set match rules.
 
 ### Step 5: Recent Activity
 

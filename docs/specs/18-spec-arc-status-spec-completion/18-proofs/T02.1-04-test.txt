@@ -1,0 +1,30 @@
+Type: test
+Description: Verify that ONLY my Step 4 changes are present in the working tree relative to HEAD (no incidental edits to Step 5, Step 6, Step 7, or any other section). Confirms task-scope discipline.
+Command: |
+  git diff HEAD -- skills/arc-status/SKILL.md > /tmp/T02.1.patch
+  # Count hunks
+  grep -c "^@@" /tmp/T02.1.patch
+  # Confirm hunks are within Step 4 line range (lines 117-149 area in pre-image)
+  grep "^@@" /tmp/T02.1.patch
+Expected:
+  - 3 hunks total, all within the Step 4 prose region (lines ~117-149 in the pre-image, ~117-149 in the post-image after expansion).
+  - No hunks outside Step 4.
+Timestamp: 2026-05-08T16:11:00Z
+Status: PASS
+
+Output:
+---
+git diff HEAD -- skills/arc-status/SKILL.md hunks:
+@@ -117,13 +117,19 @@ See `skills/arc-status/references/status-dimensions.md` (SD-2) for the full dete
+@@ -131,7 +137,7 @@ List all spec directories and report pipeline artifact presence for each.
+@@ -140,7 +146,7 @@ List all spec directories and report pipeline artifact presence for each.
+
+Hunk count: 3
+---
+
+Verification:
+- [PASS] All 3 hunks fall within lines 117-146 of the pre-image — the Step 4: In-Flight Specs section (line range 115-143 in the pre-image, with the `@@` context line above being from Step 3's trailing reference).
+- [PASS] No hunks touch the LG-6 detection subsection (lines 234+), Step 6.6 postamble (lines 243+), Step 7 precedence table (lines 280+), or Step 7 Alternative Skill Selection Rule table (lines 360+).
+- [PASS] No edits to status-dimensions.md (T02.2 owns SD-3 reference work; that's already committed at a4f45af).
+- [PASS] No files outside skills/arc-status/SKILL.md and the proof directory are touched by this task.
+- [PASS] Worker-1's T01.4 commit (dc7cb75) and earlier T01.1-3 / T01.6-7 / T02.2 commits are not affected.
