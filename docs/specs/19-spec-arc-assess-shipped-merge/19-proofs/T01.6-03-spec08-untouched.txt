@@ -1,0 +1,32 @@
+Type: test (byte-invariant diff)
+Description: Verify spec-08 manual merges in docs/CUSTOMER.md and the wave archives (docs/skill/arc/waves/*.md) are byte-for-byte untouched by the spec-19 implementation.
+Command: git diff 995f82a..HEAD -- docs/CUSTOMER.md docs/skill/arc/waves/
+Expected: Zero diff output — neither CUSTOMER.md nor any file under docs/skill/arc/waves/ has been modified by spec-19 work.
+Timestamp: 2026-05-11T18:11:04Z
+Status: PASS
+
+=== Diff output ===
+(empty — zero bytes of diff)
+
+=== File-level audit ===
+docs/CUSTOMER.md                          unchanged (no diff hunks)
+docs/skill/arc/waves/00-bootstrap.md      unchanged (no diff hunks)
+docs/skill/arc/waves/00-uncategorized.md  unchanged (no diff hunks)
+docs/skill/arc/waves/01-lifecycle-closure.md      unchanged
+docs/skill/arc/waves/02-shaping-intelligence.md   unchanged
+docs/skill/arc/waves/03-wave-lifecycle-closure.md unchanged
+docs/skill/arc/waves/04-status-visibility.md      unchanged
+
+Note: 04-status-visibility.md was created during spec 18's wave-archive work (not under spec 19) — its `git log` history pre-dates the spec-19 task commits.
+
+=== Spec-19 commits inspection ===
+The five implementation commits for spec 19 (be21425, 1d8edf7, 2f1adc4, 7a22bde, f2bc24c) and the housekeeping commit (5ffc892) touch only the following paths:
+  - skills/arc-assess/SKILL.md
+  - skills/arc-assess/references/import-rules.md
+  - skills/arc-assess/references/detection-patterns.md
+  - skills/arc-assess/references/align-report-template.md
+  - docs/specs/19-spec-arc-assess-shipped-merge/19-proofs/*
+
+No spec-19 commit reaches docs/CUSTOMER.md or docs/skill/arc/waves/.
+
+Result: PASS — spec-08 manual merges in CUSTOMER.md and wave archives are byte-untouched.

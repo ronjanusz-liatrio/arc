@@ -1,0 +1,119 @@
+Type: test (functional-requirement-to-evidence map)
+Description: Map the 16 functional requirements from 19-spec-arc-assess-shipped-merge.md to landed implementation evidence (file paths + line ranges + commits).
+Timestamp: 2026-05-11T18:11:04Z
+Status: PASS
+
+================================================================
+FUNCTIONAL REQUIREMENTS COVERAGE MAP
+================================================================
+
+FR-1: Build shipped-spec index (H3-title OR Spec-field signals, union, keyed by basename).
+  Evidence:
+    - skills/arc-assess/SKILL.md "### Step 1.6: Build the Shipped-Spec Index" (lines 242-303)
+    - Inputs, Bounded I/O, Build Procedure (steps 1-4), Index Schema, Match Rules, Outputs, Determinism & Idempotency all documented
+    - Commit be21425 (T01.1)
+  STATUS: LANDED
+
+FR-2: KW-19 match -> shipped-spec lookup -> reclassify as merge-candidate, suppress captured stub.
+  Evidence:
+    - SKILL.md lines 528 (KW-19 table cell updated), 534-580 ("KW-19 Shipped-Spec Merge-Candidate Branch")
+    - Commit 1d8edf7 (T01.2)
+  STATUS: LANDED
+
+FR-3: Single-match -> auto-route to that target without prompting, single row in Merge Candidates section.
+  Evidence:
+    - SKILL.md lines 540-541 (table row: "Basename matches exactly one shipped-spec index entry | Auto-route to that target without prompting...")
+    - Commit 1d8edf7 (T01.2)
+    - import-rules.md lines 270-283 (Routing-Decision table)
+    - Commit 2f1adc4 (T01.3)
+  STATUS: LANDED
+
+FR-4: Multi-match -> AskUserQuestion prompt naming source path + line range, listing each candidate, "Skip this source" as last option, apply selection.
+  Evidence:
+    - SKILL.md lines 542 (table row), 546-569 (prompt template + user-selection handling)
+    - Commit 1d8edf7 (T01.2)
+  STATUS: LANDED
+
+FR-5: New "Merge Candidates" section in align-report.md positioned between "Imported Items by Artifact" and "Skipped Items", with columns Source Path | Lines | Target Wave Archive | Target Skill Heading | Provenance. Provenance contains the literal HTML comment.
+  Evidence:
+    - align-report-template.md "## Merge Candidates" section (lines 187-228)
+    - Commit f2bc24c (T01.5)
+  STATUS: LANDED
+
+FR-6: Multi-match rows render unselected candidates as nested sub-bullets under chosen target row.
+  Evidence:
+    - SKILL.md line 568 (rule: "Render each unselected candidate as a nested sub-bullet under the chosen-target row in the form - candidate: {spec-dir-basename} ({wave-archive-file} → {skill-heading})")
+    - align-report-template.md worked example demonstrates nested-bullet rendering
+  STATUS: LANDED
+
+FR-7: Persona extraction (CUSTOMER.md side) continues to run on shipped-spec sources. Only captured-stub creation is suppressed.
+  Evidence:
+    - SKILL.md line 578 ("Persona extraction: The KW-19 persona-extraction sub-step continues to run on shipped-spec sources. Persona roles appearing in 2+ stories within the same shipped-spec source still become CUSTOMER discoveries and land in docs/CUSTOMER.md per the standard import pipeline. Only the BACKLOG-stub side of the KW-19 flow is suppressed by this branch.")
+    - detection-patterns.md line 420 ("Persona extraction continues to run unchanged on shipped-spec sources — only the captured-stub creation is suppressed.")
+    - import-rules.md lines 281, 308 mention persona-extraction continuation
+  STATUS: LANDED
+
+FR-8: No align-manifest.md rows for merge-candidate classifications.
+  Evidence:
+    - SKILL.md line 574 ("No align-manifest.md row: The manifest tracks materialized imports only; merge candidates are report-only.")
+    - import-rules.md line 282 (Routing-Decision table row: "align-manifest.md row | Suppressed — the manifest tracks materialized imports only; merge candidates are report-only")
+  STATUS: LANDED
+
+FR-9: SKILL.md documents merge-candidate branch and shipped-spec index pre-pass (bounded I/O, deterministic, side-effect-free).
+  Evidence:
+    - Step 1.6 entire section (lines 242-303)
+    - "KW-19 Shipped-Spec Merge-Candidate Branch" sub-section (lines 534-582)
+    - Bounded I/O paragraph (line 253) explicitly states <10 currently, <50 expected
+  STATUS: LANDED
+
+FR-10: import-rules.md KW-19 row adds "shipped-spec" prefix branch alongside existing (deferred)/(open question).
+  Evidence:
+    - import-rules.md line 219 (KW-19 row updated)
+    - import-rules.md lines 269-307 ("Shipped-Spec Merge Candidates: KW-19 Routing Override" sub-section with routing-decision table and AskUserQuestion prompt template)
+    - Commit 2f1adc4 (T01.3)
+  STATUS: LANDED
+
+FR-11: detection-patterns.md KW-19 entry cross-references the shipped-spec index pre-pass.
+  Evidence:
+    - detection-patterns.md lines 403-421 (KW-19 entry Purpose / Typical target artifact / Shipped-spec routing paragraphs updated)
+    - Explicit reference to "Step 1.6 of skills/arc-assess/SKILL.md ('Build the Shipped-Spec Index')"
+    - Explicit reference to "skills/arc-assess/references/import-rules.md under the 'Shipped-Spec Merge Candidates: KW-19 Routing Override' sub-section"
+    - Explicit statement "KW-1..KW-18 and KW-20..KW-22 classification is unaffected by this routing"
+    - Commit 7a22bde (T01.4)
+  STATUS: LANDED
+
+FR-12: align-report-template.md documents Merge Candidates section with column schema, multi-match nested-bullet rendering, and worked example.
+  Evidence:
+    - align-report-template.md "## Merge Candidates" section (lines 187-228) with column definitions, nested-bullet rendering rule, and a worked example
+    - Commit f2bc24c (T01.5)
+  STATUS: LANDED
+
+FR-13: KW-1..KW-18 and KW-20..KW-22 classification logic byte-for-byte unchanged in SKILL.md and references.
+  Evidence:
+    - Proof T01.6-01-byte-invariants.txt — per-KW byte-equality sweep PASS for all 21 unchanged KW-N sections
+    - Diff hunks scoped exclusively to Step 1.6 insertion and KW-19 modifications
+  STATUS: LANDED + VERIFIED THIS PROOF
+
+FR-14: align-manifest.md schema documentation unchanged.
+  Evidence:
+    - Proof T01.6-02-manifest-schema.txt — diff of ## Manifest Format section returns zero bytes; live manifest also unchanged
+  STATUS: LANDED + VERIFIED THIS PROOF
+
+FR-15: Already-completed spec-08 manual merges in CUSTOMER.md and wave archives untouched.
+  Evidence:
+    - Proof T01.6-03-spec08-untouched.txt — git diff 995f82a..HEAD -- docs/CUSTOMER.md docs/skill/arc/waves/ returns empty
+  STATUS: LANDED + VERIFIED THIS PROOF
+
+FR-16: (Bonus — Idempotency clause embedded in success metrics): Two consecutive /arc-assess runs with same disambiguation produce identical Merge Candidates sections.
+  Evidence:
+    - Proof T01.6-05-idempotency.txt — five invariants verified via rule-prose inspection
+    - SKILL.md Step 1.6 "Determinism & Idempotency" paragraph (line 303)
+  STATUS: LANDED + VERIFIED THIS PROOF
+
+================================================================
+ALL 15 EXPLICIT FRs + IDEMPOTENCY METRIC: LANDED
+================================================================
+
+(Spec section 'Functional Requirements' contains 15 bulleted items in the source plus the implicit 16th idempotency expectation surfaced in 'Success Metrics' and the proof artifacts list. All 16 have evidence.)
+
+Result: PASS

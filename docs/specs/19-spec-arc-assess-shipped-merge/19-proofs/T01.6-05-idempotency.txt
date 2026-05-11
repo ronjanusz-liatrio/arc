@@ -1,0 +1,83 @@
+Type: test (idempotency — two consecutive /arc-assess runs)
+Description: Verify that two consecutive /arc-assess runs with the same disambiguation selections produce byte-identical "Merge Candidates" sections in align-report.md. Since /arc-assess is a prose-driven Markdown skill (not an executable), idempotency is verified by inspecting the rule prose for determinism guarantees and confirming no inputs are mutated by the run.
+Command: (rule-prose inspection of Step 1.6 determinism guarantees and Step 5 rendering rules)
+Expected: All inputs to the Merge Candidates section are read-only and deterministic; no run mutates the shipped-spec-index inputs; the same disambiguation answers produce the same rendered rows.
+Timestamp: 2026-05-11T18:11:04Z
+Status: PASS
+
+================================================================
+DETERMINISM GUARANTEES (from skills/arc-assess/SKILL.md Step 1.6)
+================================================================
+
+Quote from Step 1.6 (lines 244, 301-303):
+
+  "Before any keyword, structural, or code-comment scanning runs, build a shipped-spec
+   index — a deterministic, side-effect-free, in-memory pre-pass executed at the start
+   of every /arc-assess run. ... The build performs no writes, no caching, no
+   persistence: the index is held in memory for the duration of the run only and
+   rebuilt on every subsequent invocation. There is no staleness window — the source
+   files are read fresh each run."
+
+  "Determinism & Idempotency: The pre-pass performs no writes, no prompts, and no
+   network calls. Running it twice in the same working tree produces a byte-identical
+   shipped_spec_index (modulo entry ordering, which is irrelevant for lookup-by-key).
+   The index is not persisted between runs — re-invocations rebuild it from the
+   current state of docs/skill/arc/waves/*.md and docs/specs/NN-spec-*/. This
+   guarantees the index is never stale relative to the working tree at run time."
+
+================================================================
+IDEMPOTENCY-RELEVANT INVARIANTS (rule prose checks)
+================================================================
+
+Invariant 1: Inputs to shipped_spec_index are read-only.
+  - docs/skill/arc/waves/*.md: never written by /arc-assess. Spec line 64 states "Modifying spec 08's already-completed manual merges in docs/CUSTOMER.md or any wave archive's `### User Stories` block" is out-of-scope.
+  - docs/specs/NN-spec-*/: read-only enumeration of basenames only. The pre-pass does not Read spec file contents — only globs the directory.
+  STATUS: HOLDS
+
+Invariant 2: Merge-candidate classification does not mutate the shipped_spec_index.
+  - Per SKILL.md line 574: "the Step 2e manifest dedup check is not bypassed by the merge-candidate branch — re-runs that re-detect the same KW-19 source rebuild the in-memory shipped_spec_index from scratch and re-fire the merge-candidate branch, producing an identical Merge Candidates section row when the same disambiguation selection is made."
+  STATUS: HOLDS (rule explicitly states identical output for identical disambiguation input)
+
+Invariant 3: Merge-candidate routing does NOT write to align-manifest.md.
+  - Per SKILL.md line 574, per import-rules.md line 282: "Suppressed — the manifest tracks materialized imports only; merge candidates are report-only".
+  - Consequence: there is no manifest-state drift between run 1 and run 2 that could change run 2's behavior. Run 2 sees the same manifest state as run 1.
+  STATUS: HOLDS
+
+Invariant 4: Multi-match prompt re-presents same options in same order across runs.
+  - Per SKILL.md lines 287, 546-552: option ordering is the natural enumeration order of back_references (which derives from the file-read order of docs/skill/arc/waves/*.md Glob — stable for any given working tree).
+  - User selection is the only stochastic input; given identical selection, identical row is written.
+  STATUS: HOLDS
+
+Invariant 5: Skip-this-source path also idempotent.
+  - Per SKILL.md line 569: skip annotation is `(skipped by user)` literal — no timestamp, no random ID.
+  STATUS: HOLDS
+
+================================================================
+ALIGN-REPORT.MD RENDERING IDEMPOTENCY
+================================================================
+
+The "Merge Candidates" section template (align-report-template.md, lines 187-228) renders:
+  - Column headers: literal "Source Path | Lines | Target Wave Archive | Target Skill Heading | Provenance" (no run-specific data).
+  - Row content: derived from (a) source_path:line_range (deterministic from the file), (b) the chosen target back-reference (deterministic given disambiguation), (c) the Provenance literal HTML comment (no timestamp).
+  - Section is omitted when zero candidates exist (deterministic on/off).
+
+Critically, the Provenance column uses the LITERAL HTML comment string `<!-- aligned-from: {source_path}:{line_range} aligned-from-spec: {spec-dir-basename} -->` — no run timestamp, no run UUID, no sequence counter. This means two consecutive runs with the same disambiguation answers produce byte-identical rows.
+
+================================================================
+SECOND-RUN BEHAVIOR ANALYSIS
+================================================================
+
+Hypothetical run 2 against the same working tree as run 1:
+  1. Step 1.6 rebuilds shipped_spec_index from same inputs -> same index (HOLDS by Invariant 1).
+  2. Step 2 re-scans same files via same Grep patterns -> same KW-19 matches.
+  3. Step 2d KW-19 branch consults same index -> same classification (merge-candidate for the same sources).
+  4. Step 5 renders same rows in same order with same Provenance literals -> byte-identical Merge Candidates section.
+
+  Manifest dedup (Step 2e): After run 1 writes captured-stub manifest rows for non-shipped sources, run 2's manifest-dedup check skips those (re-import suppression). This DOES affect the BACKLOG — Imported Items section but NOT the Merge Candidates section, since merge candidates never enter the manifest (Invariant 3).
+
+  Therefore the Merge Candidates section is byte-identical between run 1 and run 2 given identical disambiguation.
+
+================================================================
+RESULT: PASS
+================================================================
+Two consecutive /arc-assess runs with the same disambiguation selections produce byte-identical "Merge Candidates" sections by construction. Idempotency is guaranteed by the determinism-and-no-write-side-effects rule prose in Step 1.6 plus the literal-string Provenance comment in the template.

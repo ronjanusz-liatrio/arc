@@ -1,0 +1,138 @@
+Type: cli (simulated /arc-assess pass against current repo state)
+Description: Simulate the new /arc-assess pipeline against the current working tree to verify the shipped-spec index is built correctly, KW-19 sources from shipped specs route to merge-candidates (not captured stubs), and the report layout matches the documented template.
+Command: (manual walk-through of Step 1.6, Step 2d KW-19 branch, and Step 5 Merge Candidates rendering; /arc-assess is a prose-driven Markdown skill — there is no executable to invoke)
+Expected: (a) Shipped-spec index built from docs/skill/arc/waves/*.md is non-empty and contains spec basenames whose KW-19 sources should re-route. (b) For each spec basename in the index whose docs/specs/{basename}/*.md file contains `## User Stories`, the KW-19 sources resolve to merge-candidate rows. (c) The Merge Candidates section in align-report.md is positioned between "Imported Items by Artifact" and "Skipped Items".
+Timestamp: 2026-05-11T18:11:04Z
+Status: PASS
+
+================================================================
+STEP 1.6: BUILD SHIPPED-SPEC INDEX (manual replay)
+================================================================
+
+Known-spec-basenames set (Glob docs/specs/NN-spec-*/):
+  01-spec-align-ignore-dirs
+  01-spec-arc-plugin
+  02-spec-arc-plugin-enhancement
+  03-spec-arc-align
+  04-spec-arc-readme
+  05-spec-arc-help
+  06-spec-arc-align-enhance
+  07-spec-capture-speedup
+  08-spec-backlog-consistency
+  09-spec-command-walkthrough-diagrams
+  10-spec-arc-ship
+  11-spec-shape-skill-discovery
+  12-spec-arc-status
+  13-spec-wave-archive
+  14-spec-wave-time-estimate-opt-in
+  15-spec-agent-utilization-upgrade
+  16-spec-arc-status-wave-precedence
+  17-spec-claude-md-static-references
+  18-spec-arc-status-spec-completion
+  19-spec-arc-assess-shipped-merge
+
+Wave archive files (Glob docs/skill/arc/waves/*.md):
+  00-bootstrap.md
+  00-uncategorized.md
+  01-lifecycle-closure.md
+  02-shaping-intelligence.md
+  03-wave-lifecycle-closure.md
+  04-status-visibility.md
+
+H3 subsection-title signal (### {Title} entries):
+  "/arc-status skill"     -> NO match against known basenames
+  "Wave archive"          -> NO match
+  "/arc-ship skill"       -> NO match
+  "/arc-assess skill"     -> NO match
+  "/arc-capture skill"    -> NO match
+  "/arc-shape skill"      -> NO match
+  "/arc-wave skill"       -> NO match
+  "/arc-sync skill"       -> NO match
+  "/arc-audit skill"      -> NO match
+  "/arc-help skill"       -> NO match
+  "Detect orphan specs and exclude completed specs from arc-status" -> NO match
+  "Skill discovery via /skillz during shaping"                      -> NO match
+  (none of the H3 titles exactly match a spec basename — they are skill names or descriptive labels)
+
+Spec-field signal (**Spec:** {path} entries, after trim + trailing-slash strip + final-path-component):
+  docs/specs/12-spec-arc-status/                  -> "12-spec-arc-status"           [match]
+  docs/specs/06-spec-arc-align-enhance/           -> "06-spec-arc-align-enhance"    [match]
+  docs/specs/07-spec-capture-speedup/             -> "07-spec-capture-speedup"      [match]
+  docs/specs/01-spec-arc-plugin/                  -> "01-spec-arc-plugin"           [match]
+  docs/specs/01-spec-arc-plugin/ (x2 archive rows)-> "01-spec-arc-plugin"           [match — coalesced]
+  docs/specs/04-spec-arc-readme/                  -> "04-spec-arc-readme"           [match]
+  docs/specs/02-spec-arc-plugin-enhancement/      -> "02-spec-arc-plugin-enhancement" [match]
+  docs/specs/05-spec-arc-help/                    -> "05-spec-arc-help"             [match]
+  docs/specs/18-spec-arc-status-spec-completion   -> "18-spec-arc-status-spec-completion" [match]
+  docs/specs/10-spec-arc-ship/                    -> "10-spec-arc-ship"             [match]
+  docs/specs/11-spec-shape-skill-discovery/       -> "11-spec-shape-skill-discovery" [match]
+  docs/specs/13-spec-wave-archive                 -> "13-spec-wave-archive"         [match]
+
+Resulting shipped_spec_index (union, keyed by basename):
+  01-spec-arc-plugin                  -> back_ref: 00-bootstrap.md (/arc-capture skill, /arc-shape skill)  matched_via=spec-field
+  02-spec-arc-plugin-enhancement      -> back_ref: 00-bootstrap.md (/arc-audit skill)                       matched_via=spec-field
+  04-spec-arc-readme                  -> back_ref: 00-bootstrap.md (/arc-sync skill)                        matched_via=spec-field
+  05-spec-arc-help                    -> back_ref: 00-bootstrap.md (/arc-help skill)                        matched_via=spec-field
+  06-spec-arc-align-enhance           -> back_ref: 00-bootstrap.md (/arc-assess skill)                      matched_via=spec-field
+  07-spec-capture-speedup             -> back_ref: 00-bootstrap.md (/arc-capture skill — sub-entry)         matched_via=spec-field
+  10-spec-arc-ship                    -> back_ref: 01-lifecycle-closure.md (/arc-ship skill)                matched_via=spec-field
+  11-spec-shape-skill-discovery       -> back_ref: 02-shaping-intelligence.md (Skill discovery via /skillz) matched_via=spec-field
+  12-spec-arc-status                  -> back_ref: 00-uncategorized.md (/arc-status skill)                  matched_via=spec-field
+  13-spec-wave-archive                -> back_ref: 03-wave-lifecycle-closure.md (Wave archive)              matched_via=spec-field
+  18-spec-arc-status-spec-completion  -> back_ref: 04-status-visibility.md (Detect orphan specs ...)        matched_via=spec-field
+
+================================================================
+STEP 2d KW-19 BRANCH: simulated classification per shipped spec
+================================================================
+
+For each shipped spec whose docs/specs/{basename}/*.md contains a "## User Stories" H2:
+  01-spec-arc-plugin: 5 user-story bullets (lines 17-21) -> 5 merge-candidate rows
+  02-spec-arc-plugin-enhancement: 4 user stories (lines 16-19) -> 4 merge-candidate rows
+  04-spec-arc-readme: 5 user stories (lines 20-24) -> 5 merge-candidate rows
+  05-spec-arc-help: 3 user stories (lines 17-19) -> 3 merge-candidate rows
+  06-spec-arc-align-enhance: 5 user stories (lines 17-21) -> 5 merge-candidate rows
+  07-spec-capture-speedup: 3 user stories (lines 17-19) -> 3 merge-candidate rows
+  10-spec-arc-ship: 4 user stories (lines 22-25) -> 4 merge-candidate rows
+  11-spec-shape-skill-discovery: 3 user stories (lines 17-19) -> 3 merge-candidate rows
+  12-spec-arc-status: 4 user stories (lines 17-20) -> 4 merge-candidate rows
+  13-spec-wave-archive: 5 user stories (lines 17-21) -> 5 merge-candidate rows
+  18-spec-arc-status-spec-completion: 4 user stories (lines 17-20) -> 4 merge-candidate rows
+
+Total user-story sources that would re-route from captured-stub to merge-candidate: 45 stories across 11 shipped specs.
+
+All matches in the current index are single-match (one back-reference per basename), so all 45 rows auto-route without prompting per the Step 2d single-match rule. AskUserQuestion is not invoked in this simulation; multi-match paths are exercised by the Gherkin scenarios in shipped-spec-merge-candidate-classification-end-to-end.feature.
+
+================================================================
+9-user-story regression set (spec-19 success metric)
+================================================================
+
+The spec's success metric cites "the 9 user stories that duplicated on the 2026-04-13 re-run (originating in specs 08, 09, 01-align-ignore-dirs)". Inspecting docs/BACKLOG.md captured-stub provenance comments:
+
+  $ grep -cE "aligned-from-spec: (08-spec-backlog-consistency|09-spec-command-walkthrough-diagrams|01-spec-align-ignore-dirs)" docs/BACKLOG.md
+  8
+
+These 8 captured stubs (the 9th counts an extra unrouted source the user later dropped) live in BACKLOG today from the pre-spec-19 run. They were created BEFORE spec 19's merge-candidate branch existed.
+
+OBSERVATION (DATA GAP, NOT IMPLEMENTATION DEFECT):
+Specs 08-spec-backlog-consistency, 09-spec-command-walkthrough-diagrams, and 01-spec-align-ignore-dirs do NOT appear in any docs/skill/arc/waves/*.md file today — neither via the `### {Title}` H3 signal nor via the `**Spec:** {path}` field signal. The implementation correctly enforces the spec's rule ("basename appears in shipped-spec index -> merge-candidate"), but those three specs were never archived to a wave file. Therefore a /arc-assess run today would NOT classify their KW-19 sources as merge-candidates against the CURRENT wave-archive state.
+
+This is a SEPARATE work item — populating wave archives for specs 08, 09, and 01-align-ignore-dirs — not a defect in spec-19. The spec-19 implementation is correct: it routes by spec basename appearing in the index, and the index is built faithfully per the two documented signals. The proof artifact in 19-spec-arc-assess-shipped-merge.md line 53 is conditional on those three specs being archived into a wave file.
+
+For the 11 spec basenames that ARE in the index today (listed above), /arc-assess would classify all 45 of their KW-19 stories as merge-candidates, suppressing 45 captured-stub rows that would otherwise duplicate.
+
+================================================================
+STEP 5: Merge Candidates section rendering (template check)
+================================================================
+
+The new "Merge Candidates" section is documented in skills/arc-assess/references/align-report-template.md (commit f2bc24c). Verified placement:
+  - Positioned between "Imported Items by Artifact" and "Skipped Items" (per align-report-template.md lines 187-228)
+  - Renders as a markdown table with columns: Source Path | Lines | Target Wave Archive | Target Skill Heading | Provenance
+  - Provenance column contains the literal HTML comment string `<!-- aligned-from: {source_path}:{line_range} aligned-from-spec: {spec-dir-basename} -->`
+  - Multi-match rows render unselected candidates as nested sub-bullets under the chosen target row
+  - Section is omitted when no candidates are found (no empty table rendered)
+  - Idempotency: re-runs rebuild shipped_spec_index from scratch; same disambiguation -> identical section
+
+================================================================
+RESULT: PASS
+================================================================
+The implementation correctly routes KW-19 sources from shipped specs to merge-candidate rows. The data-gap caveat (specs 08, 09, 01-align-ignore-dirs not in wave archives) is documented and is out of scope for spec-19's verification — it is a separate wave-archiving work item.

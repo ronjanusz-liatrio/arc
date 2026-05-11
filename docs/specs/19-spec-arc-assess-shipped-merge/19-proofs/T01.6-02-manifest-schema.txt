@@ -1,0 +1,24 @@
+Type: test (byte-invariant diff)
+Description: Verify align-manifest.md schema documentation is byte-identical to the parent commit (995f82a).
+Command: diff <(git show 995f82a:skills/arc-assess/references/import-rules.md | sed -n '/^## Manifest Format/,$p') <(sed -n '/^## Manifest Format/,$p' skills/arc-assess/references/import-rules.md)
+Expected: Zero diff output — the Manifest Format section (and everything below it) in import-rules.md is byte-identical between parent and HEAD.
+Timestamp: 2026-05-11T18:11:04Z
+Status: PASS
+
+=== Diff output ===
+(empty — zero bytes of diff)
+
+=== Sanity check: Manifest Format section location ===
+Parent commit (995f82a) line 484: ## Manifest Format
+HEAD line                  522: ## Manifest Format
+(Line offset = +38, matching the size of the new "Shipped-Spec Merge Candidates: KW-19 Routing Override" sub-section inserted earlier in the file. The section header and all subsequent content are unchanged byte-for-byte.)
+
+=== Schema rows audit ===
+The manifest schema table headers (`Source Path | Lines | Target Artifact | Imported At`) and example rows below `## Manifest Format` are unchanged. No new column documented for merge-candidate routing — this is consistent with the spec's explicit non-goal ("Adding a manifest schema for merge-candidate entries. The manifest tracks materialized imports only.").
+
+=== Live docs/skill/arc/align-manifest.md untouched ===
+Command: git diff 995f82a..HEAD -- docs/skill/arc/align-manifest.md
+Output: (empty)
+The live manifest file is also unchanged, consistent with the schema docs.
+
+Result: PASS — manifest schema documentation byte-invariant.
