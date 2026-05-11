@@ -1,0 +1,18 @@
+Type: test
+Command: diff <(awk excludes KW-19 entry from HEAD version) <(awk excludes KW-19 entry from working tree version)
+Expected: Empty diff — KW-1..KW-18, KW-20..KW-22, ST-1..ST-4, CC-1..CC-4, Detection Ordering, Pattern Confidence, and Cross-References sections are byte-identical between HEAD and working tree.
+Timestamp: 2026-05-11T17:35:00Z
+Status: PASS
+
+--- diff output (everything except the KW-19 entry) ---
+
+--- end of diff ---
+
+Line counts:
+  HEAD:           754 lines
+  Working tree:   756 lines
+  Net delta:      2 lines (KW-19 paragraph addition + Purpose line extension)
+
+KW entry count: 22 (expected 22)
+ST entry count: 4 (expected 4)
+CC entry count: 4 (expected 4)

@@ -401,7 +401,7 @@ Our north star metric is the capture-to-spec-ready conversion rate.
 
 ### KW-19: ## User Stories
 
-**Purpose:** Detect user story sections in spec and design documents. Each story becomes a separate BACKLOG stub.
+**Purpose:** Detect user story sections in spec and design documents. Each story becomes a separate BACKLOG stub, **unless** the source spec directory basename appears in the shipped-spec index — in which case the story is routed to the "Merge Candidates" branch instead of the captured-stub branch.
 
 **Search term:** `## User Stories`
 
@@ -415,7 +415,9 @@ Our north star metric is the capture-to-spec-ready conversion rate.
 - As a team lead, I want arc-assess to run idempotently so repeated scans don't create duplicates.
 ```
 
-**Typical target artifact:** BACKLOG (one stub per story)
+**Typical target artifact:** BACKLOG (one stub per story) — or **merge-candidate** routing when the source originates in a shipped spec (see "Shipped-spec routing" below).
+
+**Shipped-spec routing:** Before classification, the KW-19 match is cross-referenced against the **shipped-spec index** built at the start of every `/arc-assess` run from `docs/skill/arc/waves/*.md`. The index pre-pass is defined in Step 1.6 of `skills/arc-assess/SKILL.md` ("Build the Shipped-Spec Index"). If the source spec directory basename is present in the index, classification branches to the merge-candidate routing rule rather than emitting a captured stub. Persona extraction continues to run unchanged on shipped-spec sources — only the captured-stub creation is suppressed. The full merge-candidate routing procedure (single-match auto-route, multi-match `AskUserQuestion` disambiguation, `Skip this source` fallback, suppressed `align-manifest.md` row, provenance comment format) is documented in `skills/arc-assess/references/import-rules.md` under the "Shipped-Spec Merge Candidates: KW-19 Routing Override" sub-section. KW-1..KW-18 and KW-20..KW-22 classification is unaffected by this routing — the shipped-spec index is consulted only for KW-19 matches.
 
 ---
 

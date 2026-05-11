@@ -1,0 +1,28 @@
+Type: test
+Command: Verify each cross-reference in the new KW-19 "Shipped-spec routing" paragraph resolves to a real heading in its target file.
+Expected: Each named anchor exists exactly once in its target file, and the new KW-19 paragraph references each anchor exactly once.
+Timestamp: 2026-05-11T17:35:00Z
+Status: PASS
+
+--- Cross-reference resolution checks ---
+
+1. Target: `skills/arc-assess/SKILL.md` heading `### Step 1.6: Build the Shipped-Spec Index`
+   Occurrences in target file: 1 (expected 1)
+   Occurrences in KW-19 paragraph (xref by "Step 1.6 of `skills/arc-assess/SKILL.md`"): 1 (expected 1)
+
+2. Target: `skills/arc-assess/references/import-rules.md` heading `### Shipped-Spec Merge Candidates: KW-19 Routing Override`
+   Occurrences in target file: 1 (expected 1)
+   Occurrences in KW-19 paragraph (xref by "Shipped-Spec Merge Candidates: KW-19 Routing Override"): 1 (expected 1)
+
+--- Scope guard: only the KW-19 entry was modified ---
+
+Files modified in this task (from git diff --name-only):
+docs/BACKLOG.md
+docs/ROADMAP.md
+docs/skill/arc/shape-report.md
+docs/skill/arc/wave-report.md
+skills/arc-assess/SKILL.md
+skills/arc-assess/references/detection-patterns.md
+
+Files modified in this task (staged + unstaged for paths in scope only):
+skills/arc-assess/references/detection-patterns.md
