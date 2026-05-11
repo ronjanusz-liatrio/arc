@@ -239,6 +239,69 @@ If none of the artifacts exist, set `temper_context` to `null` and proceed — t
 
 **Do NOT import Temper artifacts into BACKLOG** — they are engineering artifacts, not product ideas. Arc reads them for context only.
 
+### Step 1.6: Build the Shipped-Spec Index
+
+Before any keyword, structural, or code-comment scanning runs, build a **shipped-spec index** — a deterministic, side-effect-free, in-memory pre-pass executed at the start of every `/arc-assess` run. The index is the lookup table that Step 2d's KW-19 classification consults to decide whether a `## User Stories` source originates in an already-shipped spec and therefore must be routed to the "Merge Candidates" branch instead of the captured-stub branch. The build performs no writes, no caching, no persistence: the index is held in memory for the duration of the run only and rebuilt on every subsequent invocation. There is no staleness window — the source files are read fresh each run.
+
+**Inputs:**
+
+- `docs/skill/arc/waves/*.md` — wave archive files. The build is a no-op when the directory is absent or contains no `.md` files; the index in that case is the empty set.
+- `docs/specs/NN-spec-*/` — spec directories under the project's `docs/specs/` tree (where `NN` is a two-digit number). Globbed once to produce the set of known spec directory basenames against which the two wave-archive signals are matched.
+
+**Bounded I/O:**
+
+Worst-case I/O equals the count of wave archive files plus one Glob of `docs/specs/NN-spec-*/`. The wave archive count is currently <10 and is expected to stay <50 for the foreseeable life of the project. There is no recursive descent into spec directories during this pre-pass — only the basenames of `docs/specs/NN-spec-*/` are needed; the spec file contents are not read here.
+
+**Build Procedure:**
+
+1. Glob `docs/specs/NN-spec-*/` to enumerate the **known-spec-basenames set** — the set of spec directory basenames currently in the repo. If the glob returns no matches, the shipped-spec index is the empty set and the procedure terminates.
+2. Glob `docs/skill/arc/waves/*.md` to enumerate the wave archive files. If the glob returns no matches, the shipped-spec index is the empty set and the procedure terminates.
+3. For each wave archive file, Read its full contents once and walk the parsed Markdown for two independent signals:
+
+   **a. Subsection-title signal (H3).** For every `### {Title}` H3 subsection in the archive file, trim surrounding whitespace from `{Title}`. Emit an index entry keyed by that trimmed title if and only if the trimmed value exactly matches a basename in the known-spec-basenames set. Comparison is case-sensitive with no normalization beyond whitespace trim — substrings, suffixes, and decorated titles do not match (e.g., `12-spec-arc-status — addendum` does not match `12-spec-arc-status`).
+
+   **b. Spec-field signal.** For every `**Spec:** {path}` field in the archive file, trim surrounding whitespace from `{path}`, strip a single trailing slash if present, and take the final path component. Emit an index entry keyed by that final-path-component basename if and only if it matches a basename in the known-spec-basenames set. The trailing-slash normalization rule matches the WL-3 / LG-3 / LG-4 rule documented in `skills/arc-status/references/status-dimensions.md` (SD-3): `docs/specs/12-spec-arc-status/` and `docs/specs/12-spec-arc-status` both resolve to basename `12-spec-arc-status`. The leading `docs/specs/` prefix is not required — any path whose final segment matches a known spec basename qualifies.
+
+4. The shipped-spec index is the **union** of the entries produced by (a) and (b). Either signal alone is sufficient to admit a basename to the index; both signals matching the same basename contribute one entry, not two. Duplicate entries from multiple archive files for the same basename are coalesced into a single index entry whose back-references list every (archive-file, skill-heading) pair that contributed to admission.
+
+**Index Schema:**
+
+Each index entry is keyed by a spec directory basename (e.g., `08-spec-customer-md-personas`) and carries back-references to the wave archive context that admitted it:
+
+```
+shipped_spec_index = {
+  "{spec-dir-basename}": {
+    "back_references": [
+      {
+        "wave_archive_file": "docs/skill/arc/waves/{NN}-{name}.md",
+        "skill_heading": "{matching H3 subsection title}",
+        "matched_via": "subsection-title" | "spec-field" | "both"
+      },
+      ...
+    ]
+  },
+  ...
+}
+```
+
+A single basename may carry multiple back-reference rows when more than one archive file or more than one signal admitted it. The `matched_via` discriminator records which signal(s) admitted that specific back-reference and is used by the multi-match disambiguation prompt in Step 2d to render auditable option descriptions ("wave archive file + skill heading") when ≥2 shipped specs are candidate targets for a single KW-19 source.
+
+**Match Rules (shipped-spec index):**
+
+- **Case-sensitive:** `08-spec-customer-md-personas` matches `08-spec-customer-md-personas` but not `08-Spec-Customer-MD-Personas`.
+- **Whitespace-trimmed:** leading and trailing whitespace on either side is removed before comparison.
+- **Trailing-slash normalization on `**Spec:** {path}` field values only:** stripped before taking the final path component, matching the WL-3 rule.
+- **Final-path-component for `**Spec:** {path}` field:** only the last path segment is compared against the known-spec-basenames set. The leading `docs/specs/` prefix is not required.
+- **No partial or substring matching:** an H3 subsection title that contains a spec basename as a substring does not match. Comparisons are exact after trim.
+
+**Outputs:**
+
+- `shipped_spec_index` — the in-memory map described above, consumed by Step 2d (Classify discoveries) when classifying KW-19 (`## User Stories`) matches and by Step 5 (Import Discoveries) when rendering the "Merge Candidates" section of `align-report.md`.
+
+**Determinism & Idempotency:**
+
+The pre-pass performs no writes, no prompts, and no network calls. Running it twice in the same working tree produces a byte-identical `shipped_spec_index` (modulo entry ordering, which is irrelevant for lookup-by-key). The index is **not** persisted between runs — re-invocations rebuild it from the current state of `docs/skill/arc/waves/*.md` and `docs/specs/NN-spec-*/`. This guarantees the index is never stale relative to the working tree at run time.
+
 ### Step 2: Discover Product-Direction Content
 
 Scan all non-excluded files using three detection strategies in sequence. Read `skills/arc-assess/references/detection-patterns.md` for the full pattern reference.

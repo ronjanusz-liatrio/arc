@@ -1,0 +1,19 @@
+Type: file
+Description: Verify that skills/arc-assess/SKILL.md contains a new "Shipped-Spec Index" sub-section (Step 1.6) documenting the deterministic, side-effect-free, in-memory pre-pass.
+Command: grep -n "Step 1.6\|Shipped-Spec Index\|shipped_spec_index" skills/arc-assess/SKILL.md
+Expected: The grep output shows the Step 1.6 heading on line 242, the index schema variable shipped_spec_index, and its consumer reference for Step 2d/5.
+Timestamp: 2026-05-11T10:30:00Z
+
+Output:
+242:### Step 1.6: Build the Shipped-Spec Index
+272:shipped_spec_index = {
+299:- `shipped_spec_index` — the in-memory map described above, consumed by Step 2d (Classify discoveries) when classifying KW-19 (`## User Stories`) matches and by Step 5 (Import Discoveries) when rendering the "Merge Candidates" section of `align-report.md`.
+303:The pre-pass performs no writes, no prompts, and no network calls. Running it twice in the same working tree produces a byte-identical `shipped_spec_index` (modulo entry ordering, which is irrelevant for lookup-by-key). The index is **not** persisted between runs — re-invocations rebuild it from the current state of `docs/skill/arc/waves/*.md` and `docs/specs/NN-spec-*/`. This guarantees the index is never stale relative to the working tree at run time.
+
+Verification summary:
+- New "Step 1.6: Build the Shipped-Spec Index" heading present at line 242, positioned between Step 1.5 and Step 2.
+- Sub-section documents the index schema (shipped_spec_index map keyed by spec dir basename).
+- Sub-section names Step 2d and Step 5 as downstream consumers (forward declarations for T01.2/follow-on work).
+- Sub-section explicitly states no caching, no persistence, no staleness — index rebuilt on every run.
+
+Status: PASS

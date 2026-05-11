@@ -1,0 +1,22 @@
+Type: test
+Description: Byte-invariant test — confirm that KW-1..KW-22 classification prose in skills/arc-assess/SKILL.md is byte-identical to the parent commit and that the edit is purely additive (zero deletions).
+Command: git diff --numstat HEAD -- skills/arc-assess/SKILL.md && git diff HEAD -- skills/arc-assess/SKILL.md | grep -E "^-[^-]" | grep -c "KW-"
+Expected: numstat shows additions only (Y 0 path-form); zero deletion lines mention any KW-N row, confirming no rule prose was rewritten.
+Timestamp: 2026-05-11T10:32:00Z
+
+Output (numstat):
+63	0	skills/arc-assess/SKILL.md
+
+Output (deletion lines containing KW-):
+0
+
+Cross-checks:
+- 63 lines added, 0 lines deleted -> the change is strictly additive.
+- 0 deletion lines reference any KW-N identifier -> KW-1..KW-22 classification rule prose preserved byte-for-byte.
+- 0 deletion lines reference any ST-N or CC-N identifier (sibling rule families) -> their prose is also preserved.
+- Step heading inventory (^### Step) before/after:
+  Before: Step 0, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 10
+  After:  Step 0, 1, 1.5, 1.6 (NEW), 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 10
+  -> Only addition is the new Step 1.6; all other step headings preserved verbatim.
+
+Status: PASS
