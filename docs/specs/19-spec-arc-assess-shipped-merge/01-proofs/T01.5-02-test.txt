@@ -1,0 +1,31 @@
+Type: test
+Command: git diff HEAD -- skills/arc-assess/references/align-report-template.md and section-by-section byte-invariance checks
+Expected: Additive diff only (no deletions); other template sections (Run Metadata, Imported Items, Skipped Items, Excluded from Scanning, Remaining Unmanaged Content, Discovery Flow) byte-identical to parent commit
+Timestamp: 2026-05-11T11:00:30Z
+
+=== git diff --numstat ===
+55	0	skills/arc-assess/references/align-report-template.md
+
+=== Deletion count (should be 0) ===
+0
+
+=== Untouched template subsections byte-equality (HEAD vs working tree) ===
+--- Run Metadata block (lines 14-24 in HEAD) ---
+MATCH: Run Metadata byte-identical
+
+--- Imported Items by Artifact block (lines 28-46 in HEAD) ---
+MATCH: Imported Items byte-identical
+
+--- Skipped Items block (lines 50-54 in HEAD = lines 61-65 in working tree) ---
+MATCH: Skipped Items byte-identical
+
+--- Excluded from Scanning block (lines 58-102 in HEAD = lines 69-113 in working tree) ---
+MATCH: Excluded from Scanning byte-identical
+
+--- Remaining Unmanaged Content block (lines 106-110 in HEAD = lines 117-121 in working tree) ---
+MATCH: Remaining Unmanaged byte-identical
+
+--- Discovery Flow block (lines 114-128 in HEAD = lines 125-139 in working tree) ---
+MATCH: Discovery Flow byte-identical
+
+Status: PASS

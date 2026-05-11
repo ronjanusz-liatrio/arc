@@ -1,0 +1,39 @@
+Type: file
+Command: grep + section verification of skills/arc-assess/references/align-report-template.md
+Expected: Merge Candidates section added in Template body between Imported Items and Skipped Items; Field Descriptions block added between Imported Items and Skipped Items descriptions; column schema and provenance format match spec; worked example present; omission rule documented
+Timestamp: 2026-05-11T11:00:00Z
+
+=== H2 "## Merge Candidates" position in template body ===
+28:## Imported Items by Artifact
+50:## Merge Candidates
+61:## Skipped Items
+218:## Merge Candidates
+
+=== H3 "### Merge Candidates" position in Field Descriptions ===
+169:### Imported Items by Artifact
+185:### Merge Candidates
+229:### Skipped Items
+
+=== Column schema header row ===
+52:| Source Path | Lines | Target Wave Archive | Target Skill Heading | Provenance |
+220:| Source Path | Lines | Target Wave Archive | Target Skill Heading | Provenance |
+
+=== Provenance HTML-comment literal ===
+54:| {source_path} | {line_range} | {wave-archive-file} | {skill-heading} | `<!-- aligned-from: {source_path}:{line_range} aligned-from-spec: {spec-dir-basename} -->` |
+201:| Provenance | The literal HTML-comment string `<!-- aligned-from: {source_path}:{line_range} aligned-from-spec: {spec-dir-basename} -->` — same format used by BACKLOG aligned-from headers, no new format invented |
+
+=== Nested sub-bullet format ===
+56:    - candidate: {unselected-spec-dir-basename} ({wave-archive-file} → {skill-heading})
+57:    - candidate: {unselected-spec-dir-basename} ({wave-archive-file} → {skill-heading})
+224:    - candidate: 09-spec-bar-alt (docs/skill/arc/waves/wave-03.md → 09-spec-bar-alt)
+
+=== Omission rule prose ===
+191:**Omission rule:** When no KW-19 source resolves to any entry in the shipped-spec index, the entire section is omitted — no header is written and no empty table is rendered. The "no candidates" case produces a report whose "Imported Items by Artifact" section is immediately followed by "Skipped Items".
+
+=== Worked example (single-match + multi-match) ===
+222:| docs/specs/08-spec-foo/08-spec-foo.md | 120-135 | docs/skill/arc/waves/wave-01.md | 08-spec-foo | `<!-- aligned-from: docs/specs/08-spec-foo/08-spec-foo.md:120-135 aligned-from-spec: 08-spec-foo -->` |
+223:| docs/specs/09-spec-bar/09-spec-bar.md | 88-102 | docs/skill/arc/waves/wave-02.md | 09-spec-bar | `<!-- aligned-from: docs/specs/09-spec-bar/09-spec-bar.md:88-102 aligned-from-spec: 09-spec-bar -->` |
+224:    - candidate: 09-spec-bar-alt (docs/skill/arc/waves/wave-03.md → 09-spec-bar-alt)
+227:The first row above is a single-match case: `08-spec-foo` resolved to exactly one shipped-spec index entry and auto-routed without prompting. The second row is a multi-match case: `09-spec-bar` matched two shipped-spec index entries, the user selected the `09-spec-bar` candidate at the `AskUserQuestion` prompt, and the unselected `09-spec-bar-alt` candidate is rendered as a nested sub-bullet beneath the chosen row so the audit trail is preserved in-report.
+
+Status: PASS
