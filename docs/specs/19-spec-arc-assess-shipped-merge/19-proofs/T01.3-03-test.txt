@@ -1,0 +1,9 @@
+Type: test
+Command: diff <(git show HEAD:skills/arc-assess/references/import-rules.md | sed -n '/^## Manifest Format/,/^## /p') <(sed -n '/^## Manifest Format/,/^## /p' skills/arc-assess/references/import-rules.md)
+Expected: Byte-identical Manifest Format section between working tree and parent commit
+Timestamp: 2026-05-11T00:00:00Z
+
+--- output ---
+BYTE-IDENTICAL
+
+Status: PASS

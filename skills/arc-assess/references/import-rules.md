@@ -219,7 +219,7 @@ Content discovered in spec directories (matched via KW-18 through KW-22) follows
 | Spec Section | Target Artifact | Rule |
 |--------------|----------------|------|
 | `## Goals` (KW-18) | VISION | Goals sections describe product aims and strategic direction — classify as VISION |
-| `## User Stories` (KW-19) | BACKLOG | Each "As a {persona}, I want {goal} so that {benefit}" story becomes one captured BACKLOG stub |
+| `## User Stories` (KW-19) | BACKLOG (or merge-candidate routing for shipped-spec sources) | Each "As a {persona}, I want {goal} so that {benefit}" story becomes one captured BACKLOG stub — except when the source spec directory basename appears in the shipped-spec index, in which case the story is classified as a `shipped-spec` merge candidate and routed per the "Shipped-Spec Merge Candidates" branch below |
 | `## Non-Goals` (KW-20) | BACKLOG | Non-goals are deferred scope items — classify as BACKLOG with `(deferred)` title prefix and P3-Low default priority |
 | `## Open Questions` (KW-21) | BACKLOG | Open questions require follow-up work — classify as BACKLOG with `(open question)` title prefix and P2-Medium default priority |
 | `## Introduction` / `## Overview` (KW-22) | VISION (conditional) | Classify as VISION only if the section contains declarative product-direction language (`mission`, `direction`, `purpose`, `vision`); skip if the section describes features or implementation details |
@@ -266,6 +266,44 @@ Example: "Should we support SSO on day one?" → "(open question) Should we supp
 |-------|-------|
 | Priority | P2-Medium |
 | Rationale | Open questions require attention but are not yet confirmed defects or planned items |
+
+---
+
+### Shipped-Spec Merge Candidates: KW-19 Routing Override
+
+KW-19 (`## User Stories`) matches whose source spec directory basename appears in the shipped-spec index (built at the start of every `/arc-assess` run from `docs/skill/arc/waves/*.md`) bypass captured-stub creation and are routed to the "Merge Candidates" section of `docs/skill/arc/align-report.md` instead. This preserves the single-representation invariant for user stories that already live in shipped skill entries.
+
+**Classification override:**
+
+| Field | Value |
+|-------|-------|
+| Classification | `shipped-spec` merge-candidate (not `captured-stub`) |
+| BACKLOG stub creation | Suppressed — no row written to `docs/BACKLOG.md`, no captured stub appended |
+| `align-manifest.md` row | Suppressed — the manifest tracks materialized imports only; merge candidates are report-only |
+| `align-report.md` row | Written to the "Merge Candidates" section between "Imported Items by Artifact" and "Skipped Items" |
+| Persona extraction | Continues unchanged — the KW-19 persona-extraction sub-step still runs on shipped-spec sources, and persona inferences land in `docs/CUSTOMER.md` per the standard import pipeline |
+
+**Routing procedure:**
+
+1. Look up the source spec directory basename in the shipped-spec index.
+2. If the basename is **absent**, fall through to the standard KW-19 captured-stub flow (no change in behavior).
+3. If the basename matches **exactly one** shipped-spec index entry, auto-route the candidate to that target without prompting and emit a single-row entry in the "Merge Candidates" section of `align-report.md`.
+4. If the basename matches **two or more** shipped-spec index entries, present an `AskUserQuestion` prompt naming the source path + line range and listing each matching spec as an option (label = spec directory basename, description = wave archive file + skill heading). Include `Skip this source` as the last option.
+   - Apply the user's selection to the merge-candidate row written to `align-report.md`.
+   - If the user selects `Skip this source`, write the row with a `(skipped by user)` annotation and do not auto-route.
+   - Render each unselected candidate as a nested sub-bullet under the chosen-target row in the form `- candidate: {spec-dir-basename} ({wave-archive-file} → {skill-heading})`, preserving the audit trail of the disambiguation decision.
+
+**Provenance comment:**
+
+Merge-candidate rows reuse the existing aligned-from format used in BACKLOG aligned-from headers — no new format is invented:
+
+```
+<!-- aligned-from: {source_path}:{line_range} aligned-from-spec: {spec-dir-basename} -->
+```
+
+This comment populates the `Provenance` column of the "Merge Candidates" table.
+
+**No-op when index is empty:** If the shipped-spec index is empty (no wave archives present), the shipped-spec branch never fires and all KW-19 matches follow the standard captured-stub flow.
 
 ---
 

@@ -1,0 +1,10 @@
+Type: file
+Command: grep -n "Shipped-Spec Merge Candidates" skills/arc-assess/references/import-rules.md
+Expected: New section "Shipped-Spec Merge Candidates: KW-19 Routing Override" present; KW-19 row references it
+Timestamp: 2026-05-11T00:00:00Z
+
+--- output ---
+222:| `## User Stories` (KW-19) | BACKLOG (or merge-candidate routing for shipped-spec sources) | Each "As a {persona}, I want {goal} so that {benefit}" story becomes one captured BACKLOG stub — except when the source spec directory basename appears in the shipped-spec index, in which case the story is classified as a `shipped-spec` merge candidate and routed per the "Shipped-Spec Merge Candidates" branch below |
+272:### Shipped-Spec Merge Candidates: KW-19 Routing Override
+
+Status: PASS

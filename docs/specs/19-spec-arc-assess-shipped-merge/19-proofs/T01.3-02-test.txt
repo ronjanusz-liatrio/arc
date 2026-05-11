@@ -1,0 +1,9 @@
+Type: test
+Command: git diff HEAD -- skills/arc-assess/references/import-rules.md | grep -E "^[+-]" | grep -v "^[+-][+-][+-]" | grep -E "KW-(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|20|21|22)\b"
+Expected: No diff lines mention KW-1..KW-18 or KW-20..KW-22 (byte invariance preserved on unchanged rule rows)
+Timestamp: 2026-05-11T00:00:00Z
+
+--- output ---
+(no matches — empty result)
+
+Status: PASS
