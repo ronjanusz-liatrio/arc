@@ -1,0 +1,35 @@
+Type: test
+Description: Verify the diff to SKILL.md only touches the KW-19 area — KW-1..KW-18 and KW-20..KW-22 prose remain byte-identical to the parent commit
+Command: git diff skills/arc-assess/SKILL.md | grep -E "^[-+]" | grep -v "^[+-]{3}" | grep -E "KW-(1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|20|21|22)([^0-9]|\$)"
+Expected: Zero output lines — no non-KW-19 keyword prose was modified.
+Timestamp: 2026-05-11T10:38:00Z
+
+--- COMMAND OUTPUT ---
+
+(empty)
+
+--- ADDITIONAL CHECKS ---
+
+git diff --numstat skills/arc-assess/SKILL.md
+-> 51	1	skills/arc-assess/SKILL.md
+
+  * 51 insertions, 1 deletion
+  * The single deletion is the original KW-19 row in the spec-specific
+    classification table, replaced inline with an updated version that
+    documents the merge-candidate routing branch. The task scope explicitly
+    permits KW-19 row prose changes.
+
+git diff skills/arc-assess/SKILL.md | grep -E "^-[^-]"
+-> -   | `## User Stories` (KW-19) | BACKLOG | Each "As a..." story = one captured stub; also extract recurring persona roles as CUSTOMER entries |
+
+  * Confirms the ONLY deletion in the diff is the original KW-19 row.
+  * No KW-1..KW-18 or KW-20..KW-22 row was deleted.
+
+--- ANALYSIS ---
+
+The byte-invariant required by the spec ("KW-1..KW-18 and KW-20..KW-22
+classification logic byte-for-byte unchanged in skills/arc-assess/SKILL.md")
+is satisfied. Only the KW-19 row was modified, and a new sub-rule was added
+below the spec-specific classification table.
+
+Status: PASS

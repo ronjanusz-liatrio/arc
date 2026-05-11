@@ -1,0 +1,49 @@
+Type: test
+Description: Verify all five spec functional requirements for KW-19 merge-candidate routing are documented in SKILL.md (single-match auto-route, multi-match prompt, Skip-this-source, persona continues, no align-manifest row)
+Command: grep -c "auto-route\|AskUserQuestion\|Skip this source\|Persona extraction\|align-manifest.md" /home/ron.linux/arc/skills/arc-assess/SKILL.md
+Expected: One or more anchor hits for each of the five required behaviors.
+Timestamp: 2026-05-11T10:38:00Z
+
+--- COMMAND OUTPUTS (per-anchor) ---
+
+1. Single-match auto-route:
+   $ grep -n "Auto-route\|auto-route" /home/ron.linux/arc/skills/arc-assess/SKILL.md
+   541:   | Basename matches **exactly one** shipped-spec index entry | Auto-route to that target without prompting. Classify the match as `shipped-spec` merge-candidate (not `captured-stub`). Suppress BACKLOG stub creation entirely. Emit a single-row entry in the "Merge Candidates" section of `docs/skill/arc/align-report.md`. |
+   542:   | Basename matches **two or more** shipped-spec index entries | Present an `AskUserQuestion` prompt to disambiguate before writing the merge-candidate row. Classify as `shipped-spec` merge-candidate and suppress BACKLOG stub creation. Apply the user's selection to the merge-candidate row. |
+   569:   - **User picks `Skip this source`:** Write a single row to the "Merge Candidates" section with the source path, line range, and a `(skipped by user)` annotation appended to the row. Do not auto-route to any specific target. The row still includes the provenance comment so the audit trail records that the source was surfaced and explicitly skipped.
+   PASS — single-match auto-route documented at line 541.
+
+2. Multi-match AskUserQuestion prompt:
+   $ grep -n "AskUserQuestion" /home/ron.linux/arc/skills/arc-assess/SKILL.md
+   (returns the existing entries plus the new prompt at line 549)
+   PASS — multi-match AskUserQuestion prompt block at lines 548-562 names
+   the source path + line range and lists each matching spec as an option
+   (label = spec-dir-basename, description = wave archive file + skill heading).
+
+3. Skip this source option:
+   $ grep -n "Skip this source" /home/ron.linux/arc/skills/arc-assess/SKILL.md
+   557:         { label: "Skip this source", description: "Do not auto-route; record the row with a (skipped by user) annotation" },
+   564:   Each candidate option's `label` is the spec directory basename and its `description` is the wave archive file plus matching skill heading, drawn from the `back_references` recorded for that basename in the shipped-spec index. `Skip this source` is always the last option and is always present. ...
+   569:   - **User picks `Skip this source`:** Write a single row ... and a `(skipped by user)` annotation appended to the row. Do not auto-route to any specific target. ...
+   PASS — Skip this source option present as the last option and its
+   handling is documented (annotates row with "(skipped by user)" and does
+   not auto-route).
+
+4. Persona extraction continues on shipped-spec sources:
+   $ grep -n "Persona extraction\|persona-extraction" /home/ron.linux/arc/skills/arc-assess/SKILL.md
+   578:   - **Persona extraction:** The KW-19 persona-extraction sub-step continues to run on shipped-spec sources. Persona roles appearing in 2+ stories within the same shipped-spec source still become CUSTOMER discoveries and land in `docs/CUSTOMER.md` per the standard import pipeline. Only the BACKLOG-stub side of the KW-19 flow is suppressed by this branch.
+   PASS — persona extraction explicitly documented as preserved on
+   shipped-spec sources.
+
+5. No align-manifest.md row for merge-candidate classifications:
+   $ grep -n "No \`align-manifest.md\` row\|align-manifest" /home/ron.linux/arc/skills/arc-assess/SKILL.md | head -3
+   574:   - **No `align-manifest.md` row:** The manifest tracks materialized imports only; merge candidates are report-only. ...
+   PASS — merge-candidate classifications explicitly suppressed from
+   align-manifest.md.
+
+--- ANALYSIS ---
+
+All five spec functional requirements (FR 32-38 of 19-spec-arc-assess-shipped-merge.md)
+are documented in the new "KW-19 Shipped-Spec Merge-Candidate Branch" sub-rule.
+
+Status: PASS

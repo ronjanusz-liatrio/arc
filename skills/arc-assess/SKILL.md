@@ -525,11 +525,61 @@ For each discovery, apply the following decision rules in order:
    | Spec Section | Target | Special Handling |
    |-------------|--------|-----------------|
    | `## Goals` (KW-18) | VISION | Goals describe product aims — always VISION |
-   | `## User Stories` (KW-19) | BACKLOG | Each "As a..." story = one captured stub; also extract recurring persona roles as CUSTOMER entries |
+   | `## User Stories` (KW-19) | BACKLOG (or merge-candidate routing for shipped-spec sources) | Each "As a..." story = one captured stub; also extract recurring persona roles as CUSTOMER entries — except when the source spec directory basename appears in the shipped-spec index (Step 1.6), in which case the story is classified as a `shipped-spec` merge candidate and routed per the "KW-19 Shipped-Spec Merge-Candidate Branch" sub-rule below |
    | `## Non-Goals` (KW-20) | BACKLOG | Prepend `(deferred) ` to title; override priority to P3-Low |
    | `## Open Questions` (KW-21) | BACKLOG | Prepend `(open question) ` to title; use default P2-Medium |
    | `## Introduction`/`## Overview` (KW-22) | VISION (conditional) | Only if section contains `mission`, `direction`, `purpose`, or `vision` language; otherwise skip |
    | Persona roles in user stories | CUSTOMER | Extract when same role appears in 2+ stories; create dedicated CUSTOMER stub |
+
+   **KW-19 Shipped-Spec Merge-Candidate Branch:**
+
+   When a KW-19 (`## User Stories`) match fires during scanning, before applying the standard captured-stub flow, look up the source spec directory basename in the `shipped_spec_index` built by Step 1.6. The lookup result determines routing:
+
+   | Index Lookup Result | Routing Behavior |
+   |---------------------|------------------|
+   | Basename **absent** | Standard KW-19 captured-stub flow — no change in behavior. Each "As a..." story becomes one captured BACKLOG stub. |
+   | Basename matches **exactly one** shipped-spec index entry | Auto-route to that target without prompting. Classify the match as `shipped-spec` merge-candidate (not `captured-stub`). Suppress BACKLOG stub creation entirely. Emit a single-row entry in the "Merge Candidates" section of `docs/skill/arc/align-report.md`. |
+   | Basename matches **two or more** shipped-spec index entries | Present an `AskUserQuestion` prompt to disambiguate before writing the merge-candidate row. Classify as `shipped-spec` merge-candidate and suppress BACKLOG stub creation. Apply the user's selection to the merge-candidate row. |
+
+   **Multi-match disambiguation prompt:**
+
+   When ≥2 shipped-spec index entries match a single KW-19 source, present the following prompt before writing the merge-candidate row:
+
+   ```
+   AskUserQuestion({
+     questions: [{
+       question: "Multiple shipped specs could absorb this user story from {source_path}:{line_range}. Pick a merge target.",
+       header: "Merge Candidate",
+       options: [
+         { label: "{spec-dir-basename-1}", description: "{wave-archive-file-1} → {skill-heading-1}" },
+         { label: "{spec-dir-basename-2}", description: "{wave-archive-file-2} → {skill-heading-2}" },
+         ...
+         { label: "Skip this source", description: "Do not auto-route; record the row with a (skipped by user) annotation" }
+       ],
+       multiSelect: false
+     }]
+   })
+   ```
+
+   Each candidate option's `label` is the spec directory basename and its `description` is the wave archive file plus matching skill heading, drawn from the `back_references` recorded for that basename in the shipped-spec index. `Skip this source` is always the last option and is always present. The prompt is one source at a time; multi-match cases that share a basename ordering across the run are not batched.
+
+   **User selection handling:**
+
+   - **User picks a candidate spec basename:** Write a single row to the "Merge Candidates" section of `align-report.md` with the selected target. Render each unselected candidate as a nested sub-bullet under the chosen-target row in the form `- candidate: {spec-dir-basename} ({wave-archive-file} → {skill-heading})`, preserving the audit trail of the decision in-report.
+   - **User picks `Skip this source`:** Write a single row to the "Merge Candidates" section with the source path, line range, and a `(skipped by user)` annotation appended to the row. Do not auto-route to any specific target. The row still includes the provenance comment so the audit trail records that the source was surfaced and explicitly skipped.
+
+   **Suppressions in the merge-candidate branch (apply to single-match and multi-match alike):**
+
+   - **No captured-stub creation:** Suppress the BACKLOG stub append for this source. No row is written to `docs/BACKLOG.md` for the user story.
+   - **No `align-manifest.md` row:** The manifest tracks materialized imports only; merge candidates are report-only. The Step 2e manifest dedup check is not bypassed by the merge-candidate branch — re-runs that re-detect the same KW-19 source rebuild the in-memory `shipped_spec_index` from scratch and re-fire the merge-candidate branch, producing an identical "Merge Candidates" section row when the same disambiguation selection is made.
+
+   **Preserved sub-steps (still run on shipped-spec sources):**
+
+   - **Persona extraction:** The KW-19 persona-extraction sub-step continues to run on shipped-spec sources. Persona roles appearing in 2+ stories within the same shipped-spec source still become CUSTOMER discoveries and land in `docs/CUSTOMER.md` per the standard import pipeline. Only the BACKLOG-stub side of the KW-19 flow is suppressed by this branch.
+
+   **No-op when index is empty:** If the shipped-spec index built by Step 1.6 is empty (no wave archives present, or no archive entry matches any current spec directory basename), the shipped-spec branch never fires and all KW-19 matches follow the standard captured-stub flow.
+
+   See `skills/arc-assess/references/import-rules.md` ("Shipped-Spec Merge Candidates: KW-19 Routing Override") for the canonical routing rules.
 
 3. **Merged-section handling:** If a discovery was merged from multiple keyword matches in the same heading section (per the deduplication rule in Step 2a), use the majority pattern target. If patterns map to different targets (e.g., a section matched by both `roadmap` and `vision`), split the discovery:
    - Read the full section content
