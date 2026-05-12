@@ -22,7 +22,6 @@ A triaged list of product ideas. Each idea progresses through the idea lifecycle
 | [(deferred) Batch capture](#deferred-batch-capture) | captured | P3-Low | -- |
 | [Add rewrite mode to arc-sync injection prompt](#add-rewrite-mode-to-arc-sync-injection-prompt) | captured | P1-High | -- |
 | [Fix stale arc-align path references](#fix-stale-arc-align-path-references) | captured | P2-Medium | -- |
-| [Classify shipped-spec user stories as merge candidates in arc-assess](#classify-shipped-spec-user-stories-as-merge-candidates-in-arc-assess) | captured | P2-Medium | -- |
 | [(deferred) Triaging remaining captured priorities](#deferred-triaging-remaining-captured-priorities) | captured | P3-Low | -- |
 | [(deferred) Creating ROADMAP.md](#deferred-creating-roadmapmd) | captured | P3-Low | -- |
 | [(deferred) Modifying CUSTOMER.md](#deferred-modifying-customermd) | captured | P3-Low | -- |
@@ -130,15 +129,6 @@ When arc-sync detects injection mode (existing README without ARC: markers), off
 
 Two reference files still point to the pre-rename `skills/arc-align/` path instead of `skills/arc-assess/`: `skills/arc-assess/references/detection-patterns.md:752` and `skills/arc-assess/references/import-rules.md:543`. Fix both references and grep for any other stragglers.
 
-## Classify shipped-spec user stories as merge candidates in arc-assess
-
-- **Status:** captured
-- **Priority:** P2-Medium
-- **Captured:** 2026-04-13T00:10:00Z
-- **Context:** Arc-assess re-run on 2026-04-13 re-surfaced the exact class of duplication that spec 08 was designed to fix. Nine user stories from shipped specs (08, 09, 01-align-ignore-dirs) classified as new `captured` BACKLOG stubs; only a manual user decision prevented the re-duplication.
-
-Enhance `/arc-assess` classification rules to detect when a KW-19 user story originates from a spec with `status: shipped` (via BACKLOG summary table or spec metadata). Instead of creating a new captured stub, flag the story as a merge candidate for the corresponding shipped skill entry's `### User Stories` subsection — automating what spec 08 did manually.
-
 ## (deferred) Triaging remaining captured priorities
 
 - **Status:** captured
@@ -226,5 +216,4 @@ Updating the detection-patterns.md or import-rules.md references (they don't enu
 - **Captured:** 2026-04-14T00:00:00Z
 
 Strip time/effort estimates from the arc-wave workflow to simplify wave planning.
-
 
